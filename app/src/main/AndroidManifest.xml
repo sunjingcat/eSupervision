@@ -41,22 +41,10 @@
         <activity android:name="com.zz.supervision.business.mine.PasswordActivity" />
         <activity android:name="com.zz.supervision.business.mine.ChangeCodeActivity" />
         <activity android:name="com.zz.supervision.business.mine.AboutActivity" />
-        <activity android:name="com.zz.supervision.business.map.NavActivity" />
-        <activity android:name="com.zz.supervision.business.alarm.AlarmDetailActivity" />
-        <activity
-            android:name="com.zz.supervision.business.control.VideoActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="landscape" />
-        <activity android:name="com.zz.supervision.business.control.GroupControlActivity" />
-        <activity android:name="com.zz.supervision.business.entry.LightDetailActivity" />
-        <activity android:name="com.zz.supervision.business.entry.LineActivity" />
-        <activity android:name="com.zz.supervision.business.entry.LampListActivity" />
-        <activity android:name="com.zz.supervision.business.entry.EntryLampActivity" />
-        <activity android:name="com.zz.supervision.business.control.TerminalControlActivity" />
-        <activity
-            android:name="com.zz.supervision.business.entry.EntryJzqActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name="com.zz.supervision.business.entry.RegionActivity" />
+
+
+
+
         <activity
             android:name="com.zz.supervision.business.login.LoginActivity"
             android:configChanges="keyboard"
@@ -72,10 +60,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.zz.supervision.business.entry.AddLineActivity"
-            android:theme="@style/ActivityDialogTheme" />
-        <activity android:name="com.zz.supervision.business.control.LigitDeviceControlActivity" />
+
         <activity android:name="com.donkingliang.imageselector.ImageSelectorActivity" />
         <activity
             android:name="com.donkingliang.imageselector.PreviewActivity"
@@ -84,7 +69,6 @@
         <activity
             android:name="com.donkingliang.imageselector.ClipImageActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name="com.zz.supervision.business.alarm.AlarmHandleActivity" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
@@ -154,7 +138,6 @@
             android:process=":pushservice"
             android:taskAffinity="com.igexin.sdk.PushActivityTask"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name="com.zz.supervision.business.alarm.ImageLookActivity" />
 
         <service
             android:name="com.zz.supervision.service.PushService"
