@@ -7,35 +7,53 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02687bf3-5f0c-4abd-8214-45741cb3b5cc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileContent/fileContent.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/eStreetLamp-app.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/dlroundmenuview.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/eStreetLamp-dlroundmenuview.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/proguard-rules.pro" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/project-eStreetLamp-dlroundmenuview.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/src/androidTest/java/com/dlong/rep/dlroundmenuview/ExampleInstrumentedTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/src/main/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/src/main/java/com/dlong/rep/dlroundmenuview/DLRoundMenuView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/src/main/java/com/dlong/rep/dlroundmenuview/Interface/OnMenuClickListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/src/main/java/com/dlong/rep/dlroundmenuview/Interface/OnMenuLongClickListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/src/main/java/com/dlong/rep/dlroundmenuview/Interface/OnMenuTouchListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/src/main/java/com/dlong/rep/dlroundmenuview/utils/DLMathUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/src/main/java/com/dlong/rep/dlroundmenuview/utils/DrawableUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/src/main/res/drawable/def_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/src/main/res/drawable/right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/src/main/res/values/attrs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/src/main/res/values/defaults.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/src/main/res/values/strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dlroundmenuview/src/test/java/com/dlong/rep/dlroundmenuview/ExampleUnitTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zz/supervision/utils/TabUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/cloud_download.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/icon_close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/icon_marker_jzq.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/image_add_lamp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/image_add_line.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/image_alarm_time.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/image_entry_left.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/image_entry_right.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/image_location.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/image_location_now.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/image_real_check.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/image_real_uncheck.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/main_group_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/main_group_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/main_group_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/main_group_4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/main_group_5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/main_group_6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/main_left_text.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/push.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/push_small.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/tab_alarm_hover.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/tab_alarm_normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/tab_control_hover.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/tab_control_normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/tab_entry_hover.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/tab_entry_normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/tab_home_hover.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/tab_home_normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/tab_mine_hover.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/tab_mine_normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/check_real.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/tab_alarm.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/tab_control.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/tab_entry.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/tab_home.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/tab_mine.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/view_tab_item.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/view_tab_top_item.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,36 +156,55 @@
       <option name="presentableId" value="Default" />
       <updated>1600071945414</updated>
     </task>
+    <task id="LOCAL-00001" summary="d">
+      <created>1600075417436</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1600075417437</updated>
+    </task>
+    <task id="LOCAL-00002" summary="d">
+      <created>1600075670183</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1600075670183</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="d" />
+    <option name="LAST_COMMIT_MESSAGE" value="d" />
   </component>
   <component name="WindowStateProjectService">
     <state x="828" y="296" key="#PSD" timestamp="1600073982942">
       <screen x="57" y="23" width="1991" height="1129" />
     </state>
     <state x="828" y="296" key="#PSD/57.23.1991.1129@57.23.1991.1129" timestamp="1600073982942" />
-    <state x="1041" y="311" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1600073658423">
+    <state x="1041" y="311" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1600075867116">
       <screen x="57" y="23" width="1991" height="1129" />
     </state>
-    <state x="1041" y="311" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/57.23.1991.1129@57.23.1991.1129" timestamp="1600073658423" />
-    <state x="922" y="261" key="CommitChangelistDialog2" timestamp="1600075339969">
+    <state x="1041" y="311" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/57.23.1991.1129@57.23.1991.1129" timestamp="1600075867116" />
+    <state x="922" y="261" key="CommitChangelistDialog2" timestamp="1600075669911">
       <screen x="57" y="23" width="1991" height="1129" />
     </state>
-    <state x="922" y="261" key="CommitChangelistDialog2/57.23.1991.1129@57.23.1991.1129" timestamp="1600075339969" />
+    <state x="922" y="261" key="CommitChangelistDialog2/57.23.1991.1129@57.23.1991.1129" timestamp="1600075669911" />
     <state x="456" y="94" key="DiffContextDialog" timestamp="1600074414331">
       <screen x="57" y="23" width="1991" height="1129" />
     </state>
     <state x="456" y="94" key="DiffContextDialog/57.23.1991.1129@57.23.1991.1129" timestamp="1600074414331" />
-    <state x="903" y="297" key="Vcs.Push.Dialog.v2" timestamp="1600075178882">
+    <state x="903" y="297" key="Vcs.Push.Dialog.v2" timestamp="1600075671342">
       <screen x="57" y="23" width="1991" height="1129" />
     </state>
-    <state x="903" y="297" key="Vcs.Push.Dialog.v2/57.23.1991.1129@57.23.1991.1129" timestamp="1600075178882" />
-    <state x="1083" y="481" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600074665518">
+    <state x="903" y="297" key="Vcs.Push.Dialog.v2/57.23.1991.1129@57.23.1991.1129" timestamp="1600075671342" />
+    <state x="1083" y="481" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600075655991">
       <screen x="57" y="23" width="1991" height="1129" />
     </state>
-    <state x="1083" y="481" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/57.23.1991.1129@57.23.1991.1129" timestamp="1600074665518" />
-    <state x="955" y="314" width="745" height="486" key="find.popup" timestamp="1600075359893">
+    <state x="1083" y="481" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/57.23.1991.1129@57.23.1991.1129" timestamp="1600075655991" />
+    <state x="955" y="314" width="745" height="486" key="find.popup" timestamp="1600075470061">
       <screen x="57" y="23" width="1991" height="1129" />
     </state>
-    <state x="955" y="314" width="745" height="486" key="find.popup/57.23.1991.1129@57.23.1991.1129" timestamp="1600075359893" />
+    <state x="955" y="314" width="745" height="486" key="find.popup/57.23.1991.1129@57.23.1991.1129" timestamp="1600075470061" />
   </component>
 </project>

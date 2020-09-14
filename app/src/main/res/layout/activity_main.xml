@@ -23,7 +23,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:layout_weight="1"
-        android:src="@drawable/main_group_1" />
+        android:src="@drawable/ic_launcher" />
 
     <ImageView
         android:id="@+id/main_group_2"
@@ -31,7 +31,7 @@
         android:layout_height="0dp"
         android:layout_marginLeft="100dp"
         android:layout_weight="1"
-        android:src="@drawable/main_group_2" />
+        android:src="@drawable/ic_launcher" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
         <ImageView
             android:layout_width="140dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/main_left_text" />
+            android:src="@drawable/ic_launcher" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,14 +57,14 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
 
-                android:src="@drawable/main_group_3" />
+                android:src="@drawable/ic_launcher" />
 
             <ImageView
                 android:id="@+id/main_group_4"
                 android:layout_width="120dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:src="@drawable/main_group_4" />
+                android:src="@drawable/ic_launcher" />
         </LinearLayout>
     </LinearLayout>
 
@@ -75,7 +75,7 @@
         android:layout_height="0dp"
         android:layout_marginLeft="100dp"
         android:layout_weight="1"
-        android:src="@drawable/main_group_5" />
+        android:src="@drawable/ic_launcher" />
 
     <ImageView
         android:id="@+id/main_group_6"
@@ -83,7 +83,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="20dp"
         android:layout_weight="1"
-        android:src="@drawable/main_group_6" />
+        android:src="@drawable/ic_launcher" />
 
     </LinearLayout>
 </RelativeLayout>
