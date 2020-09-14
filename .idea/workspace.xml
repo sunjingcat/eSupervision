@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="02687bf3-5f0c-4abd-8214-45741cb3b5cc" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="GXK0216325000739" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view />
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1hUiCm5LQjnr6DkVRKz0D5fVQkQ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="android.project.structure.last.selected" value="SDK Location" />
+    <property name="android.project.structure.proportion" value="0.15" />
+    <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/layout" />
+    <property name="memory.settings.postsync.last.time.stamp" value="1600071973030" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.34137055" />
+    <property name="settings.editor.selected.configurable" value="experimental" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="DEBUGGER_TYPE" value="Java" />
+      <Java />
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="02687bf3-5f0c-4abd-8214-45741cb3b5cc" name="Default Changelist" comment="" />
+      <created>1600071945414</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1600071945414</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="828" y="296" key="#PSD" timestamp="1600073982942">
+      <screen x="57" y="23" width="1991" height="1129" />
+    </state>
+    <state x="828" y="296" key="#PSD/57.23.1991.1129@57.23.1991.1129" timestamp="1600073982942" />
+    <state x="1041" y="311" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1600073658423">
+      <screen x="57" y="23" width="1991" height="1129" />
+    </state>
+    <state x="1041" y="311" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/57.23.1991.1129@57.23.1991.1129" timestamp="1600073658423" />
+    <state x="922" y="261" key="CommitChangelistDialog2" timestamp="1600075121418">
+      <screen x="57" y="23" width="1991" height="1129" />
+    </state>
+    <state x="922" y="261" key="CommitChangelistDialog2/57.23.1991.1129@57.23.1991.1129" timestamp="1600075121418" />
+    <state x="456" y="94" key="DiffContextDialog" timestamp="1600074414331">
+      <screen x="57" y="23" width="1991" height="1129" />
+    </state>
+    <state x="456" y="94" key="DiffContextDialog/57.23.1991.1129@57.23.1991.1129" timestamp="1600074414331" />
+    <state x="903" y="297" key="Vcs.Push.Dialog.v2" timestamp="1600075110180">
+      <screen x="57" y="23" width="1991" height="1129" />
+    </state>
+    <state x="903" y="297" key="Vcs.Push.Dialog.v2/57.23.1991.1129@57.23.1991.1129" timestamp="1600075110180" />
+    <state x="1083" y="481" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600074665518">
+      <screen x="57" y="23" width="1991" height="1129" />
+    </state>
+    <state x="1083" y="481" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/57.23.1991.1129@57.23.1991.1129" timestamp="1600074665518" />
+    <state x="955" y="314" width="745" height="486" key="find.popup" timestamp="1600075004665">
+      <screen x="57" y="23" width="1991" height="1129" />
+    </state>
+    <state x="955" y="314" width="745" height="486" key="find.popup/57.23.1991.1129@57.23.1991.1129" timestamp="1600075004665" />
+  </component>
+</project>

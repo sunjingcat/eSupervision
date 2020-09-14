@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">智慧城市</string>
+    <string name="tab_control">实时控制</string>
+    <string name="tab_alarm">告警报警</string>
+    <string name="tab_home">首页</string>
+    <string name="tab_entry">基础数据</string>
+    <string name="tab_mine">个人中心</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment11111</string>
+</resources>
