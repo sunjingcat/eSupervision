@@ -37,8 +37,7 @@ public class LoginActivity extends MyBaseActivity<Contract.IsetLoginPresenter> i
     EditText logPassword;
     @BindView(R.id.login_password_show)
     ImageView loginPasswordShow;
-    @BindView(R.id.log_code)
-    EditText logCode;
+
     @BindView(R.id.login_btn)
     Button loginBtn;
     @BindView(R.id.boutique_all)
@@ -59,8 +58,6 @@ public class LoginActivity extends MyBaseActivity<Contract.IsetLoginPresenter> i
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        String code = CacheUtility.spGetOut("code", "600001");
-        logCode.setText(code+"");
     }
 
     @Override
@@ -86,7 +83,7 @@ public class LoginActivity extends MyBaseActivity<Contract.IsetLoginPresenter> i
             case R.id.login_btn:
                 String number = logNumber.getText().toString();
                 String password = logPassword.getText().toString();
-                String code = logCode.getText().toString();
+
                 if (TextUtils.isEmpty(number)){
                     showToast("请填写用户名");
                     return;
@@ -95,11 +92,8 @@ public class LoginActivity extends MyBaseActivity<Contract.IsetLoginPresenter> i
                     showToast("请填写密码");
                     return;
                 }
-                if (TextUtils.isEmpty(code)){
-                    showToast("请填授权码");
-                    return;
-                }
-                mPresenter.getAddress(code);
+
+                mPresenter.getAddress("");
 
                 break;
         }
@@ -110,11 +104,11 @@ public class LoginActivity extends MyBaseActivity<Contract.IsetLoginPresenter> i
     public void setAuthCode(IpAdress params) {
         String number = logNumber.getText().toString();
         String password = logPassword.getText().toString();
-        String code = logCode.getText().toString();
+
         Map<String,Object> map = new HashMap<>();
         map.put("username",number);
         map.put("password",password);
-        map.put("cId",code);
+
         mPresenter.setAccount(map);
 
     }
@@ -122,7 +116,6 @@ public class LoginActivity extends MyBaseActivity<Contract.IsetLoginPresenter> i
     @Override
     public void showIntent(int indexType) {
         showToast("登录成功");
-        String code = logCode.getText().toString();
 
         PushManager.getInstance().turnOnPush(this);
 
