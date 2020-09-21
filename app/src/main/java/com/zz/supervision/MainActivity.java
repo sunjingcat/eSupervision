@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.EventBusSimpleInfo;
+import com.zz.supervision.business.supervise.CompanyListActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -26,11 +27,12 @@ import java.util.Map;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.zz.supervision.net.RxNetUtils.getCApi;
+import static com.zz.supervision.net.RxNetUtils.getApi;
 
 public class MainActivity extends MyBaseActivity {
 
     private long mExitTime = 0;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_main;
@@ -53,43 +55,27 @@ public class MainActivity extends MyBaseActivity {
 
     }
 
-    @OnClick({R.id.main_group_1, R.id.main_group_2, R.id.main_group_3, R.id.main_group_4, R.id.main_group_5, R.id.main_group_6})
+    @OnClick({R.id.main_group_1, R.id.main_group_2, R.id.main_group_3})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.main_group_1:
-                PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION}, new PermissionUtils.OnPermissionChangedListener() {
-                    @Override
-                    public void onGranted() {
-                        Intent intent = new Intent();
-//                        intent.setClass(MainActivity.this, HomeActivity.class);
-                        startActivity(intent);
-                    }
 
-                    @Override
-                    public void onDenied() {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, CompanyListActivity.class);
+                startActivity(intent);
 
-                    }
-                });
 
                 break;
             case R.id.main_group_2:
                 showToast("暂未开放，敬请期待");
                 break;
+
             case R.id.main_group_3:
-                showToast("暂未开放，敬请期待");
-                break;
-            case R.id.main_group_4:
-                showToast("暂未开放，敬请期待");
-                break;
-            case R.id.main_group_5:
-                showToast("暂未开放，敬请期待");
-                break;
-            case R.id.main_group_6:
                 showToast("暂未开放，敬请期待");
                 break;
         }
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -112,18 +98,20 @@ public class MainActivity extends MyBaseActivity {
             putClientId();
         }
     }
+
     public void putClientId() {
-        Map<String,Object> map = new HashMap<>();
-        map.put("cId", CacheUtility.spGetOut("cId",""));
-        RxNetUtils.request(getCApi(ApiService.class).putClientId(map), new RequestObserver<JsonT>(this) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("cId", CacheUtility.spGetOut("cId", ""));
+        RxNetUtils.request(getApi(ApiService.class).putClientId(map), new RequestObserver<JsonT>(this) {
             @Override
             protected void onSuccess(JsonT login_data) {
                 if (login_data.isSuccess()) {
 
-                }else {
+                } else {
 
                 }
             }
+
             @Override
             protected void onFail2(JsonT userInfoJsonT) {
                 super.onFail2(userInfoJsonT);

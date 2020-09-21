@@ -28,13 +28,6 @@ public class MyBasePresenterImpl<V extends com.zz.lib.core.ui.mvp.BaseView> exte
                 .createSApi(t);
     }
 
-    protected  <T> T getCApi(Class<T> t) {
-        return RxNetUtils
-                .getSCInstance(CacheUtility.getURL())
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .createSApi(t);
-    }
 
 
     protected <T> T getUploadApi(Class<T> t) {

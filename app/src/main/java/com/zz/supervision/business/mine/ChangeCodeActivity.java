@@ -69,25 +69,25 @@ public class ChangeCodeActivity extends MyBaseActivity {
             showToast("请输入授权码");
             return;
         }
-        RxNetUtils.request(getApi(ApiService.class).getAddress(trim), new RequestObserver<JsonT<IpAdress>>(this) {
-            @Override
-            protected void onSuccess(JsonT<IpAdress> jsonT) {
-                if (jsonT.isSuccess()) {
-                    CacheUtility.spSave("code",trim);
-//                    startActivity(new Intent(ChangeCodeActivity.this, LoginActivity.class));
-                    EventBus.getDefault().post(new OutDateEvent());
-                    PushManager.getInstance().turnOffPush(ChangeCodeActivity.this);
-                    finish();
-                } else {
-
-                }
-            }
-
-            @Override
-            protected void onFail2(JsonT<IpAdress> userInfoJsonT) {
-                super.onFail2(userInfoJsonT);
-                showToast(userInfoJsonT.getMessage());
-            }
-        }, null);
+//        RxNetUtils.request(getApi(ApiService.class).getAddress(trim), new RequestObserver<JsonT<IpAdress>>(this) {
+//            @Override
+//            protected void onSuccess(JsonT<IpAdress> jsonT) {
+//                if (jsonT.isSuccess()) {
+//                    CacheUtility.spSave("code",trim);
+////                    startActivity(new Intent(ChangeCodeActivity.this, LoginActivity.class));
+//                    EventBus.getDefault().post(new OutDateEvent());
+//                    PushManager.getInstance().turnOffPush(ChangeCodeActivity.this);
+//                    finish();
+//                } else {
+//
+//                }
+//            }
+//
+//            @Override
+//            protected void onFail2(JsonT<IpAdress> userInfoJsonT) {
+//                super.onFail2(userInfoJsonT);
+//                showToast(userInfoJsonT.getMessage());
+//            }
+//        }, null);
     }
 }

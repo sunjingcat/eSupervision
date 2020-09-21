@@ -22,7 +22,7 @@ public class MineInfoPresenter extends MyBasePresenterImpl<Contract.IMineInfoVie
 
     @Override
     public void getMineInfo() {
-        RxNetUtils.request(getCApi(ApiService.class).getUserDetail(), new RequestObserver<JsonT<UserBasicBean>>(this) {
+        RxNetUtils.request(getApi(ApiService.class).getUserDetail(), new RequestObserver<JsonT<UserBasicBean>>(this) {
             @Override
             protected void onSuccess(JsonT<UserBasicBean> data) {
                 if (data.isSuccess()) {
@@ -42,7 +42,7 @@ public class MineInfoPresenter extends MyBasePresenterImpl<Contract.IMineInfoVie
 
     @Override
     public void logout() {
-        RxNetUtils.request(getCApi(ApiService.class).logout(), new RequestObserver<JsonT>(this) {
+        RxNetUtils.request(getApi(ApiService.class).logout(), new RequestObserver<JsonT>(this) {
             @Override
             protected void onSuccess(JsonT data) {
                 if (data.isSuccess()) {

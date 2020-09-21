@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="#eeeeee"
+    tools:context=".business.mine.AboutActivity">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:background="@color/colorPrimary" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="新增企业"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+    </androidx.appcompat.widget.Toolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white">
+        <TextView
+            style="@style/textLeftStyle"
+            android:text="经营者名称"
+
+            android:layout_width="150dp"/>
+
+        <EditText
+            android:id="@+id/et_operatorName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:drawablePadding="5dp"
+            android:hint="请填写"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="#333"
+            android:textSize="14dp">
+
+        </EditText>
+    </LinearLayout><LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+        <TextView
+            style="@style/textLeftStyle"
+            android:text="社会信用代码"
+
+            android:layout_width="150dp"/>
+
+        <EditText
+            android:id="@+id/et_socialCreditCode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:drawablePadding="5dp"
+            android:hint="请填写"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="#333"
+            android:textSize="14dp">
+
+        </EditText>
+    </LinearLayout>
+</LinearLayout>

@@ -28,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.zz.supervision.net.RxNetUtils.getCApi;
+import static com.zz.supervision.net.RxNetUtils.getApi;
 /**
  * 密码
  */
@@ -97,7 +97,7 @@ public class PasswordActivity extends MyBaseActivity {
         map.put("newPassword",edPassword_);
         map.put("oldPassword",edPasswordOld_);
         map.put("username",username);
-        RxNetUtils.request(getCApi(ApiService.class).resetPwd(map), new RequestObserver<JsonT>(this) {
+        RxNetUtils.request(getApi(ApiService.class).resetPwd(map), new RequestObserver<JsonT>(this) {
             @Override
             protected void onSuccess(JsonT data) {
                 if (data.isSuccess()) {

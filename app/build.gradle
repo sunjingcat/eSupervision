@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 
 android {
     def API_RELEASE_HOST = "\"http://city.tjzzsw.com/\""
-    def API_DEV_HOST = "\"http://city.tjzzsw.com/\""
+    def API_DEV_HOST = "\"http://121.89.175.40:8787/\""
 
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.zz.lamp"
+        applicationId "com.zz.supervision"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 38

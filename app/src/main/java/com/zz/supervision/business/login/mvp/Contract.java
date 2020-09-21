@@ -10,14 +10,12 @@ import java.util.Map;
 
 public class Contract {
     public interface IsetLoginPresenter extends BasePresenter {
-        void getAddress(String authCode);
         void setAccount(Map<String, Object> params);
     }
 
     public interface IGetLoginView extends BaseView{
 
-        void setAuthCode(IpAdress params);
-        void showIntent(int indexType);
+        void showIntent();
     }
 
 }

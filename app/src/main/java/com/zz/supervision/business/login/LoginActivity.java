@@ -29,7 +29,7 @@ import butterknife.OnClick;
 /**
  * 登录
  */
-public class LoginActivity extends MyBaseActivity<Contract.IsetLoginPresenter> implements Contract.IGetLoginView{
+public class LoginActivity extends MyBaseActivity<Contract.IsetLoginPresenter> implements Contract.IGetLoginView {
 
     @BindView(R.id.log_number)
     EditText logNumber;
@@ -42,7 +42,7 @@ public class LoginActivity extends MyBaseActivity<Contract.IsetLoginPresenter> i
     Button loginBtn;
     @BindView(R.id.boutique_all)
     CheckBox boutiqueAll;
-    private boolean mPasswordVisible =true;
+    private boolean mPasswordVisible = true;
 
     @Override
     protected int getContentView() {
@@ -64,6 +64,7 @@ public class LoginActivity extends MyBaseActivity<Contract.IsetLoginPresenter> i
     protected void initToolBar() {
 
     }
+
     @OnClick({R.id.login_password_show, R.id.login_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -72,10 +73,12 @@ public class LoginActivity extends MyBaseActivity<Contract.IsetLoginPresenter> i
                     //设置EditText的密码为可见的
                     logPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     mPasswordVisible = false;
+                    loginPasswordShow.setImageResource(R.drawable.image_login_password_show);
                 } else {
                     //设置密码为隐藏的
                     logPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     mPasswordVisible = true;
+                    loginPasswordShow.setImageResource(R.drawable.image_login_password_hide);
                 }
 
 
@@ -84,47 +87,34 @@ public class LoginActivity extends MyBaseActivity<Contract.IsetLoginPresenter> i
                 String number = logNumber.getText().toString();
                 String password = logPassword.getText().toString();
 
-                if (TextUtils.isEmpty(number)){
+                if (TextUtils.isEmpty(number)) {
                     showToast("请填写用户名");
                     return;
                 }
-                if (TextUtils.isEmpty(password)){
+                if (TextUtils.isEmpty(password)) {
                     showToast("请填写密码");
                     return;
                 }
+                Map<String, Object> map = new HashMap<>();
+                map.put("username", number);
+                map.put("password", password);
 
-                mPresenter.getAddress("");
+                mPresenter.setAccount(map);
 
                 break;
         }
     }
 
-
     @Override
-    public void setAuthCode(IpAdress params) {
-        String number = logNumber.getText().toString();
-        String password = logPassword.getText().toString();
-
-        Map<String,Object> map = new HashMap<>();
-        map.put("username",number);
-        map.put("password",password);
-
-        mPresenter.setAccount(map);
-
-    }
-
-    @Override
-    public void showIntent(int indexType) {
+    public void showIntent() {
         showToast("登录成功");
 
         PushManager.getInstance().turnOnPush(this);
 
         Intent intent = new Intent();
-        if (indexType ==1){
-//            intent.setClass(this, HomeActivity.class);
-        }else {
-            intent.setClass(this, MainActivity.class);
-        }
+
+        intent.setClass(this, MainActivity.class);
+
         startActivity(intent);
         finish();
     }

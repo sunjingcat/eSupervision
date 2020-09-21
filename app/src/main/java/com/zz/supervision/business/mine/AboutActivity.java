@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.zz.supervision.net.RxNetUtils.getCApi;
+import static com.zz.supervision.net.RxNetUtils.getApi;
 
 /**
  * 关于
@@ -78,7 +78,7 @@ public class AboutActivity extends MyBaseActivity {
         return "";
     }
     void getData() {
-        RxNetUtils.request(getCApi(ApiService.class).getVersionInfo(getVersionCode()+""), new RequestObserver<JsonT<Version>>(this) {
+        RxNetUtils.request(getApi(ApiService.class).getVersionInfo(getVersionCode()+""), new RequestObserver<JsonT<Version>>(this) {
             @Override
             protected void onSuccess(JsonT<Version> data) {
                 if (data.isSuccess()&&data.getData()!=null) {

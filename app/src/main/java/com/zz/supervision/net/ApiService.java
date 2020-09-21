@@ -3,6 +3,7 @@ package com.zz.supervision.net;
 
 
 
+import com.zz.supervision.CompanyBean;
 import com.zz.supervision.bean.CameraBean;
 import com.zz.supervision.bean.DictBean;
 import com.zz.supervision.bean.ImageBack;
@@ -41,10 +42,8 @@ import retrofit2.http.QueryMap;
 
 public interface ApiService {
 
-    @GET("/app/light/authCode/getAddress/{authCode}")
-    Observable<JsonT<IpAdress>> getAddress(@Path("authCode") String authCode);
 
-    @POST( "/app/light/login")
+    @POST( "/app/v1/login")
     Observable<JsonT<UserInfo>> login(@QueryMap Map<String, Object> params);
 
     @POST("/app/light/gtClientId")
@@ -68,6 +67,10 @@ public interface ApiService {
     @Multipart
     @POST(URLs.VERSION + "/upload/image")
     Observable<JsonT<ImageBean>> upload(@Part List<MultipartBody.Part> imgs);
+
+    @GET("/app/v1/supervise/companyInfo/list")
+    Observable<JsonT<List<CompanyBean>>> getCompanyInfoList(@QueryMap Map<String, Object> params);
+
 
 }
 

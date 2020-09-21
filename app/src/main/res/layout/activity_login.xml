@@ -11,12 +11,11 @@
     tools:context=".business.login.LoginActivity">
 
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:layout_marginTop="100dp">
+        android:layout_marginTop="100dp"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,8 +27,8 @@
                 android:layout_height="wrap_content"
                 android:text="您好！"
                 android:textColor="#ffffff"
-                android:textStyle="bold"
-                android:textSize="25dp" />
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -39,15 +38,32 @@
                 android:textColor="#ffffff"
                 android:textSize="18dp" />
 
-            <EditText
-                android:id="@+id/log_number"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:background="@color/white"
-                android:textColor="#444444"
-                android:textSize="@dimen/sp_14"
-                android:hint="请输入账号" />
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:src="@drawable/icon_user"
+                    android:textColor="#444444" />
+
+                <EditText
+                    android:id="@+id/log_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/white"
+                    android:text="15846275069"
+                    android:hint="请输入账号"
+                    android:textColor="#444444"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
 
             <View
                 android:layout_width="match_parent"
@@ -57,10 +73,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:gravity="center_vertical"
-                android:background="@color/white"
                 android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:src="@drawable/icon_password"
+                    android:textColor="#444444" />
 
                 <EditText
                     android:id="@+id/log_password"
@@ -68,20 +91,21 @@
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:background="@color/white"
-                    android:textColor="#444444"
                     android:hint="请输入登录密码"
-                    android:textSize="@dimen/sp_14"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword"
+                    android:textColor="#444444"
+                    android:text="123456"
+                    android:textSize="@dimen/sp_14" />
 
                 <ImageView
                     android:id="@+id/login_password_show"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:textColor="#444444"
-                    android:src="@drawable/image_login_password_show" />
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:padding="1dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/image_login_password_hide"
+                    android:textColor="#444444" />
             </LinearLayout>
-
 
 
             <Button
@@ -109,7 +133,7 @@
                     android:layout_marginRight="20px"
                     android:button="@drawable/check_login"
                     android:checked="true"
-                   android:gravity="center" />
+                    android:gravity="center" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -117,6 +141,7 @@
                     android:text="   已阅读并同意"
                     android:textColor="#999999"
                     android:textSize="12dp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
