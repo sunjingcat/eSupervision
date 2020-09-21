@@ -13,4 +13,7 @@ public class Contract {
         void showUserInfo(UserBasicBean userInfo);
         void showIntent();
     }
+
+
+
 }

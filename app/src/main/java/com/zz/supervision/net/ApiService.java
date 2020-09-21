@@ -71,6 +71,9 @@ public interface ApiService {
     @GET("/app/v1/supervise/companyInfo/list")
     Observable<JsonT<List<CompanyBean>>> getCompanyInfoList(@QueryMap Map<String, Object> params);
 
+    @POST("/app/v1/supervise/companyInfo/addCompanyInfo")
+    Observable<JsonT> poatCompanyInfo(@QueryMap Map<String, Object> params);
+
 
 }
 
