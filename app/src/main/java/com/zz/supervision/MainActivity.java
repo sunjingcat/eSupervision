@@ -14,7 +14,6 @@ import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.utils.UpdateManager;
 import com.zz.lib.commonlib.utils.CacheUtility;
-import com.zz.lib.commonlib.utils.PermissionUtils;
 import com.zz.lib.core.http.utils.ToastUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 

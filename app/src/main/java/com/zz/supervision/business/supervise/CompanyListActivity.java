@@ -1,6 +1,10 @@
 package com.zz.supervision.business.supervise;
+
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -17,6 +21,7 @@ import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
+import com.zz.supervision.business.company.AddCompanyActivity;
 import com.zz.supervision.business.company.adapter.CompanyListAdapter;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
@@ -30,6 +35,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
@@ -42,10 +48,13 @@ public class CompanyListActivity extends MyBaseActivity implements OnRefreshList
     RecyclerView rv;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.toolbar_subtitle)
+    TextView toolbarSubtitle;
     private CompanyListAdapter adapter;
     List<CompanyBean> mlist = new ArrayList<>();
     private int pagenum = 1;
     private int pagesize = 20;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_company_list;
@@ -86,6 +95,7 @@ public class CompanyListActivity extends MyBaseActivity implements OnRefreshList
             llNull.setVisibility(View.GONE);
         }
     }
+
     void getDate() {
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", pagenum);
@@ -108,7 +118,7 @@ public class CompanyListActivity extends MyBaseActivity implements OnRefreshList
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-        pagenum ++;
+        pagenum++;
         getDate();
         refreshLayout.finishLoadMore();
     }
@@ -118,5 +128,10 @@ public class CompanyListActivity extends MyBaseActivity implements OnRefreshList
         pagenum = 1;
         getDate();
         refreshlayout.finishRefresh();
+    }
+
+    @OnClick(R.id.toolbar_subtitle)
+    public void onViewClicked() {
+        startActivity(new Intent(this, AddCompanyActivity.class));
     }
 }

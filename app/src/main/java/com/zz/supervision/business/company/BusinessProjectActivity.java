@@ -51,7 +51,7 @@ public class BusinessProjectActivity extends MyBaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-
+        mContext = this;
         recLeft = findViewById(R.id.rec_left);
         recRight = findViewById(R.id.rec_right);
         rightTitle = findViewById(R.id.right_title);

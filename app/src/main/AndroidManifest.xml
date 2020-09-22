@@ -153,6 +153,7 @@
             android:theme="@style/CaptureTheme"/>
         <activity android:name=".business.supervise.CompanyListActivity" />
         <activity android:name=".business.company.AddCompanyActivity" />
+        <activity android:name=".business.company.BusinessProjectActivity" />
     </application>
 
 </manifest>

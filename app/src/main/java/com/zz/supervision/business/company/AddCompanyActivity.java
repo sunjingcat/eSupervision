@@ -119,6 +119,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             case R.id.et_businessType:
                 break;
             case R.id.et_businessProject:
+                startActivity(new Intent(this,BusinessProjectActivity.class));
                 break;
             case R.id.et_endTime:
                 break;
