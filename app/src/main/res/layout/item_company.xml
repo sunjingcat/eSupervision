@@ -3,60 +3,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="12dp"
     android:background="@drawable/line_radius_10_light"
+    android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="15dp"
+    android:padding="12dp">
 
-    android:gravity="center_vertical">
-    <TextView
-        android:id="@+id/item_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#444444"
-        android:textSize="15dp"
-        tools:text="集中器1" />
-
-    <TextView
-        android:id="@+id/item_content"
+    <LinearLayout
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:textColor="#999999"
-        android:textSize="12dp"
-        tools:text="52487963" />
-    <TextView
-        android:id="@+id/item_edit"
-        android:layout_width="42dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_5_yellow"
-        android:gravity="center"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:text="修改"
-        android:layout_marginLeft="8dp"
-        android:textColor="@color/color9C"
-        android:textSize="14dp"
-        android:visibility="gone"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/item_delete"
-        android:layout_width="42dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_5_yellow"
-        android:gravity="center"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:layout_marginLeft="8dp"
-        android:text="删除"
-        android:textColor="@color/color9C"
-        android:visibility="gone"
-        android:textSize="14dp" />
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#272727"
+            android:textSize="18dp"
+            android:lines="1"
+            android:ellipsize="end"
+            tools:text="黑龙江富电实业集团有限公司燃料" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
+            <TextView
+                android:id="@+id/item_legalRepresentative"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#999999"
+                android:textSize="15dp"
+                tools:text="法人代表:张志强" />
+            <TextView
+                android:id="@+id/item_businessType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:textColor="#999999"
+                android:textSize="15dp"
+                tools:text="主体业态:单位食堂" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:src="@drawable/image_arrow"/>
+        android:src="@drawable/image_arrow" />
 
 
 </LinearLayout>

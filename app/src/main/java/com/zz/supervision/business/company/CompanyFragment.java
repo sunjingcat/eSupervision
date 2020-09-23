@@ -24,6 +24,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.business.company.adapter.CompanyListAdapter;
@@ -46,23 +47,11 @@ import static com.zz.supervision.net.RxNetUtils.getApi;
 
 
 /**
- * 签证验收fragment
+ * fragment
  */
 @SuppressLint("ValidFragment")
 public class CompanyFragment extends Fragment implements OnRefreshListener, OnLoadMoreListener {
-    @BindView(R.id.certi_search_et)
-    EditText certiSearchEt;
-//    @BindView(R.id.certi_search)
-//    TextView certiSearch;
-//    @BindView(R.id.certi_title_num)
-//    TextView certiTitleNum;
-//    @BindView(R.id.certi_title_name)
-//    TextView certiTitleName;
-//    @BindView(R.id.certi_title_type)
-//    TextView certiTitleType;
-//    @BindView(R.id.certi_title_time)
-//    TextView certiTitleTime;
-//    @BindView(R.id.ll_null)
+
     LinearLayout llNull;
     @BindView(R.id.rv)
     RecyclerView rv;
@@ -107,29 +96,6 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setOnLoadMoreListener(this);
 
-        certiSearchEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (TextUtils.isEmpty(s)){
-                    searchStr ="";
-                }else {
-                    searchStr = s.toString();
-                }
-
-            }
-        });
-
-
     }
 
     @Override
@@ -166,21 +132,20 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
         Map<String, Object> map = new HashMap<>();
         map.put("pagenum", pagenum);
         map.put("pagesize", pagesize);
-        map.put("visaAcceptanceType", type);
         if (!TextUtils.isEmpty(searchStr)){
-            map.put("title",searchStr);
+            map.put("searchValue",searchStr);
         }
-//        RxNetUtils.request(getApi(ApiService.class).getUserDetail(map), new RequestObserver<JsonT<List<CompanyBean>>>() {
-//            @Override
-//            protected void onSuccess(JsonT<List<CompanyBean>> jsonT) {
-//                showResult(jsonT.getData());
-//            }
-//
-//            @Override
-//            protected void onFail2(JsonT<List<CompanyBean>> stringJsonT) {
-//                super.onFail2(stringJsonT);
-//            }
-//        }, null);
+        RxNetUtils.request(getApi(ApiService.class).getCompanyInfoList(map), new RequestObserver<JsonT<List<CompanyBean>>>() {
+            @Override
+            protected void onSuccess(JsonT<List<CompanyBean>> jsonT) {
+                showResult(jsonT.getData());
+            }
+
+            @Override
+            protected void onFail2(JsonT<List<CompanyBean>> stringJsonT) {
+                super.onFail2(stringJsonT);
+            }
+        }, LoadingUtils.build(getActivity()));
     }
 
 

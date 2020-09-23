@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".business.mine.AboutActivity">
@@ -36,39 +37,16 @@
             android:textColor="@color/white"
             android:textSize="16dp" />
     </androidx.appcompat.widget.Toolbar>
-    <LinearLayout
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        app:tabIndicatorColor="@color/colorPrimary"
+        />
 
-        android:padding="5dp">
 
-        <EditText
-            android:id="@+id/certi_search_et"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/border_radius_40_white"
-            android:drawableRight="@drawable/image_search"
-            android:drawablePadding="5dp"
-            android:hint="请输入搜索内容"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textColor="#333"
-            android:textSize="14dp">
-
-        </EditText>
-
-        <TextView
-            android:id="@+id/certi_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-
-            android:padding="5dp"
-            android:text="搜索"
-            android:textColor="@color/white"
-            android:textSize="15dp" />
-    </LinearLayout>
-    <include layout="@layout/refresh_layout" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>
