@@ -26,18 +26,23 @@ public class BusinessProjectAdapter extends BaseSectionQuickAdapter<BusinessProj
 
     @Override
     protected void convertHeader(@NotNull BaseViewHolder baseViewHolder, @NotNull BusinessProjectBean businessProjectBean) {
-        baseViewHolder.setText(R.id.title,businessProjectBean.getValue()+" "+businessProjectBean.getTitle());
+        baseViewHolder.setText(R.id.title,businessProjectBean.getTitle());
         baseViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBnpjClickListener.onHeaderClick(v,baseViewHolder.getAdapterPosition());
             }
         });
+        if (businessProjectBean.isSelect()){
+            baseViewHolder.setTextColor(R.id.title, Color.parseColor("#0851A2"));
+        }else {
+            baseViewHolder.setTextColor(R.id.title, Color.parseColor("#999999"));
+        }
     }
 
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, BusinessProjectBean businessProjectBean) {
-        baseViewHolder.setText(R.id.title,businessProjectBean.getValue()+" "+businessProjectBean.getTitle());
+        baseViewHolder.setText(R.id.title,businessProjectBean.getTitle());
         baseViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,9 +50,11 @@ public class BusinessProjectAdapter extends BaseSectionQuickAdapter<BusinessProj
             }
         });
         if (businessProjectBean.isSelect()){
-            baseViewHolder.setTextColor(R.id.title, Color.GRAY);
+            baseViewHolder.setTextColor(R.id.title, Color.parseColor("#0851A2"));
+            baseViewHolder.setBackgroundResource(R.id.title, R.drawable.border_radius_3_dae);
         }else {
-            baseViewHolder.setTextColor(R.id.title, R.color.colorAccent);
+            baseViewHolder.setTextColor(R.id.title, Color.parseColor("#4A4A4A"));
+            baseViewHolder.setBackgroundResource(R.id.title, R.drawable.border_radius_3_gray);
         }
     }
 

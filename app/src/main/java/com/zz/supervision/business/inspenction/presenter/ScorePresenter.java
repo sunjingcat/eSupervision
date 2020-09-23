@@ -40,18 +40,18 @@ public class ScorePresenter extends MyBasePresenterImpl<Contract.IGetScoreView> 
 
     @Override
     public void submitData(Map<String, Object> map) {
-        RxNetUtils.request(getApi(ApiService.class).poatCompanyInfo(map), new RequestObserver<JsonT>(this) {
-            @Override
-            protected void onSuccess(JsonT jsonT) {
-                view.showResult();
-                view.showToast(jsonT.getMessage());
-            }
-            @Override
-            protected void onFail2(JsonT stringJsonT) {
-                super.onFail2(stringJsonT);
-                view.showToast(stringJsonT.getMessage());
-            }
-        },mDialog);
+//        RxNetUtils.request(getApi(ApiService.class).poatCompanyInfo(map), new RequestObserver<JsonT>(this) {
+//            @Override
+//            protected void onSuccess(JsonT jsonT) {
+//                view.showResult();
+//                view.showToast(jsonT.getMessage());
+//            }
+//            @Override
+//            protected void onFail2(JsonT stringJsonT) {
+//                super.onFail2(stringJsonT);
+//                view.showToast(stringJsonT.getMessage());
+//            }
+//        },mDialog);
     }
 
 

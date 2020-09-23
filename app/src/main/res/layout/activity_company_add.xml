@@ -6,26 +6,27 @@
     android:background="#eeeeee"
     android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:id="@+id/bg"
     tools:context=".business.mine.AboutActivity">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="33dp"
-        android:background="@color/colorPrimary" />
+        android:background="@color/white" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="新增企业"
-            android:textColor="@color/white"
+            android:textColor="#272727"
             android:textSize="18dp" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -406,9 +407,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <Button
+                android:id="@+id/bt_ok"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/border_radius_3_blue"
                 android:layout_margin="20dp"
                 android:text="提交"
                 android:textColor="@color/white"

@@ -1,6 +1,9 @@
 package com.zz.supervision.business.company.mvp.presenter;
 
 
+import android.text.TextUtils;
+
+import com.google.gson.Gson;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.bean.ImageBean;
 import com.zz.supervision.bean.UserBasicBean;
@@ -41,11 +44,40 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
     }
 
     @Override
+    public void postImage(String id, String files, List<Integer> ids) {
+        if (TextUtils.isEmpty(files)){
+            if (ids.size()==0){
+                view.showPostImage();
+            }else {
+                postImageIDs(id, new Gson().toJson(ids));
+            }
+        }else {
+            RxNetUtils.request(getApi(ApiService.class).uploadImgs(files), new RequestObserver<JsonT<List<Integer>>>(this) {
+                @Override
+                protected void onSuccess(JsonT<List<Integer>> data) {
+                    if (data.isSuccess()) {
+                        ids.addAll(data.getData());
+                        postImageIDs(id, new Gson().toJson(ids));
+                    } else {
+
+                    }
+                }
+
+                @Override
+                protected void onFail2(JsonT<List<Integer>> userInfoJsonT) {
+                    super.onFail2(userInfoJsonT);
+                    view.showToast(userInfoJsonT.getMessage());
+                }
+            }, mDialog);
+        }
+    }
+
+    @Override
     public void submitData(Map<String, Object> map) {
-        RxNetUtils.request(getApi(ApiService.class).poatCompanyInfo(map), new RequestObserver<JsonT>(this) {
+        RxNetUtils.request(getApi(ApiService.class).poatCompanyInfo(map), new RequestObserver<JsonT<String>>(this) {
             @Override
-            protected void onSuccess(JsonT jsonT) {
-                view.showResult();
+            protected void onSuccess(JsonT<String> jsonT) {
+                view.showSubmitResult((String) jsonT.getData());
                 view.showToast(jsonT.getMessage());
             }
             @Override
@@ -55,26 +87,23 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
             }
         },mDialog);
     }
-
-
-    @Override
-    public void uploadImage(List<MultipartBody.Part> imgs) {
-
-        RxNetUtils.request(getApi(ApiService.class).upload(imgs), new RequestObserver<JsonT<ImageBean>>(this) {
-
+    public void postImageIDs(String id,String files) {
+        RxNetUtils.request(getApi(ApiService.class).uploadCompanyImgs(id,files), new RequestObserver<JsonT>(this) {
             @Override
-            protected void onSuccess(JsonT<ImageBean> jsonT) {
+            protected void onSuccess(JsonT data) {
+                if (data.isSuccess()) {
+                    view.showPostImage();
+                }else {
 
-                view.showImage(jsonT.getData().getImgName());
+                }
             }
 
             @Override
-            protected void onFail(String message) {
-                super.onFail(message);
-                view.onError();
+            protected void onFail2(JsonT userInfoJsonT) {
+                super.onFail2(userInfoJsonT);
+                view.showToast(userInfoJsonT.getMessage());
             }
         },mDialog);
-
     }
 }
 

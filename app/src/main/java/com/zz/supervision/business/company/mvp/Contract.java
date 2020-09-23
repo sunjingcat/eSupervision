@@ -16,15 +16,19 @@ public class Contract {
 
         void getData(String url,Map<String, Object> map);
 
-        void uploadImage(List<MultipartBody.Part> imgs);
+        void postImage(String id,String files,List<Integer> ids);
     }
 
     public interface IGetCompanyAddView extends BaseView {
-        void showPatrolInfo(CompanyBean data);
+        void showCompanyInfo(CompanyBean data);
+
+        void showSubmitResult(String id);
 
         void showResult();
+        void showPostImage();
 
-        void showImage(String url);
+
+
     }
 
 }

@@ -65,15 +65,22 @@ public interface ApiService {
     Observable<JsonT<Version>> getVersionInfo(@Path("versionCode") String terminalId);
 
     @Multipart
-    @POST(URLs.VERSION + "/upload/image")
+    @POST( "/app/v1/supervise/enclosure/upload")
     Observable<JsonT<ImageBean>> upload(@Part List<MultipartBody.Part> imgs);
 
     @GET("/app/v1/supervise/companyInfo/list")
     Observable<JsonT<List<CompanyBean>>> getCompanyInfoList(@QueryMap Map<String, Object> params);
 
     @POST("/app/v1/supervise/companyInfo/addCompanyInfo")
-    Observable<JsonT> poatCompanyInfo(@QueryMap Map<String, Object> params);
+    Observable<JsonT<String>> poatCompanyInfo(@QueryMap Map<String, Object> params);
 
+    @POST("/app/v1/supervise/companyInfo/uploadImgs/{id}")
+    @FormUrlEncoded
+    Observable<JsonT> uploadCompanyImgs(@Path("id")String id,@Field("enclosureIds") String handleFile);
+
+    @POST("/app/v1/supervise/enclosure/upload")
+    @FormUrlEncoded
+    Observable<JsonT<List<Integer>>> uploadImgs( @Field("filebase64s") String handleFile);
 
 }
 

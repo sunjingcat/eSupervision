@@ -61,15 +61,16 @@ public class BusinessProjectActivity extends MyBaseActivity {
             public void onHeaderClick(View v, int p) {
                 for (int i =0;i<mlist.size();i++){
                     if (mlist.get(i).getFatherValue()==mlist.get(p).getValue()){
-                        mlist.get(i).setSelect(true);
+                        mlist.get(i).setSelect(!mlist.get(p).isSelect());
                     }
                 }
+                mlist.get(p).setSelect(!mlist.get(p).isSelect());
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onContentClick(View v, int p) {
-                mlist.get(p).setSelect(true);
+                mlist.get(p).setSelect(!mlist.get(p).isSelect());
                 adapter.notifyDataSetChanged();
             }
 
@@ -122,11 +123,11 @@ public class BusinessProjectActivity extends MyBaseActivity {
     }
 
 
-    @OnClick(R.id.toolbar_subtitle)
+    @OnClick(R.id.bt_ok)
     public void onViewClicked() {
         ArrayList<BusinessProjectBean> selectList = new ArrayList<>();
+        selectList.clear();
         for (BusinessProjectBean businessProjectBean:mlist){
-            selectList.clear();
             if (businessProjectBean.isSelect()){
                 selectList.add(businessProjectBean);
             }
