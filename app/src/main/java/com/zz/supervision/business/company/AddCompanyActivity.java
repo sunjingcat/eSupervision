@@ -3,6 +3,7 @@ package com.zz.supervision.business.company;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,10 +19,12 @@ import com.codbking.widget.bean.DateType;
 import com.donkingliang.imageselector.utils.ImageSelector;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
+import com.zz.lib.commonlib.widget.SelectPopupWindows;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
+import com.zz.supervision.bean.BusinessProjectBean;
 import com.zz.supervision.business.company.adapter.ImageDeleteItemAdapter;
 import com.zz.supervision.business.company.mvp.Contract;
 import com.zz.supervision.business.company.mvp.presenter.CompanyAddPresenter;
@@ -71,6 +74,11 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     @BindView(R.id.item_rv_images)
     RecyclerView itemRvImages;
     long fieldTime;
+    int businessType = 0;
+    String businessProject = "";
+    private static final String[] PLANETS = new String[]{"食品销售经营者", "餐饮服务经营者", "单位食堂"};
+    SelectPopupWindows selectPopupWindows;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_company_add;
@@ -117,9 +125,28 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.et_businessType:
+                selectPopupWindows = new SelectPopupWindows(this, PLANETS);
+                selectPopupWindows.showAtLocation(findViewById(R.id.bg),
+                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                selectPopupWindows.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
+                    @Override
+                    public void onSelected(int index, String msg) {
+                        etBusinessType.setText(msg);
+                        businessType = index + 1;
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        selectPopupWindows.dismiss();
+                    }
+                });
                 break;
             case R.id.et_businessProject:
-                startActivity(new Intent(this,BusinessProjectActivity.class));
+                if (businessType ==0){
+                    showToast("请先选择主体业态");
+                    return;
+                }
+                startActivityForResult(new Intent(this, BusinessProjectActivity.class).putExtra("type",businessType),2001);
                 break;
             case R.id.et_endTime:
                 break;
@@ -188,10 +215,28 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 upload(images);
                 adapter.notifyDataSetChanged();
             }
+            if (requestCode == 2001) {
+                //获取选择器返回的数据
+                ArrayList<BusinessProjectBean> projectBeans = data.getParcelableArrayListExtra("bnpj");
+                String str="";
+                String content="";
+                for (int i =0;i<projectBeans.size();i++){
+                    if (i == projectBeans.size()-1){
+                        str = str +projectBeans.get(i).getTitle();
+                        content = content +projectBeans.get(i).getValue();
+                    }else {
+                        str = str + "," +projectBeans.get(i).getTitle()+ ",";
+                        content = content + "," +projectBeans.get(i).getValue()+ ",";
+                    }
+                }
+                etBusinessProject.setText(str);
+                businessProject =content;
+            }
 
 
         }
     }
+
     private void upload(final ArrayList<String> files) {
         final List<MultipartBody.Part> parts = new ArrayList<>(files.size());
         for (String strfile : files) {

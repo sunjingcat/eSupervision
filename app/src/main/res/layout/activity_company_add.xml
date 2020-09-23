@@ -6,6 +6,7 @@
     android:background="#eeeeee"
     android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:id="@+id/bg"
     tools:context=".business.mine.AboutActivity">
 
     <View
