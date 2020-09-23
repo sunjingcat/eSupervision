@@ -29,7 +29,7 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
-        android:name="com.zz.supervision.App"
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
@@ -38,29 +38,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.zz.supervision.business.mine.PasswordActivity" />
-        <activity android:name="com.zz.supervision.business.mine.ChangeCodeActivity" />
-        <activity android:name="com.zz.supervision.business.mine.AboutActivity" />
-
-
-
-
+        <activity android:name=".business.inspenction.XCHZFActivity"></activity>
+        <activity android:name=".business.mine.PasswordActivity" />
+        <activity android:name=".business.mine.ChangeCodeActivity" />
+        <activity android:name=".business.mine.AboutActivity" />
         <activity
-            android:name="com.zz.supervision.business.login.LoginActivity"
+            android:name=".business.login.LoginActivity"
             android:configChanges="keyboard"
             android:exported="false"
             android:screenOrientation="fullSensor"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name="com.zz.supervision.business.mine.MineActivity" />
-        <activity android:name="com.zz.supervision.MainActivity" />
-        <activity android:name="com.zz.supervision.StartpageActivity">
+        <activity android:name=".business.mine.MineActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".StartpageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name="com.donkingliang.imageselector.ImageSelectorActivity" />
         <activity
             android:name="com.donkingliang.imageselector.PreviewActivity"
@@ -73,10 +69,12 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="WpcSzZmbGm2suikRU1TZKKXPCrwNNXek" />
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"></service>
+            android:process=":remote" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -140,17 +138,18 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <service
-            android:name="com.zz.supervision.service.PushService"
+            android:name=".service.PushService"
             android:exported="true"
             android:label="PushService"
             android:process=":pushservice" />
         <service
-            android:name="com.zz.supervision.service.IntentService"
+            android:name=".service.IntentService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
         <activity
-            android:name="com.zz.supervision.CaptureActivity"
+            android:name=".CaptureActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/CaptureTheme"/>
+            android:theme="@style/CaptureTheme" />
         <activity android:name=".business.supervise.CompanyListActivity" />
         <activity android:name=".business.company.AddCompanyActivity" />
         <activity android:name=".business.company.BusinessProjectActivity" />
