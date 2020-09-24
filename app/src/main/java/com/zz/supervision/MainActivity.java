@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.EventBusSimpleInfo;
+import com.zz.supervision.business.company.AddCompanyActivity;
 import com.zz.supervision.business.company.CompanyListActivity;
 import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.net.ApiService;
@@ -60,7 +61,7 @@ public class MainActivity extends MyBaseActivity {
             case R.id.main_group_1:
 
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this, XCHZFActivity.class);
+                intent.setClass(MainActivity.this, AddCompanyActivity.class);
                 startActivity(intent);
 
 
