@@ -5,6 +5,7 @@ package com.zz.supervision.net;
 
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.bean.CameraBean;
+import com.zz.supervision.bean.CompanyType;
 import com.zz.supervision.bean.DictBean;
 import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.bean.ImageBean;
@@ -70,6 +71,10 @@ public interface ApiService {
 
     @GET("/app/v1/supervise/companyInfo/list")
     Observable<JsonT<List<CompanyBean>>> getCompanyInfoList(@QueryMap Map<String, Object> params);
+
+
+    @GET("/app/v1/supervise/companyInfo/selectCompanyGroupCount")
+    Observable<JsonT<List<CompanyType>>> selectCompanyGroupCount(@QueryMap Map<String, Object> params);
 
     @POST("/app/v1/supervise/companyInfo/addCompanyInfo")
     Observable<JsonT<String>> poatCompanyInfo(@QueryMap Map<String, Object> params);

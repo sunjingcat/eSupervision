@@ -1,13 +1,13 @@
 package com.zz.supervision;
 
-import android.Manifest;
 import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.View;
 
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.EventBusSimpleInfo;
-import com.zz.supervision.business.supervise.CompanyListActivity;
+import com.zz.supervision.business.company.CompanyListActivity;
+import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -60,7 +60,7 @@ public class MainActivity extends MyBaseActivity {
             case R.id.main_group_1:
 
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this, CompanyListActivity.class);
+                intent.setClass(MainActivity.this, XCHZFActivity.class);
                 startActivity(intent);
 
 

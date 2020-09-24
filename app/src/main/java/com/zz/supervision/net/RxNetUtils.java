@@ -51,23 +51,6 @@ public class RxNetUtils extends RxHttpUtils {
         rxhttp.baseUrl(rxhttp.getBaseUrl());
         return rxhttp;
     }
-
-    public static SingleRxHttp getSCInstance(String URL) {
-        SingleRxHttp rxhttp = SingleRxHttp.getInstance();
-
-        if(CacheUtility.isLogin()){
-            if (!TextUtils.isEmpty(CacheUtility.getToken()) ){
-                Map<String,Object> paras = new HashMap<>();
-                paras.put("token", CacheUtility.getToken());
-                rxhttp.addHeaders(paras);
-            }
-        }
-//        Map<String,Object> param = new HashMap<>();
-//        rxhttp.addParams(param);
-        rxhttp.baseUrl(URL);
-        return rxhttp;
-    }
-
     public static SingleRxHttp getTestInstance() {
         SingleRxHttp rxhttp = SingleRxHttp.getInstance();
 

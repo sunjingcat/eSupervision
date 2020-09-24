@@ -295,6 +295,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     }
 
     private void postData() {
+        mPresenter.postImage("id", "s", new ArrayList<>());
         Map<String, Object> params = new HashMap<>();
         String operatorName = etOperatorName.getText().toString();
         if (TextUtils.isEmpty(operatorName)) {
@@ -367,7 +368,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             return;
         }
         params.put("fieldTime", fieldTime);
-        mPresenter.submitData(params);
+        mPresenter.postImage("id", "s", new ArrayList<>());
 
     }
 

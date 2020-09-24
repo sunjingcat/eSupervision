@@ -150,9 +150,10 @@
             android:name=".CaptureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CaptureTheme" />
-        <activity android:name=".business.supervise.CompanyListActivity" />
+        <activity android:name=".business.company.CompanyListActivity" />
         <activity android:name=".business.company.AddCompanyActivity" />
         <activity android:name=".business.company.BusinessProjectActivity" />
+        <activity android:name=".business.company.CompanyInfoActivity" />
     </application>
 
 </manifest>

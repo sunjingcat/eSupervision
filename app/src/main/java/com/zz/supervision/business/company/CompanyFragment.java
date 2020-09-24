@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -61,14 +62,14 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
     private RecyclerView recyclerView;
     private CompanyListAdapter adapter;
     List<CompanyBean> mlist = new ArrayList<>();
-    private int pagenum = 0;
+    private int pagenum = 1;
     private int pagesize = 20;
     private String searchStr="";
-    private int type=0;
+    private String type="";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_company_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_company_list, container, false);
 
         unbinder = ButterKnife.bind(this, view);
         init(view);
@@ -76,7 +77,7 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
     }
 
     @SuppressLint("ValidFragment")
-    public CompanyFragment(int type) {
+    public CompanyFragment(String type) {
         this.type = type;
     }
 
@@ -95,7 +96,21 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
         recyclerView.setAdapter(adapter);
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setOnLoadMoreListener(this);
+        String select = getActivity().getIntent().getStringExtra("select");
 
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+                if (TextUtils.isEmpty(select)){
+                    startActivity(new Intent(getActivity(),CompanyInfoActivity.class).putExtra("id",mlist.get(position).getId()));
+                }else {
+                    Intent intent = new Intent();
+                    intent.putExtra("company",mlist.get(position));
+                    getActivity().setResult(getActivity().RESULT_OK,intent);
+                    getActivity().finish();
+                }
+            }
+        });
     }
 
     @Override
@@ -104,20 +119,15 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
         unbinder.unbind();
     }
 
-    @OnClick(R.id.certi_search)
-    public void onViewClicked() {
-        pagenum = 0;
-        getDate();
-    }
     @Override
     public void onRefresh(RefreshLayout refreshlayout) {
-        pagenum = 0;
+        pagenum = 1;
         getDate();
         refreshlayout.finishRefresh();
     }
 
     public void showResult(List<CompanyBean> data) {
-        if (pagenum == 0) {
+        if (pagenum == 1) {
             mlist.clear();
         }
         mlist.addAll(data);
@@ -130,8 +140,9 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
     }
     void getDate() {
         Map<String, Object> map = new HashMap<>();
-        map.put("pagenum", pagenum);
-        map.put("pagesize", pagesize);
+        map.put("pageNum", pagenum);
+        map.put("pageSize", pagesize);
+        map.put("companyType", type);
         if (!TextUtils.isEmpty(searchStr)){
             map.put("searchValue",searchStr);
         }
