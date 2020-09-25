@@ -4,16 +4,19 @@ package com.zz.supervision.net;
 
 
 import com.zz.supervision.CompanyBean;
+import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.CameraBean;
 import com.zz.supervision.bean.CompanyType;
 import com.zz.supervision.bean.DictBean;
 import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.bean.ImageBean;
+import com.zz.supervision.bean.LawEnforcerBean;
 import com.zz.supervision.bean.MapListBean;
 import com.zz.supervision.bean.OperLog;
 import com.zz.supervision.bean.RealTimeCtrlGroup;
 import com.zz.supervision.bean.RealTimeCtrlTerminal;
 import com.zz.supervision.bean.RegionExpandItem;
+import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.bean.UserBasicBean;
 import com.zz.supervision.bean.UserInfo;
 import com.zz.supervision.bean.Version;
@@ -86,6 +89,16 @@ public interface ApiService {
     @POST("/app/v1/supervise/enclosure/upload")
     @FormUrlEncoded
     Observable<JsonT<List<Integer>>> uploadImgs( @Field("filebase64s") String handleFile);
+
+
+    @GET("/app/v1/supervise/companyInfo/getLawEnforcerList")
+    Observable<JsonT<List<LawEnforcerBean>>> getLawEnforcerList();
+
+    @GET("/app/v1/supervise/dict/getDicts")
+    Observable<JsonT<List<BusinessType>>> getDicts(@QueryMap Map<String, Object> params);
+
+    @GET("/app/v1/supervise/spxsInspectionRecord/getItems")
+    Observable<JsonT<List<SuperviseBean>>> getFoodSuperviseList(@QueryMap Map<String, Object> params);
 
 }
 

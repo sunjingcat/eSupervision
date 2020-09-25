@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.zz.supervision.CompanyBean;
+import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.ImageBean;
 import com.zz.supervision.bean.UserBasicBean;
 import com.zz.supervision.business.company.mvp.Contract;
@@ -41,6 +42,20 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
 //                super.onFail2(stringJsonT);
 //            }
 //        },mDialog);
+    }
+
+    @Override
+    public void getBusinessType(String url, Map<String, Object> map) {
+                RxNetUtils.request(getApi(ApiService.class).getDicts(map), new RequestObserver<JsonT<List<BusinessType>>>(this) {
+            @Override
+            protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
+                view.showBusinessType(jsonT.getData());
+            }
+            @Override
+            protected void onFail2(JsonT<List<BusinessType>> stringJsonT) {
+                super.onFail2(stringJsonT);
+            }
+        },mDialog);
     }
 
     @Override

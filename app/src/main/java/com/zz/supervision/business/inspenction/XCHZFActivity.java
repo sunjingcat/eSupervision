@@ -2,31 +2,50 @@ package com.zz.supervision.business.inspenction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
+import com.codbking.widget.DatePickDialog;
+import com.codbking.widget.OnChangeLisener;
+import com.codbking.widget.OnSureLisener;
+import com.codbking.widget.bean.DateType;
+import com.codbking.widget.utils.UIAdjuster;
+import com.zz.lib.commonlib.utils.ToolBarUtils;
+import com.zz.lib.commonlib.widget.SelectPopupWindows;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
+import com.zz.supervision.bean.LawEnforcerBean;
+import com.zz.supervision.business.company.AddCompanyActivity;
 import com.zz.supervision.business.company.CompanyListActivity;
+import com.zz.supervision.business.company.PeopleActivity;
+import com.zz.supervision.utils.TimeUtils;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 现场执法
+ */
 public class XCHZFActivity extends MyBaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.et_company)
     TextView etCompany;
-    @BindView(R.id.et_Type)
+    @BindView(R.id.et_type)
     TextView etType;
     @BindView(R.id.et_people)
     TextView etPeople;
@@ -36,17 +55,31 @@ public class XCHZFActivity extends MyBaseActivity {
     EditText edCause;
     @BindView(R.id.bt_ok)
     TextView btOk;
+    @BindView(R.id.ll_company)
+    LinearLayout llCompany;
+    @BindView(R.id.et_socialCreditCode)
+    TextView etSocialCreditCode;
+    @BindView(R.id.et_legalRepresentative)
+    TextView etLegalRepresentative;
+    @BindView(R.id.et_businessPlace)
+    TextView etBusinessPlace;
+    @BindView(R.id.et_contact)
+    TextView etContact;
+    @BindView(R.id.et_contactInformation)
+    TextView etContactInformation;
+    @BindView(R.id.ll_company_info)
+    LinearLayout llCompanyInfo;
+    CompanyBean companyBean;
+    int type = 0;
+    long startTime = 0;
+    String ids = "";
+    String names = "";
+    private static final String[] PLANETS = new String[]{"食品销售日常监督检查", "餐饮服务日常监督检查", "食品销售风险因素量化分值", "餐饮服务风险因素量化分值"};
+    SelectPopupWindows selectPopupWindows;
 
     @Override
     protected int getContentView() {
         return R.layout.activity_xchzf;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_xchzf);
-        ButterKnife.bind(this);
     }
 
     @Override
@@ -56,30 +89,88 @@ public class XCHZFActivity extends MyBaseActivity {
 
     @Override
     protected void initView() {
-
+        ButterKnife.bind(this);
     }
 
     @Override
     protected void initToolBar() {
-
+        ToolBarUtils.getInstance().setNavigation(toolbar);
     }
 
-    @OnClick({R.id.et_company, R.id.et_Type, R.id.et_people, R.id.et_startTime, R.id.ed_cause, R.id.bt_ok})
+    @OnClick({R.id.ll_company, R.id.et_type, R.id.et_people, R.id.et_startTime, R.id.bt_ok})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.et_company:
-                startActivityForResult(new Intent(this, CompanyListActivity.class),1001);
+            case R.id.ll_company:
+                startActivityForResult(new Intent(this, CompanyListActivity.class).putExtra("select", "xczf"), 1001);
                 break;
-            case R.id.et_Type:
+            case R.id.et_type:
+                UIAdjuster.closeKeyBoard(this);
+                selectPopupWindows = new SelectPopupWindows(this, PLANETS);
+                selectPopupWindows.showAtLocation(findViewById(R.id.bg),
+                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                selectPopupWindows.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
+                    @Override
+                    public void onSelected(int index, String msg) {
+                        etType.setText(msg);
+                        type = index + 1;
+                    }
 
+                    @Override
+                    public void onCancel() {
+                        selectPopupWindows.dismiss();
+                    }
+                });
                 break;
             case R.id.et_people:
+                startActivityForResult(new Intent(this, PeopleActivity.class), 2001);
                 break;
             case R.id.et_startTime:
+                DatePickDialog dialog = new DatePickDialog(XCHZFActivity.this);
+                //设置上下年分限制
+                //设置上下年分限制
+                dialog.setYearLimt(20);
+                //设置标题
+                dialog.setTitle("选择时间");
+                //设置类型
+                dialog.setType(DateType.TYPE_YMD);
+                //设置消息体的显示格式，日期格式
+                dialog.setMessageFormat("yyyy-MM-dd");
+                //设置选择回调
+                dialog.setOnChangeLisener(new OnChangeLisener() {
+                    @Override
+                    public void onChanged(Date date) {
+                        Log.v("+++", date.toString());
+                    }
+                });
+                //设置点击确定按钮回调
+                dialog.setOnSureLisener(new OnSureLisener() {
+                    @Override
+                    public void onSure(Date date) {
+                        startTime = date.getTime();
+                        String time = TimeUtils.getTime(date.getTime(), TimeUtils.DATE_FORMAT_DATE);
+                        etStartTime.setText(time);
+                    }
+                });
+                dialog.show();
                 break;
-            case R.id.ed_cause:
-                break;
+
             case R.id.bt_ok:
+                if (companyBean == null) {
+                    showToast("请先选择企业");
+                    return;
+                }
+                if (ids == null) {
+                    showToast("请选择执法人员");
+                    return;
+                }
+                if (type==1){
+                    startActivity(new Intent(this, SPXSJDActivity.class)
+                            .putExtra("company", companyBean)
+                            .putExtra("lawEnforcer", ids)
+                            .putExtra("lawEnforcerText", names)
+                    );
+                }
+
                 break;
         }
     }
@@ -87,13 +178,39 @@ public class XCHZFActivity extends MyBaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==RESULT_OK){
-            if (requestCode==1001){
-                 CompanyBean company= data.getParcelableExtra("company");
-                 if (company !=null){
-                     etCompany.setText(company.getOperatorName()+"");
-                 }
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1001) {
+                CompanyBean company = data.getParcelableExtra("company");
+                if (company != null) {
+                    companyBean = company;
+                    llCompany.setVisibility(View.GONE);
+                    llCompanyInfo.setVisibility(View.VISIBLE);
+                    etCompany.setText(company.getOperatorName() + "");
+                    etSocialCreditCode.setText(company.getSocialCreditCode() + "");
+                    etLegalRepresentative.setText(company.getLegalRepresentative() + "");
+                    etBusinessPlace.setText(company.getBusinessPlace() + "");
+                    etContact.setText(company.getContact() + "");
+                    etContactInformation.setText(company.getContactInformation() + "");
+                }
+            } else if (requestCode == 2001) {
+                ArrayList<LawEnforcerBean> arrayList = data.getParcelableArrayListExtra("select");
+                if (arrayList != null) {
+                    names = "";
+                    ids = "";
+                    for (int i = 0; i < arrayList.size(); i++) {
+                        if (i == arrayList.size() - 1) {
+                            names = names + arrayList.get(i).getName();
+                            ids = ids + arrayList.get(i).getId();
+                        } else {
+                            names = names + arrayList.get(i).getName() + ",";
+                            ids = ids + arrayList.get(i).getId() + ",";
+                        }
+                    }
+                    etPeople.setText(names);
+                }
             }
         }
     }
+
+
 }

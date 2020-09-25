@@ -22,6 +22,7 @@ import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.BusinessProjectBean;
+import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.business.company.adapter.ImageDeleteItemAdapter;
 import com.zz.supervision.business.company.mvp.Contract;
@@ -76,12 +77,13 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     ImageDeleteItemAdapter adapter;
     @BindView(R.id.item_rv_images)
     RecyclerView itemRvImages;
-    long fieldTime;
-    long validDate;
-    int businessType = 0;
+    String fieldTime;
+    String validDate;
+    String businessType = "";
     String businessProject = "";
     String businessProjectText = "";
-    private static final String[] PLANETS = new String[]{"食品销售经营者", "餐饮服务经营者", "单位食堂"};
+    List<BusinessType> businessTypeList = new ArrayList<>();
+    private  String[] PLANETS = new String[]{"食品销售经营者", "餐饮服务经营者", "单位食堂"};
     SelectPopupWindows selectPopupWindows;
     List<ImageBack> imageBacks = new ArrayList<>();
 
@@ -140,14 +142,20 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         switch (view.getId()) {
             case R.id.et_businessType:
                 UIAdjuster.closeKeyBoard(this);
-                selectPopupWindows = new SelectPopupWindows(this, PLANETS);
+                String array [] = new String[10];
+                String values [] = new String[10];
+                for (int i=0;i<businessTypeList.size();i++){
+                    array[i]= businessTypeList.get(i).getDictLabel();
+                    values[i]= businessTypeList.get(i).getDictValue();
+                }
+                selectPopupWindows = new SelectPopupWindows(this, array);
                 selectPopupWindows.showAtLocation(findViewById(R.id.bg),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 selectPopupWindows.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
                     @Override
                     public void onSelected(int index, String msg) {
                         etBusinessType.setText(msg);
-                        businessType = index + 1;
+                        businessType = values[index];
                     }
 
                     @Override
@@ -157,7 +165,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 });
                 break;
             case R.id.et_businessProject:
-                if (businessType == 0) {
+                if (TextUtils.isEmpty(businessType)) {
                     showToast("请先选择主体业态");
                     return;
                 }
@@ -185,8 +193,9 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 dialog.setOnSureLisener(new OnSureLisener() {
                     @Override
                     public void onSure(Date date) {
-                        validDate = date.getTime();
+
                         String time = TimeUtils.getTime(date.getTime(), TimeUtils.DATE_FORMAT_DATE);
+                        validDate = time;
                         etEndTime.setText(time);
                     }
                 });
@@ -214,8 +223,9 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 dialog1.setOnSureLisener(new OnSureLisener() {
                     @Override
                     public void onSure(Date date) {
-                        fieldTime = date.getTime();
+
                         String time = TimeUtils.getTime(date.getTime(), TimeUtils.DATE_FORMAT_DATE);
+                        fieldTime = time;
                         etFieldTime.setText(time);
                     }
                 });
@@ -294,6 +304,14 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         showToast("提交成功");
     }
 
+    @Override
+    public void showBusinessType(List<BusinessType> list) {
+        if (list!=null) {
+            businessTypeList.clear();
+            businessTypeList.addAll(list);
+        }
+    }
+
     private void postData() {
         Map<String, Object> params = new HashMap<>();
         String operatorName = etOperatorName.getText().toString();
@@ -337,10 +355,10 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         }
         params.put("businessPlace", businessPlace);
 
-        if (businessType > 0) {
+        if (!TextUtils.isEmpty(businessType)) {
             params.put("businessType", businessType);
         }
-        if (validDate == 0) {
+        if (TextUtils.isEmpty(validDate)) {
             showToast("请选择有效期至");
             return;
         }
@@ -361,9 +379,9 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         }
         params.put("contactInformation", contactInformation);
 
-        String fieldTime = etFieldTime.getText().toString();
+
         if (TextUtils.isEmpty(fieldTime)) {
-            showToast("签发时间");
+            showToast("请选择签发时间");
             return;
         }
         params.put("fieldTime", fieldTime);
@@ -404,7 +422,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                         content = content + projectBeans.get(i).getValue();
                     } else {
                         str = str + projectBeans.get(i).getTitle() + ",";
-                        content = content + "," + projectBeans.get(i).getValue() + ",";
+                        content = content  + projectBeans.get(i).getValue() + ",";
                     }
                 }
                 etBusinessProject.setText(str);

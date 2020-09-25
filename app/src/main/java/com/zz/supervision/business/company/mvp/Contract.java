@@ -3,6 +3,7 @@ package com.zz.supervision.business.company.mvp;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.ui.mvp.BaseView;
 import com.zz.supervision.CompanyBean;
+import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.UserBasicBean;
 
 import java.util.List;
@@ -16,6 +17,8 @@ public class Contract {
 
         void getData(String url,Map<String, Object> map);
 
+        void getBusinessType(String url,Map<String, Object> map);
+
         void postImage(String id,String files,List<Integer> ids);
     }
 
@@ -26,6 +29,8 @@ public class Contract {
 
         void showResult();
         void showPostImage();
+
+        void showBusinessType(List<BusinessType> list);
 
 
 

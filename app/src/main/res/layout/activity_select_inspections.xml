@@ -35,12 +35,36 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/certi_search"
+            android:id="@+id/tv_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="企业名称"
+            tools:text="企业名称"
             android:textColor="@color/colorTextBlack33"
+            android:textSize="15dp" />
+        <TextView
+            android:id="@+id/tv_inspector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            tools:text="检察员"
+            android:textColor="@color/colorTextBlack99"
+            android:textSize="15dp" />
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            tools:text="检查类型"
+            android:textColor="@color/colorTextBlack99"
+            android:textSize="15dp" />
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            tools:text="检查次数"
+            android:textColor="@color/colorTextBlack99"
             android:textSize="15dp" />
     </LinearLayout>
 

@@ -52,7 +52,7 @@ import static com.zz.supervision.net.RxNetUtils.getApi;
  */
 @SuppressLint("ValidFragment")
 public class CompanyFragment extends Fragment implements OnRefreshListener, OnLoadMoreListener {
-
+    @BindView(R.id.ll_null)
     LinearLayout llNull;
     @BindView(R.id.rv)
     RecyclerView rv;
@@ -64,8 +64,9 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
     List<CompanyBean> mlist = new ArrayList<>();
     private int pagenum = 1;
     private int pagesize = 20;
-    private String searchStr="";
-    private String type="";
+    private String searchStr = "";
+    private String type = "";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,8 +91,6 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
     private void init(View view) {
         recyclerView = view.findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-
         adapter = new CompanyListAdapter(R.layout.item_company, mlist);
         recyclerView.setAdapter(adapter);
         refreshLayout.setOnRefreshListener(this);
@@ -101,12 +100,12 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                if (TextUtils.isEmpty(select)){
-                    startActivity(new Intent(getActivity(),CompanyInfoActivity.class).putExtra("id",mlist.get(position).getId()));
-                }else {
+                if (TextUtils.isEmpty(select)) {
+                    startActivity(new Intent(getActivity(), CompanyInfoActivity.class).putExtra("id", mlist.get(position).getId()));
+                } else {
                     Intent intent = new Intent();
-                    intent.putExtra("company",mlist.get(position));
-                    getActivity().setResult(getActivity().RESULT_OK,intent);
+                    intent.putExtra("company", mlist.get(position));
+                    getActivity().setResult(getActivity().RESULT_OK, intent);
                     getActivity().finish();
                 }
             }
@@ -138,13 +137,14 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
             llNull.setVisibility(View.GONE);
         }
     }
+
     void getDate() {
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", pagenum);
         map.put("pageSize", pagesize);
         map.put("companyType", type);
-        if (!TextUtils.isEmpty(searchStr)){
-            map.put("searchValue",searchStr);
+        if (!TextUtils.isEmpty(searchStr)) {
+            map.put("searchValue", searchStr);
         }
         RxNetUtils.request(getApi(ApiService.class).getCompanyInfoList(map), new RequestObserver<JsonT<List<CompanyBean>>>() {
             @Override
@@ -162,7 +162,7 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-        pagenum ++;
+        pagenum++;
         getDate();
         refreshLayout.finishLoadMore();
     }

@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorbg"
     android:orientation="vertical"
+    android:id="@+id/bg"
     tools:context=".business.inspenction.XCHZFActivity">
 
     <View
@@ -37,10 +38,12 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ll_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_marginTop="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/line_radius_10_light"
                 android:orientation="horizontal"
                 android:padding="10dp">
@@ -52,7 +55,6 @@
                     android:text="请选择企业" />
 
                 <TextView
-                    android:id="@+id/et_company"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/white"
@@ -69,10 +71,174 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_company_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/line_radius_10_light"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/et_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#4A4A4A"
+                    android:textSize="17sp"
+                    tools:text="黑龙江富电实业集团有限公司燃料" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
+                        android:text="社会信用代码" />
+
+                    <TextView
+                        android:id="@+id/et_socialCreditCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
+
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
+                        android:text="法定代表人" />
+
+                    <TextView
+                        android:id="@+id/et_legalRepresentative"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
+
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
+                        android:text="生产经营地址" />
+
+                    <TextView
+                        android:id="@+id/et_businessPlace"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
+
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
+                        android:text="联系人" />
+
+                    <TextView
+                        android:id="@+id/et_contact"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
+
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
+                        android:text="联系方式" />
+
+                    <TextView
+                        android:id="@+id/et_contactInformation"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
+
+                    </TextView>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/line_radius_10_light"
                 android:orientation="vertical"
@@ -92,7 +258,7 @@
                         android:text="检查类型" />
 
                     <TextView
-                        android:id="@+id/et_Type"
+                        android:id="@+id/et_type"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/white"

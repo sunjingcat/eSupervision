@@ -2,6 +2,7 @@ package com.zz.supervision.business.inspenction;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -15,20 +16,28 @@ import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.ScoreBean;
-
-import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.business.inspenction.adapter.ScoreAdapter;
 import com.zz.supervision.business.inspenction.presenter.ScorePresenter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SelectInspectionActivity extends MyBaseActivity<Contract.IsetScorePresenter> implements Contract.IGetScoreView {
+/**
+ * 食品销售日常监督检查
+ */
+public class SPXSJDActivity extends MyBaseActivity<Contract.IsetScorePresenter> implements Contract.IGetScoreView {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.tv_company)
+    TextView tvCompany;
+    @BindView(R.id.tv_inspector)
+    TextView tvInspector;
+    @BindView(R.id.tv_type)
+    TextView tvType;
+    @BindView(R.id.tv_num)
+    TextView tvNum;
     @BindView(R.id.ll_null)
     LinearLayout llNull;
     @BindView(R.id.rv)
@@ -37,7 +46,6 @@ public class SelectInspectionActivity extends MyBaseActivity<Contract.IsetScoreP
     SmartRefreshLayout refreshLayout;
     ScoreAdapter adapter;
     ArrayList<ScoreBean> list = new ArrayList<>();
-
     @Override
     protected int getContentView() {
         return R.layout.activity_select_inspections;
@@ -64,7 +72,7 @@ public class SelectInspectionActivity extends MyBaseActivity<Contract.IsetScoreP
     }
 
     @Override
-    public void showFoodSuperviseList(List<SuperviseBean> data) {
+    public void showScoreInfo(CompanyBean data) {
 
     }
 
@@ -72,5 +80,4 @@ public class SelectInspectionActivity extends MyBaseActivity<Contract.IsetScoreP
     public void showResult() {
 
     }
-
 }
