@@ -16,10 +16,12 @@ import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.ScoreBean;
+import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.business.inspenction.adapter.ScoreAdapter;
 import com.zz.supervision.business.inspenction.presenter.ScorePresenter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,8 +73,9 @@ public class SPXSJDActivity extends MyBaseActivity<Contract.IsetScorePresenter> 
         return new ScorePresenter(this);
     }
 
+
     @Override
-    public void showScoreInfo(CompanyBean data) {
+    public void showFoodSuperviseList(List<SuperviseBean> data) {
 
     }
 
