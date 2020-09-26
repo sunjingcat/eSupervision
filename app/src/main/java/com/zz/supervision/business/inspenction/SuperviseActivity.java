@@ -1,6 +1,7 @@
 package com.zz.supervision.business.inspenction;
 
 import android.os.Parcelable;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -46,7 +47,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     SuperviseAdapter adapter;
-    ArrayList<ScoreBean> list = new ArrayList<>();
+    ArrayList<SuperviseBean> mlist = new ArrayList<>();
     @Override
     protected int getContentView() {
         return R.layout.activity_select_inspections;
@@ -58,7 +59,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         adapter = new SuperviseAdapter();
-        adapter.setList(list);
+        adapter.setList(mlist);
         rv.setAdapter(adapter);
         mPresenter.getData("spxsInspectionRecord/getItems");
         initData();
@@ -83,7 +84,14 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
 
     @Override
     public void showFoodSuperviseList(List<SuperviseBean> data) {
-
+        mlist.clear();
+        mlist.addAll(data);
+        adapter.notifyDataSetChanged();
+        if (mlist.size() == 0) {
+            llNull.setVisibility(View.VISIBLE);
+        } else {
+            llNull.setVisibility(View.GONE);
+        }
     }
 
     @Override

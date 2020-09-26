@@ -1,7 +1,5 @@
 package com.zz.supervision.bean;
 
-import android.sax.RootElement;
-
 import com.chad.library.adapter.base.entity.node.BaseNode;
 
 import org.jetbrains.annotations.Nullable;
@@ -17,7 +15,7 @@ public class SuperviseBean extends BaseNode {
     private String itemName;// ,
     private String itemNum;// ,
     private String itemRemark;// ,
-    private String params;// {},
+    private Object params;// {},
     private String remark;// ,
     private String searchValue;// ,
     private String updateBy;// ,
@@ -56,7 +54,7 @@ public class SuperviseBean extends BaseNode {
         return itemRemark;
     }
 
-    public String getParams() {
+    public Object getParams() {
         return params;
     }
 
@@ -79,7 +77,12 @@ public class SuperviseBean extends BaseNode {
     @Nullable
     @Override
     public List<BaseNode> getChildNode() {
-        return null;
+        if (childrenList == null) return null;
+        List<BaseNode> childs = new ArrayList<>();
+        for (BaseNode node : childrenList) {
+            childs.add(node);
+        }
+        return childs;
     }
 
     public class Children extends BaseNode{
@@ -92,7 +95,7 @@ public class SuperviseBean extends BaseNode {
         private String    itemNum;// ,
         private String     itemPid;// 0,
         private String      itemType;// ,
-        private String      params;// {},
+        private Object      params;// {},
         private String    remark;// ,
         private String    searchValue;// ,
         private String    updateBy;// ,
@@ -134,7 +137,7 @@ public class SuperviseBean extends BaseNode {
             return itemType;
         }
 
-        public String getParams() {
+        public Object getParams() {
             return params;
         }
 
