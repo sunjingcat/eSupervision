@@ -1,7 +1,6 @@
 package com.zz.supervision.business.inspenction;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -24,7 +23,6 @@ import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.LawEnforcerBean;
-import com.zz.supervision.business.company.AddCompanyActivity;
 import com.zz.supervision.business.company.CompanyListActivity;
 import com.zz.supervision.business.company.PeopleActivity;
 import com.zz.supervision.utils.TimeUtils;
@@ -155,21 +153,22 @@ public class XCHZFActivity extends MyBaseActivity {
                 break;
 
             case R.id.bt_ok:
-                if (companyBean == null) {
-                    showToast("请先选择企业");
-                    return;
-                }
-                if (ids == null) {
-                    showToast("请选择执法人员");
-                    return;
-                }
-                if (type==1){
-                    startActivity(new Intent(this, SPXSJDActivity.class)
-                            .putExtra("company", companyBean)
-                            .putExtra("lawEnforcer", ids)
-                            .putExtra("lawEnforcerText", names)
+//                if (companyBean == null) {
+//                    showToast("请先选择企业");
+//                    return;
+//                }
+//                if (ids == null) {
+//                    showToast("请选择执法人员");
+//                    return;
+//                }
+//                if (type==1){
+                    startActivity(new Intent(this, SuperviseActivity.class)
+
                     );
-                }
+//                         .putExtra("company", companyBean)
+//                    .putExtra("lawEnforcer", ids)
+//                    .putExtra("lawEnforcerText", names)
+//                }
 
                 break;
         }

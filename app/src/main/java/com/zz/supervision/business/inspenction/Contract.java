@@ -11,14 +11,14 @@ import java.util.Map;
 import okhttp3.MultipartBody;
 
 public class Contract {
-    public interface IsetScorePresenter extends BasePresenter {
+    public interface IsetSupervisePresenter extends BasePresenter {
         void submitData(Map<String, Object> map);
 
-        void getData(String url, Map<String, Object> map);
+        void getData(String url);
 
     }
 
-    public interface IGetScoreView extends BaseView {
+    public interface IGetSuperviseView extends BaseView {
         void showFoodSuperviseList(List<SuperviseBean> data);
 
         void showResult();

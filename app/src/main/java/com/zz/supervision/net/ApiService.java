@@ -98,7 +98,7 @@ public interface ApiService {
     Observable<JsonT<List<BusinessType>>> getDicts(@QueryMap Map<String, Object> params);
 
     @GET("/app/v1/supervise/spxsInspectionRecord/getItems")
-    Observable<JsonT<List<SuperviseBean>>> getFoodSuperviseList(@QueryMap Map<String, Object> params);
+    Observable<JsonT<List<SuperviseBean>>> getSuperviseList();
 
 }
 

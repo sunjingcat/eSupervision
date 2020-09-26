@@ -155,6 +155,7 @@
         <activity android:name=".business.company.BusinessProjectActivity" />
         <activity android:name=".business.company.CompanyInfoActivity" />
         <activity android:name=".business.company.PeopleActivity" />
+        <activity android:name=".business.inspenction.SuperviseActivity" />
     </application>
 
 </manifest>

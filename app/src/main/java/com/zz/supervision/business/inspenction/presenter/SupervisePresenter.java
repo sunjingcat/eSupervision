@@ -19,15 +19,15 @@ import okhttp3.MultipartBody;
  * Created by 77 on 2018/8/8.
  */
 
-public class ScorePresenter extends MyBasePresenterImpl<Contract.IGetScoreView> implements Contract.IsetScorePresenter {
+public class SupervisePresenter extends MyBasePresenterImpl<Contract.IGetSuperviseView> implements Contract.IsetSupervisePresenter {
 
-    public ScorePresenter(Contract.IGetScoreView view) {
+    public SupervisePresenter(Contract.IGetSuperviseView view) {
         super(view);
     }
 
     @Override
-    public void getData(String url, Map<String, Object> map) {
-        RxNetUtils.request(getApi(ApiService.class).getFoodSuperviseList(map), new RequestObserver<JsonT<List<SuperviseBean>>>(this) {
+    public void getData(String url) {
+        RxNetUtils.request(getApi(ApiService.class).getSuperviseList(), new RequestObserver<JsonT<List<SuperviseBean>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<SuperviseBean>> jsonT) {
                 view.showFoodSuperviseList(jsonT.getData());

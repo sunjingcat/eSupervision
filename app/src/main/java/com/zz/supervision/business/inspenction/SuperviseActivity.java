@@ -1,6 +1,6 @@
 package com.zz.supervision.business.inspenction;
 
-import android.os.Bundle;
+import android.os.Parcelable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -11,14 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
-import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.ScoreBean;
 import com.zz.supervision.bean.SuperviseBean;
-import com.zz.supervision.business.inspenction.adapter.ScoreAdapter;
-import com.zz.supervision.business.inspenction.presenter.ScorePresenter;
+import com.zz.supervision.business.inspenction.adapter.SuperviseAdapter;
+import com.zz.supervision.business.inspenction.presenter.SupervisePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +26,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 食品销售日常监督检查
+ * 监督检查:食品销售日常
  */
-public class SPXSJDActivity extends MyBaseActivity<Contract.IsetScorePresenter> implements Contract.IGetScoreView {
+public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePresenter> implements Contract.IGetSuperviseView {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_company)
@@ -46,7 +45,7 @@ public class SPXSJDActivity extends MyBaseActivity<Contract.IsetScorePresenter> 
     RecyclerView rv;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-    ScoreAdapter adapter;
+    SuperviseAdapter adapter;
     ArrayList<ScoreBean> list = new ArrayList<>();
     @Override
     protected int getContentView() {
@@ -58,9 +57,11 @@ public class SPXSJDActivity extends MyBaseActivity<Contract.IsetScorePresenter> 
         ButterKnife.bind(this);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        adapter = new ScoreAdapter();
+        adapter = new SuperviseAdapter();
         adapter.setList(list);
         rv.setAdapter(adapter);
+        mPresenter.getData("spxsInspectionRecord/getItems");
+        initData();
     }
 
     @Override
@@ -68,9 +69,15 @@ public class SPXSJDActivity extends MyBaseActivity<Contract.IsetScorePresenter> 
         ToolBarUtils.getInstance().setNavigation(toolbar);
     }
 
+   void initData(){
+//       CompanyBean company = getIntent().getParcelableExtra("company");
+//       String lawEnforcerText = getIntent().getStringExtra("lawEnforcerText");
+//       tvCompany.setText(company.getOperatorName());
+//       tvInspector.setText(lawEnforcerText);
+   }
     @Override
-    public ScorePresenter initPresenter() {
-        return new ScorePresenter(this);
+    public SupervisePresenter initPresenter() {
+        return new SupervisePresenter(this);
     }
 
 
