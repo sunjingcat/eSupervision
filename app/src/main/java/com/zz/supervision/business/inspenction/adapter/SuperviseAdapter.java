@@ -12,10 +12,8 @@ import java.util.List;
 public class SuperviseAdapter extends BaseNodeAdapter {
     public SuperviseAdapter() {
         super();
-
-        // 需要占满一行的，使用此方法（例如section）
-        addFullSpanNodeProvider(new RootNodeProvider());
-        addFullSpanNodeProvider(new SecondNodeProvider());
+        addNodeProvider(new RootNodeProvider());
+        addNodeProvider(new SecondNodeProvider());
     }
 
     @Override
