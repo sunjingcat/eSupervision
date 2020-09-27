@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".business.mine.AboutActivity">
@@ -12,14 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="33dp"
         android:background="@color/colorPrimary" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
 
-        <TextView
-            android:id="@+id/bt_search"
+        <EditText
+            android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_marginRight="60dp"
             android:layout_marginLeft="60dp"
@@ -32,6 +33,7 @@
             android:textSize="15dp"
             android:background="@drawable/border_radius_40_white"
             />
+
         <TextView
             android:id="@+id/toolbar_subtitle"
             android:layout_width="wrap_content"
@@ -44,16 +46,6 @@
             android:textColor="@color/white"
             android:textSize="16dp" />
     </androidx.appcompat.widget.Toolbar>
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tablayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabIndicatorColor="@color/colorPrimary"
-        />
 
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <include layout="@layout/refresh_layout" />
 </LinearLayout>

@@ -1,22 +1,17 @@
-package com.zz.supervision.business.company;
+package com.zz.supervision.business.record;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +26,7 @@ import com.troila.customealert.CustomDialog;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
+import com.zz.supervision.business.company.CompanyInfoActivity;
 import com.zz.supervision.business.company.adapter.CompanyListAdapter;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
@@ -44,7 +40,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
@@ -54,7 +49,7 @@ import static com.zz.supervision.net.RxNetUtils.getApi;
  * fragment
  */
 @SuppressLint("ValidFragment")
-public class CompanyFragment extends Fragment implements OnRefreshListener, OnLoadMoreListener {
+public class CheckFragment extends Fragment implements OnRefreshListener, OnLoadMoreListener {
     @BindView(R.id.ll_null)
     LinearLayout llNull;
     @BindView(R.id.rv)
@@ -74,7 +69,7 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_company_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_check_list, container, false);
 
         unbinder = ButterKnife.bind(this, view);
         init(view);
@@ -82,7 +77,7 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
     }
 
     @SuppressLint("ValidFragment")
-    public CompanyFragment(String type) {
+    public CheckFragment(String type) {
         this.type = type;
     }
 
@@ -117,7 +112,7 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
         adapter.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override
             public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
-                CustomDialog.Builder builder = new com.troila.customealert.CustomDialog.Builder(getActivity())
+                CustomDialog.Builder builder = new CustomDialog.Builder(getActivity())
                         .setTitle("提示")
                         .setMessage("确定删除设备")
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {

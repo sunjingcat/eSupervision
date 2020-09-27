@@ -160,6 +160,8 @@
             android:name=".business.inspenction.InfoActivity"
             android:theme="@style/ActivityDialogTheme" />
         <activity android:name=".business.inspenction.SuperviseResultActivity" />
+        <activity android:name=".business.record.CheckListActivity" />
+        <activity android:name=".business.company.SearchCompanyActivity" />
     </application>
 
 </manifest>

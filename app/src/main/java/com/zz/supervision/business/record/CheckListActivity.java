@@ -1,7 +1,6 @@
-package com.zz.supervision.business.company;
+package com.zz.supervision.business.record;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -13,28 +12,18 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
-import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
-import com.zz.supervision.bean.CompanyType;
+import com.zz.supervision.business.company.AddCompanyActivity;
 import com.zz.supervision.business.company.adapter.FmPagerAdapter;
-import com.zz.supervision.net.ApiService;
-import com.zz.supervision.net.JsonT;
-import com.zz.supervision.net.RequestObserver;
-import com.zz.supervision.net.RxNetUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.zz.supervision.net.RxNetUtils.getApi;
-
-public class CompanyListActivity extends MyBaseActivity {
+public class CheckListActivity extends MyBaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tablayout)
@@ -45,18 +34,18 @@ public class CompanyListActivity extends MyBaseActivity {
     @BindView(R.id.toolbar_subtitle)
     TextView toolbarSubtitle;
     private ArrayList<Fragment> fragments = new ArrayList<>();
-    String select;
+    String[] tabs = {"日常监督检查", "风险等级评定"};
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_company_list;
+        return R.layout.activity_check_list;
     }
 
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        getDate();
-         select = getIntent().getStringExtra("select");
+        initFragment();
+        String select = getIntent().getStringExtra("select");
         if (TextUtils.isEmpty(select)) {
             toolbarSubtitle.setVisibility(View.VISIBLE);
         } else {
@@ -80,9 +69,9 @@ public class CompanyListActivity extends MyBaseActivity {
         });
     }
 
-    void initFragment(List<CompanyType> list) {
-        for (int i = 0; i < list.size(); i++) {
-            fragments.add(new CompanyFragment(list.get(i).getCompanyType()));
+    void initFragment() {
+        for (int i = 0; i < tabs.length; i++) {
+            fragments.add(new CheckFragment(tabs[i]));
             tablayout.addTab(tablayout.newTab());
         }
 
@@ -90,8 +79,8 @@ public class CompanyListActivity extends MyBaseActivity {
         pagerAdapter = new FmPagerAdapter(fragments, getSupportFragmentManager());
         viewpager.setAdapter(pagerAdapter);
 
-        for (int i = 0; i < list.size(); i++) {
-            tablayout.getTabAt(i).setText(list.get(i).getCompanyTypeText());
+        for (int i = 0; i < tabs.length; i++) {
+            tablayout.getTabAt(i).setText(tabs[i]);
         }
     }
 
@@ -105,31 +94,10 @@ public class CompanyListActivity extends MyBaseActivity {
         return null;
     }
 
-    void getDate() {
-        Map<String, Object> map = new HashMap<>();
-        RxNetUtils.request(getApi(ApiService.class).selectCompanyGroupCount(map), new RequestObserver<JsonT<List<CompanyType>>>() {
-            @Override
-            protected void onSuccess(JsonT<List<CompanyType>> jsonT) {
-                initFragment(jsonT.getData());
-            }
-
-            @Override
-            protected void onFail2(JsonT<List<CompanyType>> stringJsonT) {
-                super.onFail2(stringJsonT);
-            }
-        }, LoadingUtils.build(this));
+    @OnClick(R.id.toolbar_subtitle)
+    public void onViewClicked() {
+        startActivity(new Intent(this, AddCompanyActivity.class));
     }
 
 
-    @OnClick({R.id.bt_search, R.id.toolbar_subtitle})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.bt_search:
-                startActivity(new Intent(this, SearchCompanyActivity.class).putExtra("select",select));
-                break;
-            case R.id.toolbar_subtitle:
-                startActivity(new Intent(this, AddCompanyActivity.class));
-                break;
-        }
-    }
 }
