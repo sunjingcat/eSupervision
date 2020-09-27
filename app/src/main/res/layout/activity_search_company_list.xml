@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
 
-        <EditText
+        <com.zz.lib.commonlib.widget.ClearEditText
             android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_marginRight="60dp"
@@ -31,6 +31,8 @@
             android:hint="搜索"
             android:textColor="@color/white"
             android:textSize="15dp"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
             android:background="@drawable/border_radius_40_white"
             />
 

@@ -28,6 +28,7 @@ import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.business.company.CompanyInfoActivity;
 import com.zz.supervision.business.company.adapter.CompanyListAdapter;
+import com.zz.supervision.business.record.adapter.CheckListAdapter;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -58,7 +59,7 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
     SmartRefreshLayout refreshLayout;
     Unbinder unbinder;
     private RecyclerView recyclerView;
-    private CompanyListAdapter adapter;
+    private CheckListAdapter adapter;
     List<CompanyBean> mlist = new ArrayList<>();
     private int pagenum = 1;
     private int pagesize = 20;
@@ -90,7 +91,7 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
     private void init(View view) {
         recyclerView = view.findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new CompanyListAdapter(R.layout.item_company, mlist);
+        adapter = new CheckListAdapter(R.layout.item_company, mlist);
         recyclerView.setAdapter(adapter);
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setOnLoadMoreListener(this);

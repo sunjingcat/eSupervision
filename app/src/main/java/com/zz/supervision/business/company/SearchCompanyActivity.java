@@ -5,9 +5,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -23,6 +26,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.troila.customealert.CustomDialog;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
+import com.zz.lib.commonlib.widget.ClearEditText;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.CompanyBean;
@@ -54,7 +58,7 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
     @BindView(R.id.ll_null)
     LinearLayout llNull;
     @BindView(R.id.et_search)
-    EditText et_search;
+    ClearEditText et_search;
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refreshLayout)
@@ -67,7 +71,6 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
     private int pagesize = 20;
     private String searchStr = "";
     private String type = "";
-    private CustomDialog customDialog;
 
     @SuppressLint("ValidFragment")
     public SearchCompanyActivity(String type) {
@@ -105,6 +108,7 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
         map.put("pageNum", pagenum);
         map.put("pageSize", pagesize);
         map.put("companyType", type);
+        searchStr = et_search.getText().toString();
         if (!TextUtils.isEmpty(searchStr)) {
             map.put("searchValue", searchStr);
         }
@@ -122,21 +126,11 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
     }
 
 
-
-
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
         pagenum++;
         getDate();
         refreshLayout.finishLoadMore();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (customDialog != null && customDialog.isShowing()) {
-            customDialog.dismiss();
-        }
     }
 
     @Override
@@ -168,7 +162,16 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
                 }
             }
         });
-
+        et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                getDate();//搜索方法
+                //隐藏软键盘
+                @SuppressLint("WrongConstant") InputMethodManager imm = (InputMethodManager) context.getSystemService("input_method");
+                imm.toggleSoftInput(0, 2);
+                return true;
+            }
+        });
     }
 
     @Override
