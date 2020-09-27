@@ -10,10 +10,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class SuperviseAdapter extends BaseNodeAdapter {
-    public SuperviseAdapter() {
+    public SuperviseAdapter(OnProviderOnClick onProviderOnClick) {
         super();
-        addNodeProvider(new RootNodeProvider());
-        addNodeProvider(new SecondNodeProvider());
+        addNodeProvider(new RootNodeProvider(onProviderOnClick));
+        addNodeProvider(new SecondNodeProvider(onProviderOnClick));
     }
 
     @Override
@@ -25,5 +25,8 @@ public class SuperviseAdapter extends BaseNodeAdapter {
             return 1;
         }
         return -1;
+    }
+    public interface OnProviderOnClick{
+        void onItemOnclick(BaseNode node,int type);
     }
 }

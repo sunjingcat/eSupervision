@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.supervision.CompanyBean;
@@ -48,6 +49,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     SmartRefreshLayout refreshLayout;
     SuperviseAdapter adapter;
     ArrayList<SuperviseBean> mlist = new ArrayList<>();
+
     @Override
     protected int getContentView() {
         return R.layout.activity_select_inspections;
@@ -57,8 +59,22 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     protected void initView() {
         ButterKnife.bind(this);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        adapter = new SuperviseAdapter();
+//        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        adapter = new SuperviseAdapter(new SuperviseAdapter.OnProviderOnClick() {
+            @Override
+            public void onItemOnclick(BaseNode node, int type) {
+                if (node instanceof SuperviseBean){
+                    ((SuperviseBean) node).setCheck(!((SuperviseBean) node).isCheck());
+                }else if (node instanceof SuperviseBean){
+                    if (type==1) {
+                        ((SuperviseBean.Children) node).setCheck(true);
+                    }else {
+                        ((SuperviseBean.Children) node).setCheck(false);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
         adapter.setList(mlist);
         rv.setAdapter(adapter);
         mPresenter.getData("spxsInspectionRecord/getItems");
@@ -70,12 +86,13 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         ToolBarUtils.getInstance().setNavigation(toolbar);
     }
 
-   void initData(){
+    void initData() {
 //       CompanyBean company = getIntent().getParcelableExtra("company");
 //       String lawEnforcerText = getIntent().getStringExtra("lawEnforcerText");
 //       tvCompany.setText(company.getOperatorName());
 //       tvInspector.setText(lawEnforcerText);
-   }
+    }
+
     @Override
     public SupervisePresenter initPresenter() {
         return new SupervisePresenter(this);
@@ -84,10 +101,9 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
 
     @Override
     public void showFoodSuperviseList(List<SuperviseBean> data) {
-        mlist.clear();
-        mlist.addAll(data);
+        adapter.setList(data);
         adapter.notifyDataSetChanged();
-        if (mlist.size() == 0) {
+        if (data.size() == 0) {
             llNull.setVisibility(View.VISIBLE);
         } else {
             llNull.setVisibility(View.GONE);

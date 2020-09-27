@@ -1,5 +1,6 @@
 package com.zz.supervision.bean;
 
+import com.chad.library.adapter.base.entity.node.BaseExpandNode;
 import com.chad.library.adapter.base.entity.node.BaseNode;
 
 import org.jetbrains.annotations.Nullable;
@@ -7,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuperviseBean extends BaseNode {
+public class SuperviseBean extends BaseExpandNode {
     private String createBy;// ,
     private String createTime;// ,
     private String deptId;// 0,
@@ -20,7 +21,16 @@ public class SuperviseBean extends BaseNode {
     private String searchValue;// ,
     private String updateBy;// ,
     private String updateTime;//
+    private boolean check;//
     private ArrayList<Children> childrenList;
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
 
     public ArrayList<Children> getChildrenList() {
         return childrenList;
@@ -85,21 +95,30 @@ public class SuperviseBean extends BaseNode {
         return childs;
     }
 
-    public class Children extends BaseNode{
-        private String	createBy;// ,
-        private String       createTime;// ,
-        private String       id;// 0,
-        private String       isImportant;// 0,
-        private String     isSatisfy;// 0,
-        private String     itemName;// ,
-        private String    itemNum;// ,
-        private String     itemPid;// 0,
-        private String      itemType;// ,
-        private Object      params;// {},
-        private String    remark;// ,
-        private String    searchValue;// ,
-        private String    updateBy;// ,
-        private String    updateTime;//
+    public class Children extends BaseExpandNode {
+        private String createBy;// ,
+        private String createTime;// ,
+        private String id;// 0,
+        private int isImportant;// 0,
+        private String isSatisfy;// 0,
+        private String itemName;// ,
+        private String itemNum;// ,
+        private String itemPid;// 0,
+        private String itemType;// ,
+        private Object params;// {},
+        private String remark;// ,
+        private String searchValue;// ,
+        private String updateBy;// ,
+        private String updateTime;//
+        private boolean check;//
+
+        public void setCheck(boolean check) {
+            this.check = check;
+        }
+
+        public boolean isCheck() {
+            return check;
+        }
 
         public String getCreateBy() {
             return createBy;
@@ -113,7 +132,7 @@ public class SuperviseBean extends BaseNode {
             return id;
         }
 
-        public String getIsImportant() {
+        public int getIsImportant() {
             return isImportant;
         }
 

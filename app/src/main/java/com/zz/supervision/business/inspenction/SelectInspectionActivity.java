@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.supervision.R;
@@ -45,7 +46,12 @@ public class SelectInspectionActivity extends MyBaseActivity<Contract.IsetSuperv
         ButterKnife.bind(this);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        adapter = new SuperviseAdapter();
+        adapter = new SuperviseAdapter(new SuperviseAdapter.OnProviderOnClick() {
+            @Override
+            public void onItemOnclick(BaseNode node, int type) {
+
+            }
+        });
         adapter.setList(list);
         rv.setAdapter(adapter);
     }
