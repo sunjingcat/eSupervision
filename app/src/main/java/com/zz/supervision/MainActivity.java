@@ -58,16 +58,20 @@ public class MainActivity extends MyBaseActivity {
     @OnClick({R.id.main_group_1, R.id.main_group_2, R.id.main_group_3})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+
             case R.id.main_group_1:
 
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this,XCHZFActivity.class);
+                intent.setClass(MainActivity.this, XCHZFActivity.class);
                 startActivity(intent);
 
 
                 break;
             case R.id.main_group_2:
-                showToast("暂未开放，敬请期待");
+                Intent intent1 = new Intent();
+                intent1.setClass(MainActivity.this, CompanyListActivity.class);
+                startActivity(intent1);
+
                 break;
 
             case R.id.main_group_3:

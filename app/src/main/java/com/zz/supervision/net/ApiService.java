@@ -78,12 +78,21 @@ public interface ApiService {
     @GET("/app/v1/supervise/companyInfo/list")
     Observable<JsonT<List<CompanyBean>>> getCompanyInfoList(@QueryMap Map<String, Object> params);
 
+    @GET("/app/v1/supervise/companyInfo/removeCompanyInfo/{id}")
+    Observable<JsonT> removeCompanyInfo(@Path("id")String id);
+
+    @GET("/app/v1/supervise/companyInfo/{id}")
+    Observable<JsonT<CompanyBean>> getCompanyInfo(@Path("id") String id);
+
 
     @GET("/app/v1/supervise/companyInfo/selectCompanyGroupCount")
     Observable<JsonT<List<CompanyType>>> selectCompanyGroupCount(@QueryMap Map<String, Object> params);
 
+    @POST("/app/v1/supervise/companyInfo/editCompanyInfo")
+    Observable<JsonT<String>> editCompanyInfo(@QueryMap Map<String, Object> params);
+
     @POST("/app/v1/supervise/companyInfo/addCompanyInfo")
-    Observable<JsonT<String>> poatCompanyInfo(@QueryMap Map<String, Object> params);
+    Observable<JsonT<String>> postCompanyInfo(@QueryMap Map<String, Object> params);
 
     @POST("/app/v1/supervise/companyInfo/uploadImgs/{id}")
     @FormUrlEncoded
@@ -115,6 +124,8 @@ public interface ApiService {
     @POST("/app/v1/supervise/universal/createRecord")
     Observable<JsonT<Integer>> createRecord(@QueryMap Map<String, Object> params);
 
+    @GET("/app/v1/supervise/enclosure/base64/{type}/{modelId}")
+    Observable<JsonT<List<ImageBack>>> getImageBase64(@Path("type") String type, @Path("modelId") String modelId);
 
 
 }

@@ -9,6 +9,7 @@ public class CompanyBean implements Parcelable {
     private String businessProject;// ,
     private String businessProjectText;// ,
     private String businessType;// ,
+    private String businessTypeText;// ,
     private String companyType;// ,
     private String contact;// ,
     private String contactInformation;// ,
@@ -62,6 +63,10 @@ public class CompanyBean implements Parcelable {
             return new CompanyBean[size];
         }
     };
+
+    public String getBusinessTypeText() {
+        return businessTypeText;
+    }
 
     public String getBusinessPlace() {
         return businessPlace;

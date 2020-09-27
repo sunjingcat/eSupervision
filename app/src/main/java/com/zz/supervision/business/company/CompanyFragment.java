@@ -1,6 +1,7 @@
 package com.zz.supervision.business.company;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,11 +21,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.troila.customealert.CustomDialog;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
@@ -66,7 +69,7 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
     private int pagesize = 20;
     private String searchStr = "";
     private String type = "";
-
+    private CustomDialog customDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -108,6 +111,29 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
                     getActivity().setResult(getActivity().RESULT_OK, intent);
                     getActivity().finish();
                 }
+            }
+        });
+        adapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
+                CustomDialog.Builder builder = new com.troila.customealert.CustomDialog.Builder(getActivity())
+                        .setTitle("提示")
+                        .setMessage("确定删除设备")
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteDate(mlist.get(position).getId());
+                            }
+                        });
+                customDialog = builder.create();
+                customDialog.show();
+
             }
         });
     }
@@ -159,11 +185,33 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
         }, LoadingUtils.build(getActivity()));
     }
 
+    void deleteDate(String id) {
+        RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(id), new RequestObserver<JsonT>() {
+            @Override
+            protected void onSuccess(JsonT jsonT) {
+                pagenum=1;
+                getDate();
+            }
+
+            @Override
+            protected void onFail2(JsonT stringJsonT) {
+                super.onFail2(stringJsonT);
+            }
+        }, LoadingUtils.build(getActivity()));
+    }
+
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
         pagenum++;
         getDate();
         refreshLayout.finishLoadMore();
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (customDialog != null && customDialog.isShowing()) {
+            customDialog.dismiss();
+        }
     }
 }

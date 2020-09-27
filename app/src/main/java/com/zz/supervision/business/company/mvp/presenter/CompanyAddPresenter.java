@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.bean.BusinessType;
+import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.bean.ImageBean;
 import com.zz.supervision.bean.UserBasicBean;
 import com.zz.supervision.business.company.mvp.Contract;
@@ -31,42 +32,44 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
     }
 
     @Override
-    public void getData(String url, Map<String, Object> map) {
-//        RxNetUtils.request(getApi(ApiService.class).getCompanyInfoList("", map), new RequestObserver<JsonT<CompanyBean>>(this) {
-//            @Override
-//            protected void onSuccess(JsonT<CompanyBean> jsonT) {
-//                view.showPatrolInfo(jsonT.getData());
-//            }
-//            @Override
-//            protected void onFail2(JsonT<CompanyBean> stringJsonT) {
-//                super.onFail2(stringJsonT);
-//            }
-//        },mDialog);
+    public void getData(String url) {
+        RxNetUtils.request(getApi(ApiService.class).getCompanyInfo(url), new RequestObserver<JsonT<CompanyBean>>(this) {
+            @Override
+            protected void onSuccess(JsonT<CompanyBean> jsonT) {
+                view.showCompanyInfo(jsonT.getData());
+            }
+
+            @Override
+            protected void onFail2(JsonT<CompanyBean> stringJsonT) {
+                super.onFail2(stringJsonT);
+            }
+        }, mDialog);
     }
 
     @Override
-    public void getBusinessType(String url, Map<String, Object> map) {
-                RxNetUtils.request(getApi(ApiService.class).getDicts(map), new RequestObserver<JsonT<List<BusinessType>>>(this) {
+    public void getBusinessType(Map<String, Object> map) {
+        RxNetUtils.request(getApi(ApiService.class).getDicts(map), new RequestObserver<JsonT<List<BusinessType>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
                 view.showBusinessType(jsonT.getData());
             }
+
             @Override
             protected void onFail2(JsonT<List<BusinessType>> stringJsonT) {
                 super.onFail2(stringJsonT);
             }
-        },mDialog);
+        }, mDialog);
     }
 
     @Override
     public void postImage(String id, String files, List<Integer> ids) {
-        if (TextUtils.isEmpty(files)){
-            if (ids.size()==0){
+        if (TextUtils.isEmpty(files)) {
+            if (ids.size() == 0) {
                 view.showPostImage();
-            }else {
+            } else {
                 postImageIDs(id, new Gson().toJson(ids));
             }
-        }else {
+        } else {
             RxNetUtils.request(getApi(ApiService.class).uploadImgs(files), new RequestObserver<JsonT<List<Integer>>>(this) {
                 @Override
                 protected void onSuccess(JsonT<List<Integer>> data) {
@@ -88,27 +91,65 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
     }
 
     @Override
-    public void submitData(Map<String, Object> map) {
-        RxNetUtils.request(getApi(ApiService.class).poatCompanyInfo(map), new RequestObserver<JsonT<String>>(this) {
+    public void getImage(String type, String modelId) {
+        RxNetUtils.request(getApi(ApiService.class).getImageBase64(type, modelId), new RequestObserver<JsonT<List<ImageBack>>>(this) {
             @Override
-            protected void onSuccess(JsonT<String> jsonT) {
-                view.showSubmitResult((String) jsonT.getData());
-                view.showToast(jsonT.getMessage());
+            protected void onSuccess(JsonT<List<ImageBack>> data) {
+                if (data.isSuccess()) {
+                    view.showImage(data.getData());
+                } else {
+
+                }
             }
+
             @Override
-            protected void onFail2(JsonT stringJsonT) {
-                super.onFail2(stringJsonT);
-                view.showToast(stringJsonT.getMessage());
+            protected void onFail2(JsonT<List<ImageBack>> userInfoJsonT) {
+                super.onFail2(userInfoJsonT);
+                view.showToast(userInfoJsonT.getMessage());
             }
-        },mDialog);
+        }, mDialog);
     }
-    public void postImageIDs(String id,String files) {
-        RxNetUtils.request(getApi(ApiService.class).uploadCompanyImgs(id,files), new RequestObserver<JsonT>(this) {
+
+    @Override
+    public void submitData(Map<String, Object> map) {
+        if (map.containsKey("id")) {
+            RxNetUtils.request(getApi(ApiService.class).editCompanyInfo(map), new RequestObserver<JsonT<String>>(this) {
+                @Override
+                protected void onSuccess(JsonT<String> jsonT) {
+                    view.showSubmitResult((String) jsonT.getData());
+                    view.showToast(jsonT.getMessage());
+                }
+
+                @Override
+                protected void onFail2(JsonT stringJsonT) {
+                    super.onFail2(stringJsonT);
+                    view.showToast(stringJsonT.getMessage());
+                }
+            }, mDialog);
+        } else {
+            RxNetUtils.request(getApi(ApiService.class).postCompanyInfo(map), new RequestObserver<JsonT<String>>(this) {
+                @Override
+                protected void onSuccess(JsonT<String> jsonT) {
+                    view.showSubmitResult((String) jsonT.getData());
+                    view.showToast(jsonT.getMessage());
+                }
+
+                @Override
+                protected void onFail2(JsonT stringJsonT) {
+                    super.onFail2(stringJsonT);
+                    view.showToast(stringJsonT.getMessage());
+                }
+            }, mDialog);
+        }
+    }
+
+    public void postImageIDs(String id, String files) {
+        RxNetUtils.request(getApi(ApiService.class).uploadCompanyImgs(id, files), new RequestObserver<JsonT>(this) {
             @Override
             protected void onSuccess(JsonT data) {
                 if (data.isSuccess()) {
                     view.showPostImage();
-                }else {
+                } else {
 
                 }
             }
@@ -118,7 +159,7 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
                 super.onFail2(userInfoJsonT);
                 view.showToast(userInfoJsonT.getMessage());
             }
-        },mDialog);
+        }, mDialog);
     }
 }
 

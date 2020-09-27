@@ -1,60 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.guanaj.easyswipemenulibrary.EasySwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
-    android:background="@drawable/line_radius_10_light"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:padding="12dp">
+    app:contentView="@+id/content"
+    app:leftMenuView="@+id/left"
+    app:rightMenuView="@+id/right">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:id="@+id/content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/item_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#272727"
-            android:textSize="18dp"
-            android:lines="1"
-            android:ellipsize="end"
-            tools:text="黑龙江富电实业集团有限公司燃料" />
+        android:layout_margin="12dp"
+        android:background="@drawable/line_radius_10_light"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="12dp">
 
         <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textColor="#272727"
+                android:textSize="18dp"
+                tools:text="黑龙江富电实业集团有限公司燃料" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/item_legalRepresentative"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#999999"
+                    android:textSize="15dp"
+                    tools:text="法人代表:张志强" />
+
+                <TextView
+                    android:id="@+id/item_businessType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="#999999"
+                    android:textSize="15dp"
+                    tools:text="主体业态:单位食堂" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="12dp">
-            <TextView
-                android:id="@+id/item_legalRepresentative"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#999999"
-                android:textSize="15dp"
-                tools:text="法人代表:张志强" />
-            <TextView
-                android:id="@+id/item_businessType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:textColor="#999999"
-                android:textSize="15dp"
-                tools:text="主体业态:单位食堂" />
-        </LinearLayout>
+            android:padding="5dp"
+            android:src="@drawable/image_arrow" />
 
 
     </LinearLayout>
 
-    <ImageView
+    <LinearLayout
+        android:id="@+id/right"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:src="@drawable/image_arrow" />
+        android:layout_height="match_parent"
+        android:background="@android:color/holo_red_light"
+        android:orientation="horizontal">
 
-
-</LinearLayout>
+        <TextView
+            android:id="@+id/mc_item_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_red_light"
+            android:padding="20dp"
+            android:text="删除"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</com.guanaj.easyswipemenulibrary.EasySwipeMenuLayout>

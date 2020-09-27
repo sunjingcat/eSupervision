@@ -40,6 +40,7 @@ import java.util.Map;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -83,9 +84,10 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     String businessProject = "";
     String businessProjectText = "";
     List<BusinessType> businessTypeList = new ArrayList<>();
-    private  String[] PLANETS = new String[]{"食品销售经营者", "餐饮服务经营者", "单位食堂"};
+    private String[] PLANETS = new String[]{"食品销售经营者", "餐饮服务经营者", "单位食堂"};
     SelectPopupWindows selectPopupWindows;
     List<ImageBack> imageBacks = new ArrayList<>();
+    String id;
 
     @Override
     protected int getContentView() {
@@ -124,6 +126,13 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 adapter.notifyDataSetChanged();
             }
         });
+        id = getIntent().getStringExtra("id");
+        if (!TextUtils.isEmpty(id)) {
+            mPresenter.getData(id);
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("dictType", "company_type");
+        mPresenter.getBusinessType(params);
 
     }
 
@@ -142,11 +151,11 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         switch (view.getId()) {
             case R.id.et_businessType:
                 UIAdjuster.closeKeyBoard(this);
-                String array [] = new String[10];
-                String values [] = new String[10];
-                for (int i=0;i<businessTypeList.size();i++){
-                    array[i]= businessTypeList.get(i).getDictLabel();
-                    values[i]= businessTypeList.get(i).getDictValue();
+                String array[] = new String[10];
+                String values[] = new String[10];
+                for (int i = 0; i < businessTypeList.size(); i++) {
+                    array[i] = businessTypeList.get(i).getDictLabel();
+                    values[i] = businessTypeList.get(i).getDictValue();
                 }
                 selectPopupWindows = new SelectPopupWindows(this, array);
                 selectPopupWindows.showAtLocation(findViewById(R.id.bg),
@@ -241,7 +250,21 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
     @Override
     public void showCompanyInfo(CompanyBean data) {
-
+        etOperatorName.setText(data.getOperatorName() + "");
+        etSocialCreditCode.setText(data.getSocialCreditCode() + "");
+        etLicenseNumber.setText(data.getLicenseNumber() + "");
+        etLegalRepresentative.setText(data.getLegalRepresentative() + "");
+        etAddress.setText(data.getAddress() + "");
+        etBusinessPlace.setText(data.getBusinessPlace() + "");
+        etBusinessType.setText(data.getBusinessTypeText() + "");
+        etBusinessProject.setText(data.getBusinessProjectText()+"");
+        businessType = data.getBusinessType();
+        validDate = data.getValidDate();
+        etEndTime.setText(data.getValidDate() + "");
+        etContact.setText(data.getContact() + "");
+        etContactInformation.setText(data.getContactInformation() + "");
+        etFieldTime.setText(data.getFieldTime() + "");
+        fieldTime = data.getFieldTime();
     }
 
     @Override
@@ -306,14 +329,32 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
     @Override
     public void showBusinessType(List<BusinessType> list) {
-        if (list!=null) {
+        if (list != null) {
             businessTypeList.clear();
             businessTypeList.addAll(list);
         }
     }
 
+    @Override
+    public void showImage(List<ImageBack> list) {
+        if (list == null) return;
+        imageBacks.clear();
+        imageBacks.addAll(list);
+
+        List<String> showList = new ArrayList<>();
+        for (ImageBack imageBack:list){
+            showList.add(imageBack.getBase64());
+        }
+        images.clear();
+
+        images.addAll(showList);
+
+        adapter.notifyDataSetChanged();
+    }
+
     private void postData() {
         Map<String, Object> params = new HashMap<>();
+
         String operatorName = etOperatorName.getText().toString();
         if (TextUtils.isEmpty(operatorName)) {
             showToast("请填写经营者名称");
@@ -385,8 +426,11 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             return;
         }
         params.put("fieldTime", fieldTime);
-        mPresenter.submitData(params);
+        if (!TextUtils.isEmpty(id)) {
+            params.put("id", id);
 
+        }
+        mPresenter.submitData(params);
     }
 
     @Override
@@ -422,7 +466,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                         content = content + projectBeans.get(i).getValue();
                     } else {
                         str = str + projectBeans.get(i).getTitle() + ",";
-                        content = content  + projectBeans.get(i).getValue() + ",";
+                        content = content + projectBeans.get(i).getValue() + ",";
                     }
                 }
                 etBusinessProject.setText(str);
