@@ -24,7 +24,7 @@ public class Contract {
     public interface IGetSuperviseView extends BaseView {
         void showFoodSuperviseList(List<SuperviseBean> data);
 
-        void showReResult(SuperviseBean.ResposeBean resposeBean);
+        void showReResult(SuperviseBean.ResposeConfirmBean resposeBean);
 
         void showResult();
     }

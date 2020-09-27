@@ -105,11 +105,11 @@ public interface ApiService {
 
     @Headers("Content-Type: application/json")
     @POST("/app/v1/supervise/spxsInspectionRecord/confirm/{id}")
-    Observable<JsonT<SuperviseBean.ResposeBean>> submitSuperviseConfirm(@Path("id")String id, @Body ArrayList<SuperviseBean.PostBean> requestBody);
+    Observable<JsonT<SuperviseBean.ResposeConfirmBean>> submitSuperviseConfirm(@Path("id")String id, @Body ArrayList<SuperviseBean.PostBean> requestBody);
 
 
+    @Headers("Content-Type: application/json")
     @POST("/app/v1/supervise/spxsInspectionRecord/submitScoreItems/{id}")
-    @FormUrlEncoded
     Observable<JsonT> submitSupervise(@Path("id")String id,@Body ArrayList<SuperviseBean.PostBean> requestBody);
 
     @POST("/app/v1/supervise/universal/createRecord")

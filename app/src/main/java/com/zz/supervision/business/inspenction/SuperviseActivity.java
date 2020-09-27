@@ -1,7 +1,6 @@
 package com.zz.supervision.business.inspenction;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -10,10 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.blankj.utilcode.util.GsonUtils;
 import com.chad.library.adapter.base.entity.node.BaseNode;
-import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.supervision.CompanyBean;
@@ -22,8 +18,6 @@ import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.business.inspenction.adapter.SuperviseAdapter;
 import com.zz.supervision.business.inspenction.presenter.SupervisePresenter;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,12 +110,15 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     }
 
     @Override
-    public void showReResult(SuperviseBean.ResposeBean bean) {
-        startActivityForResult(new Intent(this,InfoActivity.class).putExtra("resposeBean",bean),1001);
+    public void showReResult(SuperviseBean.ResposeConfirmBean bean) {
+        startActivityForResult(new Intent(this,InfoActivity.class)
+                        .putExtra("supervise_respose",bean)
+                ,1001);
     }
 
     @Override
     public void showResult() {
+        startActivity(new Intent(this,SuperviseResultActivity.class));
 
     }
     ArrayList<SuperviseBean.PostBean> postBeans = new ArrayList<>();

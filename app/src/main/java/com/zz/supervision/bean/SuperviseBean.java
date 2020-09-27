@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.entity.node.BaseNode;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -206,7 +207,7 @@ public class SuperviseBean extends BaseExpandNode {
             return isSatisfy;
         }
     }
-    public  class ResposeBean implements Parcelable {
+    public  class ResposeConfirmBean implements Serializable {
         private String	id;// 17,
         private String          companyId;// null,
         private String        serialNumber;// null,
@@ -218,30 +219,7 @@ public class SuperviseBean extends BaseExpandNode {
         private String       inspectionResult;// 不符合,
         private String      inspectionResultReduction;// 食品生产经营者立即停止食品生产经营活动
 
-        protected ResposeBean(Parcel in) {
-            id = in.readString();
-            companyId = in.readString();
-            serialNumber = in.readString();
-            sumCount = in.readString();
-            importantCount = in.readString();
-            generalCount = in.readString();
-            importantProblemCount = in.readString();
-            generalProblemCount = in.readString();
-            inspectionResult = in.readString();
-            inspectionResultReduction = in.readString();
-        }
 
-        public  final Creator<ResposeBean> CREATOR = new Creator<ResposeBean>() {
-            @Override
-            public ResposeBean createFromParcel(Parcel in) {
-                return new ResposeBean(in);
-            }
-
-            @Override
-            public ResposeBean[] newArray(int size) {
-                return new ResposeBean[size];
-            }
-        };
 
         public String getCompanyId() {
             return companyId;
@@ -283,24 +261,7 @@ public class SuperviseBean extends BaseExpandNode {
             return sumCount;
         }
 
-        @Override
-        public int describeContents() {
-            return 0;
-        }
 
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(id);
-            dest.writeString(companyId);
-            dest.writeString(serialNumber);
-            dest.writeString(sumCount);
-            dest.writeString(importantCount);
-            dest.writeString(generalCount);
-            dest.writeString(importantProblemCount);
-            dest.writeString(generalProblemCount);
-            dest.writeString(inspectionResult);
-            dest.writeString(inspectionResultReduction);
-        }
     }
     
 }

@@ -1,7 +1,4 @@
 package com.zz.supervision.business.inspenction.presenter;
-
-
-import com.zz.supervision.bean.ImageBean;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.business.inspenction.Contract;
 import com.zz.supervision.net.ApiService;
@@ -12,9 +9,6 @@ import com.zz.supervision.net.RxNetUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import okhttp3.MultipartBody;
 
 /**
  * Created by 77 on 2018/8/8.
@@ -59,14 +53,14 @@ public class SupervisePresenter extends MyBasePresenterImpl<Contract.IGetSupervi
 
     @Override
     public void submitReData(String id, ArrayList<SuperviseBean.PostBean> postBeans) {
-        RxNetUtils.request(getApi(ApiService.class).submitSuperviseConfirm(id,postBeans), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
+        RxNetUtils.request(getApi(ApiService.class).submitSuperviseConfirm(id,postBeans), new RequestObserver<JsonT<SuperviseBean.ResposeConfirmBean>>(this) {
             @Override
-            protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
+            protected void onSuccess(JsonT<SuperviseBean.ResposeConfirmBean> jsonT) {
                 view.showReResult(jsonT.getData());
                 view.showToast(jsonT.getMessage());
             }
             @Override
-            protected void onFail2(JsonT<SuperviseBean.ResposeBean> stringJsonT) {
+            protected void onFail2(JsonT<SuperviseBean.ResposeConfirmBean> stringJsonT) {
                 super.onFail2(stringJsonT);
                 view.showToast(stringJsonT.getMessage());
             }

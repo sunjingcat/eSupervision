@@ -159,6 +159,7 @@
         <activity
             android:name=".business.inspenction.InfoActivity"
             android:theme="@style/ActivityDialogTheme" />
+        <activity android:name=".business.inspenction.SuperviseResultActivity" />
     </application>
 
 </manifest>
