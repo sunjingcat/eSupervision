@@ -21,17 +21,18 @@
                 android:id="@+id/itemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorTextBlack33"
+                android:textColor="#4A4A4A"
                 android:textSize="16dp"
-                tools:text="123" />
+                tools:text="经营资质" />
 
             <TextView
                 android:id="@+id/itemContent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorTextBlack99"
-                android:textSize="14dp"
-                tools:text="123" />
+                android:textColor="#929292"
+                android:textSize="13dp"
+                android:layout_marginTop="5dp"
+                tools:text="重点项3项,一般项2项" />
 
 
         </LinearLayout>
@@ -41,8 +42,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@drawable/check_blue"
-            android:text="  是" />
+            android:text="  是"
+            android:textColor="#0851A2"/>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#e2e2e2"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
     <ImageView
         android:id="@+id/image_fold"
         android:layout_width="wrap_content"
@@ -51,5 +59,6 @@
         android:padding="10dp"
         android:scaleType="center"
         android:src="@drawable/image_top" />
+
 
 </LinearLayout>

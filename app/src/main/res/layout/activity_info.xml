@@ -27,14 +27,16 @@
             android:textColor="#444444"
             android:textSize="18dp"
             android:gravity="center"
-            tools:text="集中器" />
+            android:text="执法详情预览" />
 
 
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="#444564" />
+        android:background="#444564"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"

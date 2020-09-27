@@ -49,17 +49,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:textColor="@color/colorTextBlack33"
-                    android:textSize="15dp"
-                    tools:text="企业名称" />
+                    android:textColor="#4A4A4A"
+                    android:textSize="17dp"
+                    tools:text="黑龙江富电实业集团有限公司燃料" />
 
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="2dp"
+                    android:background="#0851A2"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8dp"/>
                 <TextView
                     android:id="@+id/tv_inspector"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:textColor="@color/colorTextBlack99"
+                    android:textColor="#272727"
                     android:textSize="15dp"
+                    android:layout_marginTop="8dp"
                     tools:text="检察员" />
 
                 <TextView
@@ -67,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:textColor="@color/colorTextBlack99"
+                    android:textColor="#272727"
                     android:textSize="15dp"
                     tools:text="检查类型" />
 
@@ -76,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:textColor="@color/colorTextBlack99"
+                    android:textColor="#272727"
                     android:textSize="15dp"
                     tools:text="检查次数" />
             </LinearLayout>

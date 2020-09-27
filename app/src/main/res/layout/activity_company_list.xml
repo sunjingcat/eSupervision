@@ -27,20 +27,23 @@
             android:paddingLeft="15dp"
             android:layout_gravity="center"
             android:gravity="center_vertical"
-            android:hint="搜索"
+            android:hint="输入相关关键词"
             android:textColor="@color/white"
             android:textSize="15dp"
+            android:drawablePadding="5dp"
+            android:drawableLeft="@drawable/image_search"
             android:background="@drawable/border_radius_40_white"
             />
         <TextView
             android:id="@+id/toolbar_subtitle"
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginRight="10dp"
             android:padding="8dp"
+            android:text=""
             android:singleLine="true"
-            android:text="编辑"
+            android:drawableLeft="@drawable/image_add_company"
             android:textColor="@color/white"
             android:textSize="16dp" />
     </androidx.appcompat.widget.Toolbar>

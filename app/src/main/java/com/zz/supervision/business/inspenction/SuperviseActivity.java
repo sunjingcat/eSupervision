@@ -87,8 +87,8 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
        String type = getIntent().getStringExtra("type");
         id = getIntent().getStringExtra("id");
        tvCompany.setText(company.getOperatorName());
-       tvInspector.setText(lawEnforcerText);
-       tvType.setText(type+"");
+       tvInspector.setText("检查员："+lawEnforcerText);
+       tvType.setText("检查类型："+type+"");
     }
 
     @Override
