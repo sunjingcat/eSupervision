@@ -10,6 +10,7 @@ import com.zz.supervision.net.MyBasePresenterImpl;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,19 +42,35 @@ public class SupervisePresenter extends MyBasePresenterImpl<Contract.IGetSupervi
     }
 
     @Override
-    public void submitData(Map<String, Object> map) {
-//        RxNetUtils.request(getApi(ApiService.class).poatCompanyInfo(map), new RequestObserver<JsonT>(this) {
-//            @Override
-//            protected void onSuccess(JsonT jsonT) {
-//                view.showResult();
-//                view.showToast(jsonT.getMessage());
-//            }
-//            @Override
-//            protected void onFail2(JsonT stringJsonT) {
-//                super.onFail2(stringJsonT);
-//                view.showToast(stringJsonT.getMessage());
-//            }
-//        },mDialog);
+    public void submitData(String id,ArrayList<SuperviseBean.PostBean> spxsInspectionPoints) {
+        RxNetUtils.request(getApi(ApiService.class).submitSupervise(id,spxsInspectionPoints), new RequestObserver<JsonT>(this) {
+            @Override
+            protected void onSuccess(JsonT jsonT) {
+                view.showResult();
+                view.showToast(jsonT.getMessage());
+            }
+            @Override
+            protected void onFail2(JsonT stringJsonT) {
+                super.onFail2(stringJsonT);
+                view.showToast(stringJsonT.getMessage());
+            }
+        },mDialog);
+    }
+
+    @Override
+    public void submitReData(String id, ArrayList<SuperviseBean.PostBean> postBeans) {
+        RxNetUtils.request(getApi(ApiService.class).submitSuperviseConfirm(id,postBeans), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
+            @Override
+            protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
+                view.showReResult(jsonT.getData());
+                view.showToast(jsonT.getMessage());
+            }
+            @Override
+            protected void onFail2(JsonT<SuperviseBean.ResposeBean> stringJsonT) {
+                super.onFail2(stringJsonT);
+                view.showToast(stringJsonT.getMessage());
+            }
+        },mDialog);
     }
 }
 

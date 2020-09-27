@@ -2,6 +2,7 @@ package com.zz.supervision.business.inspenction.adapter;
 
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.chad.library.adapter.base.provider.BaseNodeProvider;
@@ -35,18 +36,19 @@ public class SecondNodeProvider extends BaseNodeProvider {
         SuperviseBean.Children entity = (SuperviseBean.Children) data;
         baseViewHolder.setText(R.id.itemName, entity.getItemName());
         baseViewHolder.getView(R.id.item_isImportant).setVisibility(entity.getIsImportant() == 0 ? View.GONE : View.VISIBLE);
-        baseViewHolder.getView(R.id.item_check_no).setOnClickListener(new View.OnClickListener() {
+        ((RadioGroup) baseViewHolder.getView(R.id.item_rg)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                onProviderOnClick.onItemOnclick(data, 0);
-            }
-        });baseViewHolder.getView(R.id.item_check_yes).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onProviderOnClick.onItemOnclick(data, 1);
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.item_check_yes:
+                        ((SuperviseBean.Children) data).setCheck(true);
+                        break;
+                    case R.id.item_check_no:
+                        ((SuperviseBean.Children) data).setCheck(false);
+                        break;
+                }
             }
         });
-        ((RadioButton)baseViewHolder.getView(R.id.item_check_no)).setChecked(entity.isCheck());
-        ((RadioButton)baseViewHolder.getView(R.id.item_check_yes)).setChecked(entity.isCheck());
+        ((RadioButton) baseViewHolder.getView(R.id.item_check_yes)).setChecked(entity.isCheck());
     }
 }

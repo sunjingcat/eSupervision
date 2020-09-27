@@ -1,5 +1,8 @@
 package com.zz.supervision.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.chad.library.adapter.base.entity.node.BaseExpandNode;
 import com.chad.library.adapter.base.entity.node.BaseNode;
 
@@ -100,7 +103,7 @@ public class SuperviseBean extends BaseExpandNode {
         private String createTime;// ,
         private String id;// 0,
         private int isImportant;// 0,
-        private String isSatisfy;// 0,
+        private int isSatisfy;// 0,
         private String itemName;// ,
         private String itemNum;// ,
         private String itemPid;// 0,
@@ -136,7 +139,7 @@ public class SuperviseBean extends BaseExpandNode {
             return isImportant;
         }
 
-        public String getIsSatisfy() {
+        public int getIsSatisfy() {
             return isSatisfy;
         }
 
@@ -182,4 +185,122 @@ public class SuperviseBean extends BaseExpandNode {
             return null;
         }
     }
+
+    public static class PostBean{
+        String itemId;
+        int  isSatisfy;
+
+        public PostBean() {
+        }
+
+        public PostBean(String itemId, int isSatisfy) {
+            this.itemId = itemId;
+            this.isSatisfy = isSatisfy;
+        }
+
+        public String getItemId() {
+            return itemId;
+        }
+
+        public int getIsSatisfy() {
+            return isSatisfy;
+        }
+    }
+    public  class ResposeBean implements Parcelable {
+        private String	id;// 17,
+        private String          companyId;// null,
+        private String        serialNumber;// null,
+        private String       sumCount;// 2,
+        private String       importantCount;// 0,
+        private String      generalCount;// 2,
+        private String      importantProblemCount;// 0,
+        private String      generalProblemCount;// 2,
+        private String       inspectionResult;// 不符合,
+        private String      inspectionResultReduction;// 食品生产经营者立即停止食品生产经营活动
+
+        protected ResposeBean(Parcel in) {
+            id = in.readString();
+            companyId = in.readString();
+            serialNumber = in.readString();
+            sumCount = in.readString();
+            importantCount = in.readString();
+            generalCount = in.readString();
+            importantProblemCount = in.readString();
+            generalProblemCount = in.readString();
+            inspectionResult = in.readString();
+            inspectionResultReduction = in.readString();
+        }
+
+        public  final Creator<ResposeBean> CREATOR = new Creator<ResposeBean>() {
+            @Override
+            public ResposeBean createFromParcel(Parcel in) {
+                return new ResposeBean(in);
+            }
+
+            @Override
+            public ResposeBean[] newArray(int size) {
+                return new ResposeBean[size];
+            }
+        };
+
+        public String getCompanyId() {
+            return companyId;
+        }
+
+        public String getGeneralCount() {
+            return generalCount;
+        }
+
+        public String getGeneralProblemCount() {
+            return generalProblemCount;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getImportantCount() {
+            return importantCount;
+        }
+
+        public String getImportantProblemCount() {
+            return importantProblemCount;
+        }
+
+        public String getInspectionResult() {
+            return inspectionResult;
+        }
+
+        public String getInspectionResultReduction() {
+            return inspectionResultReduction;
+        }
+
+        public String getSerialNumber() {
+            return serialNumber;
+        }
+
+        public String getSumCount() {
+            return sumCount;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(id);
+            dest.writeString(companyId);
+            dest.writeString(serialNumber);
+            dest.writeString(sumCount);
+            dest.writeString(importantCount);
+            dest.writeString(generalCount);
+            dest.writeString(importantProblemCount);
+            dest.writeString(generalProblemCount);
+            dest.writeString(inspectionResult);
+            dest.writeString(inspectionResultReduction);
+        }
+    }
+    
 }

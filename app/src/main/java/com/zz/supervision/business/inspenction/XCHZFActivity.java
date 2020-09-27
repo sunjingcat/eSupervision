@@ -1,6 +1,7 @@
 package com.zz.supervision.business.inspenction;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -19,20 +20,29 @@ import com.codbking.widget.utils.UIAdjuster;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.commonlib.widget.SelectPopupWindows;
 import com.zz.lib.core.ui.mvp.BasePresenter;
+import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.LawEnforcerBean;
 import com.zz.supervision.business.company.CompanyListActivity;
 import com.zz.supervision.business.company.PeopleActivity;
+import com.zz.supervision.net.ApiService;
+import com.zz.supervision.net.JsonT;
+import com.zz.supervision.net.RequestObserver;
+import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.utils.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.zz.supervision.net.RxNetUtils.getApi;
 
 /**
  * 现场执法
@@ -69,9 +79,9 @@ public class XCHZFActivity extends MyBaseActivity {
     LinearLayout llCompanyInfo;
     CompanyBean companyBean;
     int type = 0;
-    long startTime = 0;
-    String ids = "";
+    String inspectionTime = "";
     String names = "";
+    ArrayList<LawEnforcerBean> lawEnforcerBeanArrayList = new ArrayList<>();
     private static final String[] PLANETS = new String[]{"食品销售日常监督检查", "餐饮服务日常监督检查", "食品销售风险因素量化分值", "餐饮服务风险因素量化分值"};
     SelectPopupWindows selectPopupWindows;
 
@@ -144,8 +154,8 @@ public class XCHZFActivity extends MyBaseActivity {
                 dialog.setOnSureLisener(new OnSureLisener() {
                     @Override
                     public void onSure(Date date) {
-                        startTime = date.getTime();
                         String time = TimeUtils.getTime(date.getTime(), TimeUtils.DATE_FORMAT_DATE);
+                        inspectionTime = time;
                         etStartTime.setText(time);
                     }
                 });
@@ -153,22 +163,7 @@ public class XCHZFActivity extends MyBaseActivity {
                 break;
 
             case R.id.bt_ok:
-//                if (companyBean == null) {
-//                    showToast("请先选择企业");
-//                    return;
-//                }
-//                if (ids == null) {
-//                    showToast("请选择执法人员");
-//                    return;
-//                }
-//                if (type==1){
-                    startActivity(new Intent(this, SuperviseActivity.class)
-
-                    );
-//                         .putExtra("company", companyBean)
-//                    .putExtra("lawEnforcer", ids)
-//                    .putExtra("lawEnforcerText", names)
-//                }
+                postDate();
 
                 break;
         }
@@ -194,15 +189,15 @@ public class XCHZFActivity extends MyBaseActivity {
             } else if (requestCode == 2001) {
                 ArrayList<LawEnforcerBean> arrayList = data.getParcelableArrayListExtra("select");
                 if (arrayList != null) {
+                    lawEnforcerBeanArrayList.clear();
+                    lawEnforcerBeanArrayList.addAll(arrayList);
                     names = "";
-                    ids = "";
+
                     for (int i = 0; i < arrayList.size(); i++) {
                         if (i == arrayList.size() - 1) {
                             names = names + arrayList.get(i).getName();
-                            ids = ids + arrayList.get(i).getId();
                         } else {
                             names = names + arrayList.get(i).getName() + ",";
-                            ids = ids + arrayList.get(i).getId() + ",";
                         }
                     }
                     etPeople.setText(names);
@@ -211,5 +206,54 @@ public class XCHZFActivity extends MyBaseActivity {
         }
     }
 
+    void postDate() {
+        HashMap<String, Object> map = new HashMap<>();
+        if (companyBean == null) {
+            showToast("请先选择企业");
+            return;
+        }
+        if (lawEnforcerBeanArrayList .size()<2) {
+            showToast("请选择执法人员");
+            return;
+        }
+        if (type ==0) {
+            showToast("请选择执法类型");
+            return;
+        }
+        if (TextUtils.isEmpty(inspectionTime)) {
+            showToast("请选择执法时间");
+            return;
+        }
+        String reason = edCause.getText().toString();
+        if (!TextUtils.isEmpty(reason)) {
+            map.put("reason", reason);
+        }
+
+        map.put("companyId", companyBean.getId());
+        map.put("inspectionTime", inspectionTime);
+        map.put("lawEnforcer1", lawEnforcerBeanArrayList.get(0).getId());
+        map.put("lawEnforcer2", lawEnforcerBeanArrayList.get(1).getId());
+        map.put("type", type);
+
+        RxNetUtils.request(getApi(ApiService.class).createRecord(map), new RequestObserver<JsonT<Integer>>() {
+            @Override
+            protected void onSuccess(JsonT<Integer> jsonT) {
+                if (type == 1) {
+                    startActivity(new Intent(XCHZFActivity.this, SuperviseActivity.class)
+                            .putExtra("company", companyBean)
+                            .putExtra("id", jsonT.getData()+"")
+                            .putExtra("type", etType.getText().toString())
+                            .putExtra("lawEnforcer", names)
+                            .putExtra("inspectionTime", inspectionTime));
+                    finish();
+                }
+            }
+
+            @Override
+            protected void onFail2(JsonT stringJsonT) {
+                super.onFail2(stringJsonT);
+            }
+        }, LoadingUtils.build(this));
+    }
 
 }

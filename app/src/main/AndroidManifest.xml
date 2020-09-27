@@ -156,6 +156,9 @@
         <activity android:name=".business.company.CompanyInfoActivity" />
         <activity android:name=".business.company.PeopleActivity" />
         <activity android:name=".business.inspenction.SuperviseActivity" />
+        <activity
+            android:name=".business.inspenction.InfoActivity"
+            android:theme="@style/ActivityDialogTheme" />
     </application>
 
 </manifest>

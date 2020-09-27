@@ -23,15 +23,18 @@ import com.zz.supervision.bean.Version;
 import com.zz.supervision.bean.IpAdress;
 import com.zz.supervision.bean.YsConfig;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -99,6 +102,20 @@ public interface ApiService {
 
     @GET("/app/v1/supervise/spxsInspectionRecord/getItems")
     Observable<JsonT<List<SuperviseBean>>> getSuperviseList();
+
+    @Headers("Content-Type: application/json")
+    @POST("/app/v1/supervise/spxsInspectionRecord/confirm/{id}")
+    Observable<JsonT<SuperviseBean.ResposeBean>> submitSuperviseConfirm(@Path("id")String id, @Body ArrayList<SuperviseBean.PostBean> requestBody);
+
+
+    @POST("/app/v1/supervise/spxsInspectionRecord/submitScoreItems/{id}")
+    @FormUrlEncoded
+    Observable<JsonT> submitSupervise(@Path("id")String id,@Body ArrayList<SuperviseBean.PostBean> requestBody);
+
+    @POST("/app/v1/supervise/universal/createRecord")
+    Observable<JsonT<Integer>> createRecord(@QueryMap Map<String, Object> params);
+
+
 
 }
 

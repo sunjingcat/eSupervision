@@ -93,6 +93,10 @@ public class PeopleActivity extends MyBaseActivity {
                 select.add(mlist.get(i));
             }
         }
+        if (select.size()<2){
+           showToast("请选择两位执法人");
+           return;
+        }
         intent.putExtra("select",select);
         setResult(RESULT_OK,intent);
         finish();

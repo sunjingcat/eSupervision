@@ -1,31 +1,35 @@
 package com.zz.supervision.business.inspenction;
 
-import android.os.Parcelable;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.GsonUtils;
 import com.chad.library.adapter.base.entity.node.BaseNode;
+import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
-import com.zz.supervision.bean.ScoreBean;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.business.inspenction.adapter.SuperviseAdapter;
 import com.zz.supervision.business.inspenction.presenter.SupervisePresenter;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 监督检查:食品销售日常
@@ -48,7 +52,8 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     SuperviseAdapter adapter;
-    ArrayList<SuperviseBean> mlist = new ArrayList<>();
+    List<BaseNode> mlist = new ArrayList<>();
+    String id;
 
     @Override
     protected int getContentView() {
@@ -63,13 +68,9 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         adapter = new SuperviseAdapter(new SuperviseAdapter.OnProviderOnClick() {
             @Override
             public void onItemOnclick(BaseNode node, int type) {
-                if (node instanceof SuperviseBean){
-                    ((SuperviseBean) node).setCheck(!((SuperviseBean) node).isCheck());
-                }else if (node instanceof SuperviseBean){
-                    if (type==1) {
-                        ((SuperviseBean.Children) node).setCheck(true);
-                    }else {
-                        ((SuperviseBean.Children) node).setCheck(false);
+                if (node instanceof SuperviseBean) {
+                    for (SuperviseBean.Children children : ((SuperviseBean) node).getChildrenList()) {
+                        children.setCheck(((SuperviseBean) node).isCheck());
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -87,10 +88,13 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     }
 
     void initData() {
-//       CompanyBean company = getIntent().getParcelableExtra("company");
-//       String lawEnforcerText = getIntent().getStringExtra("lawEnforcerText");
-//       tvCompany.setText(company.getOperatorName());
-//       tvInspector.setText(lawEnforcerText);
+       CompanyBean company = getIntent().getParcelableExtra("company");
+       String lawEnforcerText = getIntent().getStringExtra("lawEnforcerText");
+       String type = getIntent().getStringExtra("type");
+        id = getIntent().getStringExtra("id");
+       tvCompany.setText(company.getOperatorName());
+       tvInspector.setText(lawEnforcerText);
+       tvType.setText(type+"");
     }
 
     @Override
@@ -101,6 +105,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
 
     @Override
     public void showFoodSuperviseList(List<SuperviseBean> data) {
+
         adapter.setList(data);
         adapter.notifyDataSetChanged();
         if (data.size() == 0) {
@@ -111,7 +116,36 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     }
 
     @Override
+    public void showReResult(SuperviseBean.ResposeBean bean) {
+        startActivityForResult(new Intent(this,InfoActivity.class).putExtra("resposeBean",bean),1001);
+    }
+
+    @Override
     public void showResult() {
 
+    }
+    ArrayList<SuperviseBean.PostBean> postBeans = new ArrayList<>();
+    @OnClick(R.id.bt_ok)
+    public void onViewClicked() {
+        mlist = adapter.getData();
+        postBeans = new ArrayList<>();
+        for (BaseNode node : mlist) {
+            if (node instanceof SuperviseBean.Children) {
+                if (((SuperviseBean.Children) node).isCheck()) {
+                    postBeans.add(new SuperviseBean.PostBean(((SuperviseBean.Children) node).getId(), ((SuperviseBean.Children) node).getIsSatisfy()));
+                }
+            }
+        }
+        mPresenter.submitReData(id, postBeans);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1001){
+            if (resultCode==RESULT_OK){
+                mPresenter.submitData(id, postBeans);
+            }
+        }
     }
 }
