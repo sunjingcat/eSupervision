@@ -9,6 +9,7 @@ import com.zz.supervision.bean.EventBusSimpleInfo;
 import com.zz.supervision.business.company.AddCompanyActivity;
 import com.zz.supervision.business.company.CompanyListActivity;
 import com.zz.supervision.business.inspenction.XCHZFActivity;
+import com.zz.supervision.business.record.CheckListActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -64,8 +65,6 @@ public class MainActivity extends MyBaseActivity {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, XCHZFActivity.class);
                 startActivity(intent);
-
-
                 break;
             case R.id.main_group_2:
                 Intent intent1 = new Intent();
@@ -75,7 +74,9 @@ public class MainActivity extends MyBaseActivity {
                 break;
 
             case R.id.main_group_3:
-                showToast("暂未开放，敬请期待");
+                Intent intent2 = new Intent();
+                intent2.setClass(MainActivity.this, CheckListActivity.class);
+                startActivity(intent2);
                 break;
         }
     }
