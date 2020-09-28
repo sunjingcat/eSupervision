@@ -26,6 +26,7 @@ import com.troila.customealert.CustomDialog;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
+import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.business.company.CompanyInfoActivity;
 import com.zz.supervision.business.company.adapter.CompanyListAdapter;
 import com.zz.supervision.business.record.adapter.CheckListAdapter;
@@ -60,12 +61,11 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
     Unbinder unbinder;
     private RecyclerView recyclerView;
     private CheckListAdapter adapter;
-    List<CompanyBean> mlist = new ArrayList<>();
+    List<SuperviseBean.ResposeBean> mlist = new ArrayList<>();
     private int pagenum = 1;
     private int pagesize = 20;
     private String searchStr = "";
     private String type = "";
-    private CustomDialog customDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,7 +91,7 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
     private void init(View view) {
         recyclerView = view.findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new CheckListAdapter(R.layout.item_company, mlist);
+        adapter = new CheckListAdapter(R.layout.item_check_list, mlist);
         recyclerView.setAdapter(adapter);
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setOnLoadMoreListener(this);
@@ -110,29 +110,7 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
                 }
             }
         });
-        adapter.setOnItemChildClickListener(new OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
-                CustomDialog.Builder builder = new CustomDialog.Builder(getActivity())
-                        .setTitle("提示")
-                        .setMessage("确定删除设备")
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                deleteDate(mlist.get(position).getId());
-                            }
-                        });
-                customDialog = builder.create();
-                customDialog.show();
 
-            }
-        });
     }
 
     @Override
@@ -148,7 +126,7 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
         refreshlayout.finishRefresh();
     }
 
-    public void showResult(List<CompanyBean> data) {
+    public void showResult(List<SuperviseBean.ResposeBean> data) {
         if (pagenum == 1) {
             mlist.clear();
         }
@@ -165,33 +143,18 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", pagenum);
         map.put("pageSize", pagesize);
-        map.put("companyType", type);
+        map.put("inspectionType", type);
         if (!TextUtils.isEmpty(searchStr)) {
             map.put("searchValue", searchStr);
         }
-        RxNetUtils.request(getApi(ApiService.class).getCompanyInfoList(map), new RequestObserver<JsonT<List<CompanyBean>>>() {
+        RxNetUtils.request(getApi(ApiService.class).getRecordList(map), new RequestObserver<JsonT<List<SuperviseBean.ResposeBean>>>() {
             @Override
-            protected void onSuccess(JsonT<List<CompanyBean>> jsonT) {
+            protected void onSuccess(JsonT<List<SuperviseBean.ResposeBean>> jsonT) {
                 showResult(jsonT.getData());
             }
 
             @Override
-            protected void onFail2(JsonT<List<CompanyBean>> stringJsonT) {
-                super.onFail2(stringJsonT);
-            }
-        }, LoadingUtils.build(getActivity()));
-    }
-
-    void deleteDate(String id) {
-        RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(id), new RequestObserver<JsonT>() {
-            @Override
-            protected void onSuccess(JsonT jsonT) {
-                pagenum = 1;
-                getDate();
-            }
-
-            @Override
-            protected void onFail2(JsonT stringJsonT) {
+            protected void onFail2(JsonT<List<SuperviseBean.ResposeBean>> stringJsonT) {
                 super.onFail2(stringJsonT);
             }
         }, LoadingUtils.build(getActivity()));
@@ -205,11 +168,5 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
         refreshLayout.finishLoadMore();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (customDialog != null && customDialog.isShowing()) {
-            customDialog.dismiss();
-        }
-    }
+
 }

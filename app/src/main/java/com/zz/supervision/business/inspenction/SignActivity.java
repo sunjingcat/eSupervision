@@ -3,23 +3,17 @@ package com.zz.supervision.business.inspenction;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import androidx.appcompat.widget.Toolbar;
-
-import com.blankj.utilcode.util.ImageUtils;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.utils.BASE64;
 import com.zz.supervision.widget.SignatureView;
-
-import java.sql.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -78,6 +78,9 @@ public interface ApiService {
     @GET("/app/v1/supervise/companyInfo/list")
     Observable<JsonT<List<CompanyBean>>> getCompanyInfoList(@QueryMap Map<String, Object> params);
 
+    @GET("/app/v1/supervise/universal/getRecordList")
+    Observable<JsonT<List<SuperviseBean.ResposeBean>>> getRecordList(@QueryMap Map<String, Object> params);
+
     @GET("/app/v1/supervise/companyInfo/removeCompanyInfo/{id}")
     Observable<JsonT> removeCompanyInfo(@Path("id")String id);
 

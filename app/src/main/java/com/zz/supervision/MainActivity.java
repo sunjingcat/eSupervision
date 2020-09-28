@@ -75,11 +75,9 @@ public class MainActivity extends MyBaseActivity {
                 break;
 
             case R.id.main_group_3:
-//                Intent intent2 = new Intent();
-//                intent2.setClass(MainActivity.this, CheckListActivity.class);
-//                startActivity(intent2);
-
-                startActivity(new Intent(this, SignActivity.class));
+                Intent intent2 = new Intent();
+                intent2.setClass(MainActivity.this, CheckListActivity.class);
+                startActivity(intent2);
                 break;
         }
     }
