@@ -8,6 +8,7 @@ import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.EventBusSimpleInfo;
 import com.zz.supervision.business.company.AddCompanyActivity;
 import com.zz.supervision.business.company.CompanyListActivity;
+import com.zz.supervision.business.inspenction.SignActivity;
 import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.business.record.CheckListActivity;
 import com.zz.supervision.net.ApiService;
@@ -74,9 +75,11 @@ public class MainActivity extends MyBaseActivity {
                 break;
 
             case R.id.main_group_3:
-                Intent intent2 = new Intent();
-                intent2.setClass(MainActivity.this, CheckListActivity.class);
-                startActivity(intent2);
+//                Intent intent2 = new Intent();
+//                intent2.setClass(MainActivity.this, CheckListActivity.class);
+//                startActivity(intent2);
+
+                startActivity(new Intent(this, SignActivity.class));
                 break;
         }
     }

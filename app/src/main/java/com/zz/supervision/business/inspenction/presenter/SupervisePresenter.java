@@ -37,14 +37,14 @@ public class SupervisePresenter extends MyBasePresenterImpl<Contract.IGetSupervi
 
     @Override
     public void submitData(String id,ArrayList<SuperviseBean.PostBean> spxsInspectionPoints) {
-        RxNetUtils.request(getApi(ApiService.class).submitSupervise(id,spxsInspectionPoints), new RequestObserver<JsonT>(this) {
+        RxNetUtils.request(getApi(ApiService.class).submitSupervise(id,spxsInspectionPoints), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
             @Override
-            protected void onSuccess(JsonT jsonT) {
-                view.showResult();
+            protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
+                view.showResult(jsonT.getData());
                 view.showToast(jsonT.getMessage());
             }
             @Override
-            protected void onFail2(JsonT stringJsonT) {
+            protected void onFail2(JsonT<SuperviseBean.ResposeBean> stringJsonT) {
                 super.onFail2(stringJsonT);
                 view.showToast(stringJsonT.getMessage());
             }

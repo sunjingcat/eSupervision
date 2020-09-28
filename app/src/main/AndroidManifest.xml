@@ -161,7 +161,11 @@
             android:theme="@style/ActivityDialogTheme" />
         <activity android:name=".business.inspenction.SuperviseResultActivity" />
         <activity android:name=".business.record.CheckListActivity" />
-        <activity android:name=".business.company.SearchCompanyActivity" />
+        <activity android:name=".business.company.SearchCompanyActivity"
+            tools:ignore="Instantiatable" />
+        <activity android:name=".business.inspenction.SignActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

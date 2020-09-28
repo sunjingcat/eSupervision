@@ -119,13 +119,16 @@ public interface ApiService {
 
     @Headers("Content-Type: application/json")
     @POST("/app/v1/supervise/spxsInspectionRecord/submitScoreItems/{id}")
-    Observable<JsonT> submitSupervise(@Path("id")String id,@Body ArrayList<SuperviseBean.PostBean> requestBody);
+    Observable<JsonT<SuperviseBean.ResposeBean>> submitSupervise(@Path("id")String id,@Body ArrayList<SuperviseBean.PostBean> requestBody);
 
     @POST("/app/v1/supervise/universal/createRecord")
     Observable<JsonT<Integer>> createRecord(@QueryMap Map<String, Object> params);
 
     @GET("/app/v1/supervise/enclosure/base64/{type}/{modelId}")
     Observable<JsonT<List<ImageBack>>> getImageBase64(@Path("type") String type, @Path("modelId") String modelId);
+
+    @POST("/app/v1/supervise/spxsInspectionRecord/submitSign/{id}")
+    Observable<JsonT> submitSign(@Path("id")String id,@QueryMap Map<String, Object> params);
 
 
 }

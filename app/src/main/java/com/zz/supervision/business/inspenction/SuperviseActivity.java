@@ -117,8 +117,8 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     }
 
     @Override
-    public void showResult() {
-        startActivity(new Intent(this,SuperviseResultActivity.class));
+    public void showResult(SuperviseBean.ResposeBean resposeBean) {
+        startActivity(new Intent(this,SuperviseSignActivity.class).putExtra("resposeBean",resposeBean));
 
     }
     ArrayList<SuperviseBean.PostBean> postBeans = new ArrayList<>();

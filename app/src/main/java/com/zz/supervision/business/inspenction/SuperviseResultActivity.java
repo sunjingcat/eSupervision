@@ -1,4 +1,7 @@
 package com.zz.supervision.business.inspenction;
+
+import android.content.Intent;
+import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.widget.Toolbar;
@@ -18,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 监督检查结果
@@ -32,7 +36,7 @@ public class SuperviseResultActivity extends MyBaseActivity {
     Button btnControl;
     List<DetailBean> mlist = new ArrayList<>();
     DetailAdapter adapter;
-    SuperviseBean.ResposeConfirmBean deviceInfo;
+    SuperviseBean.ResposeBean deviceInfo;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -49,7 +53,7 @@ public class SuperviseResultActivity extends MyBaseActivity {
         adapter = new DetailAdapter(R.layout.item_detail, mlist);
         infoRv.setAdapter(adapter);
 
-        deviceInfo = (SuperviseBean.ResposeConfirmBean) getIntent().getSerializableExtra("supervise_respose");
+        deviceInfo = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
         if (deviceInfo != null) {
             showIntent(deviceInfo);
         }
@@ -60,7 +64,7 @@ public class SuperviseResultActivity extends MyBaseActivity {
         ToolBarUtils.getInstance().setNavigation(toolbar);
     }
 
-    public void showIntent(SuperviseBean.ResposeConfirmBean lightDevice) {
+    public void showIntent(SuperviseBean.ResposeBean lightDevice) {
         if (lightDevice == null) return;
         mlist.clear();
         List<DetailBean> list = new ArrayList<>();
@@ -81,5 +85,7 @@ public class SuperviseResultActivity extends MyBaseActivity {
     public BasePresenter initPresenter() {
         return null;
     }
+
+
 
 }
