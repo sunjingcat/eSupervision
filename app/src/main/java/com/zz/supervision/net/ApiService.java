@@ -15,6 +15,7 @@ import com.zz.supervision.bean.MapListBean;
 import com.zz.supervision.bean.OperLog;
 import com.zz.supervision.bean.RealTimeCtrlGroup;
 import com.zz.supervision.bean.RealTimeCtrlTerminal;
+import com.zz.supervision.bean.RecordBean;
 import com.zz.supervision.bean.RegionExpandItem;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.bean.UserBasicBean;
@@ -79,7 +80,7 @@ public interface ApiService {
     Observable<JsonT<List<CompanyBean>>> getCompanyInfoList(@QueryMap Map<String, Object> params);
 
     @GET("/app/v1/supervise/universal/getRecordList")
-    Observable<JsonT<List<SuperviseBean.ResposeBean>>> getRecordList(@QueryMap Map<String, Object> params);
+    Observable<JsonT<List<RecordBean>>> getRecordList(@QueryMap Map<String, Object> params);
 
     @GET("/app/v1/supervise/companyInfo/removeCompanyInfo/{id}")
     Observable<JsonT> removeCompanyInfo(@Path("id")String id);

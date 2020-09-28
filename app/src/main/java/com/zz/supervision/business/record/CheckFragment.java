@@ -26,6 +26,7 @@ import com.troila.customealert.CustomDialog;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
+import com.zz.supervision.bean.RecordBean;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.business.company.CompanyInfoActivity;
 import com.zz.supervision.business.company.adapter.CompanyListAdapter;
@@ -61,7 +62,7 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
     Unbinder unbinder;
     private RecyclerView recyclerView;
     private CheckListAdapter adapter;
-    List<SuperviseBean.ResposeBean> mlist = new ArrayList<>();
+    List<RecordBean> mlist = new ArrayList<>();
     private int pagenum = 1;
     private int pagesize = 20;
     private String searchStr = "";
@@ -126,7 +127,7 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
         refreshlayout.finishRefresh();
     }
 
-    public void showResult(List<SuperviseBean.ResposeBean> data) {
+    public void showResult(List<RecordBean> data) {
         if (pagenum == 1) {
             mlist.clear();
         }
@@ -147,14 +148,14 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
         if (!TextUtils.isEmpty(searchStr)) {
             map.put("searchValue", searchStr);
         }
-        RxNetUtils.request(getApi(ApiService.class).getRecordList(map), new RequestObserver<JsonT<List<SuperviseBean.ResposeBean>>>() {
+        RxNetUtils.request(getApi(ApiService.class).getRecordList(map), new RequestObserver<JsonT<List<RecordBean>>>() {
             @Override
-            protected void onSuccess(JsonT<List<SuperviseBean.ResposeBean>> jsonT) {
+            protected void onSuccess(JsonT<List<RecordBean>> jsonT) {
                 showResult(jsonT.getData());
             }
 
             @Override
-            protected void onFail2(JsonT<List<SuperviseBean.ResposeBean>> stringJsonT) {
+            protected void onFail2(JsonT<List<RecordBean>> stringJsonT) {
                 super.onFail2(stringJsonT);
             }
         }, LoadingUtils.build(getActivity()));

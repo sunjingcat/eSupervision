@@ -71,7 +71,7 @@ public class CheckListActivity extends MyBaseActivity {
 
     void initFragment() {
         for (int i = 0; i < tabs.length; i++) {
-            fragments.add(new CheckFragment(tabs[i]));
+            fragments.add(new CheckFragment((i+1)+""));
             tablayout.addTab(tablayout.newTab());
         }
 

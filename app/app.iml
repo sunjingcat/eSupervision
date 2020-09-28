@@ -122,9 +122,10 @@
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:disklrucache:4.7.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:annotations:4.7.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72@jar" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-android-extensions-runtime:1.3.50@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.8.5@jar" level="project" />
     <orderEntry type="library" name="Gradle: org.reactivestreams:reactive-streams:1.0.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.10.0@jar" level="project" />
-    <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.8.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: org.greenrobot:eventbus:3.1.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.3.72@jar" level="project" />
     <orderEntry type="library" name="Gradle: javax.jmdns:jmdns:3.4.1@jar" level="project" />
@@ -155,6 +156,8 @@
     <orderEntry type="library" name="Gradle: homhomlin.lib:frescoimageview:1.3.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: top.zibin:Luban:1.1.3@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.ycjiang:ImagePreview:2.3.5@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.blankj:utilcodex:1.29.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.anzaizai:EasySwipeMenuLayout:1.1.4@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.recyclerview:recyclerview:1.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.fragment:fragment:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.vectordrawable:vectordrawable-animated:1.0.0@aar" level="project" />
@@ -196,14 +199,5 @@
     <orderEntry type="module" module-name="corelib" />
     <orderEntry type="module" module-name="commonlib" />
     <orderEntry type="library" name="Gradle: org.apache.http.legacy-android-28" level="project" />
-    <orderEntry type="module" module-name="mylibrary" />
-    <orderEntry type="module" module-name="corelib" />
-    <orderEntry type="module" module-name="commonlib" />
-    <orderEntry type="module" module-name="mylibrary" />
-    <orderEntry type="module" module-name="corelib" />
-    <orderEntry type="module" module-name="commonlib" />
-    <orderEntry type="module" module-name="mylibrary" />
-    <orderEntry type="module" module-name="corelib" />
-    <orderEntry type="module" module-name="commonlib" />
   </component>
 </module>

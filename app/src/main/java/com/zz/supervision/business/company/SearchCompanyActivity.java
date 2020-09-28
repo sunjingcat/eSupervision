@@ -107,7 +107,7 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", pagenum);
         map.put("pageSize", pagesize);
-        map.put("companyType", type);
+        map.put("companyType", 0);
         searchStr = et_search.getText().toString();
         if (!TextUtils.isEmpty(searchStr)) {
             map.put("searchValue", searchStr);
