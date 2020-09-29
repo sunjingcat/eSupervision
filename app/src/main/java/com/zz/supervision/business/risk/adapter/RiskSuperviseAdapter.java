@@ -14,7 +14,7 @@ public class RiskSuperviseAdapter extends BaseNodeAdapter {
         super();
         addNodeProvider(new RiskRootNodeProvider(onProviderOnClick));
         addNodeProvider(new RiskSecondNodeProvider(onProviderOnClick));
-        addNodeProvider(new RiskThirdNodeProvider(onProviderOnClick));
+
     }
 
     @Override
@@ -24,8 +24,6 @@ public class RiskSuperviseAdapter extends BaseNodeAdapter {
             return 0;
         } else if (node instanceof RiskSuperviseBean.ChildRisk) {
             return 1;
-        }else if (node instanceof RiskSuperviseBean.ChildRisk2) {
-            return 2;
         }
         return -1;
     }
