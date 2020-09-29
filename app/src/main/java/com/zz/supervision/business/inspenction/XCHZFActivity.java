@@ -27,6 +27,7 @@ import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.LawEnforcerBean;
 import com.zz.supervision.business.company.CompanyListActivity;
 import com.zz.supervision.business.company.PeopleActivity;
+import com.zz.supervision.business.risk.RiskSuperviseActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -163,8 +164,13 @@ public class XCHZFActivity extends MyBaseActivity {
                 break;
 
             case R.id.bt_ok:
-                postDate();
-
+//                postDate();
+                startActivity(new Intent(XCHZFActivity.this, RiskSuperviseActivity.class)
+                        .putExtra("company", companyBean)
+                        .putExtra("id", "")
+                        .putExtra("type", etType.getText().toString())
+                        .putExtra("lawEnforcer", names)
+                        .putExtra("inspectionTime", inspectionTime));
                 break;
         }
     }
@@ -240,6 +246,14 @@ public class XCHZFActivity extends MyBaseActivity {
             protected void onSuccess(JsonT<Integer> jsonT) {
                 if (type == 1) {
                     startActivity(new Intent(XCHZFActivity.this, SuperviseActivity.class)
+                            .putExtra("company", companyBean)
+                            .putExtra("id", jsonT.getData()+"")
+                            .putExtra("type", etType.getText().toString())
+                            .putExtra("lawEnforcer", names)
+                            .putExtra("inspectionTime", inspectionTime));
+                    finish();
+                }else if (type == 3) {
+                    startActivity(new Intent(XCHZFActivity.this, RiskSuperviseActivity.class)
                             .putExtra("company", companyBean)
                             .putExtra("id", jsonT.getData()+"")
                             .putExtra("type", etType.getText().toString())

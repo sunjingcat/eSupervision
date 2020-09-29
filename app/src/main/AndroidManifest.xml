@@ -166,6 +166,7 @@
         <activity android:name=".business.inspenction.SignActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"/>
+        <activity android:name=".business.risk.RiskSuperviseActivity" />
     </application>
 
 </manifest>

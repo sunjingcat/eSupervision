@@ -17,6 +17,7 @@ import com.zz.supervision.bean.RealTimeCtrlGroup;
 import com.zz.supervision.bean.RealTimeCtrlTerminal;
 import com.zz.supervision.bean.RecordBean;
 import com.zz.supervision.bean.RegionExpandItem;
+import com.zz.supervision.bean.RiskSuperviseBean;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.bean.UserBasicBean;
 import com.zz.supervision.bean.UserInfo;
@@ -115,6 +116,10 @@ public interface ApiService {
 
     @GET("/app/v1/supervise/spxsInspectionRecord/getItems")
     Observable<JsonT<List<SuperviseBean>>> getSuperviseList();
+
+
+    @GET("/app/v1/supervise/spxsRiskRecord/getItems")
+    Observable<JsonT<RiskSuperviseBean>> getRiskSuperviseList();
 
     @Headers("Content-Type: application/json")
     @POST("/app/v1/supervise/spxsInspectionRecord/confirm/{id}")
