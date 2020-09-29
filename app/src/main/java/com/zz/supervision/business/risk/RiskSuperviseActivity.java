@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,26 +45,23 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
     TextView tvType;
     @BindView(R.id.tv_num)
     TextView tvNum;
-    @BindView(R.id.ll_null)
-    LinearLayout llNull;
-    @BindView(R.id.rv)
-    RecyclerView rv;
-    @BindView(R.id.refreshLayout)
-    SmartRefreshLayout refreshLayout;
+
+    @BindView(R.id.rv_dynamicRisks)
+    RecyclerView rv_dynamicRisks;
     RiskSuperviseAdapter adapter;
     List<BaseNode> mlist = new ArrayList<>();
     String id;
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_select_inspections;
+        return R.layout.activity_select_risks;
     }
 
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        rv.setLayoutManager(new LinearLayoutManager(this));
-//        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        rv_dynamicRisks.setLayoutManager(new LinearLayoutManager(this));
+        rv_dynamicRisks.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         adapter = new RiskSuperviseAdapter(new RiskSuperviseAdapter.OnProviderOnClick() {
             @Override
             public void onItemOnclick(BaseNode node, int type) {
@@ -76,7 +74,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
             }
         });
         adapter.setList(mlist);
-        rv.setAdapter(adapter);
+        rv_dynamicRisks.setAdapter(adapter);
         mPresenter.getData("spxsInspectionRecord/getItems");
         initData();
     }
@@ -107,11 +105,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
 
         adapter.setList(data.getDynamicRisks());
         adapter.notifyDataSetChanged();
-        if (data.getDynamicRisks().size() == 0) {
-            llNull.setVisibility(View.VISIBLE);
-        } else {
-            llNull.setVisibility(View.GONE);
-        }
+
     }
 
     @Override

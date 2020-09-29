@@ -2,6 +2,7 @@ package com.zz.supervision.bean;
 
 import com.chad.library.adapter.base.entity.node.BaseExpandNode;
 import com.chad.library.adapter.base.entity.node.BaseNode;
+import com.chad.library.adapter.base.entity.node.NodeFooterImp;
 import com.zz.supervision.CompanyBean;
 
 import org.jetbrains.annotations.Nullable;
@@ -23,7 +24,7 @@ public class RiskSuperviseBean {
         return staticRisks;
     }
 
-    public class RiskItem extends BaseExpandNode {
+    public class RiskItem extends BaseExpandNode  {
         private String childType;//
         private String content;//
         private String createBy;//
@@ -45,6 +46,10 @@ public class RiskSuperviseBean {
         private String orderNum;//
         private String type;// 0,
         private ArrayList<ChildRisk> childRisks;
+
+        public RiskItem() {
+            setExpanded(true);
+        }
 
         public String getChildType() {
             return childType;
@@ -128,6 +133,7 @@ public class RiskSuperviseBean {
             }
             return childs;
         }
+
     }
 
     public class ChildRisk extends BaseExpandNode {

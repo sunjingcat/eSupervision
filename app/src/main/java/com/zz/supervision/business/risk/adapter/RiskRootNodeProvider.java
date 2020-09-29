@@ -36,10 +36,9 @@ public class RiskRootNodeProvider extends BaseNodeProvider {
         RiskSuperviseBean.RiskItem entity = (RiskSuperviseBean.RiskItem) data;
         baseViewHolder.setText(R.id.itemName, entity.getContent());
         baseViewHolder.setText(R.id.itemContent, "");
-        baseViewHolder.getView(R.id.item_check).setVisibility(View.GONE);
         ((CheckBox) baseViewHolder.getView(R.id.item_check)).setChecked(entity.isCheck());
         baseViewHolder.setImageResource(R.id.image_fold, !((BaseExpandNode) data).isExpanded() ? R.drawable.image_down : R.drawable.image_top);
-        baseViewHolder.getView(R.id.image_fold).setVisibility(data.getChildNode() != null && data.getChildNode().size() > 0 ? View.VISIBLE : View.INVISIBLE);
+//        baseViewHolder.getView(R.id.image_fold).setVisibility(data.getChildNode() != null && data.getChildNode().size() > 0 ? View.VISIBLE : View.INVISIBLE);
         baseViewHolder.getView(R.id.image_fold).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

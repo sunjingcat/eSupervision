@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.entity.node.BaseNode;
@@ -58,7 +59,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     protected void initView() {
         ButterKnife.bind(this);
         rv.setLayoutManager(new LinearLayoutManager(this));
-//        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         adapter = new SuperviseAdapter(new SuperviseAdapter.OnProviderOnClick() {
             @Override
             public void onItemOnclick(BaseNode node, int type) {
@@ -85,10 +86,10 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
        CompanyBean company = getIntent().getParcelableExtra("company");
        String lawEnforcerText = getIntent().getStringExtra("lawEnforcerText");
        String type = getIntent().getStringExtra("type");
-        id = getIntent().getStringExtra("id");
-       tvCompany.setText(company.getOperatorName());
-       tvInspector.setText("检查员："+lawEnforcerText);
-       tvType.setText("检查类型："+type+"");
+//        id = getIntent().getStringExtra("id");
+//       tvCompany.setText(company.getOperatorName());
+//       tvInspector.setText("检查员："+lawEnforcerText);
+//       tvType.setText("检查类型："+type+"");
     }
 
     @Override
