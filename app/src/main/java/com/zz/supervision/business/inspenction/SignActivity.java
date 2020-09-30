@@ -42,21 +42,6 @@ public class SignActivity extends MyBaseActivity {
         mView = new SignatureView(this);
         flView.addView(mView);
         mView.requestFocus();
-        btnClear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mView.clear();
-            }
-        });
-        btnOk.setOnClickListener((v) -> {
-            Bitmap imageBitmap = mView.getCachebBitmap();
-            String path = BASE64.saveBitmap(imageBitmap);
-            Intent intent= new Intent();
-            intent.putExtra("sign",path);
-            setResult(RESULT_OK,intent);
-            finish();
-
-        });
     }
 
     @Override
@@ -74,8 +59,17 @@ public class SignActivity extends MyBaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_ok:
+                Bitmap imageBitmap = mView.getCachebBitmap();
+                String path = BASE64.saveBitmap(imageBitmap);
+                Intent intent= new Intent();
+                intent.putExtra("sign",path);
+                setResult(RESULT_OK,intent);
+                finish();
+
                 break;
             case R.id.btn_clear:
+                mView.clear();
+
                 break;
         }
     }

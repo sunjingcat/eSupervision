@@ -1,5 +1,7 @@
 package com.zz.supervision.business.inspenction;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,8 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
+import com.zz.lib.commonlib.utils.PermissionUtils;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
+import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.SuperviseBean;
@@ -127,10 +131,32 @@ public class SuperviseSignActivity extends MyBaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_lawEnforcer_sign:
-                startActivityForResult(new Intent(this, SignActivity.class), 1001);
+                PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
+                    @Override
+                    public void onGranted() {
+                        startActivityForResult(new Intent(SuperviseSignActivity.this, SignActivity.class), 1001);
+                    }
+
+                    @Override
+                    public void onDenied() {
+
+                    }
+                });
+
                 break;
             case R.id.ll_legalRepresentative_sign:
-                startActivityForResult(new Intent(this, SignActivity.class), 1002);
+                PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
+                    @Override
+                    public void onGranted() {
+                        startActivityForResult(new Intent(SuperviseSignActivity.this, SignActivity.class), 1002);
+                    }
+
+                    @Override
+                    public void onDenied() {
+
+                    }
+                });
+
                 break;
             case R.id.bt_ok:
                 postData();
@@ -182,6 +208,6 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 super.onFail2(userInfoJsonT);
                 showToast(userInfoJsonT.getMessage());
             }
-        }, null);
+        }, LoadingUtils.build(this));
     }
 }
