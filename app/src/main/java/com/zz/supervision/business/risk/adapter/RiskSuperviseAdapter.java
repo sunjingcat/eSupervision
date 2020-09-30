@@ -24,12 +24,13 @@ public class RiskSuperviseAdapter extends BaseNodeAdapter {
             return 0;
         } else if (node instanceof RiskSuperviseBean.ChildRisk) {
             return 1;
-        }else if (node instanceof RiskSuperviseBean.RootFooterNode) {
+        } else if (node instanceof RiskSuperviseBean.RootFooterNode) {
             return 2;
         }
         return -1;
     }
-    public interface OnProviderOnClick{
+
+    public interface OnProviderOnClick {
         void onItemOnclick(BaseNode node, int type);
     }
 }

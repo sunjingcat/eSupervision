@@ -104,14 +104,7 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                if (TextUtils.isEmpty(select)) {
-                    startActivity(new Intent(getActivity(), CompanyInfoActivity.class).putExtra("id", mlist.get(position).getId()));
-                } else {
-                    Intent intent = new Intent();
-                    intent.putExtra("company", mlist.get(position));
-                    getActivity().setResult(getActivity().RESULT_OK, intent);
-                    getActivity().finish();
-                }
+
             }
         });
         adapter.setOnItemChildClickListener(new OnItemChildClickListener() {

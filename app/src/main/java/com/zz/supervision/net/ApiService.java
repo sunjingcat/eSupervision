@@ -5,25 +5,16 @@ package com.zz.supervision.net;
 
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.bean.BusinessType;
-import com.zz.supervision.bean.CameraBean;
 import com.zz.supervision.bean.CompanyType;
-import com.zz.supervision.bean.DictBean;
 import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.bean.ImageBean;
 import com.zz.supervision.bean.LawEnforcerBean;
-import com.zz.supervision.bean.MapListBean;
-import com.zz.supervision.bean.OperLog;
-import com.zz.supervision.bean.RealTimeCtrlGroup;
-import com.zz.supervision.bean.RealTimeCtrlTerminal;
 import com.zz.supervision.bean.RecordBean;
-import com.zz.supervision.bean.RegionExpandItem;
 import com.zz.supervision.bean.RiskSuperviseBean;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.bean.UserBasicBean;
 import com.zz.supervision.bean.UserInfo;
 import com.zz.supervision.bean.Version;
-import com.zz.supervision.bean.IpAdress;
-import com.zz.supervision.bean.YsConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +23,6 @@ import java.util.Map;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -41,7 +31,6 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 
@@ -125,10 +114,19 @@ public interface ApiService {
     @POST("/app/v1/supervise/spxsInspectionRecord/confirm/{id}")
     Observable<JsonT<SuperviseBean.ResposeConfirmBean>> submitSuperviseConfirm(@Path("id")String id, @Body ArrayList<SuperviseBean.PostBean> requestBody);
 
+   @Headers("Content-Type: application/json")
+    @POST("/app/v1/supervise/spxsRiskRecord/confirm/{id}")
+    Observable<JsonT<SuperviseBean.ResposeConfirmBean>> submitSpxsRiskRecordConfirm(@Path("id")String id, @Body RiskSuperviseBean.PostBean requestBody);
+
 
     @Headers("Content-Type: application/json")
     @POST("/app/v1/supervise/spxsInspectionRecord/submitScoreItems/{id}")
     Observable<JsonT<SuperviseBean.ResposeBean>> submitSupervise(@Path("id")String id,@Body ArrayList<SuperviseBean.PostBean> requestBody);
+
+
+    @Headers("Content-Type: application/json")
+    @POST("/app/v1/supervise/spxsRiskRecord/submitScoreItems/{id}")
+    Observable<JsonT<SuperviseBean.ResposeBean>> submitSpxsRiskRecord(@Path("id")String id,@Body RiskSuperviseBean.PostBean requestBody);
 
     @POST("/app/v1/supervise/universal/createRecord")
     Observable<JsonT<Integer>> createRecord(@QueryMap Map<String, Object> params);

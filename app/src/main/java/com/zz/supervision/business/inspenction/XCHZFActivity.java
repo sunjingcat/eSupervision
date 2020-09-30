@@ -164,13 +164,8 @@ public class XCHZFActivity extends MyBaseActivity {
                 break;
 
             case R.id.bt_ok:
-//                postDate();
-                startActivity(new Intent(XCHZFActivity.this, RiskSuperviseActivity.class)
-                        .putExtra("company", companyBean)
-                        .putExtra("id", "")
-                        .putExtra("type", etType.getText().toString())
-                        .putExtra("lawEnforcer", names)
-                        .putExtra("inspectionTime", inspectionTime));
+                postDate();
+
                 break;
         }
     }

@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RiskSuperviseBean {
 
@@ -189,12 +190,6 @@ public class RiskSuperviseBean {
         private String updateBy;//
         private String updateTime;
         private boolean check;
-        private List<ChildRisk2> childRisks;
-
-        public List<ChildRisk2> getChildRisks() {
-            return childRisks;
-        }
-
         public boolean isCheck() {
             return check;
         }
@@ -266,126 +261,30 @@ public class RiskSuperviseBean {
         @Nullable
         @Override
         public List<BaseNode> getChildNode() {
-            if (childRisks == null) return null;
-            List<BaseNode> childs = new ArrayList<>();
-            for (BaseNode node : childRisks) {
-                childs.add(node);
-            }
-            return childs;
+             return null;
         }
     }
 
-    public class ChildRisk2 extends BaseExpandNode {
-        private String childType;//
-        private String content;//
-        private String createBy;//
-        private String createTime;//
-        private String deptId;//
-        private String id;//
-        private String isDelete;//
-        private Object params;
-        private String pid;//
-        private String remark;//
-        private String score;//
-        private String searchValue;//
-        private String unit;//
-        private String updateBy;//
-        private String updateTime;
-        private boolean check;
 
-        public boolean isCheck() {
-            return check;
-        }
-
-        public void setCheck(boolean check) {
-            this.check = check;
-        }
-
-        public String getChildType() {
-            return childType;
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        public String getCreateBy() {
-            return createBy;
-        }
-
-        public String getCreateTime() {
-            return createTime;
-        }
-
-        public String getDeptId() {
-            return deptId;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public String getIsDelete() {
-            return isDelete;
-        }
-
-        public Object getParams() {
-            return params;
-        }
-
-        public String getPid() {
-            return pid;
-        }
-
-        public String getRemark() {
-            return remark;
-        }
-
-        public String getScore() {
-            return score;
-        }
-
-        public String getSearchValue() {
-            return searchValue;
-        }
-
-        public String getUnit() {
-            return unit;
-        }
-
-        public String getUpdateBy() {
-            return updateBy;
-        }
-
-        public String getUpdateTime() {
-            return updateTime;
-        }
-
-        @Nullable
-        @Override
-        public List<BaseNode> getChildNode() {
-            return null;
-        }
-    }
 
     public static class PostBean {
-        String itemId;
-        int isSatisfy;
+        List<String>  staticRiskIds;
+        Map<String,Object> dynamicRiskMap;
+
+        public PostBean(List<String> staticRiskIds, Map<String, Object> dynamicRiskMap) {
+            this.staticRiskIds = staticRiskIds;
+            this.dynamicRiskMap = dynamicRiskMap;
+        }
 
         public PostBean() {
         }
 
-        public PostBean(String itemId, int isSatisfy) {
-            this.itemId = itemId;
-            this.isSatisfy = isSatisfy;
+        public List<String> getStaticRiskIds() {
+            return staticRiskIds;
         }
 
-        public String getItemId() {
-            return itemId;
-        }
-
-        public int getIsSatisfy() {
-            return isSatisfy;
+        public Map<String, Object> getDynamicRiskMap() {
+            return dynamicRiskMap;
         }
     }
 

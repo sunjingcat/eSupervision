@@ -25,8 +25,8 @@ public class SuperviseAdapter extends BaseNodeAdapter {
             return 0;
         } else if (node instanceof SuperviseBean.Children) {
             return 1;
-        }else if (node instanceof SuperviseBean.Children) {
-            return 1;
+        }else if (node instanceof SuperviseBean.RootFooterNode) {
+            return 2;
         }
         return -1;
     }

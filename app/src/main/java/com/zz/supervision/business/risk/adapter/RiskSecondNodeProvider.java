@@ -51,6 +51,5 @@ public class RiskSecondNodeProvider extends BaseNodeProvider {
             }
         });
         ((RadioButton) baseViewHolder.getView(R.id.item_check_yes)).setChecked(entity.isCheck());
-        ((RadioButton) baseViewHolder.getView(R.id.item_check_no)).setChecked(!entity.isCheck());
     }
 }

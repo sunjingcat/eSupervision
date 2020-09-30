@@ -37,8 +37,8 @@ public class RiskSupervisePresenter extends MyBasePresenterImpl<Contract.IGetRis
     }
 
     @Override
-    public void submitData(String id,ArrayList<SuperviseBean.PostBean> spxsInspectionPoints) {
-        RxNetUtils.request(getApi(ApiService.class).submitSupervise(id,spxsInspectionPoints), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
+    public void submitData(String id,RiskSuperviseBean.PostBean spxsInspectionPoints) {
+        RxNetUtils.request(getApi(ApiService.class).submitSpxsRiskRecord(id,spxsInspectionPoints), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
             @Override
             protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
                 view.showResult(jsonT.getData());
@@ -53,8 +53,8 @@ public class RiskSupervisePresenter extends MyBasePresenterImpl<Contract.IGetRis
     }
 
     @Override
-    public void submitReData(String id, ArrayList<SuperviseBean.PostBean> postBeans) {
-        RxNetUtils.request(getApi(ApiService.class).submitSuperviseConfirm(id,postBeans), new RequestObserver<JsonT<SuperviseBean.ResposeConfirmBean>>(this) {
+    public void submitReData(String id, RiskSuperviseBean.PostBean postBeans) {
+        RxNetUtils.request(getApi(ApiService.class).submitSpxsRiskRecordConfirm(id,postBeans), new RequestObserver<JsonT<SuperviseBean.ResposeConfirmBean>>(this) {
             @Override
             protected void onSuccess(JsonT<SuperviseBean.ResposeConfirmBean> jsonT) {
                 view.showReResult(jsonT.getData());

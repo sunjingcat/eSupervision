@@ -45,13 +45,6 @@ public class RootNodeProvider extends BaseNodeProvider {
             }
         });
         ((CheckBox) baseViewHolder.getView(R.id.item_check)).setChecked(entity.isCheck());
-        baseViewHolder.setImageResource(R.id.image_fold, !((BaseExpandNode) data).isExpanded() ? R.drawable.image_down : R.drawable.image_top);
-//        baseViewHolder.getView(R.id.image_fold).setVisibility(data.getChildNode() != null && data.getChildNode().size() > 0 ? View.VISIBLE : View.INVISIBLE);
-        baseViewHolder.getView(R.id.image_fold).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getAdapter().expandOrCollapse(baseViewHolder.getAdapterPosition());
-            }
-        });
+
     }
 }

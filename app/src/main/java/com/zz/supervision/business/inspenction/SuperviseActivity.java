@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
@@ -20,6 +21,7 @@ import com.zz.supervision.bean.RiskSuperviseBean;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.business.inspenction.adapter.SuperviseAdapter;
 import com.zz.supervision.business.inspenction.presenter.SupervisePresenter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,10 +71,10 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                         children.setCheck(((SuperviseBean) node).isCheck());
                     }
                 }
-                if (node instanceof SuperviseBean.RootFooterNode){
-                    for (int i =0;i<adapter.getData().size();i++) {
-                        BaseNode children  = adapter.getData().get(i);
-                        if (((SuperviseBean)children).getId()==((SuperviseBean.RootFooterNode) node).getId()){
+                if (node instanceof SuperviseBean.RootFooterNode) {
+                    for (int i = 0; i < adapter.getData().size(); i++) {
+                        BaseNode children = adapter.getData().get(i);
+                        if (((SuperviseBean) children).getId() == ((SuperviseBean.RootFooterNode) node).getId()) {
                             adapter.expandOrCollapse(i);
                             ((SuperviseBean.RootFooterNode) node).setExpanded(((SuperviseBean) children).isExpanded());
                             break;
@@ -94,13 +96,13 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     }
 
     void initData() {
-       CompanyBean company = getIntent().getParcelableExtra("company");
-       String lawEnforcerText = getIntent().getStringExtra("lawEnforcerText");
-       String type = getIntent().getStringExtra("type");
+        CompanyBean company = getIntent().getParcelableExtra("company");
+        String lawEnforcerText = getIntent().getStringExtra("lawEnforcerText");
+        String type = getIntent().getStringExtra("type");
 //        id = getIntent().getStringExtra("id");
-//       tvCompany.setText(company.getOperatorName());
-//       tvInspector.setText("检查员："+lawEnforcerText);
-//       tvType.setText("检查类型："+type+"");
+//        tvCompany.setText(company.getOperatorName());
+//        tvInspector.setText("检查员：" + lawEnforcerText);
+//        tvType.setText("检查类型：" + type + "");
     }
 
     @Override
@@ -122,17 +124,19 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
 
     @Override
     public void showReResult(SuperviseBean.ResposeConfirmBean bean) {
-        startActivityForResult(new Intent(this,InfoActivity.class)
-                        .putExtra("supervise_respose",bean)
-                ,1001);
+        startActivityForResult(new Intent(this, InfoActivity.class)
+                        .putExtra("supervise_respose", bean)
+                , 1001);
     }
 
     @Override
     public void showResult(SuperviseBean.ResposeBean resposeBean) {
-        startActivity(new Intent(this,SuperviseSignActivity.class).putExtra("resposeBean",resposeBean));
+        startActivity(new Intent(this, SuperviseSignActivity.class).putExtra("resposeBean", resposeBean));
 
     }
+
     ArrayList<SuperviseBean.PostBean> postBeans = new ArrayList<>();
+
     @OnClick(R.id.bt_ok)
     public void onViewClicked() {
         mlist = adapter.getData();
@@ -150,8 +154,8 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==1001){
-            if (resultCode==RESULT_OK){
+        if (requestCode == 1001) {
+            if (resultCode == RESULT_OK) {
                 mPresenter.submitData(id, postBeans);
             }
         }
