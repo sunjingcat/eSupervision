@@ -175,7 +175,7 @@ public class XCHZFActivity extends MyBaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == 1001) {
-                CompanyBean company = data.getParcelableExtra("company");
+                CompanyBean company = (CompanyBean) data.getSerializableExtra("company");
                 if (company != null) {
                     companyBean = company;
                     llCompany.setVisibility(View.GONE);

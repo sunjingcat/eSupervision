@@ -123,12 +123,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick(R.id.btn_ok)
-    public void onViewClicked() {
-        startActivity(new Intent(this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean));
-    }
-
-    @OnClick({R.id.ll_lawEnforcer_sign, R.id.ll_legalRepresentative_sign, R.id.btn_ok})
+    @OnClick({R.id.ll_lawEnforcer_sign, R.id.ll_legalRepresentative_sign, R.id.bt_ok})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_lawEnforcer_sign:
@@ -137,7 +132,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             case R.id.ll_legalRepresentative_sign:
                 startActivityForResult(new Intent(this, SignActivity.class), 1002);
                 break;
-            case R.id.btn_ok:
+            case R.id.bt_ok:
                 postData();
 
                 break;
@@ -161,18 +156,19 @@ public class SuperviseSignActivity extends MyBaseActivity {
     }
 
     void postData() {
-        if (TextUtils.isEmpty(lawEnforcer_sign)){
+        if (TextUtils.isEmpty(lawEnforcer_sign)) {
             showToast("执法人签字");
             return;
-        } if (TextUtils.isEmpty(legalRepresentative_sign)){
+        }
+        if (TextUtils.isEmpty(legalRepresentative_sign)) {
             showToast("企业负责人签字");
             return;
         }
         Map<String, Object> params = new HashMap<>();
         String companySign = BASE64.imageToBase64(lawEnforcer_sign);
         String officerSign = BASE64.imageToBase64(legalRepresentative_sign);
-        params.put("companySign",companySign);
-        params.put("officerSign",officerSign);
+        params.put("companySign", companySign);
+        params.put("officerSign", officerSign);
         RxNetUtils.request(getApi(ApiService.class).submitSign(resposeBean.getId(), params), new RequestObserver<JsonT>(this) {
             @Override
             protected void onSuccess(JsonT jsonT) {

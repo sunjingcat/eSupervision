@@ -96,7 +96,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     }
 
     void initData() {
-        CompanyBean company = getIntent().getParcelableExtra("company");
+        CompanyBean company = (CompanyBean) getIntent().getSerializableExtra("company");
         String lawEnforcerText = getIntent().getStringExtra("lawEnforcerText");
         String type = getIntent().getStringExtra("type");
         id = getIntent().getStringExtra("id");

@@ -57,9 +57,9 @@ public interface ApiService {
     @POST( "/app/light/resetPwd")
     Observable<JsonT> resetPwd(@QueryMap Map<String, Object> params);
 
-    @GET("/app/version/latest")
+    @GET("/app/v1/supervise/version/latest")
     Observable<JsonT<Version>> getVersion();
-   @GET("/app/version/versionCode/{versionCode}")
+   @GET("/app/v1/supervise/version/versionCode/{versionCode}")
     Observable<JsonT<Version>> getVersionInfo(@Path("versionCode") String terminalId);
 
     @Multipart
