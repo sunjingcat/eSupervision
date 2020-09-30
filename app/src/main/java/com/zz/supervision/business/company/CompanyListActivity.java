@@ -23,6 +23,7 @@ import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
+import com.zz.supervision.utils.TabUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,7 +58,7 @@ public class CompanyListActivity extends MyBaseActivity {
     protected void initView() {
         ButterKnife.bind(this);
         getDate();
-         select = getIntent().getStringExtra("select");
+        select = getIntent().getStringExtra("select");
         if (TextUtils.isEmpty(select)) {
             toolbarSubtitle.setVisibility(View.VISIBLE);
         } else {
@@ -82,10 +83,12 @@ public class CompanyListActivity extends MyBaseActivity {
     }
 
     void initFragment(List<CompanyType> list) {
+        String[] tabs = new String[list.size()];
         for (int i = 0; i < list.size(); i++) {
             fragments.add(new CompanyFragment(list.get(i).getCompanyType()));
-            tablayout.addTab(tablayout.newTab());
+            tabs[i] = list.get(i).getCompanyTypeText();
         }
+
 
         tablayout.setupWithViewPager(viewpager, false);
         pagerAdapter = new FmPagerAdapter(fragments, getSupportFragmentManager());
@@ -94,6 +97,7 @@ public class CompanyListActivity extends MyBaseActivity {
         for (int i = 0; i < list.size(); i++) {
             tablayout.getTabAt(i).setText(list.get(i).getCompanyTypeText());
         }
+        TabUtils.setTabs(tablayout, this.getLayoutInflater(), tabs);
     }
 
     @Override
@@ -126,7 +130,7 @@ public class CompanyListActivity extends MyBaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_search:
-                startActivityForResult(new Intent(this, SearchCompanyActivity.class).putExtra("select",select),1001);
+                startActivityForResult(new Intent(this, SearchCompanyActivity.class).putExtra("select", select), 1001);
                 break;
             case R.id.toolbar_subtitle:
                 startActivity(new Intent(this, AddCompanyActivity.class));
@@ -137,8 +141,8 @@ public class CompanyListActivity extends MyBaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==1001&&resultCode==RESULT_OK){
-            setResult(RESULT_OK,data);
+        if (requestCode == 1001 && resultCode == RESULT_OK) {
+            setResult(RESULT_OK, data);
             finish();
         }
     }

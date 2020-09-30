@@ -101,32 +101,37 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
         refreshLayout.setOnLoadMoreListener(this);
         String select = getActivity().getIntent().getStringExtra("select");
 
-        adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-
-            }
-        });
         adapter.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override
             public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
-                CustomDialog.Builder builder = new com.troila.customealert.CustomDialog.Builder(getActivity())
-                        .setTitle("提示")
-                        .setMessage("确定删除设备")
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                deleteDate(mlist.get(position).getId());
-                            }
-                        });
-                customDialog = builder.create();
-                customDialog.show();
+                if (view.getId()==R.id.mc_item_delete) {
+                    CustomDialog.Builder builder = new com.troila.customealert.CustomDialog.Builder(getActivity())
+                            .setTitle("提示")
+                            .setMessage("确定删除设备")
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    deleteDate(mlist.get(position).getId());
+                                }
+                            });
+                    customDialog = builder.create();
+                    customDialog.show();
+                }else if (view.getId()==R.id.content) {
+                    if (TextUtils.isEmpty(select)) {
+                        startActivity(new Intent(getActivity(), CompanyInfoActivity.class).putExtra("id", mlist.get(position).getId()));
+                    } else {
+                        Intent intent = new Intent();
+                        intent.putExtra("company", mlist.get(position));
+                        getActivity().setResult(getActivity().RESULT_OK, intent);
+                        getActivity().finish();
+                    }
+                }
 
             }
         });
