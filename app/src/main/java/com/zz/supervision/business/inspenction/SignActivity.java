@@ -15,6 +15,8 @@ import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.utils.BASE64;
 import com.zz.supervision.widget.SignatureView;
 
+import java.io.File;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -61,6 +63,7 @@ public class SignActivity extends MyBaseActivity {
             case R.id.btn_ok:
                 Bitmap imageBitmap = mView.getCachebBitmap();
                 String path = BASE64.saveBitmap(imageBitmap);
+                File file = new File(path);
                 Intent intent= new Intent();
                 intent.putExtra("sign",path);
                 setResult(RESULT_OK,intent);
