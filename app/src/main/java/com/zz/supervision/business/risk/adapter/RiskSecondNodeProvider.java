@@ -42,6 +42,7 @@ public class RiskSecondNodeProvider extends BaseNodeProvider {
                 switch (checkedId) {
                     case R.id.item_check_yes:
                         ((RiskSuperviseBean.ChildRisk) data).setCheck(true);
+
                         break;
                     case R.id.item_check_no:
                         ((RiskSuperviseBean.ChildRisk) data).setCheck(false);
@@ -50,5 +51,6 @@ public class RiskSecondNodeProvider extends BaseNodeProvider {
             }
         });
         ((RadioButton) baseViewHolder.getView(R.id.item_check_yes)).setChecked(entity.isCheck());
+        ((RadioButton) baseViewHolder.getView(R.id.item_check_no)).setChecked(!entity.isCheck());
     }
 }

@@ -9,41 +9,37 @@ import com.chad.library.adapter.base.provider.BaseNodeProvider;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.zz.supervision.R;
 import com.zz.supervision.bean.RiskSuperviseBean;
-import com.zz.supervision.bean.SuperviseBean;
 
 import org.jetbrains.annotations.NotNull;
 
-public class RiskRootNodeProvider extends BaseNodeProvider {
+public class RiskFooterNodeProvider extends BaseNodeProvider {
     RiskSuperviseAdapter.OnProviderOnClick onProviderOnClick;
 
-    public RiskRootNodeProvider(RiskSuperviseAdapter.OnProviderOnClick onProviderOnClick) {
+    public RiskFooterNodeProvider(RiskSuperviseAdapter.OnProviderOnClick onProviderOnClick) {
         this.onProviderOnClick = onProviderOnClick;
     }
 
     @Override
     public int getItemViewType() {
-        return 0;
+        return 2;
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.item_root;
+        return R.layout.item_food;
     }
 
     @Override
     public void convert(@NotNull BaseViewHolder baseViewHolder, BaseNode data) {
         // 数据类型需要自己强转
-        RiskSuperviseBean.RiskItem entity = (RiskSuperviseBean.RiskItem) data;
-        baseViewHolder.setText(R.id.itemName, entity.getContent());
-        baseViewHolder.setText(R.id.itemContent, "");
-        ((CheckBox) baseViewHolder.getView(R.id.item_check)).setChecked(entity.isCheck());
-        baseViewHolder.getView(R.id.item_check).setOnClickListener(new View.OnClickListener() {
+        RiskSuperviseBean.RootFooterNode entity = (RiskSuperviseBean.RootFooterNode) data;
+        baseViewHolder.setImageResource(R.id.image_fold, !entity.isExpanded() ? R.drawable.image_down : R.drawable.image_top);
+        baseViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                entity.setCheck(!entity.isCheck());
-                onProviderOnClick.onItemOnclick(data, 0);
+                ((RiskSuperviseBean.RootFooterNode) data).setExpanded(!((RiskSuperviseBean.RootFooterNode) data).isExpanded());
+                onProviderOnClick.onItemOnclick(data,0);
             }
         });
-
     }
 }

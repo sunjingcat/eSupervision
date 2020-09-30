@@ -3,6 +3,7 @@ import com.chad.library.adapter.base.BaseNodeAdapter;
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.zz.supervision.bean.ScoreBean;
 import com.zz.supervision.bean.SuperviseBean;
+import com.zz.supervision.business.risk.adapter.RiskFooterNodeProvider;
 
 
 import org.jetbrains.annotations.NotNull;
@@ -14,6 +15,7 @@ public class SuperviseAdapter extends BaseNodeAdapter {
         super();
         addNodeProvider(new RootNodeProvider(onProviderOnClick));
         addNodeProvider(new SecondNodeProvider(onProviderOnClick));
+        addFooterNodeProvider(new FooterNodeProvider(onProviderOnClick));
     }
 
     @Override
@@ -22,6 +24,8 @@ public class SuperviseAdapter extends BaseNodeAdapter {
         if (node instanceof SuperviseBean) {
             return 0;
         } else if (node instanceof SuperviseBean.Children) {
+            return 1;
+        }else if (node instanceof SuperviseBean.Children) {
             return 1;
         }
         return -1;

@@ -24,7 +24,7 @@ public class RiskSuperviseBean {
         return staticRisks;
     }
 
-    public class RiskItem extends BaseExpandNode  {
+    public class RiskItem extends BaseExpandNode  implements NodeFooterImp{
         private String childType;//
         private String content;//
         private String createBy;//
@@ -42,14 +42,14 @@ public class RiskSuperviseBean {
         private String updateTime;
         private boolean check;
 
+        public RiskItem() {
+            setExpanded(true);
+        }
+
         private String isKey;// 0,
         private String orderNum;//
         private String type;// 0,
         private ArrayList<ChildRisk> childRisks;
-
-        public RiskItem() {
-            setExpanded(true);
-        }
 
         public String getChildType() {
             return childType;
@@ -134,6 +134,42 @@ public class RiskSuperviseBean {
             return childs;
         }
 
+        @Nullable
+        @Override
+        public BaseNode getFooterNode() {
+            return new RootFooterNode(isExpanded(),id);
+        }
+    }
+    public class RootFooterNode extends BaseNode{
+        private boolean isExpanded;
+        private String id;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public RootFooterNode(boolean isExpanded, String id) {
+            this.isExpanded = isExpanded;
+            this.id = id;
+        }
+
+        public boolean isExpanded() {
+            return isExpanded;
+        }
+
+        public void setExpanded(boolean expanded) {
+            isExpanded = expanded;
+        }
+
+        @Nullable
+        @Override
+        public List<BaseNode> getChildNode() {
+            return null;
+        }
     }
 
     public class ChildRisk extends BaseExpandNode {

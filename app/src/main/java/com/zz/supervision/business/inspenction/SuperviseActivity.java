@@ -16,6 +16,7 @@ import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
+import com.zz.supervision.bean.RiskSuperviseBean;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.business.inspenction.adapter.SuperviseAdapter;
 import com.zz.supervision.business.inspenction.presenter.SupervisePresenter;
@@ -68,10 +69,20 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                         children.setCheck(((SuperviseBean) node).isCheck());
                     }
                 }
+                if (node instanceof SuperviseBean.RootFooterNode){
+                    for (int i =0;i<adapter.getData().size();i++) {
+                        BaseNode children  = adapter.getData().get(i);
+                        if (((SuperviseBean)children).getId()==((SuperviseBean.RootFooterNode) node).getId()){
+                            adapter.expandOrCollapse(i);
+                            ((SuperviseBean.RootFooterNode) node).setExpanded(((SuperviseBean) children).isExpanded());
+                            break;
+                        }
+                    }
+                }
                 adapter.notifyDataSetChanged();
             }
         });
-        adapter.setList(mlist);
+
         rv.setAdapter(adapter);
         mPresenter.getData("spxsInspectionRecord/getItems");
         initData();
@@ -100,7 +111,6 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
 
     @Override
     public void showFoodSuperviseList(List<SuperviseBean> data) {
-
         adapter.setList(data);
         adapter.notifyDataSetChanged();
         if (data.size() == 0) {

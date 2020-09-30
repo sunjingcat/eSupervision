@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.chad.library.adapter.base.entity.node.BaseExpandNode;
 import com.chad.library.adapter.base.entity.node.BaseNode;
+import com.chad.library.adapter.base.entity.node.NodeFooterImp;
 import com.zz.supervision.CompanyBean;
 
 import org.jetbrains.annotations.Nullable;
@@ -13,7 +14,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuperviseBean extends BaseExpandNode {
+public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
     private String createBy;// ,
     private String createTime;// ,
     private String deptId;// 0,
@@ -100,6 +101,42 @@ public class SuperviseBean extends BaseExpandNode {
         return childs;
     }
 
+    @Nullable
+    @Override
+    public BaseNode getFooterNode() {
+        return new RootFooterNode(isExpanded(),id);
+    }
+    public class RootFooterNode extends BaseNode{
+        private boolean isExpanded;
+        private String id;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public RootFooterNode(boolean isExpanded, String id) {
+            this.isExpanded = isExpanded;
+            this.id = id;
+        }
+
+        public boolean isExpanded() {
+            return isExpanded;
+        }
+
+        public void setExpanded(boolean expanded) {
+            isExpanded = expanded;
+        }
+
+        @Nullable
+        @Override
+        public List<BaseNode> getChildNode() {
+            return null;
+        }
+    }
     public class Children extends BaseExpandNode {
         private String createBy;// ,
         private String createTime;// ,
