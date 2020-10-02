@@ -10,6 +10,7 @@ import com.zz.supervision.business.company.AddCompanyActivity;
 import com.zz.supervision.business.company.CompanyListActivity;
 import com.zz.supervision.business.inspenction.SignActivity;
 import com.zz.supervision.business.inspenction.XCHZFActivity;
+import com.zz.supervision.business.mine.MineActivity;
 import com.zz.supervision.business.record.CheckListActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
@@ -57,7 +58,7 @@ public class MainActivity extends MyBaseActivity {
 
     }
 
-    @OnClick({R.id.main_group_1, R.id.main_group_2, R.id.main_group_3})
+    @OnClick({R.id.main_group_1, R.id.main_group_2, R.id.main_group_3, R.id.toolbar_subtitle})
     public void onViewClicked(View view) {
         switch (view.getId()) {
 
@@ -78,6 +79,9 @@ public class MainActivity extends MyBaseActivity {
                 Intent intent2 = new Intent();
                 intent2.setClass(MainActivity.this, CheckListActivity.class);
                 startActivity(intent2);
+                break;
+                case R.id.toolbar_subtitle:
+                startActivity(new Intent(MainActivity.this, MineActivity.class));
                 break;
         }
     }

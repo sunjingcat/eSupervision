@@ -571,6 +571,14 @@
 
                 </TextView>
             </LinearLayout>
+            <Button
+                android:id="@+id/bt_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:text="删除"
+                android:textColor="@color/red_e8"
+                android:textSize="17sp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

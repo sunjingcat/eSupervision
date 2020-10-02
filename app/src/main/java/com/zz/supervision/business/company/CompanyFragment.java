@@ -107,7 +107,7 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
                 if (view.getId()==R.id.mc_item_delete) {
                     CustomDialog.Builder builder = new com.troila.customealert.CustomDialog.Builder(getActivity())
                             .setTitle("提示")
-                            .setMessage("确定删除设备")
+                            .setMessage("确定删除记录？")
                             .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -141,6 +141,9 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        if (customDialog != null && customDialog.isShowing()) {
+            customDialog.dismiss();
+        }
     }
 
     @Override

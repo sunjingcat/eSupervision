@@ -1,6 +1,7 @@
 package com.zz.supervision.business.inspenction;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.troila.customealert.CustomDialog;
 import com.zz.lib.commonlib.utils.PermissionUtils;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
@@ -75,6 +77,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
     ImageView tvLawEnforcerSign;
     @BindView(R.id.bt_ok)
     Button bt_ok;
+    @BindView(R.id.bt_delete)
+    Button bt_delete;
     @BindView(R.id.tv_legalRepresentative_sign)
     ImageView tvLegalRepresentativeSign;
     String lawEnforcer_sign;
@@ -111,6 +115,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         if (resposeBean != null) {
             showIntent(resposeBean);
             id = resposeBean.getId();
+
         } else {
             id = getIntent().getStringExtra("id");
             getData();
@@ -142,6 +147,9 @@ public class SuperviseSignActivity extends MyBaseActivity {
         if (resposeBean.getStatus() == 3) {
             llLawEnforcerSign.setEnabled(false);
             llLegalRepresentativeSign.setEnabled(false);
+            bt_delete.setVisibility(View.VISIBLE);
+        }else {
+            bt_delete.setVisibility(View.GONE);
         }
 //        tvType.setText(lightDevice.);
 
@@ -150,13 +158,13 @@ public class SuperviseSignActivity extends MyBaseActivity {
         GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLegalRepresentativeSign);
 
     }
-
+    private CustomDialog customDialog;
     @Override
     public BasePresenter initPresenter() {
         return null;
     }
 
-    @OnClick({R.id.ll_lawEnforcer_sign, R.id.ll_legalRepresentative_sign, R.id.bt_ok})
+    @OnClick({R.id.ll_lawEnforcer_sign, R.id.ll_legalRepresentative_sign, R.id.bt_ok, R.id.bt_delete})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_lawEnforcer_sign:
@@ -195,6 +203,25 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 }
 
                 break;
+            case R.id.bt_delete:
+                CustomDialog.Builder builder = new com.troila.customealert.CustomDialog.Builder(this)
+                        .setTitle("提示")
+                        .setMessage("确定删除？")
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteDate(id);
+                            }
+                        });
+                customDialog = builder.create();
+                customDialog.show();
+                break;
         }
     }
 
@@ -211,6 +238,14 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 GlideUtils.loadImage(SuperviseSignActivity.this, path, tvLegalRepresentativeSign);
 
             }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (customDialog != null && customDialog.isShowing()) {
+            customDialog.dismiss();
         }
     }
 
@@ -260,6 +295,18 @@ public class SuperviseSignActivity extends MyBaseActivity {
             }
         }, LoadingUtils.build(this));
     }
+    void deleteDate(String id) {
+        RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(id), new RequestObserver<JsonT>() {
+            @Override
+            protected void onSuccess(JsonT jsonT) {
+                finish();
+            }
 
+            @Override
+            protected void onFail2(JsonT stringJsonT) {
+                super.onFail2(stringJsonT);
+            }
+        }, LoadingUtils.build(this));
+    }
 
 }

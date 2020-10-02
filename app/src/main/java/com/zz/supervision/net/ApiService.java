@@ -49,13 +49,13 @@ public interface ApiService {
     Observable<JsonT> putClientId(@QueryMap Map<String, Object> params);
 
 
-    @GET("/app/light")
+    @GET("/app/v1")
     Observable<JsonT<UserBasicBean>> getUserDetail();
 
-    @POST("/app/light/logout")
+    @POST("/app/v1/logout")
     Observable<JsonT> logout();
 
-    @POST( "/app/light/resetPwd")
+    @POST( "/app/v1/resetPwd")
     Observable<JsonT> resetPwd(@QueryMap Map<String, Object> params);
 
     @GET("/app/v1/supervise/version/latest")
