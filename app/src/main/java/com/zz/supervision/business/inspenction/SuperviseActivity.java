@@ -14,7 +14,6 @@ import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.business.inspenction.adapter.SuperviseAdapter;
 import com.zz.supervision.business.inspenction.presenter.SupervisePresenter;
-import com.zz.supervision.business.risk.RiskSuperviseSignActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,7 +137,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
 
     @Override
     public void showResult(SuperviseBean.ResposeBean resposeBean) {
-        startActivity(new Intent(this, RiskSuperviseSignActivity.class).putExtra("resposeBean", resposeBean));
+        startActivity(new Intent(this, SuperviseSignActivity.class).putExtra("resposeBean", resposeBean));
 
     }
 

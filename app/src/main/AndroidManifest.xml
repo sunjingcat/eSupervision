@@ -166,7 +166,6 @@
         <activity android:name=".business.inspenction.SignActivity"/>
         <activity android:name=".business.risk.RiskSuperviseActivity" />
         <activity android:name=".business.inspenction.SuperviseSignActivity" />
-        <activity android:name=".business.risk.RiskSuperviseSignActivity" />
     </application>
 
 </manifest>

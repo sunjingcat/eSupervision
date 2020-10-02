@@ -77,6 +77,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
     ImageView tvLegalRepresentativeSign;
     String lawEnforcer_sign;
     String legalRepresentative_sign;
+    String url;
+    String id;
 
     @Override
     protected int getContentView() {
@@ -91,6 +93,22 @@ public class SuperviseSignActivity extends MyBaseActivity {
         resposeBean = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
         if (resposeBean != null) {
             showIntent(resposeBean);
+            id = resposeBean.getId();
+        } else {
+            id = getIntent().getStringExtra("id");
+            getData();
+        }
+
+        int type = getIntent().getIntExtra("type", 0);
+        if (type == 1) {
+            url = "spxsInspectionRecord";
+        } else if (type == 2) {
+            url = "cyfwInspectionRecord";
+        } else if (type == 3) {
+            url = "spxsRiskRecord";
+        } else {
+            url = "cyfwRiskRecord";
+
         }
     }
 
@@ -192,7 +210,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         String officerSign = BASE64.imageToBase64(legalRepresentative_sign);
         params.put("companySign", companySign);
         params.put("officerSign", officerSign);
-        RxNetUtils.request(getApi(ApiService.class).submitSign(resposeBean.getId(), params), new RequestObserver<JsonT>(this) {
+        RxNetUtils.request(getApi(ApiService.class).submitSign(id, params), new RequestObserver<JsonT>(this) {
             @Override
             protected void onSuccess(JsonT jsonT) {
                 if (jsonT.isSuccess()) {
@@ -202,6 +220,26 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
             @Override
             protected void onFail2(JsonT userInfoJsonT) {
+                super.onFail2(userInfoJsonT);
+                showToast(userInfoJsonT.getMessage());
+            }
+        }, LoadingUtils.build(this));
+    }
+
+    void getData() {
+
+        Map<String, Object> params = new HashMap<>();
+
+        RxNetUtils.request(getApi(ApiService.class).getSuperviseDetail(url, id), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
+            @Override
+            protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
+                if (jsonT.isSuccess()) {
+                    showIntent(jsonT.getData());
+                }
+            }
+
+            @Override
+            protected void onFail2(JsonT<SuperviseBean.ResposeBean> userInfoJsonT) {
                 super.onFail2(userInfoJsonT);
                 showToast(userInfoJsonT.getMessage());
             }

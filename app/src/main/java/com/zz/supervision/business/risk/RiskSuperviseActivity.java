@@ -147,7 +147,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
 
     @Override
     public void showResult(SuperviseBean.ResposeBean resposeBean) {
-        startActivity(new Intent(this, RiskSuperviseSignActivity.class).putExtra("resposeBean", resposeBean));
+        startActivity(new Intent(this, SuperviseSignActivity.class).putExtra("resposeBean", resposeBean));
 
     }
 

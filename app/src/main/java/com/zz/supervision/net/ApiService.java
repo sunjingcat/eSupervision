@@ -137,6 +137,9 @@ public interface ApiService {
     @POST("/app/v1/supervise/spxsInspectionRecord/submitSign/{id}")
     Observable<JsonT> submitSign(@Path("id")String id,@QueryMap Map<String, Object> params);
 
+    @GET("/app/v1/supervise/{url}/{id}")
+    Observable<JsonT<SuperviseBean.ResposeBean>> getSuperviseDetail(@Path("url") String url, @Path("id") String id);
+
 
 }
 
