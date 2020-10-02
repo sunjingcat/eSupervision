@@ -127,7 +127,7 @@ public interface ApiService {
 
     @Headers("Content-Type: application/json")
     @POST("/app/v1/supervise/{url}/submitScoreItems/{id}")
-    Observable<JsonT<SuperviseBean.ResposeBean>> submitSpxsRiskRecord(@Path("url")String url,@Path("id")String id,@Body RiskSuperviseBean.PostBean requestBody);
+    Observable<JsonT<Integer>> submitSpxsRiskRecord(@Path("url")String url,@Path("id")String id,@Body RiskSuperviseBean.PostBean requestBody);
 
     @POST("/app/v1/supervise/universal/createRecord")
     Observable<JsonT<Integer>> createRecord(@QueryMap Map<String, Object> params);
@@ -138,6 +138,10 @@ public interface ApiService {
     @FormUrlEncoded
     @PUT("/app/v1/supervise/{url}/submitSign/{id}")
     Observable<JsonT> submitSign(@Path("url")String url,@Path("id")String id,@Field("companySign") String companySign, @Field("officerSign") String officerSign);
+
+    @FormUrlEncoded
+    @PUT("/app/v1/supervise/{url}/submitSign/{id}")
+    Observable<JsonT> submitSign(@Path("url")String url,@Path("id")String id,@Field("fillerSign") String fillerSign, @Field("ownerSign") String  ownerSign,@Field("reviewerSign") String  reviewerSign);
 
     @GET("/app/v1/supervise/{url}/{id}")
     Observable<JsonT<SuperviseBean.ResposeBean>> getSuperviseDetail(@Path("url") String url, @Path("id") String id);

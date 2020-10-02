@@ -3,7 +3,6 @@ package com.zz.supervision.business.inspenction;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -83,12 +82,22 @@ public class SuperviseSignActivity extends MyBaseActivity {
     ImageView tvLegalRepresentativeSign;
     String lawEnforcer_sign;
     String legalRepresentative_sign;
+    String reviewerSign_sign;
     String url;
     String id;
     @BindView(R.id.ll_lawEnforcer_sign)
     LinearLayout llLawEnforcerSign;
     @BindView(R.id.ll_legalRepresentative_sign)
     LinearLayout llLegalRepresentativeSign;
+    @BindView(R.id.tv_sign_1)
+    TextView tvSign1;
+    @BindView(R.id.tv_sign_2)
+    TextView tvSign2;
+    @BindView(R.id.tv_reviewerSign_sign)
+    ImageView tvReviewerSignSign;
+    @BindView(R.id.ll_reviewerSign_sign)
+    LinearLayout llReviewerSignSign;
+    int type;
 
     @Override
     protected int getContentView() {
@@ -100,15 +109,24 @@ public class SuperviseSignActivity extends MyBaseActivity {
         ButterKnife.bind(this);
 
 
-        int type = getIntent().getIntExtra("type", 0);
+        type = getIntent().getIntExtra("type", 0);
         if (type == 1) {
             url = "spxsInspectionRecord";
+            llReviewerSignSign.setVisibility(View.GONE);
+
         } else if (type == 2) {
             url = "cyfwInspectionRecord";
+            llReviewerSignSign.setVisibility(View.GONE);
         } else if (type == 3) {
             url = "spxsRiskRecord";
+            llReviewerSignSign.setVisibility(View.VISIBLE);
+            tvSign1.setText("填表人签字");
+            tvSign2.setText("企业法定代表人签字");
         } else {
             url = "cyfwRiskRecord";
+            llReviewerSignSign.setVisibility(View.VISIBLE);
+            tvSign1.setText("填表人签字");
+            tvSign2.setText("企业法定代表人签字");
 
         }
         resposeBean = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
@@ -148,23 +166,32 @@ public class SuperviseSignActivity extends MyBaseActivity {
             llLawEnforcerSign.setEnabled(false);
             llLegalRepresentativeSign.setEnabled(false);
             bt_delete.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             bt_delete.setVisibility(View.GONE);
         }
 //        tvType.setText(lightDevice.);
 
-        GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLawEnforcerSign);
+        if (type == 1 || type == 2) {
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLawEnforcerSign);
 
-        GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLegalRepresentativeSign);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLegalRepresentativeSign);
 
+        } else {
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getFillerSign(), tvLawEnforcerSign);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOwnerSign(), tvLegalRepresentativeSign);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getReviewerSign(), tvReviewerSignSign);
+
+        }
     }
+
     private CustomDialog customDialog;
+
     @Override
     public BasePresenter initPresenter() {
         return null;
     }
 
-    @OnClick({R.id.ll_lawEnforcer_sign, R.id.ll_legalRepresentative_sign, R.id.bt_ok, R.id.bt_delete})
+    @OnClick({R.id.ll_lawEnforcer_sign, R.id.ll_legalRepresentative_sign, R.id.bt_ok, R.id.bt_delete, R.id.ll_reviewerSign_sign})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_lawEnforcer_sign:
@@ -195,6 +222,20 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 });
 
                 break;
+            case R.id.ll_reviewerSign_sign:
+                PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
+                    @Override
+                    public void onGranted() {
+                        startActivityForResult(new Intent(SuperviseSignActivity.this, SignActivity.class), 1003);
+                    }
+
+                    @Override
+                    public void onDenied() {
+
+                    }
+                });
+
+                break;
             case R.id.bt_ok:
                 if (resposeBean != null && resposeBean.getStatus() == 3) {
                     showToast("打印");
@@ -204,7 +245,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
                 break;
             case R.id.bt_delete:
-                CustomDialog.Builder builder = new com.troila.customealert.CustomDialog.Builder(this)
+                CustomDialog.Builder builder = new CustomDialog.Builder(this)
                         .setTitle("提示")
                         .setMessage("确定删除？")
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -237,6 +278,10 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 legalRepresentative_sign = path;
                 GlideUtils.loadImage(SuperviseSignActivity.this, path, tvLegalRepresentativeSign);
 
+            } else if (requestCode == 1003) {
+                reviewerSign_sign = path;
+                GlideUtils.loadImage(SuperviseSignActivity.this, path, tvReviewerSignSign);
+
             }
         }
     }
@@ -251,30 +296,64 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
     void postData() {
         if (TextUtils.isEmpty(lawEnforcer_sign)) {
-            showToast("执法人签字");
+            if (type == 1 || type == 2) {
+                showToast("执法人签字");
+            } else {
+                showToast("填表人签字");
+            }
             return;
         }
         if (TextUtils.isEmpty(legalRepresentative_sign)) {
-            showToast("企业负责人签字");
+            if (type == 1 || type == 2) {
+                showToast("企业负责人签字");
+            } else {
+                showToast("企业法定代表人签字");
+            }
             return;
         }
+        if (TextUtils.isEmpty(reviewerSign_sign)) {
+            showToast("审批人签字");
+
+            return;
+        }
+
         String companySign = BASE64.imageToBase64(lawEnforcer_sign);
         String officerSign = BASE64.imageToBase64(legalRepresentative_sign);
+        String reviewerSign = BASE64.imageToBase64(reviewerSign_sign);
 
-        RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign), new RequestObserver<JsonT>(this) {
-            @Override
-            protected void onSuccess(JsonT jsonT) {
-                if (jsonT.isSuccess()) {
-                    startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean));
+        if (type == 1 || type == 2) {
+            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign), new RequestObserver<JsonT>(this) {
+                @Override
+                protected void onSuccess(JsonT jsonT) {
+                    if (jsonT.isSuccess()) {
+                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean));
+                    }
                 }
-            }
 
-            @Override
-            protected void onFail2(JsonT userInfoJsonT) {
-                super.onFail2(userInfoJsonT);
-                showToast(userInfoJsonT.getMessage());
-            }
-        }, LoadingUtils.build(this));
+                @Override
+                protected void onFail2(JsonT userInfoJsonT) {
+                    super.onFail2(userInfoJsonT);
+                    showToast(userInfoJsonT.getMessage());
+                }
+            }, LoadingUtils.build(this));
+        } else {
+            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign, reviewerSign), new RequestObserver<JsonT>(this) {
+                @Override
+                protected void onSuccess(JsonT jsonT) {
+                    if (jsonT.isSuccess()) {
+                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean));
+                    }
+                }
+
+                @Override
+                protected void onFail2(JsonT userInfoJsonT) {
+                    super.onFail2(userInfoJsonT);
+                    showToast(userInfoJsonT.getMessage());
+                }
+            }, LoadingUtils.build(this));
+        }
+
+
     }
 
     void getData() {
@@ -295,6 +374,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             }
         }, LoadingUtils.build(this));
     }
+
     void deleteDate(String id) {
         RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(id), new RequestObserver<JsonT>() {
             @Override
@@ -308,5 +388,6 @@ public class SuperviseSignActivity extends MyBaseActivity {
             }
         }, LoadingUtils.build(this));
     }
+
 
 }

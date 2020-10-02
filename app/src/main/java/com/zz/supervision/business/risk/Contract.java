@@ -23,7 +23,7 @@ public class Contract {
 
         void showReResult(SuperviseBean.ResposeConfirmBean resposeBean);
 
-        void showResult(SuperviseBean.ResposeBean resposeBean);
+        void showResult(Integer resposeBean);
     }
 
 }

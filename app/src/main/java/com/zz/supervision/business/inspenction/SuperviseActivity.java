@@ -73,7 +73,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                 if (node instanceof SuperviseBean.RootFooterNode) {
                     for (int i = 0; i < adapter.getData().size(); i++) {
                         BaseNode children = adapter.getData().get(i);
-                        if (children instanceof SuperviseBean && ((SuperviseBean) children).getId() == ((SuperviseBean.RootFooterNode) node).getId()) {
+                        if (children instanceof SuperviseBean && ((SuperviseBean) children).getId() .equals (((SuperviseBean.RootFooterNode) node).getId())) {
                             adapter.expandOrCollapse(i);
                             ((SuperviseBean.RootFooterNode) node).setExpanded(((SuperviseBean) children).isExpanded());
                             break;
@@ -103,7 +103,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
 
     void initData() {
         String company =  getIntent().getStringExtra("company");
-        String lawEnforcerText = getIntent().getStringExtra("lawEnforcerText");
+        String lawEnforcerText = getIntent().getStringExtra("lawEnforcer");
         String type = getIntent().getStringExtra("typeText");
         id = getIntent().getStringExtra("id");
         tvCompany.setText(company+"");

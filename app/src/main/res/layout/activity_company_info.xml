@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eeeeee"
+    android:fitsSystemWindows="true"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
-    android:id="@+id/bg"
     tools:context=".business.mine.AboutActivity">
-
 
 
     <androidx.appcompat.widget.Toolbar
@@ -22,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="新增企业"
+            android:text="企业详情"
             android:textColor="#272727"
             android:textSize="18dp" />
     </androidx.appcompat.widget.Toolbar>
@@ -399,19 +398,21 @@
 
                 </TextView>
             </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/item_rv_images"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
+
             <Button
                 android:id="@+id/bt_ok"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border_radius_3_blue"
                 android:layout_margin="20dp"
+                android:background="@drawable/border_radius_3_blue"
                 android:text="开始执法"
                 android:textColor="@color/white"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
         </LinearLayout>
 
     </ScrollView>

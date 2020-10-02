@@ -25,8 +25,8 @@ public class RiskSuperviseBean {
         return staticRisks;
     }
 
-    public class RiskItem extends BaseExpandNode  implements NodeFooterImp{
-        private String childType;//
+    public class RiskItem extends BaseExpandNode implements NodeFooterImp {
+        private int childType;//
         private String content;//
         private String createBy;//
         private String createTime;//
@@ -47,12 +47,16 @@ public class RiskSuperviseBean {
             setExpanded(true);
         }
 
-        private String isKey;// 0,
         private String orderNum;//
         private String type;// 0,
         private ArrayList<ChildRisk> childRisks;
 
-        public String getChildType() {
+        private int isKey;// 0,
+        public int getIsKey() {
+            return isKey;
+        }
+
+        public int getChildType() {
             return childType;
         }
 
@@ -138,10 +142,11 @@ public class RiskSuperviseBean {
         @Nullable
         @Override
         public BaseNode getFooterNode() {
-            return new RootFooterNode(isExpanded(),id);
+            return new RootFooterNode(isExpanded(), id);
         }
     }
-    public class RootFooterNode extends BaseNode{
+
+    public class RootFooterNode extends BaseNode {
         private boolean isExpanded;
         private String id;
 
@@ -174,7 +179,7 @@ public class RiskSuperviseBean {
     }
 
     public class ChildRisk extends BaseExpandNode {
-        private String childType;//
+        private int childType;//
         private String content;//
         private String createBy;//
         private String createTime;//
@@ -190,15 +195,27 @@ public class RiskSuperviseBean {
         private String updateBy;//
         private String updateTime;
         private boolean check;
+
+        private int isKey;// 0,
         public boolean isCheck() {
             return check;
         }
+
+        public int getIsKey() {
+            return isKey;
+        }
+
+        private ArrayList<ChildRisk> childRisks;
 
         public void setCheck(boolean check) {
             this.check = check;
         }
 
-        public String getChildType() {
+        public ArrayList<ChildRisk> getChildRisks() {
+            return childRisks;
+        }
+
+        public int getChildType() {
             return childType;
         }
 
@@ -261,15 +278,19 @@ public class RiskSuperviseBean {
         @Nullable
         @Override
         public List<BaseNode> getChildNode() {
-             return null;
+            if (childRisks == null) return null;
+            List<BaseNode> childs = new ArrayList<>();
+            for (BaseNode node : childRisks) {
+                childs.add(node);
+            }
+            return childs;
         }
     }
 
 
-
     public static class PostBean {
-        List<String>  staticRiskIds;
-        Map<String,Object> dynamicRiskMap;
+        List<String> staticRiskIds;
+        Map<String, Object> dynamicRiskMap;
 
         public PostBean(List<String> staticRiskIds, Map<String, Object> dynamicRiskMap) {
             this.staticRiskIds = staticRiskIds;

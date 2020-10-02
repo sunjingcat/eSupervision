@@ -18,6 +18,7 @@ import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.utils.TabUtils;
+import com.zz.supervision.widget.NoScrollViewPager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +41,7 @@ public class CompanyListActivity extends MyBaseActivity {
     @BindView(R.id.tablayout)
     TabLayout tablayout;
     @BindView(R.id.viewpager)
-    ViewPager viewpager;
+    NoScrollViewPager viewpager;
     public FmPagerAdapter pagerAdapter;
     @BindView(R.id.toolbar_subtitle)
     TextView toolbarSubtitle;

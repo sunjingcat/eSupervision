@@ -38,14 +38,14 @@ public class RiskSupervisePresenter extends MyBasePresenterImpl<Contract.IGetRis
 
     @Override
     public void submitData(String url,String id,RiskSuperviseBean.PostBean spxsInspectionPoints) {
-        RxNetUtils.request(getApi(ApiService.class).submitSpxsRiskRecord(url,id,spxsInspectionPoints), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
+        RxNetUtils.request(getApi(ApiService.class).submitSpxsRiskRecord(url,id,spxsInspectionPoints), new RequestObserver<JsonT<Integer>>(this) {
             @Override
-            protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
+            protected void onSuccess(JsonT<Integer> jsonT) {
                 view.showResult(jsonT.getData());
                 view.showToast(jsonT.getMessage());
             }
             @Override
-            protected void onFail2(JsonT<SuperviseBean.ResposeBean> stringJsonT) {
+            protected void onFail2(JsonT<Integer> stringJsonT) {
                 super.onFail2(stringJsonT);
                 view.showToast(stringJsonT.getMessage());
             }

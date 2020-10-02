@@ -109,7 +109,7 @@
                     android:padding="5dp"
                     android:text="动态风险评分项"
                     android:textColor="#272727"
-                    android:textSize="15dp" />
+                    android:textSize="18dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_dynamicRisks"
@@ -133,7 +133,7 @@
                     android:padding="5dp"
                     android:text="静态风险评分项"
                     android:textColor="#272727"
-                    android:textSize="15dp" />
+                    android:textSize="18dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_staticRisks"

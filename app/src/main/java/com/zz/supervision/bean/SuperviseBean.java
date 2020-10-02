@@ -1,8 +1,5 @@
 package com.zz.supervision.bean;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.chad.library.adapter.base.entity.node.BaseExpandNode;
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.chad.library.adapter.base.entity.node.NodeFooterImp;
@@ -104,9 +101,10 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
     @Nullable
     @Override
     public BaseNode getFooterNode() {
-        return new RootFooterNode(isExpanded(),id);
+        return new RootFooterNode(isExpanded(), id);
     }
-    public class RootFooterNode extends BaseNode{
+
+    public class RootFooterNode extends BaseNode {
         private boolean isExpanded;
         private String id;
 
@@ -137,6 +135,7 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
             return null;
         }
     }
+
     public class Children extends BaseExpandNode {
         private String createBy;// ,
         private String createTime;// ,
@@ -338,7 +337,23 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         private String lawEnforcer1Name;// 张东旭,
         private String lawEnforcer2Name;// 焦川,
         private CompanyBean companyInfo;
+        private CompanyBean company;
         private String statusText;// 待签字
+        private String fillerSign;// 待签字
+        private String ownerSign;// 待签字
+        private String reviewerSign;// 待签字
+
+        public String getFillerSign() {
+            return fillerSign;
+        }
+
+        public String getOwnerSign() {
+            return ownerSign;
+        }
+
+        public String getReviewerSign() {
+            return reviewerSign;
+        }
 
         public String getSearchValue() {
             return searchValue;
@@ -477,7 +492,9 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         }
 
         public CompanyBean getCompanyInfo() {
-            return companyInfo;
+            if (companyInfo == null) {
+                return company;
+            } else return companyInfo;
         }
 
         public String getStatusText() {

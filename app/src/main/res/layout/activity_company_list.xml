@@ -57,7 +57,7 @@
         app:tabIndicatorHeight="2dp"
         app:elevation="0dp"
         android:layout_height="40dp"/>
-    <androidx.viewpager.widget.ViewPager
+    <com.zz.supervision.widget.NoScrollViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

@@ -30,6 +30,7 @@ import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.utils.TimeUtils;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -97,7 +98,7 @@ public class XCHZFActivity extends MyBaseActivity {
     protected void initView() {
         ButterKnife.bind(this);
         CompanyBean company = (CompanyBean) getIntent().getSerializableExtra("company");
-        if (company!=null){
+        if (company != null) {
             showCompany(company);
         }
     }
@@ -200,7 +201,7 @@ public class XCHZFActivity extends MyBaseActivity {
         }
     }
 
-    void showCompany(CompanyBean company){
+    void showCompany(CompanyBean company) {
         companyBean = company;
         llCompany.setVisibility(View.GONE);
         llCompanyInfo.setVisibility(View.VISIBLE);
@@ -211,6 +212,7 @@ public class XCHZFActivity extends MyBaseActivity {
         etContact.setText(company.getContact() + "");
         etContactInformation.setText(company.getContactInformation() + "");
     }
+
     void postDate() {
         HashMap<String, Object> map = new HashMap<>();
         if (companyBean == null) {
@@ -243,7 +245,7 @@ public class XCHZFActivity extends MyBaseActivity {
         RxNetUtils.request(getApi(ApiService.class).createRecord(map), new RequestObserver<JsonT<Integer>>() {
             @Override
             protected void onSuccess(JsonT<Integer> jsonT) {
-                if (type == 1||type == 2) {
+                if (type == 1 || type == 2) {
                     startActivity(new Intent(XCHZFActivity.this, SuperviseActivity.class)
                             .putExtra("company", companyBean.getOperatorName())
                             .putExtra("id", jsonT.getData() + "")
@@ -251,16 +253,16 @@ public class XCHZFActivity extends MyBaseActivity {
                             .putExtra("typeText", etType.getText().toString())
                             .putExtra("lawEnforcer", names)
                             .putExtra("inspectionTime", inspectionTime));
-                    finish();
-                } else if (type == 3||type == 4) {
+//                    finish();
+                } else if (type == 3 || type == 4) {
                     startActivity(new Intent(XCHZFActivity.this, RiskSuperviseActivity.class)
-                            .putExtra("company", companyBean)
+                            .putExtra("company", companyBean.getOperatorName())
                             .putExtra("id", jsonT.getData() + "")
                             .putExtra("type", type)
                             .putExtra("typeText", etType.getText().toString())
                             .putExtra("lawEnforcer", names)
                             .putExtra("inspectionTime", inspectionTime));
-                    finish();
+//                    finish();
                 }
             }
 
