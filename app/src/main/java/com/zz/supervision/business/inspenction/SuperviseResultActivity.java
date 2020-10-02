@@ -1,12 +1,7 @@
 package com.zz.supervision.business.inspenction;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.widget.Button;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
@@ -19,9 +14,11 @@ import com.zz.supervision.business.inspenction.adapter.DetailAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * 监督检查结果
@@ -39,6 +36,8 @@ public class SuperviseResultActivity extends MyBaseActivity {
     SuperviseBean.ResposeBean deviceInfo;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.item_title)
+    TextView itemTitle;
 
 
     @Override
@@ -61,11 +60,12 @@ public class SuperviseResultActivity extends MyBaseActivity {
 
     @Override
     protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar,1);
+        ToolBarUtils.getInstance().setNavigation(toolbar, 1);
     }
 
     public void showIntent(SuperviseBean.ResposeBean lightDevice) {
         if (lightDevice == null) return;
+        itemTitle.setText(lightDevice.getCompanyInfo().getOperatorName() + "");
         mlist.clear();
         List<DetailBean> list = new ArrayList<>();
         list.add(new DetailBean("检查项数目", lightDevice.getSumCount() + ""));
@@ -85,7 +85,6 @@ public class SuperviseResultActivity extends MyBaseActivity {
     public BasePresenter initPresenter() {
         return null;
     }
-
 
 
 }

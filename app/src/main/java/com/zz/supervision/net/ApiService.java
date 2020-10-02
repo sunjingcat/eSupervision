@@ -29,6 +29,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
@@ -134,8 +135,9 @@ public interface ApiService {
     @GET("/app/v1/supervise/enclosure/base64/{type}/{modelId}")
     Observable<JsonT<List<ImageBack>>> getImageBase64(@Path("type") String type, @Path("modelId") String modelId);
 
-    @POST("/app/v1/supervise/spxsInspectionRecord/submitSign/{id}")
-    Observable<JsonT> submitSign(@Path("id")String id,@QueryMap Map<String, Object> params);
+    @FormUrlEncoded
+    @PUT("/app/v1/supervise/{url}/submitSign/{id}")
+    Observable<JsonT> submitSign(@Path("url")String url,@Path("id")String id,@Field("companySign") String companySign, @Field("officerSign") String officerSign);
 
     @GET("/app/v1/supervise/{url}/{id}")
     Observable<JsonT<SuperviseBean.ResposeBean>> getSuperviseDetail(@Path("url") String url, @Path("id") String id);

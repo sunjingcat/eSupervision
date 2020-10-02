@@ -2,10 +2,12 @@ package com.zz.supervision.business.inspenction;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zz.lib.commonlib.utils.PermissionUtils;
@@ -21,9 +23,6 @@ import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.utils.BASE64;
 import com.zz.supervision.utils.GlideUtils;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -82,6 +81,10 @@ public class SuperviseSignActivity extends MyBaseActivity {
     String legalRepresentative_sign;
     String url;
     String id;
+    @BindView(R.id.ll_lawEnforcer_sign)
+    LinearLayout llLawEnforcerSign;
+    @BindView(R.id.ll_legalRepresentative_sign)
+    LinearLayout llLegalRepresentativeSign;
 
     @Override
     protected int getContentView() {
@@ -136,8 +139,15 @@ public class SuperviseSignActivity extends MyBaseActivity {
         tvInspectionResult.setText(resposeBean.getInspectionResult() + "");
         tvViolation.setText(resposeBean.getViolation() + "");
         bt_ok.setText(resposeBean.getStatus() == 3 ? "打印" : "确定");
+        if (resposeBean.getStatus() == 3) {
+            llLawEnforcerSign.setEnabled(false);
+            llLegalRepresentativeSign.setEnabled(false);
+        }
 //        tvType.setText(lightDevice.);
 
+        GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLawEnforcerSign);
+
+        GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLegalRepresentativeSign);
 
     }
 
@@ -213,12 +223,10 @@ public class SuperviseSignActivity extends MyBaseActivity {
             showToast("企业负责人签字");
             return;
         }
-        Map<String, Object> params = new HashMap<>();
         String companySign = BASE64.imageToBase64(lawEnforcer_sign);
         String officerSign = BASE64.imageToBase64(legalRepresentative_sign);
-        params.put("companySign", companySign);
-        params.put("officerSign", officerSign);
-        RxNetUtils.request(getApi(ApiService.class).submitSign(id, params), new RequestObserver<JsonT>(this) {
+
+        RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign), new RequestObserver<JsonT>(this) {
             @Override
             protected void onSuccess(JsonT jsonT) {
                 if (jsonT.isSuccess()) {
@@ -240,6 +248,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             @Override
             protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
                 if (jsonT.isSuccess()) {
+                    resposeBean = jsonT.getData();
                     showIntent(jsonT.getData());
                 }
             }
@@ -251,4 +260,6 @@ public class SuperviseSignActivity extends MyBaseActivity {
             }
         }, LoadingUtils.build(this));
     }
+
+
 }
