@@ -52,8 +52,9 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
-        app:tabIndicatorHeight="0dp"
         app:tabMode="scrollable"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabIndicatorHeight="2dp"
         app:elevation="0dp"
         android:layout_height="40dp"/>
     <androidx.viewpager.widget.ViewPager

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -73,6 +74,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
     TextView tvViolation;
     @BindView(R.id.tv_lawEnforcer_sign)
     ImageView tvLawEnforcerSign;
+    @BindView(R.id.bt_ok)
+    Button bt_ok;
     @BindView(R.id.tv_legalRepresentative_sign)
     ImageView tvLegalRepresentativeSign;
     String lawEnforcer_sign;
@@ -90,15 +93,6 @@ public class SuperviseSignActivity extends MyBaseActivity {
         ButterKnife.bind(this);
 
 
-        resposeBean = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
-        if (resposeBean != null) {
-            showIntent(resposeBean);
-            id = resposeBean.getId();
-        } else {
-            id = getIntent().getStringExtra("id");
-            getData();
-        }
-
         int type = getIntent().getIntExtra("type", 0);
         if (type == 1) {
             url = "spxsInspectionRecord";
@@ -108,6 +102,15 @@ public class SuperviseSignActivity extends MyBaseActivity {
             url = "spxsRiskRecord";
         } else {
             url = "cyfwRiskRecord";
+
+        }
+        resposeBean = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
+        if (resposeBean != null) {
+            showIntent(resposeBean);
+            id = resposeBean.getId();
+        } else {
+            id = getIntent().getStringExtra("id");
+            getData();
 
         }
     }
@@ -132,6 +135,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         tvGeneralProblemDetail.setText(resposeBean.getGeneralProblemDetail() + "");
         tvInspectionResult.setText(resposeBean.getInspectionResult() + "");
         tvViolation.setText(resposeBean.getViolation() + "");
+        bt_ok.setText(resposeBean.getStatus() == 3 ? "打印" : "确定");
 //        tvType.setText(lightDevice.);
 
 
@@ -174,7 +178,11 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
                 break;
             case R.id.bt_ok:
-                postData();
+                if (resposeBean != null && resposeBean.getStatus() == 3) {
+                    showToast("打印");
+                } else {
+                    postData();
+                }
 
                 break;
         }
@@ -227,8 +235,6 @@ public class SuperviseSignActivity extends MyBaseActivity {
     }
 
     void getData() {
-
-        Map<String, Object> params = new HashMap<>();
 
         RxNetUtils.request(getApi(ApiService.class).getSuperviseDetail(url, id), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
             @Override

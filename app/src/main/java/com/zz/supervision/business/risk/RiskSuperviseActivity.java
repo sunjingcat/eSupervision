@@ -55,7 +55,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
 
     String id;
     String url = "spxsRiskRecord";
-
+    int type=0;
     @Override
     protected int getContentView() {
         return R.layout.activity_select_risks;
@@ -96,7 +96,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
 
         staticSuperviseAdapter = new RiskStaticAdapter(R.layout.item_risk_second);
         rv_staticRisks.setAdapter(staticSuperviseAdapter);
-        int type = getIntent().getIntExtra("type", 0);
+         type = getIntent().getIntExtra("type", 0);
         if (type == 3) {
             url = "spxsRiskRecord";
         } else {
@@ -113,11 +113,11 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
     }
 
     void initData() {
-        CompanyBean company = (CompanyBean) getIntent().getSerializableExtra("company");
+        String company = getIntent().getStringExtra("company");
         String lawEnforcerText = getIntent().getStringExtra("lawEnforcerText");
         String type = getIntent().getStringExtra("type");
         id = getIntent().getStringExtra("id");
-        tvCompany.setText(company.getOperatorName());
+        tvCompany.setText(company);
         tvInspector.setText("检查员：" + lawEnforcerText);
         tvType.setText("检查类型：" + type + "");
     }
@@ -147,7 +147,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
 
     @Override
     public void showResult(SuperviseBean.ResposeBean resposeBean) {
-        startActivity(new Intent(this, SuperviseSignActivity.class).putExtra("resposeBean", resposeBean));
+        startActivity(new Intent(this, SuperviseSignActivity.class).putExtra("resposeBean", resposeBean).putExtra("type",type));
 
     }
 

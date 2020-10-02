@@ -1,15 +1,9 @@
 package com.zz.supervision.business.company;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
@@ -30,6 +24,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -102,7 +100,7 @@ public class CompanyListActivity extends MyBaseActivity {
 
     @Override
     protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar);
+        ToolBarUtils.getInstance().setNavigation(toolbar, 1);
     }
 
     @Override

@@ -314,7 +314,7 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         private String id;// 22,
         private String serialNumber;// spxs20200928140145564,
         private String companyId;// 22,
-        private String status;// 2,
+        private int status;// 2,
         private String yearCount;// 0,
         private String reason;// null,
         private String inspectionTime;// 2020年09月28日,
@@ -384,7 +384,7 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
             return companyId;
         }
 
-        public String getStatus() {
+        public int getStatus() {
             return status;
         }
 

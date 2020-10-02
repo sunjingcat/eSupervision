@@ -18,8 +18,11 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.bean.RecordBean;
-import com.zz.supervision.business.company.CompanyInfoActivity;
+import com.zz.supervision.business.inspenction.SuperviseActivity;
+import com.zz.supervision.business.inspenction.SuperviseSignActivity;
+import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.business.record.adapter.CheckListAdapter;
+import com.zz.supervision.business.risk.RiskSuperviseActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -113,9 +116,29 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+                RecordBean recordBean = mlist.get(position);
+                if (recordBean.getStatus() == 1) {
+                    if (recordBean.getType() == 1 ||recordBean.getType() == 2) {
+                        startActivity(new Intent(getActivity(), SuperviseActivity.class)
+                                .putExtra("company", recordBean.getOperatorName())
+                                .putExtra("id", recordBean.getId() + "")
+                                .putExtra("type", recordBean.getType())
+                                .putExtra("typeText", recordBean.getType()+"")
+                                .putExtra("lawEnforcer", recordBean.getLawEnforcer1Name()+","+recordBean.getLawEnforcer2Name())
+                                .putExtra("inspectionTime", recordBean.getCreateTime()));
+                    } else {
+                        startActivity(new Intent(getActivity(), RiskSuperviseActivity.class)
+                                .putExtra("company", recordBean.getOperatorName())
+                                .putExtra("id", recordBean.getId() + "")
+                                .putExtra("type", recordBean.getType())
+                                .putExtra("typeText", recordBean.getType()+"")
+                                .putExtra("lawEnforcer", recordBean.getLawEnforcer1Name()+","+recordBean.getLawEnforcer2Name())
+                                .putExtra("inspectionTime", recordBean.getCreateTime())); }
 
-                startActivity(new Intent(getActivity(), CompanyInfoActivity.class).putExtra("id", mlist.get(position).getId()));
+                } else {
+                    startActivity(new Intent(getActivity(), SuperviseSignActivity.class).putExtra("id", mlist.get(position).getId() + "").putExtra("type", mlist.get(position).getType()));
 
+                }
             }
         });
 

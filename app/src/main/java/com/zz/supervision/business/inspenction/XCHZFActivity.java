@@ -30,7 +30,6 @@ import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.utils.TimeUtils;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -97,6 +96,10 @@ public class XCHZFActivity extends MyBaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
+        CompanyBean company = (CompanyBean) getIntent().getSerializableExtra("company");
+        if (company!=null){
+            showCompany(company);
+        }
     }
 
     @Override
@@ -175,15 +178,7 @@ public class XCHZFActivity extends MyBaseActivity {
             if (requestCode == 1001) {
                 CompanyBean company = (CompanyBean) data.getSerializableExtra("company");
                 if (company != null) {
-                    companyBean = company;
-                    llCompany.setVisibility(View.GONE);
-                    llCompanyInfo.setVisibility(View.VISIBLE);
-                    etCompany.setText(company.getOperatorName() + "");
-                    etSocialCreditCode.setText(company.getSocialCreditCode() + "");
-                    etLegalRepresentative.setText(company.getLegalRepresentative() + "");
-                    etBusinessPlace.setText(company.getBusinessPlace() + "");
-                    etContact.setText(company.getContact() + "");
-                    etContactInformation.setText(company.getContactInformation() + "");
+                    showCompany(company);
                 }
             } else if (requestCode == 2001) {
                 ArrayList<LawEnforcerBean> arrayList = data.getParcelableArrayListExtra("select");
@@ -205,6 +200,17 @@ public class XCHZFActivity extends MyBaseActivity {
         }
     }
 
+    void showCompany(CompanyBean company){
+        companyBean = company;
+        llCompany.setVisibility(View.GONE);
+        llCompanyInfo.setVisibility(View.VISIBLE);
+        etCompany.setText(company.getOperatorName() + "");
+        etSocialCreditCode.setText(company.getSocialCreditCode() + "");
+        etLegalRepresentative.setText(company.getLegalRepresentative() + "");
+        etBusinessPlace.setText(company.getBusinessPlace() + "");
+        etContact.setText(company.getContact() + "");
+        etContactInformation.setText(company.getContactInformation() + "");
+    }
     void postDate() {
         HashMap<String, Object> map = new HashMap<>();
         if (companyBean == null) {
@@ -237,9 +243,9 @@ public class XCHZFActivity extends MyBaseActivity {
         RxNetUtils.request(getApi(ApiService.class).createRecord(map), new RequestObserver<JsonT<Integer>>() {
             @Override
             protected void onSuccess(JsonT<Integer> jsonT) {
-                if (type == 1||type == 1) {
+                if (type == 1||type == 2) {
                     startActivity(new Intent(XCHZFActivity.this, SuperviseActivity.class)
-                            .putExtra("company", companyBean)
+                            .putExtra("company", companyBean.getOperatorName())
                             .putExtra("id", jsonT.getData() + "")
                             .putExtra("type", type)
                             .putExtra("typeText", etType.getText().toString())

@@ -1,23 +1,18 @@
 package com.zz.supervision.business.company;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
-
 import android.widget.TextView;
 
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.zz.lib.commonlib.utils.ToolBarUtils;
-
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
-
 import com.zz.supervision.business.company.adapter.ImageItemAdapter;
+import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -25,8 +20,12 @@ import com.zz.supervision.net.RxNetUtils;
 
 import java.util.ArrayList;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
@@ -65,6 +64,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
     String validDate;
     String businessType = "";
     String id;
+    CompanyBean companyBean;
 
     @Override
     protected int getContentView() {
@@ -112,6 +112,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
         RxNetUtils.request(getApi(ApiService.class).getCompanyInfo(id), new RequestObserver<JsonT<CompanyBean>>(this) {
             @Override
             protected void onSuccess(JsonT<CompanyBean> jsonT) {
+                companyBean = jsonT.getData();
                 showCompanyInfo(jsonT.getData());
             }
 
@@ -125,5 +126,11 @@ public class CompanyInfoActivity extends MyBaseActivity {
     @Override
     public BasePresenter initPresenter() {
         return null;
+    }
+
+    @OnClick(R.id.bt_ok)
+    public void onViewClicked() {
+        if (companyBean ==null) return;
+        startActivity(new Intent(this, XCHZFActivity.class).putExtra("company",companyBean));
     }
 }

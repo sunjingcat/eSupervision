@@ -409,7 +409,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/border_radius_3_blue"
                 android:layout_margin="20dp"
-                android:text="提交"
+                android:text="开始执法"
                 android:textColor="@color/white"
                 android:textSize="16sp"/>
         </LinearLayout>

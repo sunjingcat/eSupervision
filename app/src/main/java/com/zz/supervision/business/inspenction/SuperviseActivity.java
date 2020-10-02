@@ -51,7 +51,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     List<BaseNode> mlist = new ArrayList<>();
     String id;
     String url = "spxsInspectionRecord";
-
+    int type= 0;
     @Override
     protected int getContentView() {
         return R.layout.activity_select_inspections;
@@ -85,7 +85,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         });
 
         rv.setAdapter(adapter);
-        int type = getIntent().getIntExtra("type", 0);
+         type = getIntent().getIntExtra("type", 0);
         if (type == 1) {
             url = "spxsInspectionRecord";
         } else {
@@ -102,11 +102,11 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     }
 
     void initData() {
-        CompanyBean company = (CompanyBean) getIntent().getSerializableExtra("company");
+        String company =  getIntent().getStringExtra("company");
         String lawEnforcerText = getIntent().getStringExtra("lawEnforcerText");
         String type = getIntent().getStringExtra("typeText");
         id = getIntent().getStringExtra("id");
-        tvCompany.setText(company.getOperatorName());
+        tvCompany.setText(company+"");
         tvInspector.setText("检查员：" + lawEnforcerText);
         tvType.setText("检查类型：" + type + "");
     }
@@ -137,7 +137,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
 
     @Override
     public void showResult(SuperviseBean.ResposeBean resposeBean) {
-        startActivity(new Intent(this, SuperviseSignActivity.class).putExtra("resposeBean", resposeBean));
+        startActivity(new Intent(this, SuperviseSignActivity.class).putExtra("resposeBean", resposeBean).putExtra("type",type));
 
     }
 

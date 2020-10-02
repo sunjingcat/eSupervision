@@ -72,12 +72,6 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
     private String searchStr = "";
     private String type = "";
 
-    @SuppressLint("ValidFragment")
-    public SearchCompanyActivity(String type) {
-        this.type = type;
-    }
-
-
     @Override
     protected int getContentView() {
         return R.layout.activity_search_company_list;
