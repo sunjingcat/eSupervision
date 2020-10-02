@@ -9,9 +9,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnChangeLisener;
 import com.codbking.widget.OnSureLisener;
@@ -37,8 +34,9 @@ import com.zz.supervision.utils.TimeUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -103,7 +101,7 @@ public class XCHZFActivity extends MyBaseActivity {
 
     @Override
     protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar);
+        ToolBarUtils.getInstance().setNavigation(toolbar, 1);
     }
 
     @OnClick({R.id.ll_company, R.id.et_type, R.id.et_people, R.id.et_startTime, R.id.bt_ok})
@@ -213,11 +211,11 @@ public class XCHZFActivity extends MyBaseActivity {
             showToast("请先选择企业");
             return;
         }
-        if (lawEnforcerBeanArrayList .size()<2) {
+        if (lawEnforcerBeanArrayList.size() < 2) {
             showToast("请选择执法人员");
             return;
         }
-        if (type ==0) {
+        if (type == 0) {
             showToast("请选择执法类型");
             return;
         }
@@ -242,15 +240,15 @@ public class XCHZFActivity extends MyBaseActivity {
                 if (type == 1) {
                     startActivity(new Intent(XCHZFActivity.this, SuperviseActivity.class)
                             .putExtra("company", companyBean)
-                            .putExtra("id", jsonT.getData()+"")
+                            .putExtra("id", jsonT.getData() + "")
                             .putExtra("type", etType.getText().toString())
                             .putExtra("lawEnforcer", names)
                             .putExtra("inspectionTime", inspectionTime));
                     finish();
-                }else if (type == 3) {
+                } else if (type == 3) {
                     startActivity(new Intent(XCHZFActivity.this, RiskSuperviseActivity.class)
                             .putExtra("company", companyBean)
-                            .putExtra("id", jsonT.getData()+"")
+                            .putExtra("id", jsonT.getData() + "")
                             .putExtra("type", etType.getText().toString())
                             .putExtra("lawEnforcer", names)
                             .putExtra("inspectionTime", inspectionTime));

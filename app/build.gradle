@@ -159,6 +159,7 @@ dependencies {
 
     implementation 'com.blankj:utilcodex:1.29.0'
     implementation 'com.github.anzaizai:EasySwipeMenuLayout:1.1.4'
+    implementation 'com.liang.jtab:jtablayout:2.1.1'
 }
 
 def releaseTime() {

@@ -1,10 +1,11 @@
 package com.zz.lib.commonlib.utils;
 
-import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 
 import com.zz.lib.commonlib.CommonApplication;
 import com.zz.lib.commonlib.R;
+
+import androidx.appcompat.widget.Toolbar;
 
 /**
  * Created by 77 on 2018/4/23.
@@ -26,6 +27,20 @@ public class ToolBarUtils {
         toolbar.setTitle("");
         CommonApplication.activity.setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.return_button);
+        //设置回退监听
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommonApplication.activity.finish();
+            }
+        });
+
+    }
+
+    public void setNavigation(Toolbar toolbar, int white) {
+        toolbar.setTitle("");
+        CommonApplication.activity.setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.image_back_white);
         //设置回退监听
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

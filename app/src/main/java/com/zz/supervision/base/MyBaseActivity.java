@@ -59,7 +59,7 @@ public abstract class MyBaseActivity<P extends com.zz.lib.core.ui.mvp.BasePresen
     public void setTransAnimation(Bundle transAnimation) {
         mTransAnimation = transAnimation;
     }
-    ImmersionBar immersionBar;
+  public   ImmersionBar immersionBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

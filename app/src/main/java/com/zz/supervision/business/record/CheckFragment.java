@@ -1,7 +1,6 @@
 package com.zz.supervision.business.record;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,26 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.troila.customealert.CustomDialog;
 import com.zz.lib.core.utils.LoadingUtils;
-import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.bean.RecordBean;
-import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.business.company.CompanyInfoActivity;
-import com.zz.supervision.business.company.adapter.CompanyListAdapter;
 import com.zz.supervision.business.record.adapter.CheckListAdapter;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
@@ -41,6 +30,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -86,6 +79,25 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
     @Override
     public void onResume() {
         super.onResume();
+        getDate();
+    }
+
+    String company;
+    String lawEnforcer;
+    String inspectionResult;
+    int status;
+    String beginTime;
+    String endTime;
+    String level;
+
+    public void setSearchStr(String company, String lawEnforcer, String inspectionResult, String level, int status, String beginTime, String endTime) {
+        this.company = company;
+        this.lawEnforcer = lawEnforcer;
+        this.inspectionResult = inspectionResult;
+        this.beginTime = beginTime;
+        this.status = status;
+        this.endTime = endTime;
+        this.level = level;
         getDate();
     }
 
@@ -145,8 +157,26 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
         map.put("pageNum", pagenum);
         map.put("pageSize", pagesize);
         map.put("inspectionType", type);
-        if (!TextUtils.isEmpty(searchStr)) {
-            map.put("searchValue", searchStr);
+        if (!TextUtils.isEmpty(company)) {
+            map.put("company", company);
+        }
+        if (!TextUtils.isEmpty(lawEnforcer)) {
+            map.put("lawEnforcer", lawEnforcer);
+        }
+        if (!TextUtils.isEmpty(beginTime)) {
+            map.put("beginTime", beginTime);
+        }
+        if (!TextUtils.isEmpty(level)) {
+            map.put("level", level);
+        }
+        if (!TextUtils.isEmpty(endTime)) {
+            map.put("endTime", endTime);
+        }
+        if (!TextUtils.isEmpty(inspectionResult)) {
+            map.put("inspectionResult", inspectionResult);
+        }
+        if (status != 0) {
+            map.put("status", status);
         }
         RxNetUtils.request(getApi(ApiService.class).getRecordList(map), new RequestObserver<JsonT<List<RecordBean>>>() {
             @Override

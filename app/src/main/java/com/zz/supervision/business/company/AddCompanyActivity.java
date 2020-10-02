@@ -151,12 +151,14 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         switch (view.getId()) {
             case R.id.et_businessType:
                 UIAdjuster.closeKeyBoard(this);
-                String array[] = new String[10];
-                String values[] = new String[10];
+                List<String> list = new ArrayList<>();
+                List<String> list1 = new ArrayList<>();
                 for (int i = 0; i < businessTypeList.size(); i++) {
-                    array[i] = businessTypeList.get(i).getDictLabel();
-                    values[i] = businessTypeList.get(i).getDictValue();
+                    list.add(businessTypeList.get(i).getDictLabel()) ;
+                    list1.add(businessTypeList.get(i).getDictValue());
                 }
+                String[] array = (String[])list.toArray(new String[list.size()]);
+                String[] values = (String[])list1.toArray(new String[list1.size()]);
                 selectPopupWindows = new SelectPopupWindows(this, array);
                 selectPopupWindows.showAtLocation(findViewById(R.id.bg),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
