@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <View
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@mipmap/logo" />
+            android:src="@drawable/image_success" />
 
         <TextView
             android:layout_width="match_parent"
@@ -58,12 +58,13 @@
             android:padding="8dp"
             android:singleLine="true"
             android:text="测评成功"
-            android:textColor="@color/colorTextBlack33"
-            android:textSize="16dp" />
+            android:textColor="#4A4A4A"
+            android:textSize="18dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <Button
@@ -100,18 +101,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@color/white"
             android:layout_margin="10dp"
+            android:background="@color/white"
+            android:orientation="vertical"
             android:padding="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-          >
-
+                android:orientation="horizontal">
 
 
                 <TextView
@@ -122,15 +121,17 @@
                     android:layout_weight="1"
                     android:textColor="#444444"
                     android:textSize="18dp"
-                    android:gravity="center"
                     tools:text="集中器" />
 
 
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
+                android:layout_marginVertical="10dp"
                 android:background="#444564" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/info_rv"
                 android:layout_width="match_parent"

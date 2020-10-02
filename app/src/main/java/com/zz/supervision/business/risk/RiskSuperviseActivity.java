@@ -3,12 +3,6 @@ package com.zz.supervision.business.risk;
 import android.content.Intent;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.supervision.CompanyBean;
@@ -27,6 +21,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -55,6 +54,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
     RiskStaticAdapter staticSuperviseAdapter;
 
     String id;
+    String url = "spxsRiskRecord";
 
     @Override
     protected int getContentView() {
@@ -77,7 +77,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
                 } else if (node instanceof RiskSuperviseBean.RootFooterNode) {
                     for (int i = 0; i < adapter.getData().size(); i++) {
                         BaseNode children = adapter.getData().get(i);
-                        if (children instanceof RiskSuperviseBean.RiskItem&&((RiskSuperviseBean.RiskItem) children).getId() == ((RiskSuperviseBean.RootFooterNode) node).getId()) {
+                        if (children instanceof RiskSuperviseBean.RiskItem && ((RiskSuperviseBean.RiskItem) children).getId() == ((RiskSuperviseBean.RootFooterNode) node).getId()) {
 //                           ((RiskSuperviseBean.RiskItem)children).setExpanded(!((RiskSuperviseBean.RiskItem) children).isExpanded());
                             ((RiskSuperviseBean.RootFooterNode) node).setExpanded(!((RiskSuperviseBean.RiskItem) children).isExpanded());
                             adapter.expandOrCollapse(i);
@@ -96,9 +96,14 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
 
         staticSuperviseAdapter = new RiskStaticAdapter(R.layout.item_risk_second);
         rv_staticRisks.setAdapter(staticSuperviseAdapter);
+        int type = getIntent().getIntExtra("type", 0);
+        if (type == 3) {
+            url = "spxsRiskRecord";
+        } else {
+            url = "cyfwRiskRecord";
 
-
-        mPresenter.getData("spxsInspectionRecord/getItems");
+        }
+        mPresenter.getData(url);
         initData();
     }
 
@@ -142,22 +147,22 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
 
     @Override
     public void showResult(SuperviseBean.ResposeBean resposeBean) {
-        startActivity(new Intent(this, SuperviseSignActivity.class).putExtra("resposeBean", resposeBean));
+        startActivity(new Intent(this, RiskSuperviseSignActivity.class).putExtra("resposeBean", resposeBean));
 
     }
 
-    RiskSuperviseBean.PostBean postBeans =new RiskSuperviseBean.PostBean();
+    RiskSuperviseBean.PostBean postBeans = new RiskSuperviseBean.PostBean();
 
     @OnClick(R.id.bt_ok)
     public void onViewClicked() {
-       List<BaseNode> mlist = adapter.getData();
-       List<RiskSuperviseBean.RiskItem> superviseAdapterData = staticSuperviseAdapter.getData();
+        List<BaseNode> mlist = adapter.getData();
+        List<RiskSuperviseBean.RiskItem> superviseAdapterData = staticSuperviseAdapter.getData();
         Map<String, Object> dynamicRiskMap = new HashMap<>();
         for (BaseNode node : mlist) {
             if (node instanceof RiskSuperviseBean.RiskItem) {
                 for (BaseNode child : ((RiskSuperviseBean.RiskItem) node).getChildRisks()) {
                     if (((RiskSuperviseBean.ChildRisk) child).isCheck()) {
-                        dynamicRiskMap.put(((RiskSuperviseBean.ChildRisk) child).getId(),((RiskSuperviseBean.ChildRisk) child).isCheck()?1:0);
+                        dynamicRiskMap.put(((RiskSuperviseBean.ChildRisk) child).getId(), ((RiskSuperviseBean.ChildRisk) child).isCheck() ? 1 : 0);
                     }
                 }
             }
@@ -172,7 +177,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
                 }
             }
         }
-        mPresenter.submitReData(id, new RiskSuperviseBean.PostBean(staticRiskIds,dynamicRiskMap));
+        mPresenter.submitReData(url, id, new RiskSuperviseBean.PostBean(staticRiskIds, dynamicRiskMap));
     }
 
     @Override
@@ -180,7 +185,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1001) {
             if (resultCode == RESULT_OK) {
-                mPresenter.submitData(id, postBeans);
+                mPresenter.submitData(url, id, postBeans);
             }
         }
     }

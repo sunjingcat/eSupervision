@@ -34,7 +34,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
 
             android:orientation="vertical"
             android:padding="10dp">
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:padding="5dp">
+                android:padding="10dp">
 
                 <TextView
                     android:id="@+id/tv_company"
@@ -188,7 +188,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:padding="5dp">
+                android:padding="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -240,7 +240,7 @@
                         android:background="@color/white"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:hint="请填写"
+                        android:hint=""
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:textColor="#333"
@@ -299,7 +299,7 @@
                         android:background="@color/white"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:hint="请填写"
+                        android:hint=""
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:textColor="#333"
@@ -315,7 +315,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:padding="5dp">
+                android:padding="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -439,10 +439,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp">
+                android:padding="10dp">
 
                 <TextView
                     style="@style/textLeftStyle"
@@ -468,7 +468,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:padding="10dp">
@@ -504,29 +504,30 @@
                 android:id="@+id/ll_lawEnforcer_sign"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp">
+                android:padding="10dp">
 
                 <TextView
                     style="@style/textLeftStyle"
                     android:layout_width="150dp"
                     android:text="执法人签字" />
+
                 <ImageView
                     android:id="@+id/tv_lawEnforcer_sign"
                     android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="100dp"/>
+                    android:layout_height="100dp"
+                    android:layout_weight="1" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@color/white"
+                    android:drawableRight="@drawable/image_arrow"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:hint=""
-                    android:drawableRight="@drawable/image_arrow"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:textColor="#333"
@@ -539,32 +540,32 @@
                 android:id="@+id/ll_legalRepresentative_sign"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp">
+                android:padding="10dp">
 
                 <TextView
                     style="@style/textLeftStyle"
                     android:layout_width="150dp"
                     android:text="企业负责人签字" />
+
                 <ImageView
                     android:id="@+id/tv_legalRepresentative_sign"
                     android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="100dp"/>
+                    android:layout_height="100dp"
+                    android:layout_weight="1" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@color/white"
+                    android:drawableRight="@drawable/image_arrow"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:hint=""
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:drawableRight="@drawable/image_arrow"
                     android:textColor="#333"
                     android:textSize="14dp">
 

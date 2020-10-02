@@ -10,9 +10,9 @@ import java.util.List;
 
 public class Contract {
     public interface IsetRiskSupervisePresenter extends BasePresenter {
-        void submitData(String id, RiskSuperviseBean.PostBean spxsInspectionPoints);
+        void submitData(String url,String id, RiskSuperviseBean.PostBean spxsInspectionPoints);
 
-        void submitReData(String id, RiskSuperviseBean.PostBean spxsInspectionPoints);
+        void submitReData(String url,String id, RiskSuperviseBean.PostBean spxsInspectionPoints);
 
         void getData(String url);
 

@@ -1,4 +1,4 @@
-package com.zz.supervision.business.inspenction;
+package com.zz.supervision.business.risk;
 
 import android.Manifest;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.SuperviseBean;
+import com.zz.supervision.business.inspenction.SignActivity;
+import com.zz.supervision.business.inspenction.SuperviseResultActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -35,7 +37,7 @@ import static com.zz.supervision.net.RxNetUtils.getApi;
 /**
  * 测评结果-监督签字页面
  */
-public class SuperviseSignActivity extends MyBaseActivity {
+public class RiskSuperviseSignActivity extends MyBaseActivity {
 
 
     SuperviseBean.ResposeBean resposeBean;
@@ -96,7 +98,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
     @Override
     protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar, 1);
+        ToolBarUtils.getInstance().setNavigation(toolbar,1);
     }
 
     public void showIntent(SuperviseBean.ResposeBean resposeBean) {
@@ -131,7 +133,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
                     @Override
                     public void onGranted() {
-                        startActivityForResult(new Intent(SuperviseSignActivity.this, SignActivity.class), 1001);
+                        startActivityForResult(new Intent(RiskSuperviseSignActivity.this, SignActivity.class), 1001);
                     }
 
                     @Override
@@ -145,7 +147,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
                     @Override
                     public void onGranted() {
-                        startActivityForResult(new Intent(SuperviseSignActivity.this, SignActivity.class), 1002);
+                        startActivityForResult(new Intent(RiskSuperviseSignActivity.this, SignActivity.class), 1002);
                     }
 
                     @Override
@@ -169,10 +171,10 @@ public class SuperviseSignActivity extends MyBaseActivity {
             String path = data.getStringExtra("sign");
             if (requestCode == 1001) {
                 lawEnforcer_sign = path;
-                GlideUtils.loadImage(SuperviseSignActivity.this, path, tvLawEnforcerSign);
+                GlideUtils.loadImage(RiskSuperviseSignActivity.this, path, tvLawEnforcerSign);
             } else if (requestCode == 1002) {
                 legalRepresentative_sign = path;
-                GlideUtils.loadImage(SuperviseSignActivity.this, path, tvLegalRepresentativeSign);
+                GlideUtils.loadImage(RiskSuperviseSignActivity.this, path, tvLegalRepresentativeSign);
 
             }
         }
@@ -196,7 +198,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             @Override
             protected void onSuccess(JsonT jsonT) {
                 if (jsonT.isSuccess()) {
-                    startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean));
+                    startActivity(new Intent(RiskSuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean));
                 }
             }
 

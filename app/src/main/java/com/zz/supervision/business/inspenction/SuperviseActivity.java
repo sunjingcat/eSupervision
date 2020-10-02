@@ -5,26 +5,25 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
-import com.zz.supervision.bean.RiskSuperviseBean;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.business.inspenction.adapter.SuperviseAdapter;
 import com.zz.supervision.business.inspenction.presenter.SupervisePresenter;
+import com.zz.supervision.business.risk.RiskSuperviseSignActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -52,6 +51,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     SuperviseAdapter adapter;
     List<BaseNode> mlist = new ArrayList<>();
     String id;
+    String url = "spxsInspectionRecord";
 
     @Override
     protected int getContentView() {
@@ -74,7 +74,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                 if (node instanceof SuperviseBean.RootFooterNode) {
                     for (int i = 0; i < adapter.getData().size(); i++) {
                         BaseNode children = adapter.getData().get(i);
-                        if (((SuperviseBean) children).getId() == ((SuperviseBean.RootFooterNode) node).getId()) {
+                        if (children instanceof SuperviseBean && ((SuperviseBean) children).getId() == ((SuperviseBean.RootFooterNode) node).getId()) {
                             adapter.expandOrCollapse(i);
                             ((SuperviseBean.RootFooterNode) node).setExpanded(((SuperviseBean) children).isExpanded());
                             break;
@@ -86,19 +86,26 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         });
 
         rv.setAdapter(adapter);
-        mPresenter.getData("spxsInspectionRecord/getItems");
+        int type = getIntent().getIntExtra("type", 0);
+        if (type == 1) {
+            url = "spxsInspectionRecord";
+        } else {
+            url = "cyfwInspectionRecord";
+        }
+        mPresenter.getData(url);
+
         initData();
     }
 
     @Override
     protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar);
+        ToolBarUtils.getInstance().setNavigation(toolbar, 1);
     }
 
     void initData() {
         CompanyBean company = (CompanyBean) getIntent().getSerializableExtra("company");
         String lawEnforcerText = getIntent().getStringExtra("lawEnforcerText");
-        String type = getIntent().getStringExtra("type");
+        String type = getIntent().getStringExtra("typeText");
         id = getIntent().getStringExtra("id");
         tvCompany.setText(company.getOperatorName());
         tvInspector.setText("检查员：" + lawEnforcerText);
@@ -131,7 +138,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
 
     @Override
     public void showResult(SuperviseBean.ResposeBean resposeBean) {
-        startActivity(new Intent(this, SuperviseSignActivity.class).putExtra("resposeBean", resposeBean));
+        startActivity(new Intent(this, RiskSuperviseSignActivity.class).putExtra("resposeBean", resposeBean));
 
     }
 
@@ -148,7 +155,8 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                 }
             }
         }
-        mPresenter.submitReData(id, postBeans);
+        mPresenter.submitReData(url, id, postBeans);
+
     }
 
     @Override
@@ -156,7 +164,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1001) {
             if (resultCode == RESULT_OK) {
-                mPresenter.submitData(id, postBeans);
+                mPresenter.submitData(url,id, postBeans);
             }
         }
     }

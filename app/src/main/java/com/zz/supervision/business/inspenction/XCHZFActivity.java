@@ -237,19 +237,21 @@ public class XCHZFActivity extends MyBaseActivity {
         RxNetUtils.request(getApi(ApiService.class).createRecord(map), new RequestObserver<JsonT<Integer>>() {
             @Override
             protected void onSuccess(JsonT<Integer> jsonT) {
-                if (type == 1) {
+                if (type == 1||type == 1) {
                     startActivity(new Intent(XCHZFActivity.this, SuperviseActivity.class)
                             .putExtra("company", companyBean)
                             .putExtra("id", jsonT.getData() + "")
-                            .putExtra("type", etType.getText().toString())
+                            .putExtra("type", type)
+                            .putExtra("typeText", etType.getText().toString())
                             .putExtra("lawEnforcer", names)
                             .putExtra("inspectionTime", inspectionTime));
                     finish();
-                } else if (type == 3) {
+                } else if (type == 3||type == 4) {
                     startActivity(new Intent(XCHZFActivity.this, RiskSuperviseActivity.class)
                             .putExtra("company", companyBean)
                             .putExtra("id", jsonT.getData() + "")
-                            .putExtra("type", etType.getText().toString())
+                            .putExtra("type", type)
+                            .putExtra("typeText", etType.getText().toString())
                             .putExtra("lawEnforcer", names)
                             .putExtra("inspectionTime", inspectionTime));
                     finish();

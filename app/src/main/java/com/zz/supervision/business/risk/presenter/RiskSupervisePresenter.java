@@ -23,7 +23,7 @@ public class RiskSupervisePresenter extends MyBasePresenterImpl<Contract.IGetRis
 
     @Override
     public void getData(String url) {
-        RxNetUtils.request(getApi(ApiService.class).getRiskSuperviseList(), new RequestObserver<JsonT<RiskSuperviseBean>>(this) {
+        RxNetUtils.request(getApi(ApiService.class).getRiskSuperviseList(url), new RequestObserver<JsonT<RiskSuperviseBean>>(this) {
             @Override
             protected void onSuccess(JsonT<RiskSuperviseBean> jsonT) {
                 view.showSuperviseList(jsonT.getData());
@@ -37,8 +37,8 @@ public class RiskSupervisePresenter extends MyBasePresenterImpl<Contract.IGetRis
     }
 
     @Override
-    public void submitData(String id,RiskSuperviseBean.PostBean spxsInspectionPoints) {
-        RxNetUtils.request(getApi(ApiService.class).submitSpxsRiskRecord(id,spxsInspectionPoints), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
+    public void submitData(String url,String id,RiskSuperviseBean.PostBean spxsInspectionPoints) {
+        RxNetUtils.request(getApi(ApiService.class).submitSpxsRiskRecord(url,id,spxsInspectionPoints), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
             @Override
             protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
                 view.showResult(jsonT.getData());
@@ -53,8 +53,8 @@ public class RiskSupervisePresenter extends MyBasePresenterImpl<Contract.IGetRis
     }
 
     @Override
-    public void submitReData(String id, RiskSuperviseBean.PostBean postBeans) {
-        RxNetUtils.request(getApi(ApiService.class).submitSpxsRiskRecordConfirm(id,postBeans), new RequestObserver<JsonT<SuperviseBean.ResposeConfirmBean>>(this) {
+    public void submitReData(String url,String id, RiskSuperviseBean.PostBean postBeans) {
+        RxNetUtils.request(getApi(ApiService.class).submitSpxsRiskRecordConfirm(url,id,postBeans), new RequestObserver<JsonT<SuperviseBean.ResposeConfirmBean>>(this) {
             @Override
             protected void onSuccess(JsonT<SuperviseBean.ResposeConfirmBean> jsonT) {
                 view.showReResult(jsonT.getData());

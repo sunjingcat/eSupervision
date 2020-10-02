@@ -103,30 +103,30 @@ public interface ApiService {
     @GET("/app/v1/supervise/dict/getDicts")
     Observable<JsonT<List<BusinessType>>> getDicts(@QueryMap Map<String, Object> params);
 
-    @GET("/app/v1/supervise/spxsInspectionRecord/getItems")
-    Observable<JsonT<List<SuperviseBean>>> getSuperviseList();
+    @GET("/app/v1/supervise/{url}/getItems")
+    Observable<JsonT<List<SuperviseBean>>> getSuperviseList(@Path("url")String url);
 
 
-    @GET("/app/v1/supervise/spxsRiskRecord/getItems")
-    Observable<JsonT<RiskSuperviseBean>> getRiskSuperviseList();
+    @GET("/app/v1/supervise/{url}/getItems")
+    Observable<JsonT<RiskSuperviseBean>> getRiskSuperviseList(@Path("url")String url);
 
     @Headers("Content-Type: application/json")
-    @POST("/app/v1/supervise/spxsInspectionRecord/confirm/{id}")
-    Observable<JsonT<SuperviseBean.ResposeConfirmBean>> submitSuperviseConfirm(@Path("id")String id, @Body ArrayList<SuperviseBean.PostBean> requestBody);
+    @POST("/app/v1/supervise/{url}/confirm/{id}")
+    Observable<JsonT<SuperviseBean.ResposeConfirmBean>> submitSuperviseConfirm(@Path("url")String url,@Path("id")String id, @Body ArrayList<SuperviseBean.PostBean> requestBody);
 
    @Headers("Content-Type: application/json")
-    @POST("/app/v1/supervise/spxsRiskRecord/confirm/{id}")
-    Observable<JsonT<SuperviseBean.ResposeConfirmBean>> submitSpxsRiskRecordConfirm(@Path("id")String id, @Body RiskSuperviseBean.PostBean requestBody);
+    @POST("/app/v1/supervise/{url}/confirm/{id}")
+    Observable<JsonT<SuperviseBean.ResposeConfirmBean>> submitSpxsRiskRecordConfirm(@Path("url")String url,@Path("id")String id, @Body RiskSuperviseBean.PostBean requestBody);
 
 
     @Headers("Content-Type: application/json")
-    @POST("/app/v1/supervise/spxsInspectionRecord/submitScoreItems/{id}")
-    Observable<JsonT<SuperviseBean.ResposeBean>> submitSupervise(@Path("id")String id,@Body ArrayList<SuperviseBean.PostBean> requestBody);
+    @POST("/app/v1/supervise/{url}/submitScoreItems/{id}")
+    Observable<JsonT<SuperviseBean.ResposeBean>> submitSupervise(@Path("url")String url,@Path("id")String id,@Body ArrayList<SuperviseBean.PostBean> requestBody);
 
 
     @Headers("Content-Type: application/json")
-    @POST("/app/v1/supervise/spxsRiskRecord/submitScoreItems/{id}")
-    Observable<JsonT<SuperviseBean.ResposeBean>> submitSpxsRiskRecord(@Path("id")String id,@Body RiskSuperviseBean.PostBean requestBody);
+    @POST("/app/v1/supervise/{url}/submitScoreItems/{id}")
+    Observable<JsonT<SuperviseBean.ResposeBean>> submitSpxsRiskRecord(@Path("url")String url,@Path("id")String id,@Body RiskSuperviseBean.PostBean requestBody);
 
     @POST("/app/v1/supervise/universal/createRecord")
     Observable<JsonT<Integer>> createRecord(@QueryMap Map<String, Object> params);

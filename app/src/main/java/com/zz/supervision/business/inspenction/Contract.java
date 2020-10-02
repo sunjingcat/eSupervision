@@ -13,9 +13,9 @@ import okhttp3.MultipartBody;
 
 public class Contract {
     public interface IsetSupervisePresenter extends BasePresenter {
-        void submitData(String id,ArrayList<SuperviseBean.PostBean> spxsInspectionPoints);
+        void submitData(String url,String id,ArrayList<SuperviseBean.PostBean> spxsInspectionPoints);
 
-        void submitReData(String id, ArrayList<SuperviseBean.PostBean> spxsInspectionPoints);
+        void submitReData(String url,String id, ArrayList<SuperviseBean.PostBean> spxsInspectionPoints);
 
         void getData(String url);
 
