@@ -26,7 +26,7 @@ public class LoginPresenter extends MyBasePresenterImpl<Contract.IGetLoginView> 
                     CacheUtility.saveToken(login_data.getData().getLoginToken());
                     view.showIntent();
                 }else {
-
+                    view.showToast(login_data.getMessage());
                 }
             }
             @Override
