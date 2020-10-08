@@ -67,7 +67,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
             public void onItemOnclick(BaseNode node, int type) {
                 if (node instanceof SuperviseBean) {
                     for (SuperviseBean.Children children : ((SuperviseBean) node).getChildrenList()) {
-                        children.setCheck(((SuperviseBean) node).isCheck());
+                        children.setIsSatisfy(((SuperviseBean) node).isCheck()?1:0);
                     }
                 }
                 if (node instanceof SuperviseBean.RootFooterNode) {
@@ -132,6 +132,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     public void showReResult(SuperviseBean.ResposeConfirmBean bean) {
         startActivityForResult(new Intent(this, InfoActivity.class)
                         .putExtra("supervise_respose", bean)
+                        .putExtra("type", type)
                 , 1001);
     }
 
@@ -149,7 +150,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         postBeans = new ArrayList<>();
         for (BaseNode node : mlist) {
             if (node instanceof SuperviseBean.Children) {
-                if (((SuperviseBean.Children) node).isCheck()) {
+                if (((SuperviseBean.Children) node).getIsSatisfy()==1) {
                     postBeans.add(new SuperviseBean.PostBean(((SuperviseBean.Children) node).getId(), ((SuperviseBean.Children) node).getIsSatisfy()));
                 }
             }

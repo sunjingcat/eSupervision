@@ -49,10 +49,10 @@ public class InfoActivity extends Activity {
         infoRv.setLayoutManager(new LinearLayoutManager(this));
         adapter = new DetailAdapter(R.layout.item_detail, mlist);
         infoRv.setAdapter(adapter);
-
+        int type = getIntent().getIntExtra("type",0);
         deviceInfo = (SuperviseBean.ResposeConfirmBean) getIntent().getSerializableExtra("supervise_respose");
         if (deviceInfo != null) {
-            showIntent(deviceInfo);
+            showIntent(deviceInfo,type);
         }
 
     }
@@ -72,22 +72,30 @@ public class InfoActivity extends Activity {
         }
     }
 
-    public void showIntent(SuperviseBean.ResposeConfirmBean lightDevice) {
+    public void showIntent(SuperviseBean.ResposeConfirmBean lightDevice,int type) {
         if (lightDevice == null) return;
         mlist.clear();
         List<DetailBean> list = new ArrayList<>();
         itemTitle.setText("执法详情预览");
-        list.add(new DetailBean("检查项数目", lightDevice.getSumCount() + ""));
-        list.add(new DetailBean("重点项目", lightDevice.getImportantCount() + ""));
-        list.add(new DetailBean("重点项问题数", lightDevice.getImportantProblemCount() + ""));
-        list.add(new DetailBean("一般项数", lightDevice.getGeneralCount() + ""));
-        list.add(new DetailBean("一般项问题数", lightDevice.getGeneralProblemCount() + ""));
-        list.add(new DetailBean("检查结果", lightDevice.getInspectionResult() + ""));
+        if (type==1||type==2) {
+            list.add(new DetailBean("检查项数目", lightDevice.getSumCount() + ""));
+            list.add(new DetailBean("重点项目", lightDevice.getImportantCount() + ""));
+            list.add(new DetailBean("重点项问题数", lightDevice.getImportantProblemCount() + ""));
+            list.add(new DetailBean("一般项数", lightDevice.getGeneralCount() + ""));
+            list.add(new DetailBean("一般项问题数", lightDevice.getGeneralProblemCount() + ""));
+            list.add(new DetailBean("检查结果", lightDevice.getInspectionResult() + ""));
+        }else {
+            list.add(new DetailBean("静态评分项分数", lightDevice.getStaticScore() + ""));
+            list.add(new DetailBean("动态评分项分数", lightDevice.getDynamicScore() + ""));
+            list.add(new DetailBean("总分数", lightDevice.getTotalScore() + ""));
+            list.add(new DetailBean("风险等级", lightDevice.getLevel() + ""));
 
+        }
 
         mlist.addAll(list);
         adapter.notifyDataSetChanged();
 
     }
+
 
 }

@@ -35,7 +35,7 @@
             android:layout_marginRight="10dp"
             android:padding="5dp"
             android:singleLine="true"
-            android:src="@drawable/icon_user"
+            android:src="@drawable/icon_user_main"
             android:text="编辑"
             android:textColor="@color/white"
             android:textSize="16dp" />

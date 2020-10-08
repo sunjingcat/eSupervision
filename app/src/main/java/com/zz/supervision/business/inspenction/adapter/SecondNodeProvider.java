@@ -35,20 +35,20 @@ public class SecondNodeProvider extends BaseNodeProvider {
         // 数据类型需要自己强转
         SuperviseBean.Children entity = (SuperviseBean.Children) data;
         baseViewHolder.setText(R.id.itemName, entity.getItemName());
-        baseViewHolder.getView(R.id.item_isImportant).setVisibility(entity.getIsImportant() == 0 ? View.GONE : View.VISIBLE);
+        baseViewHolder.getView(R.id.item_isImportant).setVisibility(entity.getIsImportant() == 0 ? View.INVISIBLE : View.VISIBLE);
         ((RadioGroup) baseViewHolder.getView(R.id.item_rg)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.item_check_yes:
-                        ((SuperviseBean.Children) data).setCheck(true);
+                        ((SuperviseBean.Children) data).setIsSatisfy(1);
                         break;
                     case R.id.item_check_no:
-                        ((SuperviseBean.Children) data).setCheck(false);
+                        ((SuperviseBean.Children) data).setIsSatisfy(0);
                         break;
                 }
             }
         });
-        ((RadioButton) baseViewHolder.getView(R.id.item_check_yes)).setChecked(entity.isCheck());
+        ((RadioButton) baseViewHolder.getView(R.id.item_check_yes)).setChecked(entity.getIsSatisfy()==1);
     }
 }

@@ -6,9 +6,7 @@ import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.chad.library.adapter.base.provider.BaseNodeProvider;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.zz.supervision.R;
-import com.zz.supervision.bean.RiskSuperviseBean;
 import com.zz.supervision.bean.SuperviseBean;
-import com.zz.supervision.business.risk.adapter.RiskSuperviseAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -38,7 +36,7 @@ public class FooterNodeProvider extends BaseNodeProvider {
             @Override
             public void onClick(View v) {
                 ((SuperviseBean.RootFooterNode) data).setExpanded(!((SuperviseBean.RootFooterNode) data).isExpanded());
-                onProviderOnClick.onItemOnclick(data,0);
+                onProviderOnClick.onItemOnclick(data, 0);
             }
         });
     }

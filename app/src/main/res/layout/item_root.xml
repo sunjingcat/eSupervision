@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#4A4A4A"
-                android:textSize="16dp"
+                android:textSize="17dp"
                 tools:text="经营资质" />
 
             <TextView

@@ -151,16 +151,6 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         private String searchValue;// ,
         private String updateBy;// ,
         private String updateTime;//
-        private boolean check;//
-
-        public void setCheck(boolean check) {
-            this.check = check;
-        }
-
-        public boolean isCheck() {
-            return check;
-        }
-
         public String getCreateBy() {
             return createBy;
         }
@@ -171,6 +161,10 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
 
         public String getId() {
             return id;
+        }
+
+        public void setIsSatisfy(int isSatisfy) {
+            this.isSatisfy = isSatisfy;
         }
 
         public int getIsImportant() {
@@ -256,7 +250,26 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         private String generalProblemCount;// 2,
         private String inspectionResult;// 不符合,
         private String inspectionResultReduction;// 食品生产经营者立即停止食品生产经营活动
+        private String staticScore;
+        private String dynamicScore;
+        private String totalScore;
+        private String level;
 
+        public String getStaticScore() {
+            return staticScore;
+        }
+
+        public String getDynamicScore() {
+            return dynamicScore;
+        }
+
+        public String getTotalScore() {
+            return totalScore;
+        }
+
+        public String getLevel() {
+            return level;
+        }
 
         public String getCompanyId() {
             return companyId;
@@ -342,6 +355,31 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         private String fillerSign;// 待签字
         private String ownerSign;// 待签字
         private String reviewerSign;// 待签字
+
+        private String staticScore;
+        private String dynamicScore;
+        private String totalScore;
+        private String level;
+
+        public CompanyBean getCompany() {
+            return company;
+        }
+
+        public String getStaticScore() {
+            return staticScore;
+        }
+
+        public String getDynamicScore() {
+            return dynamicScore;
+        }
+
+        public String getTotalScore() {
+            return totalScore;
+        }
+
+        public String getLevel() {
+            return level;
+        }
 
         public String getFillerSign() {
             return fillerSign;

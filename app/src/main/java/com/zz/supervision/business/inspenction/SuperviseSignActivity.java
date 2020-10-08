@@ -3,6 +3,7 @@ package com.zz.supervision.business.inspenction;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -89,6 +90,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
     LinearLayout llLawEnforcerSign;
     @BindView(R.id.ll_legalRepresentative_sign)
     LinearLayout llLegalRepresentativeSign;
+    @BindView(R.id.ll_violation)
+    LinearLayout ll_violation;
     @BindView(R.id.tv_sign_1)
     TextView tvSign1;
     @BindView(R.id.tv_sign_2)
@@ -98,6 +101,22 @@ public class SuperviseSignActivity extends MyBaseActivity {
     @BindView(R.id.ll_reviewerSign_sign)
     LinearLayout llReviewerSignSign;
     int type;
+    @BindView(R.id.ll_important)
+    LinearLayout llImportant;
+    @BindView(R.id.ll_general)
+    LinearLayout llGeneral;
+    @BindView(R.id.ll_inspectionResult)
+    LinearLayout llInspectionResult;
+    @BindView(R.id.tv_staticScore)
+    TextView tvStaticScore;
+    @BindView(R.id.tv_dynamicScore)
+    TextView tvDynamicScore;
+    @BindView(R.id.tv_totalScore)
+    TextView tvTotalScore;
+    @BindView(R.id.tv_preLevel)
+    TextView tvPreLevel;
+    @BindView(R.id.ll_risk)
+    LinearLayout llRisk;
 
     @Override
     protected int getContentView() {
@@ -151,16 +170,34 @@ public class SuperviseSignActivity extends MyBaseActivity {
         tvSumCount.setText(resposeBean.getSumCount() + "");
         tvLawEnforcer.setText(resposeBean.getLawEnforcer1Name() + "/" + resposeBean.getLawEnforcer2Name());
         tvYearCount.setText(resposeBean.getYearCount() + "");
-        tvImportantCount.setText(resposeBean.getImportantCount() + "");
-        tvImportantDetail.setText(resposeBean.getImportantDetail() + "");
-        tvImportantProblemCount.setText(resposeBean.getImportantProblemCount() + "");
-        tvImportantProblemDetail.setText(resposeBean.getImportantProblemDetail() + "");
-        tvGeneralCount.setText(resposeBean.getGeneralCount() + "");
-        tvGeneralDetail.setText(resposeBean.getGeneralDetail() + "");
-        tvGeneralProblemCount.setText(resposeBean.getGeneralProblemCount() + "");
-        tvGeneralProblemDetail.setText(resposeBean.getGeneralProblemDetail() + "");
-        tvInspectionResult.setText(resposeBean.getInspectionResult() + "");
-        tvViolation.setText(resposeBean.getViolation() + "");
+
+        if (type==1||type==2) {
+            tvImportantCount.setText(resposeBean.getImportantCount() + "");
+            tvImportantDetail.setText(resposeBean.getImportantDetail() + "");
+            tvImportantProblemCount.setText(resposeBean.getImportantProblemCount() + "");
+            tvImportantProblemDetail.setText(resposeBean.getImportantProblemDetail() + "");
+            tvGeneralCount.setText(resposeBean.getGeneralCount() + "");
+            tvGeneralDetail.setText(resposeBean.getGeneralDetail() + "");
+            tvGeneralProblemCount.setText(resposeBean.getGeneralProblemCount() + "");
+            tvGeneralProblemDetail.setText(resposeBean.getGeneralProblemDetail() + "");
+            tvInspectionResult.setText(resposeBean.getInspectionResult() + "");
+            tvViolation.setText(resposeBean.getViolation() + "");
+            ll_violation.setVisibility(TextUtils.isEmpty(resposeBean.getViolation()) ? View.GONE : View.VISIBLE);
+            llGeneral.setVisibility(View.VISIBLE);
+            llImportant.setVisibility(View.VISIBLE);
+            llInspectionResult.setVisibility(View.VISIBLE);
+            llRisk.setVisibility(View.GONE);
+        }else {
+            tvStaticScore.setText(resposeBean.getStaticScore()+"");
+            tvDynamicScore.setText(resposeBean.getDynamicScore()+"");
+            tvTotalScore.setText(resposeBean.getTotalScore()+"");
+            tvPreLevel.setText(resposeBean.getLevel()+"");
+            llGeneral.setVisibility(View.GONE);
+            llImportant.setVisibility(View.GONE);
+            llInspectionResult.setVisibility(View.GONE);
+            ll_violation.setVisibility(View.GONE);
+            llRisk.setVisibility(View.VISIBLE);
+        }
         bt_ok.setText(resposeBean.getStatus() == 3 ? "打印" : "确定");
         if (resposeBean.getStatus() == 3) {
             llLawEnforcerSign.setEnabled(false);
@@ -311,10 +348,12 @@ public class SuperviseSignActivity extends MyBaseActivity {
             }
             return;
         }
-        if (TextUtils.isEmpty(reviewerSign_sign)) {
-            showToast("审批人签字");
+        if (type == 3 || type == 4) {
+            if (TextUtils.isEmpty(reviewerSign_sign)) {
+                showToast("审批人签字");
 
-            return;
+                return;
+            }
         }
 
         String companySign = BASE64.imageToBase64(lawEnforcer_sign);
@@ -326,7 +365,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
                     if (jsonT.isSuccess()) {
-                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean));
+                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type",type));
                     }
                 }
 
@@ -341,7 +380,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
                     if (jsonT.isSuccess()) {
-                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean));
+                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type",type));
                     }
                 }
 
@@ -388,6 +427,4 @@ public class SuperviseSignActivity extends MyBaseActivity {
             }
         }, LoadingUtils.build(this));
     }
-
-
 }

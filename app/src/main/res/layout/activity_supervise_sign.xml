@@ -84,7 +84,7 @@
                         android:background="@color/white"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:hint="请填写"
+                        android:hint=""
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:textColor="#333"
@@ -113,7 +113,7 @@
                         android:background="@color/white"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:hint="请填写"
+                        android:hint=""
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:textColor="#333"
@@ -142,7 +142,7 @@
                         android:background="@color/white"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:hint="请填写"
+                        android:hint=""
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:textColor="#333"
@@ -172,7 +172,7 @@
                         android:background="@color/white"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:hint="请填写"
+                        android:hint=""
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:textColor="#333"
@@ -183,6 +183,135 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_risk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp">
+
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
+                        android:text="静态评分项分数" />
+
+                    <TextView
+                        android:id="@+id/tv_staticScore"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:hint=""
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
+
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp">
+
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
+                        android:text="动态评分项分数" />
+
+                    <TextView
+                        android:id="@+id/tv_dynamicScore"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:hint=""
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
+
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp">
+
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
+                        android:text="总分数" />
+
+                    <TextView
+                        android:id="@+id/tv_totalScore"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:hint=""
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
+
+                    </TextView>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp">
+
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
+                        android:text="风险等级" />
+
+                    <TextView
+                        android:id="@+id/tv_preLevel"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:hint=""
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
+
+                    </TextView>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_important"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -211,7 +340,7 @@
                         android:background="@color/white"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:hint="请填写"
+                        android:hint=""
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:textColor="#333"
@@ -269,7 +398,7 @@
                         android:background="@color/white"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:hint="请填写"
+                        android:hint=""
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:textColor="#333"
@@ -310,6 +439,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_general"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -338,7 +468,7 @@
                         android:background="@color/white"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:hint="请填写"
+                        android:hint=""
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:textColor="#333"
@@ -367,7 +497,7 @@
                         android:background="@color/white"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:hint="请填写"
+                        android:hint=""
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:textColor="#333"
@@ -396,7 +526,7 @@
                         android:background="@color/white"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:hint="请填写"
+                        android:hint=""
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:textColor="#333"
@@ -426,7 +556,7 @@
                         android:background="@color/white"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:hint="请填写"
+                        android:hint=""
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:textColor="#333"
@@ -437,6 +567,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_inspectionResult"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -456,7 +587,7 @@
                     android:background="@color/white"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
-                    android:hint="请填写"
+                    android:hint=""
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:textColor="#333"
@@ -466,6 +597,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_violation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

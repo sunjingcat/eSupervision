@@ -195,6 +195,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
     public void showReResult(SuperviseBean.ResposeConfirmBean bean) {
         startActivityForResult(new Intent(this, InfoActivity.class)
                         .putExtra("supervise_respose", bean)
+                        .putExtra("type", type)
                 , 1001);
     }
 
