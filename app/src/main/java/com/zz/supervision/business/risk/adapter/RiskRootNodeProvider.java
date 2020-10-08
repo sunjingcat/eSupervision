@@ -36,6 +36,7 @@ public class RiskRootNodeProvider extends BaseNodeProvider {
         RiskSuperviseBean.RiskItem entity = (RiskSuperviseBean.RiskItem) data;
         baseViewHolder.setText(R.id.itemName, entity.getContent());
         baseViewHolder.setText(R.id.itemContent, "");
+        baseViewHolder.getView(R.id.itemContent).setVisibility(View.GONE);
         ((CheckBox) baseViewHolder.getView(R.id.item_check)).setChecked(entity.isCheck());
         baseViewHolder.getView(R.id.item_check).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -113,7 +113,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
                             break;
                         }
                     }
-                } else if (node instanceof RiskSuperviseBean.ChildRisk && type == 3) {
+                } else if (node instanceof RiskSuperviseBean.ChildRisk ) {
                     List<BaseNode> superviseAdapterData = staticSuperviseAdapter.getData();
                     for (BaseNode baseNode : superviseAdapterData) {
                         if (baseNode instanceof RiskSuperviseBean.RiskItem) {
@@ -138,6 +138,21 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
                                             }
                                         }
                                         break;
+                                    }else {
+                                        if (child.getChildRisks()!=null) {
+                                            for (RiskSuperviseBean.ChildRisk grandson : child.getChildRisks()) {
+                                                if (grandson.getId().equals(((RiskSuperviseBean.ChildRisk) node).getPid())) {
+                                                    for (RiskSuperviseBean.ChildRisk childRisk : (grandson).getChildRisks()) {
+                                                        if (((RiskSuperviseBean.ChildRisk) node).getId().equals(childRisk.getId())) {
+                                                            ((RiskSuperviseBean.ChildRisk) node).setCheck(!((RiskSuperviseBean.ChildRisk) node).isCheck());
+                                                        } else {
+                                                            childRisk.setCheck(false);
+                                                        }
+                                                    }
+                                                    break;
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -229,9 +244,17 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
                             staticRiskIds.add(((RiskSuperviseBean.ChildRisk) child).getId());
                         }
                     } else {
-                        for (BaseNode child1 : ((RiskSuperviseBean.ChildRisk) child).getChildRisks()) {
-                            if (((RiskSuperviseBean.ChildRisk) child1).isCheck()) {
-                                staticRiskIds.add(((RiskSuperviseBean.ChildRisk) child1).getId());
+                        for (RiskSuperviseBean.ChildRisk child1 : ((RiskSuperviseBean.ChildRisk) child).getChildRisks()) {
+                            if (child1.getChildType()==0) {
+                                if ((child1).isCheck()) {
+                                    staticRiskIds.add(child1.getId());
+                                }
+                            }else {
+                                for (RiskSuperviseBean.ChildRisk child2 : child1.getChildRisks()) {
+                                    if ((child2).isCheck()) {
+                                        staticRiskIds.add(child2.getId());
+                                    }
+                                }
                             }
                         }
                     }

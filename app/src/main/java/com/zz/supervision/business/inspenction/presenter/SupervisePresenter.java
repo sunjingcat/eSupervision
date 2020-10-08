@@ -41,7 +41,7 @@ public class SupervisePresenter extends MyBasePresenterImpl<Contract.IGetSupervi
             @Override
             protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
                 view.showResult(jsonT.getData());
-                view.showToast(jsonT.getMessage());
+//                view.showToast(jsonT.getMessage());
             }
             @Override
             protected void onFail2(JsonT<SuperviseBean.ResposeBean> stringJsonT) {
@@ -57,7 +57,7 @@ public class SupervisePresenter extends MyBasePresenterImpl<Contract.IGetSupervi
             @Override
             protected void onSuccess(JsonT<SuperviseBean.ResposeConfirmBean> jsonT) {
                 view.showReResult(jsonT.getData());
-                view.showToast(jsonT.getMessage());
+//                view.showToast(jsonT.getMessage());
             }
             @Override
             protected void onFail2(JsonT<SuperviseBean.ResposeConfirmBean> stringJsonT) {

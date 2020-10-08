@@ -92,6 +92,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
     LinearLayout llLegalRepresentativeSign;
     @BindView(R.id.ll_violation)
     LinearLayout ll_violation;
+    @BindView(R.id.ll_sumCount)
+    LinearLayout llSumCount;
     @BindView(R.id.tv_sign_1)
     TextView tvSign1;
     @BindView(R.id.tv_sign_2)
@@ -105,6 +107,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
     LinearLayout llImportant;
     @BindView(R.id.ll_general)
     LinearLayout llGeneral;
+    @BindView(R.id.ll_yearCount)
+    LinearLayout llYearCount;
     @BindView(R.id.ll_inspectionResult)
     LinearLayout llInspectionResult;
     @BindView(R.id.tv_staticScore)
@@ -115,6 +119,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
     TextView tvTotalScore;
     @BindView(R.id.tv_preLevel)
     TextView tvPreLevel;
+    @BindView(R.id.tv_time)
+    TextView tvTime;
     @BindView(R.id.ll_risk)
     LinearLayout llRisk;
 
@@ -168,9 +174,11 @@ public class SuperviseSignActivity extends MyBaseActivity {
     public void showIntent(SuperviseBean.ResposeBean resposeBean) {
         tvCompany.setText(resposeBean.getCompanyInfo().getOperatorName() + "");
         tvSumCount.setText(resposeBean.getSumCount() + "");
+        llSumCount.setVisibility(TextUtils.isEmpty(resposeBean.getSumCount())?View.GONE:View.VISIBLE);
         tvLawEnforcer.setText(resposeBean.getLawEnforcer1Name() + "/" + resposeBean.getLawEnforcer2Name());
         tvYearCount.setText(resposeBean.getYearCount() + "");
-
+        llYearCount.setVisibility(TextUtils.isEmpty(resposeBean.getYearCount())?View.GONE:View.VISIBLE);
+        tvTime.setText(resposeBean.getInspectionTime()+"");
         if (type==1||type==2) {
             tvImportantCount.setText(resposeBean.getImportantCount() + "");
             tvImportantDetail.setText(resposeBean.getImportantDetail() + "");

@@ -94,6 +94,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_sumCount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -153,6 +154,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/ll_yearCount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -167,6 +169,34 @@
 
                     <TextView
                         android:id="@+id/tv_yearCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:hint=""
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
+
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp">
+
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
+                        android:text="检查日期" />
+
+                    <TextView
+                        android:id="@+id/tv_time"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/white"
@@ -719,7 +749,7 @@
                 <TextView
                     style="@style/textLeftStyle"
                     android:layout_width="150dp"
-                    android:text="企业负责人签字" />
+                    android:text="审批人" />
 
                 <ImageView
                     android:id="@+id/tv_reviewerSign_sign"
