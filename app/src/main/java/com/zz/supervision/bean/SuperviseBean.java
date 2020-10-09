@@ -141,7 +141,7 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         private String createTime;// ,
         private String id;// 0,
         private int isImportant;// 0,
-        private int isSatisfy;// 0,
+        private int isSatisfy ;// 0,
         private String itemName;// ,
         private String itemNum;// ,
         private String itemPid;// 0,

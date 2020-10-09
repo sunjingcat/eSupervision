@@ -72,9 +72,22 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
             public void onItemOnclick(BaseNode node, int type) {
                 if (node instanceof RiskSuperviseBean.RiskItem) {
                     for (RiskSuperviseBean.ChildRisk children : ((RiskSuperviseBean.RiskItem) node).getChildRisks()) {
-                        children.setCheck(!((RiskSuperviseBean.RiskItem) node).isCheck());
+                        if (((RiskSuperviseBean.RiskItem) node).isCheck()){
+                            children.setCheck(1);
+                        }else {
+                            children.setCheck(0);
+                        }
                     }
-                } else if (node instanceof RiskSuperviseBean.RootFooterNode) {
+                } else if (node instanceof RiskSuperviseBean.ChildRisk) {
+                    ((RiskSuperviseBean.ChildRisk) node).setCheck(type);
+                    if (type==2){
+                        for (BaseNode superviseBean:adapter.getData()){
+                            if (superviseBean instanceof RiskSuperviseBean.RiskItem){
+                                ((RiskSuperviseBean.RiskItem) superviseBean).setCheck(false);
+                            }
+                        }
+                    }
+                }else if (node instanceof RiskSuperviseBean.RootFooterNode) {
                     for (int i = 0; i < adapter.getData().size(); i++) {
                         BaseNode children = adapter.getData().get(i);
                         if (children instanceof RiskSuperviseBean.RiskItem && ((RiskSuperviseBean.RiskItem) children).getId().equals(((RiskSuperviseBean.RootFooterNode) node).getId())) {
@@ -121,9 +134,9 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
                                     getPid().equals(((RiskSuperviseBean.RiskItem) baseNode).getId())) {
                                 for (RiskSuperviseBean.ChildRisk child : ((RiskSuperviseBean.RiskItem) baseNode).getChildRisks()) {
                                     if (((RiskSuperviseBean.ChildRisk) node).getId().equals(child.getId())) {
-                                        ((RiskSuperviseBean.ChildRisk) node).setCheck(!((RiskSuperviseBean.ChildRisk) node).isCheck());
+                                        ((RiskSuperviseBean.ChildRisk) node).setCheck(((RiskSuperviseBean.ChildRisk) node).isCheck()==1?0:1);
                                     } else {
-                                        child.setCheck(false);
+                                        child.setCheck(0);
                                     }
                                 }
                                 break;
@@ -132,9 +145,9 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
                                     if (child.getId().equals(((RiskSuperviseBean.ChildRisk) node).getPid())) {
                                         for (RiskSuperviseBean.ChildRisk childRisk : (child).getChildRisks()) {
                                             if (((RiskSuperviseBean.ChildRisk) node).getId().equals(childRisk.getId())) {
-                                                ((RiskSuperviseBean.ChildRisk) node).setCheck(!((RiskSuperviseBean.ChildRisk) node).isCheck());
+                                                ((RiskSuperviseBean.ChildRisk) node).setCheck(((RiskSuperviseBean.ChildRisk) node).isCheck()==1?0:1);
                                             } else {
-                                                childRisk.setCheck(false);
+                                                childRisk.setCheck(0);
                                             }
                                         }
                                         break;
@@ -144,9 +157,9 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
                                                 if (grandson.getId().equals(((RiskSuperviseBean.ChildRisk) node).getPid())) {
                                                     for (RiskSuperviseBean.ChildRisk childRisk : (grandson).getChildRisks()) {
                                                         if (((RiskSuperviseBean.ChildRisk) node).getId().equals(childRisk.getId())) {
-                                                            ((RiskSuperviseBean.ChildRisk) node).setCheck(!((RiskSuperviseBean.ChildRisk) node).isCheck());
+                                                            ((RiskSuperviseBean.ChildRisk) node).setCheck(((RiskSuperviseBean.ChildRisk) node).isCheck()==1?0:1);
                                                         } else {
-                                                            childRisk.setCheck(false);
+                                                            childRisk.setCheck(0);
                                                         }
                                                     }
                                                     break;
@@ -230,8 +243,8 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
         for (BaseNode node : mlist) {
             if (node instanceof RiskSuperviseBean.RiskItem) {
                 for (BaseNode child : ((RiskSuperviseBean.RiskItem) node).getChildRisks()) {
-                    if (((RiskSuperviseBean.ChildRisk) child).isCheck()) {
-                        dynamicRiskMap.put(((RiskSuperviseBean.ChildRisk) child).getId(), ((RiskSuperviseBean.ChildRisk) child).isCheck() ? 1 : 0);
+                    if (((RiskSuperviseBean.ChildRisk) child).isCheck()!=0) {
+                        dynamicRiskMap.put(((RiskSuperviseBean.ChildRisk) child).getId(), ((RiskSuperviseBean.ChildRisk) child).isCheck()==1 ? 1 : 0);
                     }
                 }
             }
@@ -241,18 +254,18 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
             if (node instanceof RiskSuperviseBean.RiskItem) {
                 for (BaseNode child : ((RiskSuperviseBean.RiskItem) node).getChildRisks()) {
                     if (((RiskSuperviseBean.ChildRisk) child).getChildType() == 0) {
-                        if (((RiskSuperviseBean.ChildRisk) child).isCheck()) {
+                        if (((RiskSuperviseBean.ChildRisk) child).isCheck()==1) {
                             staticRiskIds.add(((RiskSuperviseBean.ChildRisk) child).getId());
                         }
                     } else {
                         for (RiskSuperviseBean.ChildRisk child1 : ((RiskSuperviseBean.ChildRisk) child).getChildRisks()) {
                             if (child1.getChildType()==0) {
-                                if ((child1).isCheck()) {
+                                if ((child1).isCheck()==1) {
                                     staticRiskIds.add(child1.getId());
                                 }
                             }else {
                                 for (RiskSuperviseBean.ChildRisk child2 : child1.getChildRisks()) {
-                                    if ((child2).isCheck()) {
+                                    if ((child2).isCheck()==1) {
                                         staticRiskIds.add(child2.getId());
                                     }
                                 }

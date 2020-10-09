@@ -3,6 +3,7 @@ package com.zz.supervision.business.risk.adapter;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.chad.library.adapter.base.provider.BaseNodeProvider;
@@ -10,6 +11,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.zz.supervision.R;
 import com.zz.supervision.bean.RiskSuperviseBean;
 import com.zz.supervision.bean.SuperviseBean;
+import com.zz.supervision.utils.TabUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -36,20 +38,28 @@ public class RiskSecondNodeProvider extends BaseNodeProvider {
         RiskSuperviseBean.ChildRisk entity = (RiskSuperviseBean.ChildRisk) data;
         baseViewHolder.setText(R.id.itemName, entity.getContent());
         baseViewHolder.getView(R.id.item_isImportant).setVisibility(entity.getIsKey()==0?View.INVISIBLE:View.VISIBLE);
-        ((RadioGroup) baseViewHolder.getView(R.id.item_rg)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.item_check_yes:
-                        ((RiskSuperviseBean.ChildRisk) data).setCheck(true);
+        if (((RiskSuperviseBean.ChildRisk) data).isCheck()==1){
+            TabUtils.setDrawableLeft(getContext(),(TextView) baseViewHolder.getView(R.id.item_check_yes),R.drawable.image_check_circle);
+        }else {
+            TabUtils.setDrawableLeft(getContext(),(TextView) baseViewHolder.getView(R.id.item_check_yes),R.drawable.image_uncheck_circle);
+        }
 
-                        break;
-                    case R.id.item_check_no:
-                        ((RiskSuperviseBean.ChildRisk) data).setCheck(false);
-                        break;
-                }
+        if (((RiskSuperviseBean.ChildRisk) data).isCheck()==2){
+            TabUtils.setDrawableLeft(getContext(),(TextView) baseViewHolder.getView(R.id.item_check_no),R.drawable.image_check_circle);
+        }else {
+            TabUtils.setDrawableLeft(getContext(),(TextView) baseViewHolder.getView(R.id.item_check_no),R.drawable.image_uncheck_circle);
+        }
+        baseViewHolder.getView(R.id.item_check_yes).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onProviderOnClick.onItemOnclick(data,1);
             }
         });
-        ((RadioButton) baseViewHolder.getView(R.id.item_check_yes)).setChecked(entity.isCheck());
+        baseViewHolder.getView(R.id.item_check_no).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onProviderOnClick.onItemOnclick(data,2);
+            }
+        });
     }
 }

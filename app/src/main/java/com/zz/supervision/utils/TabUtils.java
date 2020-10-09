@@ -1,5 +1,7 @@
 package com.zz.supervision.utils;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -46,5 +48,10 @@ public class TabUtils {
 //        tabLayout.addTab(tab);
 
 
+    }
+    public static void setDrawableLeft(Context context,TextView attention, int drawableId) {
+        Drawable drawable = context.getResources().getDrawable(drawableId);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        attention.setCompoundDrawables(drawable, null, null, null);
     }
 }

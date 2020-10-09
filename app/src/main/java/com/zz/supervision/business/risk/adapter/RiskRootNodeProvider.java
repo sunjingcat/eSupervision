@@ -41,8 +41,9 @@ public class RiskRootNodeProvider extends BaseNodeProvider {
         baseViewHolder.getView(R.id.item_check).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onProviderOnClick.onItemOnclick(data, 0);
                 entity.setCheck(!entity.isCheck());
+                onProviderOnClick.onItemOnclick(data, 0);
+
             }
         });
 

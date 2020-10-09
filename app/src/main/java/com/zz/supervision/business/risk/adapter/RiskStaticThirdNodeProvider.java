@@ -34,7 +34,7 @@ public class RiskStaticThirdNodeProvider extends BaseNodeProvider {
         // 数据类型需要自己强转
         RiskSuperviseBean.ChildRisk entity = (RiskSuperviseBean.ChildRisk) data;
         baseViewHolder.setText(R.id.itemName, entity.getContent());
-        ((RadioButton) baseViewHolder.getView(R.id.item_check)).setChecked(entity.isCheck());
+        ((RadioButton) baseViewHolder.getView(R.id.item_check)).setChecked(entity.isCheck()==1);
         ((RadioButton) baseViewHolder.getView(R.id.item_check)).setEnabled(false);
         baseViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
            @Override

@@ -194,10 +194,10 @@ public class RiskSuperviseBean {
         private String unit;//
         private String updateBy;//
         private String updateTime;
-        private boolean check;
+        private int check ;
 
         private int isKey;// 0,
-        public boolean isCheck() {
+        public int isCheck() {
             return check;
         }
 
@@ -207,7 +207,7 @@ public class RiskSuperviseBean {
 
         private ArrayList<ChildRisk> childRisks;
 
-        public void setCheck(boolean check) {
+        public void setCheck(int check) {
             this.check = check;
         }
 

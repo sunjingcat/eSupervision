@@ -23,6 +23,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -51,7 +52,8 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     List<BaseNode> mlist = new ArrayList<>();
     String id;
     String url = "spxsInspectionRecord";
-    int type= 0;
+    int type = 0;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_select_inspections;
@@ -67,13 +69,25 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
             public void onItemOnclick(BaseNode node, int type) {
                 if (node instanceof SuperviseBean) {
                     for (SuperviseBean.Children children : ((SuperviseBean) node).getChildrenList()) {
-                        children.setIsSatisfy(((SuperviseBean) node).isCheck()?1:0);
+                        if (((SuperviseBean) node).isCheck()){
+                            children.setIsSatisfy(1);
+                        }else {
+                            children.setIsSatisfy(0);
+                        }
                     }
-                }
-                if (node instanceof SuperviseBean.RootFooterNode) {
+                } else if (node instanceof SuperviseBean.Children) {
+                    ((SuperviseBean.Children) node).setIsSatisfy(type);
+                    if (type==2){
+                        for (BaseNode superviseBean:adapter.getData()){
+                            if (superviseBean instanceof SuperviseBean){
+                                ((SuperviseBean) superviseBean).setCheck(false);
+                            }
+                        }
+                    }
+                } else if (node instanceof SuperviseBean.RootFooterNode) {
                     for (int i = 0; i < adapter.getData().size(); i++) {
                         BaseNode children = adapter.getData().get(i);
-                        if (children instanceof SuperviseBean && ((SuperviseBean) children).getId() .equals (((SuperviseBean.RootFooterNode) node).getId())) {
+                        if (children instanceof SuperviseBean && ((SuperviseBean) children).getId().equals(((SuperviseBean.RootFooterNode) node).getId())) {
                             adapter.expandOrCollapse(i);
                             ((SuperviseBean.RootFooterNode) node).setExpanded(((SuperviseBean) children).isExpanded());
                             break;
@@ -85,7 +99,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         });
 
         rv.setAdapter(adapter);
-         type = getIntent().getIntExtra("type", 0);
+        type = getIntent().getIntExtra("type", 0);
         if (type == 1) {
             url = "spxsInspectionRecord";
         } else {
@@ -102,11 +116,11 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     }
 
     void initData() {
-        String company =  getIntent().getStringExtra("company");
+        String company = getIntent().getStringExtra("company");
         String lawEnforcerText = getIntent().getStringExtra("lawEnforcer");
         String type = getIntent().getStringExtra("typeText");
         id = getIntent().getStringExtra("id");
-        tvCompany.setText(company+"");
+        tvCompany.setText(company + "");
         tvInspector.setText("检查员：" + lawEnforcerText);
         tvType.setText("检查类型：" + type + "");
     }
@@ -138,7 +152,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
 
     @Override
     public void showResult(SuperviseBean.ResposeBean resposeBean) {
-        startActivity(new Intent(this, SuperviseSignActivity.class).putExtra("resposeBean", resposeBean).putExtra("type",type));
+        startActivity(new Intent(this, SuperviseSignActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));
         finish();
     }
 
@@ -150,8 +164,8 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         postBeans = new ArrayList<>();
         for (BaseNode node : mlist) {
             if (node instanceof SuperviseBean.Children) {
-                if (((SuperviseBean.Children) node).getIsSatisfy()==1) {
-                    postBeans.add(new SuperviseBean.PostBean(((SuperviseBean.Children) node).getId(), ((SuperviseBean.Children) node).getIsSatisfy()));
+                if (((SuperviseBean.Children) node).getIsSatisfy() != 0) {
+                    postBeans.add(new SuperviseBean.PostBean(((SuperviseBean.Children) node).getId(), ((SuperviseBean.Children) node).getIsSatisfy()==1?1:0));
                 }
             }
         }
@@ -164,7 +178,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1001) {
             if (resultCode == RESULT_OK) {
-                mPresenter.submitData(url,id, postBeans);
+                mPresenter.submitData(url, id, postBeans);
             }
         }
     }

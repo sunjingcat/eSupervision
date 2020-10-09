@@ -30,7 +30,7 @@
 
     </LinearLayout>
 
-    <RadioGroup
+    <LinearLayout
         android:id="@+id/item_rg"
         android:layout_width="match_parent"
         android:gravity="right"
@@ -38,23 +38,24 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <RadioButton
+        <TextView
             android:id="@+id/item_check_yes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:button="@drawable/check_item"
+            android:drawableLeft="@drawable/check_item"
             android:textColor="#4A4A4A"
             android:drawablePadding="10dp"
-            android:text="  是" />
+            android:text="是" />
 
-        <RadioButton
+        <TextView
             android:id="@+id/item_check_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="15dp"
+            android:drawableLeft="@drawable/check_item"
             android:textColor="#4A4A4A"
-            android:button="@drawable/check_item"
-            android:text="  否" />
-    </RadioGroup>
+            android:drawablePadding="10dp"
+            android:text="否" />
+    </LinearLayout>
 
 </LinearLayout>
