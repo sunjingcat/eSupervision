@@ -46,12 +46,12 @@ public class BusinessProjectActivity extends MyBaseActivity {
         rv.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BusinessProjectAdapter(R.layout.item_bn_pj_title, R.layout.item_bn_pj_content, mlist);
         rv.setAdapter(adapter);
-        int type = getIntent().getIntExtra("type", 0);
+        String type = getIntent().getStringExtra("type" );
         mlist.clear();
-        if (type == 1) {
+        if (type .equals("1")) {
             initXS();
             tvLeft.setText("食品销售");
-        } else if (type == 2 || type == 3) {
+        } else if (type .equals("2") || type .equals("3")) {
             initFW();
             tvLeft.setText("餐饮服务");
         }
@@ -79,7 +79,7 @@ public class BusinessProjectActivity extends MyBaseActivity {
 
     @Override
     protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar);
+        ToolBarUtils.getInstance().setNavigation(toolbar,1);
     }
 
     @Override

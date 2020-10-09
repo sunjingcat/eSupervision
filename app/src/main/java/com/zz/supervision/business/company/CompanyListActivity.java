@@ -94,9 +94,9 @@ public class CompanyListActivity extends MyBaseActivity {
         viewpager.setAdapter(pagerAdapter);
 
         for (int i = 0; i < list.size(); i++) {
-            tablayout.getTabAt(i).setText(list.get(i).getCompanyTypeText());
+            tablayout.getTabAt(i).setText(list.get(i).getCompanyTypeText()+"("+list.get(i).getCount()+")");
         }
-        TabUtils.setTabs(tablayout, this.getLayoutInflater(), tabs);
+//        TabUtils.setTabs(tablayout, this.getLayoutInflater(), tabs);
     }
 
     @Override

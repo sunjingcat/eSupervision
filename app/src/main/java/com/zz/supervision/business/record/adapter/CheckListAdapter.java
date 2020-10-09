@@ -1,6 +1,7 @@
 package com.zz.supervision.business.record.adapter;
 
 import android.graphics.Color;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
@@ -20,8 +21,13 @@ public class CheckListAdapter extends BaseQuickAdapter<RecordBean, BaseViewHolde
     protected void convert(BaseViewHolder helper, RecordBean item) {
         helper.setText(R.id.tv_company, item.getOperatorName() + "");
         helper.setText(R.id.tv_licenseNumber, "许可证号：" + item.getLicenseNumber());
+        if (item.getType() == 3 || item.getType() == 4) {
+            helper.getView(R.id.ll_yearCount).setVisibility(View.GONE);
+        } else {
+            helper.getView(R.id.ll_yearCount).setVisibility(View.VISIBLE);
+        }
         helper.setText(R.id.tv_yearCount, "" + item.getYearCount());
-        helper.setText(R.id.tv_inspectionResult, "" + item.getInspectionResult());
+        helper.setText(R.id.tv_inspectionResult, "" + item.getInspectionResultText());
         helper.setText(R.id.tv_inspectionTime, "检查日期：" + item.getInspectionTime());
         helper.setText(R.id.tv_status, "" + item.getStatusText());
         if (item.getStatus() == 3) {

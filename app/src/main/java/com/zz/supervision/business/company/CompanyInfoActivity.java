@@ -3,7 +3,14 @@ package com.zz.supervision.business.company;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
@@ -20,9 +27,6 @@ import com.zz.supervision.net.RxNetUtils;
 
 import java.util.ArrayList;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -65,6 +69,10 @@ public class CompanyInfoActivity extends MyBaseActivity {
     String businessType = "";
     String id;
     CompanyBean companyBean;
+    @BindView(R.id.bt_ok)
+    Button btOk;
+    @BindView(R.id.bg)
+    LinearLayout bg;
 
     @Override
     protected int getContentView() {
@@ -128,9 +136,16 @@ public class CompanyInfoActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick(R.id.bt_ok)
-    public void onViewClicked() {
-        if (companyBean ==null) return;
-        startActivity(new Intent(this, XCHZFActivity.class).putExtra("company",companyBean));
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.toolbar_subtitle:
+                startActivity(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId()));
+                break;
+            case R.id.bt_ok:
+                if (companyBean == null) return;
+                startActivity(new Intent(this, XCHZFActivity.class).putExtra("company", companyBean));
+                break;
+        }
     }
 }

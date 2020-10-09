@@ -13,10 +13,12 @@ public class RecordBean implements Serializable {
     private String deptId;
     private int id;
     private int type;
+    private String typeText;
     private String operatorName;
     private String licenseNumber;
     private int yearCount;
     private String inspectionResult;
+    private String inspectionResultText;
     private String level;
     private String lawEnforcer1Name;
     private String lawEnforcer2Name;
@@ -28,6 +30,14 @@ public class RecordBean implements Serializable {
     }
     public String getSearchValue() {
         return searchValue;
+    }
+
+    public String getInspectionResultText() {
+        return inspectionResultText;
+    }
+
+    public String getTypeText() {
+        return typeText;
     }
 
     public void setCreateBy(String createBy) {

@@ -76,6 +76,10 @@ public interface ApiService {
     @GET("/app/v1/supervise/companyInfo/removeCompanyInfo/{id}")
     Observable<JsonT> removeCompanyInfo(@Path("id")String id);
 
+
+    @GET("/app/v1/supervise/{url}/{id}")
+    Observable<JsonT> removeSuperviseInfo(@Path("url")String url,@Path("id")String id);
+
     @GET("/app/v1/supervise/companyInfo/{id}")
     Observable<JsonT<CompanyBean>> getCompanyInfo(@Path("id") String id);
 

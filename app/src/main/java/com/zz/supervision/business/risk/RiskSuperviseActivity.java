@@ -217,6 +217,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
     @Override
     public void showResult(Integer resposeBean) {
         startActivity(new Intent(this, SuperviseSignActivity.class).putExtra("id", resposeBean + "").putExtra("type", type));
+        finish();
     }
 
     RiskSuperviseBean.PostBean postBeans = new RiskSuperviseBean.PostBean();

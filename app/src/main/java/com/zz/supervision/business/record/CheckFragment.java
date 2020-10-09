@@ -123,7 +123,7 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
                                 .putExtra("company", recordBean.getOperatorName())
                                 .putExtra("id", recordBean.getId() + "")
                                 .putExtra("type", recordBean.getType())
-                                .putExtra("typeText", recordBean.getType()+"")
+                                .putExtra("typeText", recordBean.getTypeText()+"")
                                 .putExtra("lawEnforcer", recordBean.getLawEnforcer1Name()+","+recordBean.getLawEnforcer2Name())
                                 .putExtra("inspectionTime", recordBean.getCreateTime()));
                     } else {
@@ -131,7 +131,7 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
                                 .putExtra("company", recordBean.getOperatorName())
                                 .putExtra("id", recordBean.getId() + "")
                                 .putExtra("type", recordBean.getType())
-                                .putExtra("typeText", recordBean.getType()+"")
+                                .putExtra("typeText", recordBean.getTypeText()+"")
                                 .putExtra("lawEnforcer", recordBean.getLawEnforcer1Name()+","+recordBean.getLawEnforcer2Name())
                                 .putExtra("inspectionTime", recordBean.getCreateTime())); }
 

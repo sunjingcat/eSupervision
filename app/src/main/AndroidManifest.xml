@@ -162,6 +162,7 @@
         <activity android:name=".business.inspenction.SuperviseResultActivity" />
         <activity android:name=".business.record.CheckListActivity" />
         <activity android:name=".business.company.SearchCompanyActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"
             tools:ignore="Instantiatable" />
         <activity android:name=".business.inspenction.SignActivity"/>
         <activity android:name=".business.risk.RiskSuperviseActivity" />

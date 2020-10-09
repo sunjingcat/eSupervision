@@ -70,7 +70,7 @@ public class MineActivity extends MyBaseActivity<Contract.IsetMineInfoPresenter>
 
     @Override
     protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar);
+        ToolBarUtils.getInstance().setNavigation(toolbar,1);
     }
 
 

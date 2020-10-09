@@ -1,12 +1,20 @@
 package com.zz.supervision.business.record;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnChangeLisener;
@@ -35,11 +43,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -72,6 +75,10 @@ public class CheckListActivity extends MyBaseActivity {
     TextView etBeginTime;
     @BindView(R.id.et_endTime)
     TextView etEndTime;
+    @BindView(R.id.ll_inspectionResult)
+    LinearLayout llInspectionResult;
+    @BindView(R.id.ll_level)
+    LinearLayout llLevel;
     private ArrayList<Fragment> fragments = new ArrayList<>();
     String[] tabs = {"日常监督检查", "风险等级评定"};
     String inspectionResult = "";
@@ -119,6 +126,29 @@ public class CheckListActivity extends MyBaseActivity {
         for (int i = 0; i < tabs.length; i++) {
             tablayout.getTabAt(i).setText(tabs[i]);
         }
+        tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                if (position == 0) {
+                    llLevel.setVisibility(View.GONE);
+                    llInspectionResult.setVisibility(View.VISIBLE);
+                } else {
+                    llLevel.setVisibility(View.VISIBLE);
+                    llInspectionResult.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
     }
 
@@ -141,9 +171,12 @@ public class CheckListActivity extends MyBaseActivity {
     SelectPopupWindows selectPopupWindows1;
     SelectPopupWindows selectPopupWindows2;
 
-    @OnClick({R.id.et_inspectionResult, R.id.et_status, R.id.et_level, R.id.et_beginTime, R.id.et_endTime, R.id.bt_cancel, R.id.bt_ok})
+    @OnClick({R.id.drawer_bg, R.id.et_inspectionResult, R.id.et_status, R.id.et_level, R.id.et_beginTime, R.id.et_endTime, R.id.bt_cancel, R.id.bt_ok})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.drawer_bg:
+
+                break;
             case R.id.et_inspectionResult:
                 if (businessTypeList.size() == 0) return;
                 UIAdjuster.closeKeyBoard(this);
@@ -192,7 +225,7 @@ public class CheckListActivity extends MyBaseActivity {
                 break;
             case R.id.et_status:
                 UIAdjuster.closeKeyBoard(this);
-                String[] PLANETS2 = new String[]{"待评分", "代签字", "已完成"};
+                String[] PLANETS2 = new String[]{"待评分", "待签名", "已完成"};
                 selectPopupWindows1 = new SelectPopupWindows(this, PLANETS2);
                 selectPopupWindows1.showAtLocation(findViewById(R.id.drawer),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -276,9 +309,18 @@ public class CheckListActivity extends MyBaseActivity {
                 etInspectionResult.setText("");
                 status = 0;
                 etStatus.setText("");
+                level = "";
+                etLevel.setText("");
+                etBeginTime.setText("");
+                beginTime = "";
+                etEndTime.setText("");
+                endTime = "";
+                checkFragment1.setSearchStr("", "", inspectionResult, level, status, beginTime, endTime);
+                drawer.closeDrawers();
                 break;
             case R.id.bt_ok:
                 UIAdjuster.closeKeyBoard(this);
+                drawer.closeDrawers();
                 String strCompany = etCompany.getText().toString();
                 String strLawEnforcer = etLawEnforcer.getText().toString();
                 if (tablayout.getSelectedTabPosition() == 0) {

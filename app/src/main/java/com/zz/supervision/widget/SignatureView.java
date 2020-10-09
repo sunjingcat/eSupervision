@@ -40,7 +40,7 @@ public class SignatureView extends View {
         //设置画笔
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setStrokeWidth(3);
+        paint.setStrokeWidth(5);
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.BLACK);
         path = new Path();

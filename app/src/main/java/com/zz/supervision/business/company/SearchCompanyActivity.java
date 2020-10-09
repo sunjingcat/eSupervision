@@ -71,7 +71,7 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
     private int pagesize = 20;
     private String searchStr = "";
     private String type = "";
-
+    private CustomDialog customDialog;
     @Override
     protected int getContentView() {
         return R.layout.activity_search_company_list;
@@ -143,17 +143,38 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
         refreshLayout.setOnLoadMoreListener(this);
         String select = getIntent().getStringExtra("select");
         getDate();
-        adapter.setOnItemClickListener(new OnItemClickListener() {
+        adapter.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override
-            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                if (TextUtils.isEmpty(select)) {
-                    startActivity(new Intent(SearchCompanyActivity.this, CompanyInfoActivity.class).putExtra("id", mlist.get(position).getId()));
-                } else {
-                    Intent intent = new Intent();
-                    intent.putExtra("company", mlist.get(position));
-                    setResult(RESULT_OK, intent);
-                    finish();
+            public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
+                if (view.getId() == R.id.mc_item_delete) {
+                    CustomDialog.Builder builder = new CustomDialog.Builder(SearchCompanyActivity.this)
+                            .setTitle("提示")
+                            .setMessage("确定删除记录？")
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    deleteDate(mlist.get(position).getId());
+                                }
+                            });
+                    customDialog = builder.create();
+                    customDialog.show();
+                } else if (view.getId() == R.id.content) {
+                    if (TextUtils.isEmpty(select)) {
+                        startActivity(new Intent(SearchCompanyActivity.this, CompanyInfoActivity.class).putExtra("id", mlist.get(position).getId()));
+                    } else {
+                        Intent intent = new Intent();
+                        intent.putExtra("company", mlist.get(position));
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
                 }
+
             }
         });
         et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -169,8 +190,29 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
     }
 
     @Override
-    protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar);
+    protected void onDestroy() {
+        super.onDestroy();
+        if (customDialog != null && customDialog.isShowing()) {
+            customDialog.dismiss();
+        }
     }
 
+    @Override
+    protected void initToolBar() {
+        ToolBarUtils.getInstance().setNavigation(toolbar, 1);
+    }
+    void deleteDate(String id) {
+        RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(id), new RequestObserver<JsonT>() {
+            @Override
+            protected void onSuccess(JsonT jsonT) {
+                pagenum = 1;
+                getDate();
+            }
+
+            @Override
+            protected void onFail2(JsonT stringJsonT) {
+                super.onFail2(stringJsonT);
+            }
+        }, LoadingUtils.build(this));
+    }
 }

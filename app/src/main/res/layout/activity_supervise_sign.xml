@@ -385,7 +385,8 @@
                     android:background="@color/white"
                     android:orientation="horizontal"
                     android:paddingTop="8dp"
-                    android:paddingBottom="8dp">
+                    android:paddingBottom="8dp"
+                    android:visibility="gone">
 
                     <TextView
                         style="@style/textLeftStyle"
@@ -444,7 +445,8 @@
                     android:background="@color/white"
                     android:orientation="horizontal"
                     android:paddingTop="8dp"
-                    android:paddingBottom="8dp">
+                    android:paddingBottom="8dp"
+                    android:visibility="gone">
 
                     <TextView
                         style="@style/textLeftStyle"
@@ -513,7 +515,8 @@
                     android:background="@color/white"
                     android:orientation="horizontal"
                     android:paddingTop="8dp"
-                    android:paddingBottom="8dp">
+                    android:paddingBottom="8dp"
+                    android:visibility="gone">
 
                     <TextView
                         style="@style/textLeftStyle"
@@ -572,7 +575,8 @@
                     android:background="@color/white"
                     android:orientation="horizontal"
                     android:paddingTop="8dp"
-                    android:paddingBottom="8dp">
+                    android:paddingBottom="8dp"
+                    android:visibility="gone">
 
                     <TextView
                         style="@style/textLeftStyle"
@@ -612,6 +616,36 @@
 
                 <TextView
                     android:id="@+id/tv_inspectionResult"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:hint=""
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#333"
+                    android:textSize="14dp">
+
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_resultReduction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    style="@style/textLeftStyle"
+                    android:layout_width="150dp"
+                    android:text="结果处理" />
+
+                <TextView
+                    android:id="@+id/tv_resultReduction"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/white"

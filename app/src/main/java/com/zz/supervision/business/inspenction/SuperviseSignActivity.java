@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+
 import com.troila.customealert.CustomDialog;
 import com.zz.lib.commonlib.utils.PermissionUtils;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
@@ -26,8 +29,6 @@ import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.utils.BASE64;
 import com.zz.supervision.utils.GlideUtils;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -123,6 +124,10 @@ public class SuperviseSignActivity extends MyBaseActivity {
     TextView tvTime;
     @BindView(R.id.ll_risk)
     LinearLayout llRisk;
+    @BindView(R.id.tv_resultReduction)
+    TextView tvResultReduction;
+    @BindView(R.id.ll_resultReduction)
+    LinearLayout llResultReduction;
 
     @Override
     protected int getContentView() {
@@ -174,12 +179,12 @@ public class SuperviseSignActivity extends MyBaseActivity {
     public void showIntent(SuperviseBean.ResposeBean resposeBean) {
         tvCompany.setText(resposeBean.getCompanyInfo().getOperatorName() + "");
         tvSumCount.setText(resposeBean.getSumCount() + "");
-        llSumCount.setVisibility(TextUtils.isEmpty(resposeBean.getSumCount())?View.GONE:View.VISIBLE);
-        tvLawEnforcer.setText(resposeBean.getLawEnforcer1Name() + "/" + resposeBean.getLawEnforcer2Name());
+        llSumCount.setVisibility(TextUtils.isEmpty(resposeBean.getSumCount()) ? View.GONE : View.VISIBLE);
+        tvLawEnforcer.setText(resposeBean.getLawEnforcer1Name() + "," + resposeBean.getLawEnforcer2Name());
         tvYearCount.setText(resposeBean.getYearCount() + "");
-        llYearCount.setVisibility(TextUtils.isEmpty(resposeBean.getYearCount())?View.GONE:View.VISIBLE);
-        tvTime.setText(resposeBean.getInspectionTime()+"");
-        if (type==1||type==2) {
+        llYearCount.setVisibility(TextUtils.isEmpty(resposeBean.getYearCount()) ? View.GONE : View.VISIBLE);
+        tvTime.setText(resposeBean.getInspectionTime() + "");
+        if (type == 1 || type == 2) {
             tvImportantCount.setText(resposeBean.getImportantCount() + "");
             tvImportantDetail.setText(resposeBean.getImportantDetail() + "");
             tvImportantProblemCount.setText(resposeBean.getImportantProblemCount() + "");
@@ -188,23 +193,26 @@ public class SuperviseSignActivity extends MyBaseActivity {
             tvGeneralDetail.setText(resposeBean.getGeneralDetail() + "");
             tvGeneralProblemCount.setText(resposeBean.getGeneralProblemCount() + "");
             tvGeneralProblemDetail.setText(resposeBean.getGeneralProblemDetail() + "");
-            tvInspectionResult.setText(resposeBean.getInspectionResult() + "");
+            tvInspectionResult.setText(resposeBean.getInspectionResultText() + "");
             tvViolation.setText(resposeBean.getViolation() + "");
+            tvResultReduction.setText(resposeBean.getResultReductionText()+"");
             ll_violation.setVisibility(TextUtils.isEmpty(resposeBean.getViolation()) ? View.GONE : View.VISIBLE);
             llGeneral.setVisibility(View.VISIBLE);
             llImportant.setVisibility(View.VISIBLE);
             llInspectionResult.setVisibility(View.VISIBLE);
             llRisk.setVisibility(View.GONE);
-        }else {
-            tvStaticScore.setText(resposeBean.getStaticScore()+"");
-            tvDynamicScore.setText(resposeBean.getDynamicScore()+"");
-            tvTotalScore.setText(resposeBean.getTotalScore()+"");
-            tvPreLevel.setText(resposeBean.getLevel()+"");
+            llResultReduction.setVisibility(View.VISIBLE);
+        } else {
+            tvStaticScore.setText(resposeBean.getStaticScore() + "");
+            tvDynamicScore.setText(resposeBean.getDynamicScore() + "");
+            tvTotalScore.setText(resposeBean.getTotalScore() + "");
+            tvPreLevel.setText(resposeBean.getLevel() + "");
             llGeneral.setVisibility(View.GONE);
             llImportant.setVisibility(View.GONE);
             llInspectionResult.setVisibility(View.GONE);
             ll_violation.setVisibility(View.GONE);
             llRisk.setVisibility(View.VISIBLE);
+            llResultReduction.setVisibility(View.GONE);
         }
         bt_ok.setText(resposeBean.getStatus() == 3 ? "打印" : "确定");
         if (resposeBean.getStatus() == 3) {
@@ -214,7 +222,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         } else {
             bt_delete.setVisibility(View.GONE);
         }
-//        tvType.setText(lightDevice.);
+        tvType.setText(resposeBean.getTypeText() + "");
 
         if (type == 1 || type == 2) {
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLawEnforcerSign);
@@ -373,7 +381,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
                     if (jsonT.isSuccess()) {
-                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type",type));
+                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));
+                        finish();
                     }
                 }
 
@@ -388,7 +397,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
                     if (jsonT.isSuccess()) {
-                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type",type));
+                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));
+                        finish();
                     }
                 }
 
@@ -423,7 +433,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
     }
 
     void deleteDate(String id) {
-        RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(id), new RequestObserver<JsonT>() {
+        RxNetUtils.request(getApi(ApiService.class).removeSuperviseInfo(url,id), new RequestObserver<JsonT>() {
             @Override
             protected void onSuccess(JsonT jsonT) {
                 finish();
@@ -435,4 +445,5 @@ public class SuperviseSignActivity extends MyBaseActivity {
             }
         }, LoadingUtils.build(this));
     }
+
 }

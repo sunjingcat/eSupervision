@@ -139,7 +139,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     @Override
     public void showResult(SuperviseBean.ResposeBean resposeBean) {
         startActivity(new Intent(this, SuperviseSignActivity.class).putExtra("resposeBean", resposeBean).putExtra("type",type));
-
+        finish();
     }
 
     ArrayList<SuperviseBean.PostBean> postBeans = new ArrayList<>();

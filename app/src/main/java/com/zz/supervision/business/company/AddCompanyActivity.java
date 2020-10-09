@@ -68,6 +68,8 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     TextView etBusinessProject;
     @BindView(R.id.et_endTime)
     TextView etEndTime;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
     @BindView(R.id.et_contact)
     EditText etContact;
     @BindView(R.id.et_contactInformation)
@@ -129,6 +131,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         id = getIntent().getStringExtra("id");
         if (!TextUtils.isEmpty(id)) {
             mPresenter.getData(id);
+            toolbarTitle.setText("编辑企业");
         }
         Map<String, Object> params = new HashMap<>();
         params.put("dictType", "company_type");
@@ -154,11 +157,11 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 List<String> list = new ArrayList<>();
                 List<String> list1 = new ArrayList<>();
                 for (int i = 0; i < businessTypeList.size(); i++) {
-                    list.add(businessTypeList.get(i).getDictLabel()) ;
+                    list.add(businessTypeList.get(i).getDictLabel());
                     list1.add(businessTypeList.get(i).getDictValue());
                 }
-                String[] array = (String[])list.toArray(new String[list.size()]);
-                String[] values = (String[])list1.toArray(new String[list1.size()]);
+                String[] array = (String[]) list.toArray(new String[list.size()]);
+                String[] values = (String[]) list1.toArray(new String[list1.size()]);
                 selectPopupWindows = new SelectPopupWindows(this, array);
                 selectPopupWindows.showAtLocation(findViewById(R.id.bg),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -259,7 +262,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         etAddress.setText(data.getAddress() + "");
         etBusinessPlace.setText(data.getBusinessPlace() + "");
         etBusinessType.setText(data.getBusinessTypeText() + "");
-        etBusinessProject.setText(data.getBusinessProjectText()+"");
+        etBusinessProject.setText(data.getBusinessProjectText() + "");
         businessType = data.getBusinessType();
         validDate = data.getValidDate();
         etEndTime.setText(data.getValidDate() + "");
@@ -344,7 +347,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         imageBacks.addAll(list);
 
         List<String> showList = new ArrayList<>();
-        for (ImageBack imageBack:list){
+        for (ImageBack imageBack : list) {
             showList.add(imageBack.getBase64());
         }
         images.clear();

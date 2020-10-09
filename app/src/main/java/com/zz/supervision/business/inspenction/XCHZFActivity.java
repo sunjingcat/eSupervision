@@ -37,6 +37,7 @@ import java.util.HashMap;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -108,10 +109,13 @@ public class XCHZFActivity extends MyBaseActivity {
         ToolBarUtils.getInstance().setNavigation(toolbar, 1);
     }
 
-    @OnClick({R.id.ll_company, R.id.et_type, R.id.et_people, R.id.et_startTime, R.id.bt_ok})
+    @OnClick({R.id.ll_company, R.id.ll_company_info, R.id.et_type, R.id.et_people, R.id.et_startTime, R.id.bt_ok})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_company:
+                startActivityForResult(new Intent(this, CompanyListActivity.class).putExtra("select", "xczf"), 1001);
+                break;
+            case R.id.ll_company_info:
                 startActivityForResult(new Intent(this, CompanyListActivity.class).putExtra("select", "xczf"), 1001);
                 break;
             case R.id.et_type:
@@ -253,7 +257,7 @@ public class XCHZFActivity extends MyBaseActivity {
                             .putExtra("typeText", etType.getText().toString())
                             .putExtra("lawEnforcer", names)
                             .putExtra("inspectionTime", inspectionTime));
-//                    finish();
+                    finish();
                 } else if (type == 3 || type == 4) {
                     startActivity(new Intent(XCHZFActivity.this, RiskSuperviseActivity.class)
                             .putExtra("company", companyBean.getOperatorName())
@@ -262,7 +266,7 @@ public class XCHZFActivity extends MyBaseActivity {
                             .putExtra("typeText", etType.getText().toString())
                             .putExtra("lawEnforcer", names)
                             .putExtra("inspectionTime", inspectionTime));
-//                    finish();
+                    finish();
                 }
             }
 
