@@ -249,11 +249,16 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         private String importantProblemCount;// 0,
         private String generalProblemCount;// 2,
         private String inspectionResult;// 不符合,
+        private String inspectionResultText;// 不符合,
         private String inspectionResultReduction;// 食品生产经营者立即停止食品生产经营活动
         private String staticScore;
         private String dynamicScore;
         private String totalScore;
         private String level;
+
+        public String getInspectionResultText() {
+            return inspectionResultText;
+        }
 
         public String getStaticScore() {
             return staticScore;

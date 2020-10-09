@@ -22,6 +22,8 @@ import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.SuperviseBean;
+import com.zz.supervision.business.risk.RiskSuperviseActivity;
+import com.zz.supervision.business.risk.RiskSuperviseInfoActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -195,7 +197,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             tvGeneralProblemDetail.setText(resposeBean.getGeneralProblemDetail() + "");
             tvInspectionResult.setText(resposeBean.getInspectionResultText() + "");
             tvViolation.setText(resposeBean.getViolation() + "");
-            tvResultReduction.setText(resposeBean.getResultReductionText()+"");
+            tvResultReduction.setText(resposeBean.getResultReductionText() + "");
             ll_violation.setVisibility(TextUtils.isEmpty(resposeBean.getViolation()) ? View.GONE : View.VISIBLE);
             llGeneral.setVisibility(View.VISIBLE);
             llImportant.setVisibility(View.VISIBLE);
@@ -244,7 +246,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.ll_lawEnforcer_sign, R.id.ll_legalRepresentative_sign, R.id.bt_ok, R.id.bt_delete, R.id.ll_reviewerSign_sign})
+    @OnClick({R.id.ll_lawEnforcer_sign, R.id.ll_legalRepresentative_sign, R.id.bt_ok, R.id.bt_delete, R.id.ll_reviewerSign_sign, R.id.toolbar_subtitle})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_lawEnforcer_sign:
@@ -294,6 +296,26 @@ public class SuperviseSignActivity extends MyBaseActivity {
                     showToast("打印");
                 } else {
                     postData();
+                }
+
+                break;
+            case R.id.toolbar_subtitle:
+                if (type == 1 || type == 2) {
+                    startActivity(new Intent(this, SuperviseInfoActivity.class)
+                            .putExtra("company", resposeBean.getCompanyInfo().getOperatorName())
+                            .putExtra("id", resposeBean.getId() + "")
+                            .putExtra("type", type)
+                            .putExtra("typeText", resposeBean.getTypeText() + "")
+                            .putExtra("lawEnforcer", resposeBean.getLawEnforcer1Name() + "," + resposeBean.getLawEnforcer2Name())
+                            .putExtra("inspectionTime", resposeBean.getCreateTime()));
+                } else {
+                    startActivity(new Intent(this, RiskSuperviseInfoActivity.class)
+                            .putExtra("company", resposeBean.getCompanyInfo().getOperatorName())
+                            .putExtra("id", resposeBean.getId() + "")
+                            .putExtra("type", type)
+                            .putExtra("typeText", resposeBean.getTypeText() + "")
+                            .putExtra("lawEnforcer", resposeBean.getLawEnforcer1Name() + "," + resposeBean.getLawEnforcer2Name())
+                            .putExtra("inspectionTime", resposeBean.getCreateTime()));
                 }
 
                 break;
@@ -433,7 +455,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
     }
 
     void deleteDate(String id) {
-        RxNetUtils.request(getApi(ApiService.class).removeSuperviseInfo(url,id), new RequestObserver<JsonT>() {
+        RxNetUtils.request(getApi(ApiService.class).removeSuperviseInfo(url, id), new RequestObserver<JsonT>() {
             @Override
             protected void onSuccess(JsonT jsonT) {
                 finish();

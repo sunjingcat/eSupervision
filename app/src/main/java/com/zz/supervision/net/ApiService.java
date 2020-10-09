@@ -23,6 +23,7 @@ import java.util.Map;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -73,11 +74,11 @@ public interface ApiService {
     @GET("/app/v1/supervise/universal/getRecordList")
     Observable<JsonT<List<RecordBean>>> getRecordList(@QueryMap Map<String, Object> params);
 
-    @GET("/app/v1/supervise/companyInfo/removeCompanyInfo/{id}")
+    @DELETE("/app/v1/supervise/companyInfo/removeCompanyInfo/{id}")
     Observable<JsonT> removeCompanyInfo(@Path("id")String id);
 
 
-    @GET("/app/v1/supervise/{url}/{id}")
+    @DELETE("/app/v1/supervise/{url}/{id}")
     Observable<JsonT> removeSuperviseInfo(@Path("url")String url,@Path("id")String id);
 
     @GET("/app/v1/supervise/companyInfo/{id}")
@@ -114,6 +115,13 @@ public interface ApiService {
 
     @GET("/app/v1/supervise/{url}/getItems")
     Observable<JsonT<RiskSuperviseBean>> getRiskSuperviseList(@Path("url")String url);
+
+    @GET("/app/v1/supervise/{url}/recordWithItems/{id}")
+    Observable<JsonT<List<SuperviseBean>>> getSuperviseInfo(@Path("url")String url,@Path("id")String id);
+
+
+    @GET("/app/v1/supervise/{url}/recordWithItems/{id}")
+    Observable<JsonT<RiskSuperviseBean>> getRiskSuperviseInfo(@Path("url")String url,@Path("id")String id);
 
     @Headers("Content-Type: application/json")
     @POST("/app/v1/supervise/{url}/confirm/{id}")

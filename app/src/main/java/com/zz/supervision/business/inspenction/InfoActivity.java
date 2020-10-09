@@ -83,7 +83,7 @@ public class InfoActivity extends Activity {
             list.add(new DetailBean("重点项问题数", lightDevice.getImportantProblemCount() + ""));
             list.add(new DetailBean("一般项数", lightDevice.getGeneralCount() + ""));
             list.add(new DetailBean("一般项问题数", lightDevice.getGeneralProblemCount() + ""));
-            list.add(new DetailBean("检查结果", lightDevice.getInspectionResult() + ""));
+            list.add(new DetailBean("检查结果", lightDevice.getInspectionResultText()+""));
         }else {
             list.add(new DetailBean("静态评分项分数", lightDevice.getStaticScore() + ""));
             list.add(new DetailBean("动态评分项分数", lightDevice.getDynamicScore() + ""));

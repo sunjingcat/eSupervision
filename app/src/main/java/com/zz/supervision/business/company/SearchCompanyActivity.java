@@ -1,6 +1,7 @@
 package com.zz.supervision.business.company;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,6 +43,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -95,6 +98,7 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
         } else {
             llNull.setVisibility(View.GONE);
         }
+        showSoftInputFromWindow(et_search);
     }
 
     void getDate() {
@@ -187,6 +191,7 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
                 return true;
             }
         });
+
     }
 
     @Override
@@ -214,5 +219,27 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
                 super.onFail2(stringJsonT);
             }
         }, LoadingUtils.build(this));
+    }
+    public void showSoftInputFromWindow(EditText editText){
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        Timer timer = new Timer();
+
+        timer.schedule(new TimerTask() {
+
+            @Override
+
+            public void run() {
+
+                InputMethodManager imm = (InputMethodManager) context
+
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+
+            }
+
+        }, 200);
     }
 }

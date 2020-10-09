@@ -126,6 +126,8 @@ public class CheckListActivity extends MyBaseActivity {
         for (int i = 0; i < tabs.length; i++) {
             tablayout.getTabAt(i).setText(tabs[i]);
         }
+        llLevel.setVisibility(View.GONE);
+        llInspectionResult.setVisibility(View.VISIBLE);
         tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
