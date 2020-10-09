@@ -17,9 +17,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class RiskSecondNodeProvider extends BaseNodeProvider {
     RiskSuperviseAdapter.OnProviderOnClick onProviderOnClick;
+    int enable;
 
-    public RiskSecondNodeProvider(RiskSuperviseAdapter.OnProviderOnClick onProviderOnClick) {
+    public RiskSecondNodeProvider(RiskSuperviseAdapter.OnProviderOnClick onProviderOnClick, int enable) {
         this.onProviderOnClick = onProviderOnClick;
+        this.enable = enable;
     }
 
     @Override
@@ -37,28 +39,34 @@ public class RiskSecondNodeProvider extends BaseNodeProvider {
         // 数据类型需要自己强转
         RiskSuperviseBean.ChildRisk entity = (RiskSuperviseBean.ChildRisk) data;
         baseViewHolder.setText(R.id.itemName, entity.getContent());
-        baseViewHolder.getView(R.id.item_isImportant).setVisibility(entity.getIsKey()==0?View.INVISIBLE:View.VISIBLE);
-        if (((RiskSuperviseBean.ChildRisk) data).isCheck()==1){
-            TabUtils.setDrawableLeft(getContext(),(TextView) baseViewHolder.getView(R.id.item_check_yes),R.drawable.image_check_circle);
-        }else {
-            TabUtils.setDrawableLeft(getContext(),(TextView) baseViewHolder.getView(R.id.item_check_yes),R.drawable.image_uncheck_circle);
+        baseViewHolder.getView(R.id.item_isImportant).setVisibility(entity.getIsKey() == 0 ? View.INVISIBLE : View.VISIBLE);
+        if (((RiskSuperviseBean.ChildRisk) data).isCheck() == 1) {
+
+            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_check_circle);
+
+        } else {
+            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_uncheck_circle);
         }
 
-        if (((RiskSuperviseBean.ChildRisk) data).isCheck()==2){
-            TabUtils.setDrawableLeft(getContext(),(TextView) baseViewHolder.getView(R.id.item_check_no),R.drawable.image_check_circle);
-        }else {
-            TabUtils.setDrawableLeft(getContext(),(TextView) baseViewHolder.getView(R.id.item_check_no),R.drawable.image_uncheck_circle);
+        if (((RiskSuperviseBean.ChildRisk) data).isCheck() == 2) {
+            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_check_circle);
+        } else {
+            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_uncheck_circle);
+        }
+        if (enable == 1) {
+            baseViewHolder.getView(R.id.item_check_no).setVisibility(View.GONE);
+            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_check_enable_circle);
         }
         baseViewHolder.getView(R.id.item_check_yes).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onProviderOnClick.onItemOnclick(data,1);
+                onProviderOnClick.onItemOnclick(data, 1);
             }
         });
         baseViewHolder.getView(R.id.item_check_no).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onProviderOnClick.onItemOnclick(data,2);
+                onProviderOnClick.onItemOnclick(data, 2);
             }
         });
     }

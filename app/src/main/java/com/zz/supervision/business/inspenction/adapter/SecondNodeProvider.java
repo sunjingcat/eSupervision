@@ -17,9 +17,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class SecondNodeProvider extends BaseNodeProvider {
     SuperviseAdapter.OnProviderOnClick onProviderOnClick;
+    int enable;
 
-    public SecondNodeProvider(SuperviseAdapter.OnProviderOnClick onProviderOnClick) {
+    public SecondNodeProvider(SuperviseAdapter.OnProviderOnClick onProviderOnClick,int enable) {
         this.onProviderOnClick = onProviderOnClick;
+        this.enable = enable;
     }
 
     @Override
@@ -39,8 +41,13 @@ public class SecondNodeProvider extends BaseNodeProvider {
         baseViewHolder.setText(R.id.itemName, entity.getItemName());
         baseViewHolder.getView(R.id.item_isImportant).setVisibility(entity.getIsImportant() == 0 ? View.INVISIBLE : View.VISIBLE);
 
+
         if (((SuperviseBean.Children) data).getIsSatisfy()==1){
-            TabUtils.setDrawableLeft(getContext(),(TextView) baseViewHolder.getView(R.id.item_check_yes),R.drawable.image_check_circle);
+            if (enable==1) {
+                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_check_enable_circle);
+            }else {
+                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_check_circle);
+            }
         }else {
             TabUtils.setDrawableLeft(getContext(),(TextView) baseViewHolder.getView(R.id.item_check_yes),R.drawable.image_uncheck_circle);
         }
@@ -49,6 +56,9 @@ public class SecondNodeProvider extends BaseNodeProvider {
             TabUtils.setDrawableLeft(getContext(),(TextView) baseViewHolder.getView(R.id.item_check_no),R.drawable.image_check_circle);
         }else {
             TabUtils.setDrawableLeft(getContext(),(TextView) baseViewHolder.getView(R.id.item_check_no),R.drawable.image_uncheck_circle);
+        }
+        if (enable==1){
+            baseViewHolder.getView(R.id.item_check_no).setVisibility(View.GONE);
         }
         baseViewHolder.getView(R.id.item_check_yes).setOnClickListener(new View.OnClickListener() {
             @Override

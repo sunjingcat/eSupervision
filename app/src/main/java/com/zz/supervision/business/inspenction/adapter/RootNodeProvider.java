@@ -16,9 +16,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class RootNodeProvider extends BaseNodeProvider {
     SuperviseAdapter.OnProviderOnClick onProviderOnClick;
+    int enable;
 
-    public RootNodeProvider(SuperviseAdapter.OnProviderOnClick onProviderOnClick) {
+    public RootNodeProvider(SuperviseAdapter.OnProviderOnClick onProviderOnClick,int enable) {
         this.onProviderOnClick = onProviderOnClick;
+        this.enable = enable;
     }
 
     @Override
@@ -45,6 +47,10 @@ public class RootNodeProvider extends BaseNodeProvider {
             }
         });
         ((CheckBox) baseViewHolder.getView(R.id.item_check)).setChecked(entity.isCheck());
-
+        if (enable==1){
+            baseViewHolder.getView(R.id.item_check).setVisibility(View.GONE);
+        }else {
+            baseViewHolder.getView(R.id.item_check).setVisibility(View.VISIBLE);
+        }
     }
 }

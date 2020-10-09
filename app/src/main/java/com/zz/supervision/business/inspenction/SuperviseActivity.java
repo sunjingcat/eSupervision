@@ -63,23 +63,23 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     protected void initView() {
         ButterKnife.bind(this);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+//        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         adapter = new SuperviseAdapter(new SuperviseAdapter.OnProviderOnClick() {
             @Override
             public void onItemOnclick(BaseNode node, int type) {
                 if (node instanceof SuperviseBean) {
                     for (SuperviseBean.Children children : ((SuperviseBean) node).getChildrenList()) {
-                        if (((SuperviseBean) node).isCheck()){
+                        if (((SuperviseBean) node).isCheck()) {
                             children.setIsSatisfy(1);
-                        }else {
+                        } else {
                             children.setIsSatisfy(0);
                         }
                     }
                 } else if (node instanceof SuperviseBean.Children) {
                     ((SuperviseBean.Children) node).setIsSatisfy(type);
-                    if (type==2){
-                        for (BaseNode superviseBean:adapter.getData()){
-                            if (superviseBean instanceof SuperviseBean){
+                    if (type == 2) {
+                        for (BaseNode superviseBean : adapter.getData()) {
+                            if (superviseBean instanceof SuperviseBean) {
                                 ((SuperviseBean) superviseBean).setCheck(false);
                             }
                         }
@@ -96,7 +96,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                 }
                 adapter.notifyDataSetChanged();
             }
-        });
+        },0);
 
         rv.setAdapter(adapter);
         type = getIntent().getIntExtra("type", 0);
@@ -165,7 +165,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         for (BaseNode node : mlist) {
             if (node instanceof SuperviseBean.Children) {
                 if (((SuperviseBean.Children) node).getIsSatisfy() != 0) {
-                    postBeans.add(new SuperviseBean.PostBean(((SuperviseBean.Children) node).getId(), ((SuperviseBean.Children) node).getIsSatisfy()==1?1:0));
+                    postBeans.add(new SuperviseBean.PostBean(((SuperviseBean.Children) node).getId(), ((SuperviseBean.Children) node).getIsSatisfy() == 1 ? 1 : 0));
                 }
             }
         }

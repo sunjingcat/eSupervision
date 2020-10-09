@@ -18,8 +18,10 @@ import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
+import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.bean.RiskSuperviseBean;
 import com.zz.supervision.bean.SuperviseBean;
+import com.zz.supervision.bean.SuperviseInfoBean;
 import com.zz.supervision.business.inspenction.adapter.SuperviseAdapter;
 import com.zz.supervision.business.inspenction.presenter.SupervisePresenter;
 import com.zz.supervision.net.ApiService;
@@ -70,13 +72,22 @@ public class SuperviseInfoActivity extends MyBaseActivity {
     protected void initView() {
         ButterKnife.bind(this);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         adapter = new SuperviseAdapter(new SuperviseAdapter.OnProviderOnClick() {
             @Override
             public void onItemOnclick(BaseNode node, int type) {
-
+                if (node instanceof SuperviseBean.RootFooterNode) {
+                    for (int i = 0; i < adapter.getData().size(); i++) {
+                        BaseNode children = adapter.getData().get(i);
+                        if (children instanceof SuperviseBean && ((SuperviseBean) children).getId().equals(((SuperviseBean.RootFooterNode) node).getId())) {
+                            adapter.expandOrCollapse(i);
+                            ((SuperviseBean.RootFooterNode) node).setExpanded(((SuperviseBean) children).isExpanded());
+                            break;
+                        }
+                    }
+                }
+                adapter.notifyDataSetChanged();
             }
-        });
+        },1);
         rv.setAdapter(adapter);
         type = getIntent().getIntExtra("type", 0);
         if (type == 1) {
@@ -118,14 +129,14 @@ public class SuperviseInfoActivity extends MyBaseActivity {
     }
 
     void getData() {
-        RxNetUtils.request(getApi(ApiService.class).getSuperviseInfo(url, id), new RequestObserver<JsonT<List<SuperviseBean>>>() {
+        RxNetUtils.request(getApi(ApiService.class).getSuperviseInfo(url, id), new RequestObserver<JsonT<List<SuperviseInfoBean>>>() {
             @Override
-            protected void onSuccess(JsonT<List<SuperviseBean>> jsonT) {
-                showSuperviseList(jsonT.getData());
+            protected void onSuccess(JsonT<List<SuperviseInfoBean>> jsonT) {
+                showSuperviseList(jsonT.getData().get(0).getData());
             }
 
             @Override
-            protected void onFail2(JsonT<List<SuperviseBean>> stringJsonT) {
+            protected void onFail2(JsonT<List<SuperviseInfoBean>> stringJsonT) {
                 super.onFail2(stringJsonT);
             }
         }, LoadingUtils.build(this));

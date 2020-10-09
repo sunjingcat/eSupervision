@@ -18,6 +18,7 @@ import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
+import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.business.company.adapter.ImageItemAdapter;
 import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.net.ApiService;
@@ -26,6 +27,7 @@ import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -114,6 +116,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
         etContactInformation.setText(data.getContactInformation() + "");
         etFieldTime.setText(data.getFieldTime() + "");
         fieldTime = data.getFieldTime();
+        getImage(data.getId());
     }
 
     void getData(String id) {
@@ -147,5 +150,39 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 startActivity(new Intent(this, XCHZFActivity.class).putExtra("company", companyBean));
                 break;
         }
+    }
+    public void getImage( String id) {
+        RxNetUtils.request(getApi(ApiService.class).getImageBase64("company",id), new RequestObserver<JsonT<List<ImageBack>>>(this) {
+            @Override
+            protected void onSuccess(JsonT<List<ImageBack>> data) {
+                if (data.isSuccess()) {
+                    showImage(data.getData());
+                } else {
+
+                }
+            }
+
+            @Override
+            protected void onFail2(JsonT<List<ImageBack>> userInfoJsonT) {
+                super.onFail2(userInfoJsonT);
+                showToast(userInfoJsonT.getMessage());
+            }
+        }, LoadingUtils.build(this));
+    }
+    List<ImageBack> imageBacks = new ArrayList<>();
+    public void showImage(List<ImageBack> list) {
+        if (list == null) return;
+        imageBacks.clear();
+        imageBacks.addAll(list);
+
+        List<String> showList = new ArrayList<>();
+        for (ImageBack imageBack : list) {
+            showList.add(imageBack.getBase64());
+        }
+        images.clear();
+
+        images.addAll(showList);
+
+        adapter.notifyDataSetChanged();
     }
 }

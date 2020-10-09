@@ -99,7 +99,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:padding="10dp">
+          >
 
                 <include layout="@layout/refresh_layout" />
             </LinearLayout>

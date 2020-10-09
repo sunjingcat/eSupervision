@@ -75,24 +75,51 @@ public class RiskSuperviseInfoActivity extends MyBaseActivity {
     protected void initView() {
         ButterKnife.bind(this);
         rv_dynamicRisks.setLayoutManager(new LinearLayoutManager(this));
-        rv_dynamicRisks.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         adapter = new RiskSuperviseAdapter(new RiskSuperviseAdapter.OnProviderOnClick() {
             @Override
             public void onItemOnclick(BaseNode node, int type) {
-
+                if (node instanceof RiskSuperviseBean.RootFooterNode) {
+                    for (int i = 0; i < adapter.getData().size(); i++) {
+                        BaseNode children = adapter.getData().get(i);
+                        if (children instanceof RiskSuperviseBean.RiskItem && ((RiskSuperviseBean.RiskItem) children).getId().equals(((RiskSuperviseBean.RootFooterNode) node).getId())) {
+//                           ((RiskSuperviseBean.RiskItem)children).setExpanded(!((RiskSuperviseBean.RiskItem) children).isExpanded());
+                            ((RiskSuperviseBean.RootFooterNode) node).setExpanded(!((RiskSuperviseBean.RiskItem) children).isExpanded());
+                            adapter.expandOrCollapse(i);
+                            break;
+                        }
+                    }
+                }
+                adapter.notifyDataSetChanged();
             }
-        });
+        },1);
         rv_dynamicRisks.setAdapter(adapter);
 
 
         rv_staticRisks.setLayoutManager(new LinearLayoutManager(this));
-        rv_staticRisks.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
         staticSuperviseAdapter = new RiskStaticAdapter(new RiskSuperviseAdapter.OnProviderOnClick() {
             @Override
             public void onItemOnclick(BaseNode node, int type) {
+                if (node instanceof RiskSuperviseBean.RootFooterNode) {
+                    for (int i = 0; i < staticSuperviseAdapter.getData().size(); i++) {
+                        BaseNode children = staticSuperviseAdapter.getData().get(i);
+                        if (children instanceof RiskSuperviseBean.RiskItem && ((RiskSuperviseBean.RiskItem) children).getId().equals(((RiskSuperviseBean.RootFooterNode) node).getId())) {
 
+                            if (((RiskSuperviseBean.RiskItem) children).isExpanded()) {
+                                staticSuperviseAdapter.collapseAndChild(i);
+                                ((RiskSuperviseBean.RiskItem) children).setExpanded(false);
+                            } else {
+                                staticSuperviseAdapter.expandAndChild(i);
+                                ((RiskSuperviseBean.RiskItem) children).setExpanded(true);
+                            }
+
+                            break;
+                        }
+                    }
+                }
+                staticSuperviseAdapter.notifyDataSetChanged();
             }
-        });
+        },1);
         rv_staticRisks.setAdapter(staticSuperviseAdapter);
         type = getIntent().getIntExtra("type", 0);
         if (type == 3) {

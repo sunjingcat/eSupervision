@@ -12,6 +12,7 @@ import com.zz.supervision.bean.LawEnforcerBean;
 import com.zz.supervision.bean.RecordBean;
 import com.zz.supervision.bean.RiskSuperviseBean;
 import com.zz.supervision.bean.SuperviseBean;
+import com.zz.supervision.bean.SuperviseInfoBean;
 import com.zz.supervision.bean.UserBasicBean;
 import com.zz.supervision.bean.UserInfo;
 import com.zz.supervision.bean.Version;
@@ -117,7 +118,7 @@ public interface ApiService {
     Observable<JsonT<RiskSuperviseBean>> getRiskSuperviseList(@Path("url")String url);
 
     @GET("/app/v1/supervise/{url}/recordWithItems/{id}")
-    Observable<JsonT<List<SuperviseBean>>> getSuperviseInfo(@Path("url")String url,@Path("id")String id);
+    Observable<JsonT<List<SuperviseInfoBean>>> getSuperviseInfo(@Path("url")String url, @Path("id")String id);
 
 
     @GET("/app/v1/supervise/{url}/recordWithItems/{id}")

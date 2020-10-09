@@ -11,10 +11,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class SuperviseAdapter extends BaseNodeAdapter {
-    public SuperviseAdapter(OnProviderOnClick onProviderOnClick) {
+    public SuperviseAdapter(OnProviderOnClick onProviderOnClick,int enable) {
         super();
-        addNodeProvider(new RootNodeProvider(onProviderOnClick));
-        addNodeProvider(new SecondNodeProvider(onProviderOnClick));
+        addNodeProvider(new RootNodeProvider(onProviderOnClick,enable));
+        addNodeProvider(new SecondNodeProvider(onProviderOnClick,enable));
         addFooterNodeProvider(new FooterNodeProvider(onProviderOnClick));
     }
 

@@ -66,7 +66,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
     protected void initView() {
         ButterKnife.bind(this);
         rv_dynamicRisks.setLayoutManager(new LinearLayoutManager(this));
-        rv_dynamicRisks.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+//        rv_dynamicRisks.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         adapter = new RiskSuperviseAdapter(new RiskSuperviseAdapter.OnProviderOnClick() {
             @Override
@@ -101,12 +101,12 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
                 }
                 adapter.notifyDataSetChanged();
             }
-        });
+        },0);
         rv_dynamicRisks.setAdapter(adapter);
 
 
         rv_staticRisks.setLayoutManager(new LinearLayoutManager(this));
-        rv_staticRisks.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+//        rv_staticRisks.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         staticSuperviseAdapter = new RiskStaticAdapter(new RiskSuperviseAdapter.OnProviderOnClick() {
             @Override
@@ -176,7 +176,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
                 }
                 staticSuperviseAdapter.notifyDataSetChanged();
             }
-        });
+        },0);
         rv_staticRisks.setAdapter(staticSuperviseAdapter);
         type = getIntent().getIntExtra("type", 0);
         if (type == 3) {

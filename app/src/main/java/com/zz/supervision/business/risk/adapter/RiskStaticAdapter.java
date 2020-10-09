@@ -10,11 +10,11 @@ import java.util.List;
 
 public class RiskStaticAdapter extends BaseNodeAdapter {
 
-    public RiskStaticAdapter(RiskSuperviseAdapter.OnProviderOnClick onProviderOnClick) {
+    public RiskStaticAdapter(RiskSuperviseAdapter.OnProviderOnClick onProviderOnClick,int enable ) {
         super();
         addFullSpanNodeProvider(new RiskStaticRootNodeProvider(onProviderOnClick));
         addFullSpanNodeProvider(new RiskStaticSecondNodeProvider(onProviderOnClick));
-        addFullSpanNodeProvider(new RiskStaticThirdNodeProvider(onProviderOnClick));
+        addFullSpanNodeProvider(new RiskStaticThirdNodeProvider(onProviderOnClick,enable));
         addFooterNodeProvider(new RiskFooterNodeProvider(onProviderOnClick));
 
     }

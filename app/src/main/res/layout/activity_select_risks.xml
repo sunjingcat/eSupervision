@@ -98,12 +98,12 @@
                 android:layout_margin="10dp"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:padding="10dp">
+              >
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
+                    android:padding="15dp"
                     android:text="静态风险评分项"
                     android:textColor="#272727"
                     android:textSize="18dp" />
@@ -123,12 +123,12 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:padding="10dp">
+              >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
+                    android:padding="15dp"
                     android:text="动态风险评分项"
                     android:textColor="#272727"
                     android:textSize="18dp" />

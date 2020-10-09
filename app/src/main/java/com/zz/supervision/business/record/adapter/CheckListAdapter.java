@@ -23,11 +23,15 @@ public class CheckListAdapter extends BaseQuickAdapter<RecordBean, BaseViewHolde
         helper.setText(R.id.tv_licenseNumber, "许可证号：" + item.getLicenseNumber());
         if (item.getType() == 3 || item.getType() == 4) {
             helper.getView(R.id.ll_yearCount).setVisibility(View.GONE);
+            helper.setText(R.id.tv_inspectionResult, "" + item.getLevel());
+            helper.setText(R.id.tv_inspectionResult_tv, "风险等级");
         } else {
             helper.getView(R.id.ll_yearCount).setVisibility(View.VISIBLE);
+            helper.setText(R.id.tv_inspectionResult, "" + item.getInspectionResultText());
+            helper.setText(R.id.tv_inspectionResult_tv, "检查结果");
         }
         helper.setText(R.id.tv_yearCount, "" + item.getYearCount());
-        helper.setText(R.id.tv_inspectionResult, "" + item.getInspectionResultText());
+
         helper.setText(R.id.tv_inspectionTime, "检查日期：" + item.getInspectionTime());
         helper.setText(R.id.tv_status, "" + item.getStatusText());
         if (item.getStatus() == 3) {

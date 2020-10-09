@@ -15,14 +15,20 @@ import java.util.Map;
 public class RiskSuperviseBean {
 
     private ArrayList<RiskItem> dynamicRisks;
+    private ArrayList<RiskItem> dynamicRiskItems;
     private ArrayList<RiskItem> staticRisks;
+    private ArrayList<RiskItem> staticRiskItems;
 
     public ArrayList<RiskItem> getDynamicRisks() {
-        return dynamicRisks;
+        if (dynamicRisks == null) {
+            return dynamicRiskItems;
+        } else return dynamicRisks;
     }
 
     public ArrayList<RiskItem> getStaticRisks() {
-        return staticRisks;
+        if (staticRisks == null) {
+            return staticRiskItems;
+        } else return staticRisks;
     }
 
     public class RiskItem extends BaseExpandNode implements NodeFooterImp {
@@ -52,6 +58,7 @@ public class RiskSuperviseBean {
         private ArrayList<ChildRisk> childRisks;
 
         private int isKey;// 0,
+
         public int getIsKey() {
             return isKey;
         }
@@ -194,11 +201,12 @@ public class RiskSuperviseBean {
         private String unit;//
         private String updateBy;//
         private String updateTime;
-        private int check ;
+        private int isSelected;
 
         private int isKey;// 0,
+
         public int isCheck() {
-            return check;
+            return isSelected;
         }
 
         public int getIsKey() {
@@ -208,7 +216,7 @@ public class RiskSuperviseBean {
         private ArrayList<ChildRisk> childRisks;
 
         public void setCheck(int check) {
-            this.check = check;
+            this.isSelected = check;
         }
 
         public ArrayList<ChildRisk> getChildRisks() {

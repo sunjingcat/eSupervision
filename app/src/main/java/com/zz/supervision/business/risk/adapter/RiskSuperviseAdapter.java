@@ -9,10 +9,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class RiskSuperviseAdapter extends BaseNodeAdapter {
-    public RiskSuperviseAdapter(OnProviderOnClick onProviderOnClick) {
+    public RiskSuperviseAdapter(OnProviderOnClick onProviderOnClick,int enable) {
         super();
-        addFullSpanNodeProvider(new RiskRootNodeProvider(onProviderOnClick));
-        addFullSpanNodeProvider(new RiskSecondNodeProvider(onProviderOnClick));
+        addFullSpanNodeProvider(new RiskRootNodeProvider(onProviderOnClick,enable));
+        addFullSpanNodeProvider(new RiskSecondNodeProvider(onProviderOnClick,enable));
         addFooterNodeProvider(new RiskFooterNodeProvider(onProviderOnClick));
 
     }

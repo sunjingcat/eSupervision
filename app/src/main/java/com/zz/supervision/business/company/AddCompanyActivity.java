@@ -270,6 +270,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         etContactInformation.setText(data.getContactInformation() + "");
         etFieldTime.setText(data.getFieldTime() + "");
         fieldTime = data.getFieldTime();
+        mPresenter.getImage("company",data.getId());
     }
 
     @Override

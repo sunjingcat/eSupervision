@@ -3,19 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="10dp"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorbg"
+
+        />
 
     <ImageView
         android:id="@+id/image_fold"
         android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:layout_gravity="center"
-        android:layout_height="wrap_content"
         android:padding="10dp"
         android:scaleType="center"
-        android:src="@drawable/image_top"
-       />
+        android:src="@drawable/image_top" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12px"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorbg" />
 
 </LinearLayout>

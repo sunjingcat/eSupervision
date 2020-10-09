@@ -15,9 +15,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class RiskRootNodeProvider extends BaseNodeProvider {
     RiskSuperviseAdapter.OnProviderOnClick onProviderOnClick;
+    int enable;
 
-    public RiskRootNodeProvider(RiskSuperviseAdapter.OnProviderOnClick onProviderOnClick) {
+    public RiskRootNodeProvider(RiskSuperviseAdapter.OnProviderOnClick onProviderOnClick,int enable) {
         this.onProviderOnClick = onProviderOnClick;
+        this.enable = enable;
     }
 
     @Override
@@ -46,6 +48,10 @@ public class RiskRootNodeProvider extends BaseNodeProvider {
 
             }
         });
-
+        if (enable==1){
+            baseViewHolder.getView(R.id.item_check).setVisibility(View.GONE);
+        }else {
+            baseViewHolder.getView(R.id.item_check).setVisibility(View.VISIBLE);
+        }
     }
 }
