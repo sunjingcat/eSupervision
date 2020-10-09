@@ -60,6 +60,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
     TextView etContact;
     @BindView(R.id.et_contactInformation)
     TextView etContactInformation;
+    @BindView(R.id.et_location)
+    TextView etLocation;
     @BindView(R.id.et_fieldTime)
     TextView etFieldTime;
     ArrayList<String> images = new ArrayList<>();
@@ -116,6 +118,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
         etContactInformation.setText(data.getContactInformation() + "");
         etFieldTime.setText(data.getFieldTime() + "");
         fieldTime = data.getFieldTime();
+        etLocation.setText(data.getLatitude() + "," + data.getLongitude());
         getImage(data.getId());
     }
 
@@ -139,7 +142,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok})
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.et_location})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
@@ -149,10 +152,16 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 if (companyBean == null) return;
                 startActivity(new Intent(this, XCHZFActivity.class).putExtra("company", companyBean));
                 break;
+            case R.id.et_location:
+                if (companyBean == null) return;
+                if (companyBean.getLongitude() == 0.0) return;
+                startActivity(new Intent(this, ShowLocationActivity.class).putExtra("location_lat", companyBean.getLatitude()).putExtra("location_lng",companyBean.getLongitude()));
+                break;
         }
     }
-    public void getImage( String id) {
-        RxNetUtils.request(getApi(ApiService.class).getImageBase64("company",id), new RequestObserver<JsonT<List<ImageBack>>>(this) {
+
+    public void getImage(String id) {
+        RxNetUtils.request(getApi(ApiService.class).getImageBase64("company", id), new RequestObserver<JsonT<List<ImageBack>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<ImageBack>> data) {
                 if (data.isSuccess()) {
@@ -169,7 +178,9 @@ public class CompanyInfoActivity extends MyBaseActivity {
             }
         }, LoadingUtils.build(this));
     }
+
     List<ImageBack> imageBacks = new ArrayList<>();
+
     public void showImage(List<ImageBack> list) {
         if (list == null) return;
         imageBacks.clear();

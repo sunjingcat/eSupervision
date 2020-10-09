@@ -2,6 +2,7 @@ package com.zz.supervision;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import java.io.Serializable;
 
@@ -29,8 +30,24 @@ public class CompanyBean implements Serializable {
     private String updateBy;// ,
     private String updateTime;// ,
     private String validDate;//
+    private String  longitude;//123.63550307225523,
+    private String       latitude;// 47.21882160905167,
 
+    public Double getLongitude() {
+        if (TextUtils.isEmpty(longitude)){
+            return 0.0;
+        }else {
+            return Double.parseDouble(longitude);
+        }
+    }
 
+    public Double getLatitude() {
+        if (TextUtils.isEmpty(latitude)){
+            return 0.0;
+        }else {
+            return Double.parseDouble(latitude);
+        }
+    }
 
     public String getBusinessTypeText() {
         return businessTypeText;

@@ -167,6 +167,7 @@
         <activity android:name=".business.inspenction.SuperviseSignActivity" />
         <activity android:name=".business.inspenction.SuperviseInfoActivity" />
         <activity android:name=".business.risk.RiskSuperviseInfoActivity" />
+        <activity android:name=".business.company.ShowLocationActivity" />
     </application>
 
 </manifest>
