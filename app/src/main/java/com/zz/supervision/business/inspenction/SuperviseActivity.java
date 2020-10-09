@@ -6,9 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.entity.node.BaseNode;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
-import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.SuperviseBean;
@@ -20,10 +18,8 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,8 +42,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     LinearLayout llNull;
     @BindView(R.id.rv)
     RecyclerView rv;
-    @BindView(R.id.refreshLayout)
-    SmartRefreshLayout refreshLayout;
+
     SuperviseAdapter adapter;
     List<BaseNode> mlist = new ArrayList<>();
     String id;
@@ -96,7 +91,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                 }
                 adapter.notifyDataSetChanged();
             }
-        },0);
+        }, 0);
 
         rv.setAdapter(adapter);
         type = getIntent().getIntExtra("type", 0);

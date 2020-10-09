@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.baidu.mapapi.search.core.PoiInfo;
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnChangeLisener;
 import com.codbking.widget.OnSureLisener;
@@ -40,7 +41,6 @@ import java.util.Map;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -70,12 +70,16 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     TextView etEndTime;
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
+    @BindView(R.id.et_companyType)
+    TextView etCompanyType;
     @BindView(R.id.et_contact)
     EditText etContact;
     @BindView(R.id.et_contactInformation)
     EditText etContactInformation;
     @BindView(R.id.et_fieldTime)
     TextView etFieldTime;
+    @BindView(R.id.et_location)
+    TextView etLocation;
     ArrayList<String> images = new ArrayList<>();
     ImageDeleteItemAdapter adapter;
     @BindView(R.id.item_rv_images)
@@ -83,14 +87,18 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     String fieldTime;
     String validDate;
     String businessType = "";
+    String companyType = "";
     String businessProject = "";
     String businessProjectText = "";
     List<BusinessType> businessTypeList = new ArrayList<>();
-    private String[] PLANETS = new String[]{"食品销售经营者", "餐饮服务经营者", "单位食堂"};
+    List<BusinessType> companyTypeList = new ArrayList<>();
+
     SelectPopupWindows selectPopupWindows;
+    SelectPopupWindows selectPopupWindows1;
     List<ImageBack> imageBacks = new ArrayList<>();
     String id;
-
+    double lat = 0.0;
+    double lon = 0.0;
     @Override
     protected int getContentView() {
         return R.layout.activity_company_add;
@@ -134,7 +142,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             toolbarTitle.setText("编辑企业");
         }
         Map<String, Object> params = new HashMap<>();
-        params.put("dictType", "company_type");
+        params.put("dictType", "business_type");
         mPresenter.getBusinessType(params);
 
     }
@@ -149,7 +157,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         return new CompanyAddPresenter(this);
     }
 
-    @OnClick({R.id.et_businessType, R.id.et_businessProject, R.id.et_endTime, R.id.et_fieldTime, R.id.bt_ok})
+    @OnClick({R.id.et_companyType, R.id.et_location, R.id.et_businessType, R.id.et_businessProject, R.id.et_endTime, R.id.et_fieldTime, R.id.bt_ok})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.et_businessType:
@@ -175,6 +183,32 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                     @Override
                     public void onCancel() {
                         selectPopupWindows.dismiss();
+                    }
+                });
+                break;
+            case R.id.et_companyType:
+                UIAdjuster.closeKeyBoard(this);
+                List<String> list2 = new ArrayList<>();
+                List<String> list12 = new ArrayList<>();
+                for (int i = 0; i < companyTypeList.size(); i++) {
+                    list2.add(companyTypeList.get(i).getDictLabel());
+                    list12.add(companyTypeList.get(i).getDictValue());
+                }
+                String[] array2 = (String[]) list2.toArray(new String[list2.size()]);
+                String[] values2 = (String[]) list12.toArray(new String[list12.size()]);
+                selectPopupWindows1 = new SelectPopupWindows(this, array2);
+                selectPopupWindows1.showAtLocation(findViewById(R.id.bg),
+                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                selectPopupWindows1.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
+                    @Override
+                    public void onSelected(int index, String msg) {
+                        etCompanyType.setText(msg);
+                        companyType = values2[index];
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        selectPopupWindows1.dismiss();
                     }
                 });
                 break;
@@ -249,6 +283,11 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 postData();
 
                 break;
+            case R.id.et_location:
+                startActivityForResult(new Intent(AddCompanyActivity.this, SelectLocationActivity.class).putExtra("lat", lat).putExtra("lon", lon), 1002);
+
+
+                break;
         }
     }
 
@@ -270,7 +309,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         etContactInformation.setText(data.getContactInformation() + "");
         etFieldTime.setText(data.getFieldTime() + "");
         fieldTime = data.getFieldTime();
-        mPresenter.getImage("company",data.getId());
+        mPresenter.getImage("company", data.getId());
     }
 
     @Override
@@ -342,6 +381,14 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     }
 
     @Override
+    public void showCompanyType(List<BusinessType> list) {
+        if (list != null) {
+            companyTypeList.clear();
+            companyTypeList.addAll(list);
+        }
+    }
+
+    @Override
     public void showImage(List<ImageBack> list) {
         if (list == null) return;
         imageBacks.clear();
@@ -405,6 +452,9 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         if (!TextUtils.isEmpty(businessType)) {
             params.put("businessType", businessType);
         }
+        if (!TextUtils.isEmpty(companyType)) {
+            params.put("companyType", companyType);
+        }
         if (TextUtils.isEmpty(validDate)) {
             showToast("请选择有效期至");
             return;
@@ -413,6 +463,11 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         if (!TextUtils.isEmpty(businessProject)) {
             params.put("businessProject", businessProject);
             params.put("businessProjectText", businessProjectText);
+        }
+
+        if (lon!=0.0&&lat!=0.0) {
+            params.put("longitude", lon);
+            params.put("latitude", lat);
         }
         String contact = etContact.getText().toString();
         if (!TextUtils.isEmpty(contact)) {
@@ -478,6 +533,13 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 etBusinessProject.setText(str);
                 businessProject = content;
                 businessProjectText = str;
+            }
+            if (requestCode == 2001) {
+                if (data == null) return;
+                PoiInfo poiInfo = data.getParcelableExtra("location");
+                lat = poiInfo.location.latitude;
+                lon = poiInfo.location.longitude;
+                etLocation.setText(lat + "," + lon);
             }
 
 

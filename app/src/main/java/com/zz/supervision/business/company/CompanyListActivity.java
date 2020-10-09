@@ -96,7 +96,6 @@ public class CompanyListActivity extends MyBaseActivity {
         for (int i = 0; i < list.size(); i++) {
             tablayout.getTabAt(i).setText(list.get(i).getCompanyTypeText()+"("+list.get(i).getCount()+")");
         }
-//        TabUtils.setTabs(tablayout, this.getLayoutInflater(), tabs);
     }
 
     @Override

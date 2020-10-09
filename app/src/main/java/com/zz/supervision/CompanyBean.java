@@ -26,12 +26,17 @@ public class CompanyBean implements Serializable {
     private Object params;// {},
     private String remark;// ,
     private String searchValue;// ,
+    private String recordCount;// ,
     private String socialCreditCode;// ,
     private String updateBy;// ,
     private String updateTime;// ,
     private String validDate;//
     private String  longitude;//123.63550307225523,
     private String       latitude;// 47.21882160905167,
+
+    public String getRecordCount() {
+        return recordCount;
+    }
 
     public Double getLongitude() {
         if (TextUtils.isEmpty(longitude)){

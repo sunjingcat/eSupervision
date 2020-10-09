@@ -23,6 +23,7 @@
             android:text="测评结果"
             android:textColor="@color/white"
             android:textSize="18dp" />
+
         <TextView
             android:id="@+id/toolbar_subtitle"
             android:layout_width="wrap_content"
@@ -193,6 +194,7 @@
 
                     </TextView>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -726,7 +728,8 @@
                     android:id="@+id/tv_lawEnforcer_sign"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:scaleType="fitXY" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -763,7 +766,8 @@
                     android:id="@+id/tv_legalRepresentative_sign"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:scaleType="fitXY" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -775,6 +779,7 @@
                     android:hint=""
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
+
                     android:textColor="#333"
                     android:textSize="14dp">
 
@@ -800,7 +805,8 @@
                     android:id="@+id/tv_reviewerSign_sign"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:scaleType="fitXY" />
 
                 <TextView
                     android:layout_width="wrap_content"

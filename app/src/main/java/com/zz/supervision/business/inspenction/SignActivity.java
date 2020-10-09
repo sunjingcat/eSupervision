@@ -20,6 +20,8 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 public class SignActivity extends MyBaseActivity {
     @BindView(R.id.toolbar)
@@ -63,11 +65,30 @@ public class SignActivity extends MyBaseActivity {
             case R.id.btn_ok:
                 Bitmap imageBitmap = mView.getCachebBitmap();
                 String path = BASE64.saveBitmap(imageBitmap);
-                File file = new File(path);
-                Intent intent= new Intent();
-                intent.putExtra("sign",path);
-                setResult(RESULT_OK,intent);
-                finish();
+                Luban.with(this)
+                        .load(path)
+                        .ignoreBy(64)
+                        .setCompressListener(new OnCompressListener() {
+                            @Override
+                            public void onStart() {
+                                // TODO 压缩开始前调用，可以在方法内启动 loading UI
+                            }
+
+                            @Override
+                            public void onSuccess(File file) {
+                                Intent intent= new Intent();
+                                intent.putExtra("sign",file.getAbsoluteFile());
+                                setResult(RESULT_OK,intent);
+                                finish();
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                // TODO 当压缩过程出现问题时调用
+                            }
+                        }).launch();
+
+
 
                 break;
             case R.id.btn_clear:

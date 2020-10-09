@@ -1,13 +1,8 @@
 package com.zz.supervision.business.risk;
 
 import android.content.Intent;
+import android.widget.Button;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
@@ -15,27 +10,20 @@ import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
-import com.zz.supervision.bean.RecordBean;
 import com.zz.supervision.bean.RiskSuperviseBean;
-import com.zz.supervision.bean.SuperviseBean;
-import com.zz.supervision.business.inspenction.InfoActivity;
-import com.zz.supervision.business.inspenction.SuperviseSignActivity;
 import com.zz.supervision.business.risk.adapter.RiskStaticAdapter;
 import com.zz.supervision.business.risk.adapter.RiskSuperviseAdapter;
-import com.zz.supervision.business.risk.presenter.RiskSupervisePresenter;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
@@ -65,6 +53,10 @@ public class RiskSuperviseInfoActivity extends MyBaseActivity {
     String id;
     String url = "spxsRiskRecord";
     int type = 0;
+    @BindView(R.id.bt_ok)
+    Button btOk;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
 
     @Override
     protected int getContentView() {
@@ -91,7 +83,7 @@ public class RiskSuperviseInfoActivity extends MyBaseActivity {
                 }
                 adapter.notifyDataSetChanged();
             }
-        },1);
+        }, 1);
         rv_dynamicRisks.setAdapter(adapter);
 
 
@@ -119,7 +111,7 @@ public class RiskSuperviseInfoActivity extends MyBaseActivity {
                 }
                 staticSuperviseAdapter.notifyDataSetChanged();
             }
-        },1);
+        }, 1);
         rv_staticRisks.setAdapter(staticSuperviseAdapter);
         type = getIntent().getIntExtra("type", 0);
         if (type == 3) {
@@ -128,6 +120,8 @@ public class RiskSuperviseInfoActivity extends MyBaseActivity {
             url = "cyfwRiskRecord";
 
         }
+        btOk.setText("打印");
+        toolbarTitle.setText("评分详情");
         initData();
         getData();
     }

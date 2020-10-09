@@ -139,6 +139,19 @@ public class CheckListActivity extends MyBaseActivity {
                     llLevel.setVisibility(View.VISIBLE);
                     llInspectionResult.setVisibility(View.GONE);
                 }
+                etCompany.setText("");
+                etLawEnforcer.setText("");
+                inspectionResult = "";
+                etInspectionResult.setText("");
+                status = 0;
+                etStatus.setText("");
+                level = "";
+                etLevel.setText("");
+                etBeginTime.setText("");
+                beginTime = "";
+                etEndTime.setText("");
+                endTime = "";
+                checkFragment1.setSearchStr("", "", inspectionResult, level, status, beginTime, endTime);
             }
 
             @Override

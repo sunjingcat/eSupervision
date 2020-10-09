@@ -43,6 +43,6 @@ public class CheckListAdapter extends BaseQuickAdapter<RecordBean, BaseViewHolde
         if (item.getStatus() == 1) {
             helper.setTextColor(R.id.tv_status, Color.parseColor("#C52A2A"));
         }
-        helper.setText(R.id.tv_lawEnforcerName, "" + item.getLawEnforcer1Name() + item.getLawEnforcer2Name() + "");
+        helper.setText(R.id.tv_lawEnforcerName, "" + item.getLawEnforcer1Name() +","+ item.getLawEnforcer2Name() + "");
     }
 }

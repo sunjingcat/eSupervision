@@ -20,6 +20,6 @@ public class CompanyListAdapter extends BaseQuickAdapter<CompanyBean, BaseViewHo
     protected void convert(BaseViewHolder helper, CompanyBean item) {
         helper.setText(R.id.item_title, item.getOperatorName());
         helper.setText(R.id.item_legalRepresentative, "法人代表：" + item.getLegalRepresentative());
-        helper.setText(R.id.item_businessType, "主体业态：" + item.getBusinessTypeText());
+        helper.setText(R.id.item_businessType, "检查次数：" + item.getRecordCount());
     }
 }

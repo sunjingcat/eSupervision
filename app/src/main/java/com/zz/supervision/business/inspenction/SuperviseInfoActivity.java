@@ -1,15 +1,8 @@
 package com.zz.supervision.business.inspenction;
 
-import android.content.Intent;
-import android.view.View;
-import android.widget.LinearLayout;
+import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -18,23 +11,21 @@ import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
-import com.zz.supervision.bean.ImageBack;
-import com.zz.supervision.bean.RiskSuperviseBean;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.bean.SuperviseInfoBean;
 import com.zz.supervision.business.inspenction.adapter.SuperviseAdapter;
-import com.zz.supervision.business.inspenction.presenter.SupervisePresenter;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
@@ -52,8 +43,7 @@ public class SuperviseInfoActivity extends MyBaseActivity {
     TextView tvType;
     @BindView(R.id.tv_num)
     TextView tvNum;
-    @BindView(R.id.ll_null)
-    LinearLayout llNull;
+
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refreshLayout)
@@ -62,6 +52,10 @@ public class SuperviseInfoActivity extends MyBaseActivity {
     String id;
     String url = "spxsInspectionRecord";
     int type = 0;
+    @BindView(R.id.bt_ok)
+    Button btOk;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
 
     @Override
     protected int getContentView() {
@@ -87,7 +81,7 @@ public class SuperviseInfoActivity extends MyBaseActivity {
                 }
                 adapter.notifyDataSetChanged();
             }
-        },1);
+        }, 1);
         rv.setAdapter(adapter);
         type = getIntent().getIntExtra("type", 0);
         if (type == 1) {
@@ -96,6 +90,8 @@ public class SuperviseInfoActivity extends MyBaseActivity {
             url = "cyfwInspectionRecord";
         }
         initData();
+        btOk.setText("打印");
+        toolbarTitle.setText("评分详情");
     }
 
     @Override
@@ -118,14 +114,11 @@ public class SuperviseInfoActivity extends MyBaseActivity {
     public BasePresenter initPresenter() {
         return null;
     }
+
     public void showSuperviseList(List<SuperviseBean> data) {
         adapter.setList(data);
         adapter.notifyDataSetChanged();
-        if (data.size() == 0) {
-            llNull.setVisibility(View.VISIBLE);
-        } else {
-            llNull.setVisibility(View.GONE);
-        }
+
     }
 
     void getData() {
@@ -141,4 +134,5 @@ public class SuperviseInfoActivity extends MyBaseActivity {
             }
         }, LoadingUtils.build(this));
     }
+
 }

@@ -20,7 +20,7 @@ public class LawEnforcerAdapter extends BaseQuickAdapter<LawEnforcerBean, BaseVi
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, LawEnforcerBean lawEnforcerBean) {
         if (lawEnforcerBean.isSelect()) {
-            baseViewHolder.setBackgroundColor(R.id.item_bg, Color.GRAY);
+            baseViewHolder.setBackgroundColor(R.id.item_bg, Color.parseColor("#eeeeee"));
         } else {
             baseViewHolder.setBackgroundColor(R.id.item_bg, Color.WHITE);
         }

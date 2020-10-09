@@ -23,9 +23,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="首页"
+            android:text="智慧监管"
             android:textColor="@color/white"
-            android:textSize="18dp" />
+            android:textSize="25dp" />
 
         <ImageView
             android:id="@+id/toolbar_subtitle"

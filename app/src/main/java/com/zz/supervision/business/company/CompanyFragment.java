@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -198,6 +199,7 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
             @Override
             protected void onFail2(JsonT stringJsonT) {
                 super.onFail2(stringJsonT);
+                ToastUtils.showShort(stringJsonT.getMessage());
             }
         }, LoadingUtils.build(getActivity()));
     }

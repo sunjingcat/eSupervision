@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eeeeee"
+    android:fitsSystemWindows="true"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
-    android:id="@+id/bg"
     tools:context=".business.mine.AboutActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -227,6 +227,37 @@
                     style="@style/textLeftStyle"
                     android:layout_width="150dp"
 
+                    android:text="企业类型" />
+
+                <TextView
+                    android:id="@+id/et_companyType"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:drawableRight="@drawable/image_arrow"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:hint="请选择"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#333"
+                    android:textSize="14dp">
+
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    style="@style/textLeftStyle"
+                    android:layout_width="150dp"
+
                     android:text="主体业态" />
 
                 <TextView
@@ -245,6 +276,7 @@
 
                 </TextView>
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -398,19 +430,52 @@
 
                 </TextView>
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    style="@style/textLeftStyle"
+                    android:layout_width="150dp"
+
+                    android:text="企业定位" />
+
+                <TextView
+                    android:id="@+id/et_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:drawableRight="@drawable/image_arrow"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:hint="请选择"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#333"
+                    android:textSize="14dp">
+
+                </TextView>
+            </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/item_rv_images"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
+
             <Button
                 android:id="@+id/bt_ok"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border_radius_3_blue"
                 android:layout_margin="20dp"
+                android:background="@drawable/border_radius_3_blue"
                 android:text="提交"
                 android:textColor="@color/white"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
         </LinearLayout>
 
     </ScrollView>
