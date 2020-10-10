@@ -125,14 +125,14 @@ public class SuperviseInfoActivity extends MyBaseActivity {
     }
 
     void getData() {
-        RxNetUtils.request(getApi(ApiService.class).getSuperviseInfo(url, id), new RequestObserver<JsonT<List<SuperviseInfoBean>>>() {
+        RxNetUtils.request(getApi(ApiService.class).getSuperviseInfo(url, id), new RequestObserver<JsonT<SuperviseInfoBean>>() {
             @Override
-            protected void onSuccess(JsonT<List<SuperviseInfoBean>> jsonT) {
-                showSuperviseList(jsonT.getData().get(0).getData());
+            protected void onSuccess(JsonT<SuperviseInfoBean> jsonT) {
+                showSuperviseList(jsonT.getData().getData());
             }
 
             @Override
-            protected void onFail2(JsonT<List<SuperviseInfoBean>> stringJsonT) {
+            protected void onFail2(JsonT<SuperviseInfoBean> stringJsonT) {
                 super.onFail2(stringJsonT);
             }
         }, LoadingUtils.build(this));

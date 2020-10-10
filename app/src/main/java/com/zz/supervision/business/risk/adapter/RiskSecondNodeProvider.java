@@ -41,9 +41,7 @@ public class RiskSecondNodeProvider extends BaseNodeProvider {
         baseViewHolder.setText(R.id.itemName, entity.getContent());
         baseViewHolder.getView(R.id.item_isImportant).setVisibility(entity.getIsKey() == 0 ? View.INVISIBLE : View.VISIBLE);
         if (((RiskSuperviseBean.ChildRisk) data).isCheck() == 1) {
-
             TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_check_circle);
-
         } else {
             TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_uncheck_circle);
         }
@@ -54,8 +52,15 @@ public class RiskSecondNodeProvider extends BaseNodeProvider {
             TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_uncheck_circle);
         }
         if (enable == 1) {
-            baseViewHolder.getView(R.id.item_check_no).setVisibility(View.GONE);
-            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_check_enable_circle);
+            if (((RiskSuperviseBean.ChildRisk) data).isCheck() == 1) {
+                baseViewHolder.getView(R.id.item_check_no).setVisibility(View.GONE);
+                baseViewHolder.getView(R.id.item_check_yes).setVisibility(View.VISIBLE);
+                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_check_enable_circle);
+            }else {
+                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_check_enable_circle);
+                baseViewHolder.getView(R.id.item_check_no).setVisibility(View.VISIBLE);
+                baseViewHolder.getView(R.id.item_check_yes).setVisibility(View.GONE);
+            }
         }
         baseViewHolder.getView(R.id.item_check_yes).setOnClickListener(new View.OnClickListener() {
             @Override

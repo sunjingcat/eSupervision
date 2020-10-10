@@ -1,6 +1,10 @@
 package com.zz.supervision;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.nsd.NsdManager;
+import android.net.nsd.NsdServiceInfo;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -51,6 +55,7 @@ public class MainActivity extends MyBaseActivity {
     protected void initView() {
         ButterKnife.bind(this);
         new UpdateManager(this).checkUpdate();
+        initPrint();
     }
 
     @Override
@@ -127,6 +132,62 @@ public class MainActivity extends MyBaseActivity {
                 super.onFail2(userInfoJsonT);
             }
         }, null);
+    }
+    void initPrint(){
+         String serviceType = "_ipp._tcp";
+         String serviceName = "nsdChat";
+
+        NsdServiceInfo nsdServiceInfo = new NsdServiceInfo();
+        nsdServiceInfo.setServiceType(serviceType);
+        nsdServiceInfo.setServiceName(serviceName);
+        nsdServiceInfo.setPort(9000);
+
+        NsdManager nsdManager = (NsdManager) getApplicationContext().getSystemService(Context.NSD_SERVICE);
+        NsdManager.ResolveListener resolveListener = new NsdManager.ResolveListener() {
+            @Override
+            public void onResolveFailed(NsdServiceInfo serviceInfo, int errorCode) {
+                Log.d("printer", "onServiceResolved:IP " );
+            }
+
+            @Override
+            public void onServiceResolved(NsdServiceInfo serviceInfo) {
+                Log.d("printer", "onServiceResolved:IP " + serviceInfo.getHost());
+                Log.d("printer", "onServiceResolved:Port " + serviceInfo.getPort());
+            }
+        };
+        NsdManager.DiscoveryListener discoveryListener = new NsdManager.DiscoveryListener() {
+            @Override
+            public void onStartDiscoveryFailed(String serviceType, int errorCode) {
+
+            }
+
+            @Override
+            public void onStopDiscoveryFailed(String serviceType, int errorCode) {
+
+            }
+
+            @Override
+            public void onDiscoveryStarted(String serviceType) {
+
+            }
+
+            @Override
+            public void onDiscoveryStopped(String serviceType) {
+
+            }
+
+            @Override
+            public void onServiceFound(NsdServiceInfo serviceInfo) {
+                Log.d("printer", "onServiceFound: " + serviceInfo.getServiceName());
+                nsdManager.resolveService(serviceInfo,resolveListener);
+            }
+
+            @Override
+            public void onServiceLost(NsdServiceInfo serviceInfo) {
+
+            }
+        };
+        nsdManager.discoverServices(serviceType, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
     }
 
 }

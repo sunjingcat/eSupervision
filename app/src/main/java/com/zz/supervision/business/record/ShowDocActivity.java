@@ -1,6 +1,8 @@
 package com.zz.supervision.business.record;
 
+import android.Manifest;
 import android.app.DownloadManager;
+import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tencent.smtt.sdk.TbsReaderView;
+import com.zz.lib.commonlib.utils.PermissionUtils;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.net.ApiService;
@@ -59,7 +62,18 @@ public class ShowDocActivity extends AppCompatActivity implements TbsReaderView.
                 finish();
             }
         });
-        getDocInfo();
+        PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
+            @Override
+            public void onGranted() {
+                getDocInfo();
+            }
+
+            @Override
+            public void onDenied() {
+
+            }
+        });
+
         mFileUrl = getIntent().getStringExtra("url");
 
         mTbsReaderView = new TbsReaderView(this, this);
@@ -72,8 +86,6 @@ public class ShowDocActivity extends AppCompatActivity implements TbsReaderView.
         doc_title.setText(TextUtils.isEmpty(title) ? "文件" : title);
         RelativeLayout rootRl = (RelativeLayout) findViewById(R.id.rl_root);
         rootRl.addView(mTbsReaderView, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-
 
 
         mDownloadBtn.setOnClickListener(new View.OnClickListener() {
@@ -189,10 +201,10 @@ public class ShowDocActivity extends AppCompatActivity implements TbsReaderView.
         int tinspectSheetType = getIntent().getIntExtra("tinspectSheetType", 0);
         map.put("tinspectSheetType", tinspectSheetType);
         map.put("tinspectType", tinspectType);
-        RxNetUtils.request(getApi(ApiService.class).getDocInfo(id,map), new RequestObserver<JsonT<String>>() {
+        RxNetUtils.request(getApi(ApiService.class).getDocInfo(id, map), new RequestObserver<JsonT<String>>() {
             @Override
             protected void onSuccess(JsonT<String> jsonT) {
-                mFileUrl= jsonT.getData();
+                mFileUrl = jsonT.getData();
                 mFileName = FileUtils.parseName(mFileUrl);
                 tv.setText(mFileName);
                 if (FileUtils.isLocalExist(mFileName)) {

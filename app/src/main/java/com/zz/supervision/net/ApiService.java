@@ -119,7 +119,7 @@ public interface ApiService {
     Observable<JsonT<RiskSuperviseBean>> getRiskSuperviseList(@Path("url")String url);
 
     @GET("/app/v1/supervise/{url}/recordWithItems/{id}")
-    Observable<JsonT<List<SuperviseInfoBean>>> getSuperviseInfo(@Path("url")String url, @Path("id")String id);
+    Observable<JsonT<SuperviseInfoBean>> getSuperviseInfo(@Path("url")String url, @Path("id")String id);
 
 
     @GET("/app/v1/supervise/{url}/recordWithItems/{id}")

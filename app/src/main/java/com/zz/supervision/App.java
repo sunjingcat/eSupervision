@@ -26,6 +26,17 @@ public class App extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         MultiDex.install(this);
+        QbSdk.initX5Environment(getApplicationContext(), new QbSdk.PreInitCallback() {
+            @Override
+            public void onCoreInitFinished() {
+                Log.v("####################","");
+            }
+
+            @Override
+            public void onViewInitFinished(boolean b) {
+                Log.v("####################",b+"");
+            }
+        });
         mApplication = this;
         mHandler = new Handler();
         RxNetUtils.init(this);
@@ -37,17 +48,7 @@ public class App extends BaseApplication {
 
         SDKInitializer.setCoordType(CoordType.BD09LL);
 
-        QbSdk.initX5Environment(getApplicationContext(), new QbSdk.PreInitCallback() {
-            @Override
-            public void onCoreInitFinished() {
 
-            }
-
-            @Override
-            public void onViewInitFinished(boolean b) {
-                Log.v("####################",b+"");
-            }
-        });
     }
 
     public static App getmApplication() {

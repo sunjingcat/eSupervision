@@ -19,7 +19,7 @@ public class SecondNodeProvider extends BaseNodeProvider {
     SuperviseAdapter.OnProviderOnClick onProviderOnClick;
     int enable;
 
-    public SecondNodeProvider(SuperviseAdapter.OnProviderOnClick onProviderOnClick,int enable) {
+    public SecondNodeProvider(SuperviseAdapter.OnProviderOnClick onProviderOnClick, int enable) {
         this.onProviderOnClick = onProviderOnClick;
         this.enable = enable;
     }
@@ -42,34 +42,44 @@ public class SecondNodeProvider extends BaseNodeProvider {
         baseViewHolder.getView(R.id.item_isImportant).setVisibility(entity.getIsImportant() == 0 ? View.INVISIBLE : View.VISIBLE);
 
 
-        if (((SuperviseBean.Children) data).getIsSatisfy()==1){
-            if (enable==1) {
-                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_check_enable_circle);
-            }else {
-                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_check_circle);
-            }
-        }else {
-            TabUtils.setDrawableLeft(getContext(),(TextView) baseViewHolder.getView(R.id.item_check_yes),R.drawable.image_uncheck_circle);
+        if (((SuperviseBean.Children) data).getIsSatisfy() == 1) {
+
+            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_check_circle);
+
+        } else {
+            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_uncheck_circle);
         }
 
-        if (((SuperviseBean.Children) data).getIsSatisfy()==2){
-            TabUtils.setDrawableLeft(getContext(),(TextView) baseViewHolder.getView(R.id.item_check_no),R.drawable.image_check_circle);
-        }else {
-            TabUtils.setDrawableLeft(getContext(),(TextView) baseViewHolder.getView(R.id.item_check_no),R.drawable.image_uncheck_circle);
+        if (((SuperviseBean.Children) data).getIsSatisfy() == 2) {
+            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_check_circle);
+        } else {
+            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_uncheck_circle);
         }
-        if (enable==1){
-            baseViewHolder.getView(R.id.item_check_no).setVisibility(View.GONE);
+        if (enable == 1) {
+            if (((SuperviseBean.Children) data).getIsSatisfy() == 0) {
+                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_check_enable_circle);
+                baseViewHolder.getView(R.id.item_check_yes).setVisibility(View.GONE);
+                baseViewHolder.getView(R.id.item_check_no).setVisibility(View.VISIBLE);
+            } else {
+                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_check_enable_circle);
+                baseViewHolder.getView(R.id.item_check_yes).setVisibility(View.VISIBLE);
+                baseViewHolder.getView(R.id.item_check_no).setVisibility(View.GONE);
+            }
+
+        }
+        if (enable == 1) {
+
         }
         baseViewHolder.getView(R.id.item_check_yes).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onProviderOnClick.onItemOnclick(data,1);
+                onProviderOnClick.onItemOnclick(data, 1);
             }
         });
         baseViewHolder.getView(R.id.item_check_no).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onProviderOnClick.onItemOnclick(data,2);
+                onProviderOnClick.onItemOnclick(data, 2);
             }
         });
     }
