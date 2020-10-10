@@ -38,8 +38,6 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     TextView tvType;
     @BindView(R.id.tv_num)
     TextView tvNum;
-    @BindView(R.id.ll_null)
-    LinearLayout llNull;
     @BindView(R.id.rv)
     RecyclerView rv;
 
@@ -130,11 +128,6 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     public void showFoodSuperviseList(List<SuperviseBean> data) {
         adapter.setList(data);
         adapter.notifyDataSetChanged();
-        if (data.size() == 0) {
-            llNull.setVisibility(View.VISIBLE);
-        } else {
-            llNull.setVisibility(View.GONE);
-        }
     }
 
     @Override

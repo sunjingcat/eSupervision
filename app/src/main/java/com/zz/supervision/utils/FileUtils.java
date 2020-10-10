@@ -1,6 +1,8 @@
 package com.zz.supervision.utils;
 
 import android.content.Context;
+import android.os.Environment;
+import android.text.TextUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,6 +32,30 @@ public class FileUtils {
             e.printStackTrace();
         }
         return cacheFile.getAbsolutePath();
+    }
+    public static String parseFormat(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
+    }
+
+    public static String parseName(String url) {
+        String fileName = null;
+        try {
+            fileName = url.substring(url.lastIndexOf("/") + 1);
+        } finally {
+            if (TextUtils.isEmpty(fileName)) {
+                fileName = String.valueOf(System.currentTimeMillis());
+            }
+        }
+        return fileName;
+
+    }
+
+
+    public static File getLocalFile(String mFileName) {
+        return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), mFileName);
+    }
+    public static boolean isLocalExist(String mFileName) {
+        return getLocalFile(mFileName).exists();
     }
 
 }

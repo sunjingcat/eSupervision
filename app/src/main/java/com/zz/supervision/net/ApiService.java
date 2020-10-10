@@ -9,6 +9,7 @@ import com.zz.supervision.bean.CompanyType;
 import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.bean.ImageBean;
 import com.zz.supervision.bean.LawEnforcerBean;
+import com.zz.supervision.bean.PDFBean;
 import com.zz.supervision.bean.RecordBean;
 import com.zz.supervision.bean.RiskSuperviseBean;
 import com.zz.supervision.bean.SuperviseBean;
@@ -158,6 +159,9 @@ public interface ApiService {
 
     @GET("/app/v1/supervise/{url}/{id}")
     Observable<JsonT<SuperviseBean.ResposeBean>> getSuperviseDetail(@Path("url") String url, @Path("id") String id);
+
+    @GET("/app/v1/supervise/pdfPrint/getPdfDownPath/{id}")
+    Observable<JsonT<String>> getDocInfo( @Path("id") String id,@QueryMap Map<String, Object> params);
 
 
 }

@@ -22,6 +22,7 @@ import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.SuperviseBean;
+import com.zz.supervision.business.record.ShowDocActivity;
 import com.zz.supervision.business.risk.RiskSuperviseActivity;
 import com.zz.supervision.business.risk.RiskSuperviseInfoActivity;
 import com.zz.supervision.net.ApiService;
@@ -293,7 +294,10 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 break;
             case R.id.bt_ok:
                 if (resposeBean != null && resposeBean.getStatus() == 3) {
-                    showToast("打印");
+
+                    if (TextUtils.isEmpty(id)) return;
+                    startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", id).putExtra("tinspectSheetType", 1).putExtra("tinspectType", type));
+
                 } else {
                     postData();
                 }

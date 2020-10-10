@@ -51,22 +51,6 @@ public class RxNetUtils extends RxHttpUtils {
         rxhttp.baseUrl(rxhttp.getBaseUrl());
         return rxhttp;
     }
-    public static SingleRxHttp getTestInstance() {
-        SingleRxHttp rxhttp = SingleRxHttp.getInstance();
-
-        return rxhttp;
-    }
-
-    public static <T> T getTestApi(Class<T> t) {
-        return RxNetUtils
-                .getTestInstance()
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .createSApi(t);
-    }
-
-
 
     public static <T> T getApi(Class<T> t) {
         return RxNetUtils
@@ -124,6 +108,7 @@ public class RxNetUtils extends RxHttpUtils {
         o.compose(Transformer.<T>switchSchedulers())
                 .subscribe(ob);
     }
+
 
     public static <T> Disposable timer(final Observable<T> o, final BaseObserver<T> ob) {
 

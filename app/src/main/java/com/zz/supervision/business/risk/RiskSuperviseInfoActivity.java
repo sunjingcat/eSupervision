@@ -1,6 +1,7 @@
 package com.zz.supervision.business.risk;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.RiskSuperviseBean;
+import com.zz.supervision.business.record.ShowDocActivity;
 import com.zz.supervision.business.risk.adapter.RiskStaticAdapter;
 import com.zz.supervision.business.risk.adapter.RiskSuperviseAdapter;
 import com.zz.supervision.net.ApiService;
@@ -24,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
@@ -172,5 +175,9 @@ public class RiskSuperviseInfoActivity extends MyBaseActivity {
             }
         }, LoadingUtils.build(this));
     }
-
+    @OnClick(R.id.bt_ok)
+    public void onViewClicked() {
+        if (TextUtils.isEmpty(id))return;
+        startActivity(new Intent(this, ShowDocActivity.class).putExtra("id",id).putExtra("tinspectSheetType",2).putExtra("tinspectType",type));
+    }
 }

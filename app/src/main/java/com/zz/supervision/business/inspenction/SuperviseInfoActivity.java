@@ -1,8 +1,14 @@
 package com.zz.supervision.business.inspenction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -14,6 +20,7 @@ import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.bean.SuperviseInfoBean;
 import com.zz.supervision.business.inspenction.adapter.SuperviseAdapter;
+import com.zz.supervision.business.record.ShowDocActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -21,11 +28,9 @@ import com.zz.supervision.net.RxNetUtils;
 
 import java.util.List;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
@@ -46,8 +51,6 @@ public class SuperviseInfoActivity extends MyBaseActivity {
 
     @BindView(R.id.rv)
     RecyclerView rv;
-    @BindView(R.id.refreshLayout)
-    SmartRefreshLayout refreshLayout;
     SuperviseAdapter adapter;
     String id;
     String url = "spxsInspectionRecord";
@@ -135,4 +138,9 @@ public class SuperviseInfoActivity extends MyBaseActivity {
         }, LoadingUtils.build(this));
     }
 
+    @OnClick(R.id.bt_ok)
+    public void onViewClicked() {
+        if (TextUtils.isEmpty(id))return;
+        startActivity(new Intent(this, ShowDocActivity.class).putExtra("id",id).putExtra("tinspectSheetType",2).putExtra("tinspectType",type));
+    }
 }

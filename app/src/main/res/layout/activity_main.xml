@@ -54,7 +54,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="15dp"
+            android:padding="10dp"
             android:src="@drawable/image_group1"
             android:text="现场执法" />
 
@@ -65,7 +65,7 @@
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="15dp"
+            android:padding="10dp"
             android:src="@drawable/image_group2"
             android:text="企业信息" />
 
@@ -77,8 +77,19 @@
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="15dp"
+            android:padding="10dp"
             android:src="@drawable/image_group3"
+            android:text="执法记录" />
+
+        <ImageView
+            android:id="@+id/main_group_4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="0.3"
+            android:gravity="center"
+            android:padding="15dp"
+
             android:text="执法记录" />
 
 

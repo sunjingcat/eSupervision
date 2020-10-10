@@ -169,6 +169,7 @@
         <activity android:name=".business.risk.RiskSuperviseInfoActivity" />
         <activity android:name=".business.company.ShowLocationActivity" />
         <activity android:name=".business.company.SelectLocationActivity" />
+        <activity android:name=".business.record.ShowDocActivity" />
     </application>
 
 </manifest>
