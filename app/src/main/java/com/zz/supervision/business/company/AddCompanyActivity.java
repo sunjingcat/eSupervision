@@ -32,6 +32,7 @@ import com.zz.supervision.utils.BASE64;
 import com.zz.supervision.utils.TimeUtils;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -41,6 +42,7 @@ import java.util.Map;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -99,6 +101,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     String id;
     double lat = 0.0;
     double lon = 0.0;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_company_add;
@@ -469,7 +472,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             params.put("businessProjectText", businessProjectText);
         }
 
-        if (lon!=0.0&&lat!=0.0) {
+        if (lon != 0.0 && lat != 0.0) {
             params.put("longitude", lon);
             params.put("latitude", lat);
         }
@@ -543,12 +546,16 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 PoiInfo poiInfo = data.getParcelableExtra("location");
                 lat = poiInfo.location.latitude;
                 lon = poiInfo.location.longitude;
-                etLocation.setText(lat + "," + lon);
+
+                String s = new BigDecimal(lat).toString();
+                String s1 = new BigDecimal(lon).toString();
+                etLocation.setText(s + "," + s1);
             }
 
 
         }
     }
+
 
 
 }

@@ -77,7 +77,7 @@ public class SignActivity extends MyBaseActivity {
                             @Override
                             public void onSuccess(File file) {
                                 Intent intent= new Intent();
-                                intent.putExtra("sign",file.getAbsoluteFile());
+                                intent.putExtra("sign",file.getAbsolutePath());
                                 setResult(RESULT_OK,intent);
                                 finish();
                             }
