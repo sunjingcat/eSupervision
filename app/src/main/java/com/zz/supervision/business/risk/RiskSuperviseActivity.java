@@ -1,9 +1,13 @@
 package com.zz.supervision.business.risk;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.entity.node.BaseNode;
+import com.troila.customealert.CustomDialog;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
@@ -56,7 +60,8 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
     String id;
     String url = "spxsRiskRecord";
     int type = 0;
-
+    @BindView(R.id.toolbar_subtitle)
+    TextView toolbaSubtitle;
     @Override
     protected int getContentView() {
         return R.layout.activity_select_risks;
@@ -67,7 +72,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
         ButterKnife.bind(this);
         rv_dynamicRisks.setLayoutManager(new LinearLayoutManager(this));
 //        rv_dynamicRisks.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-
+        toolbaSubtitle.setVisibility(View.VISIBLE);
         adapter = new RiskSuperviseAdapter(new RiskSuperviseAdapter.OnProviderOnClick() {
             @Override
             public void onItemOnclick(BaseNode node, int type) {
@@ -101,7 +106,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
                 }
                 adapter.notifyDataSetChanged();
             }
-        },0);
+        }, 0);
         rv_dynamicRisks.setAdapter(adapter);
 
 
@@ -176,7 +181,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
                 }
                 staticSuperviseAdapter.notifyDataSetChanged();
             }
-        },0);
+        }, 0);
         rv_staticRisks.setAdapter(staticSuperviseAdapter);
         type = getIntent().getIntExtra("type", 0);
         if (type == 3) {
@@ -236,49 +241,77 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
 
     RiskSuperviseBean.PostBean postBeans = new RiskSuperviseBean.PostBean();
 
-    @OnClick(R.id.bt_ok)
-    public void onViewClicked() {
-        List<BaseNode> mlist = adapter.getData();
-        List<BaseNode> superviseAdapterData = staticSuperviseAdapter.getData();
-        Map<String, Object> dynamicRiskMap = new HashMap<>();
-        for (BaseNode node : mlist) {
-            if (node instanceof RiskSuperviseBean.RiskItem) {
-                for (BaseNode child : ((RiskSuperviseBean.RiskItem) node).getChildRisks()) {
-                    if (((RiskSuperviseBean.ChildRisk) child).isCheck() != 0) {
-                        dynamicRiskMap.put(((RiskSuperviseBean.ChildRisk) child).getId(), ((RiskSuperviseBean.ChildRisk) child).isCheck() == 1 ? 1 : 0);
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.bt_ok:
+                List<BaseNode> mlist = adapter.getData();
+                List<BaseNode> superviseAdapterData = staticSuperviseAdapter.getData();
+                Map<String, Object> dynamicRiskMap = new HashMap<>();
+                for (BaseNode node : mlist) {
+                    if (node instanceof RiskSuperviseBean.RiskItem) {
+                        for (BaseNode child : ((RiskSuperviseBean.RiskItem) node).getChildRisks()) {
+                            if (((RiskSuperviseBean.ChildRisk) child).isCheck() != 0) {
+                                dynamicRiskMap.put(((RiskSuperviseBean.ChildRisk) child).getId(), ((RiskSuperviseBean.ChildRisk) child).isCheck() == 1 ? 1 : 0);
+                            }
+                        }
                     }
                 }
-            }
-        }
-        List<String> staticRiskIds = new ArrayList<>();
-        for (BaseNode node : superviseAdapterData) {
-            if (node instanceof RiskSuperviseBean.RiskItem) {
-                for (BaseNode child : ((RiskSuperviseBean.RiskItem) node).getChildRisks()) {
-                    if (((RiskSuperviseBean.ChildRisk) child).getChildType() == 0) {
-                        if (((RiskSuperviseBean.ChildRisk) child).isCheck() == 1) {
-                            staticRiskIds.add(((RiskSuperviseBean.ChildRisk) child).getId());
-                        }
-                    } else {
-                        for (RiskSuperviseBean.ChildRisk child1 : ((RiskSuperviseBean.ChildRisk) child).getChildRisks()) {
-                            if (child1.getChildType() == 0) {
-                                if ((child1).isCheck() == 1) {
-                                    staticRiskIds.add(child1.getId());
+                List<String> staticRiskIds = new ArrayList<>();
+                for (BaseNode node : superviseAdapterData) {
+                    if (node instanceof RiskSuperviseBean.RiskItem) {
+                        for (BaseNode child : ((RiskSuperviseBean.RiskItem) node).getChildRisks()) {
+                            if (((RiskSuperviseBean.ChildRisk) child).getChildType() == 0) {
+                                if (((RiskSuperviseBean.ChildRisk) child).isCheck() == 1) {
+                                    staticRiskIds.add(((RiskSuperviseBean.ChildRisk) child).getId());
                                 }
                             } else {
-                                for (RiskSuperviseBean.ChildRisk child2 : child1.getChildRisks()) {
-                                    if ((child2).isCheck() == 1) {
-                                        staticRiskIds.add(child2.getId());
+                                for (RiskSuperviseBean.ChildRisk child1 : ((RiskSuperviseBean.ChildRisk) child).getChildRisks()) {
+                                    if (child1.getChildType() == 0) {
+                                        if ((child1).isCheck() == 1) {
+                                            staticRiskIds.add(child1.getId());
+                                        }
+                                    } else {
+                                        for (RiskSuperviseBean.ChildRisk child2 : child1.getChildRisks()) {
+                                            if ((child2).isCheck() == 1) {
+                                                staticRiskIds.add(child2.getId());
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
+                postBeans = new RiskSuperviseBean.PostBean(staticRiskIds, dynamicRiskMap);
+                mPresenter.submitReData(url, id, postBeans);
+                break;
+            case R.id.toolbar_subtitle:
+                if (TextUtils.isEmpty(url)) return;
+                if (TextUtils.isEmpty(id)) return;
+
+                CustomDialog.Builder builder = new CustomDialog.Builder(this)
+                        .setTitle("提示")
+                        .setMessage("确定删除？")
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mPresenter.delete(url, id);
+                            }
+                        });
+                customDialog = builder.create();
+                customDialog.show();
+                break;
         }
-        postBeans = new RiskSuperviseBean.PostBean(staticRiskIds, dynamicRiskMap);
-        mPresenter.submitReData(url, id, postBeans);
     }
+
+    private CustomDialog customDialog;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -288,5 +321,18 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
                 mPresenter.submitData(url, id, postBeans);
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (customDialog != null && customDialog.isShowing()) {
+            customDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void showDelete() {
+        finish();
     }
 }

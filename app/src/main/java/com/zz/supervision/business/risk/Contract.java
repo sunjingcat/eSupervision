@@ -16,6 +16,8 @@ public class Contract {
 
         void getData(String url);
 
+        void delete(String url,String id);
+
     }
 
     public interface IGetRiskSuperviseView extends BaseView {
@@ -24,6 +26,7 @@ public class Contract {
         void showReResult(SuperviseBean.ResposeConfirmBean resposeBean);
 
         void showResult(Integer resposeBean);
+        void showDelete();
     }
 
 }

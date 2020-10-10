@@ -37,6 +37,21 @@ public class RiskSupervisePresenter extends MyBasePresenterImpl<Contract.IGetRis
     }
 
     @Override
+    public void delete(String url, String id) {
+        RxNetUtils.request(getApi(ApiService.class).removeSuperviseInfo(url, id), new RequestObserver<JsonT>() {
+            @Override
+            protected void onSuccess(JsonT jsonT) {
+                view.showDelete();
+            }
+
+            @Override
+            protected void onFail2(JsonT stringJsonT) {
+                super.onFail2(stringJsonT);
+            }
+        }, mDialog);
+    }
+
+    @Override
     public void submitData(String url,String id,RiskSuperviseBean.PostBean spxsInspectionPoints) {
         RxNetUtils.request(getApi(ApiService.class).submitSpxsRiskRecord(url,id,spxsInspectionPoints), new RequestObserver<JsonT<Integer>>(this) {
             @Override

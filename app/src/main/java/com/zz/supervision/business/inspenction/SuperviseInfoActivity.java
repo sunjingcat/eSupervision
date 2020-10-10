@@ -3,6 +3,7 @@ package com.zz.supervision.business.inspenction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -59,6 +60,9 @@ public class SuperviseInfoActivity extends MyBaseActivity {
     Button btOk;
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
+    @BindView(R.id.toolbar_subtitle)
+    TextView toolbaSubtitle;
+
 
     @Override
     protected int getContentView() {
@@ -95,6 +99,7 @@ public class SuperviseInfoActivity extends MyBaseActivity {
         initData();
         btOk.setText("打印");
         toolbarTitle.setText("评分详情");
+        toolbaSubtitle.setVisibility(View.GONE);
     }
 
     @Override

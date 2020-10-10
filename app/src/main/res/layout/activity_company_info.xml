@@ -24,6 +24,7 @@
             android:text="企业详情"
             android:textColor="#272727"
             android:textSize="18dp" />
+
         <TextView
             android:id="@+id/toolbar_subtitle"
             android:layout_width="wrap_content"
@@ -31,8 +32,8 @@
             android:layout_gravity="right"
             android:layout_marginRight="10dp"
             android:padding="8dp"
-            android:text="编辑"
             android:singleLine="true"
+            android:text="编辑"
             android:textColor="@color/colorTextBlack33"
             android:textSize="16dp" />
     </androidx.appcompat.widget.Toolbar>
@@ -238,6 +239,36 @@
                     style="@style/textLeftStyle"
                     android:layout_width="150dp"
 
+                    android:text="企业类型" />
+
+                <TextView
+                    android:id="@+id/et_companyType"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:hint=""
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#333"
+                    android:textSize="14dp">
+
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    style="@style/textLeftStyle"
+                    android:layout_width="150dp"
+
                     android:text="主体业态" />
 
                 <TextView
@@ -245,7 +276,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/white"
-                    
+
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:hint=""
@@ -276,7 +307,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/white"
-                    
+
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:hint=""
@@ -307,7 +338,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/white"
-                    
+
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:hint=""
@@ -397,7 +428,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/white"
-                    
+
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:hint=""
@@ -408,7 +439,8 @@
 
                 </TextView>
             </LinearLayout>
-<LinearLayout
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
@@ -419,15 +451,20 @@
                 <TextView
                     style="@style/textLeftStyle"
                     android:layout_width="150dp"
-
                     android:text="位置" />
+
+                <TextView
+                    style="@style/textLeftStyle"
+                    android:layout_width="50dp"
+                    android:drawableRight="@drawable/location"
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/et_location"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/white"
-
+                    android:drawableRight="@drawable/image_arrow"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:hint=""

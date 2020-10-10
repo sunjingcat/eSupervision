@@ -14,6 +14,7 @@ public class CompanyBean implements Serializable {
     private String businessType;// ,
     private String businessTypeText;// ,
     private String companyType;// ,
+    private String companyTypeText;// ,
     private String contact;// ,
     private String contactInformation;// ,
     private String createBy;// ,
@@ -52,6 +53,10 @@ public class CompanyBean implements Serializable {
         }else {
             return Double.parseDouble(latitude);
         }
+    }
+
+    public String getCompanyTypeText() {
+        return companyTypeText;
     }
 
     public String getBusinessTypeText() {

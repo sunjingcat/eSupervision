@@ -1,28 +1,40 @@
 package com.zz.supervision.business.inspenction;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.TextView;
-
-import com.chad.library.adapter.base.entity.node.BaseNode;
-import com.zz.lib.commonlib.utils.ToolBarUtils;
-import com.zz.supervision.R;
-import com.zz.supervision.base.MyBaseActivity;
-import com.zz.supervision.bean.SuperviseBean;
-import com.zz.supervision.business.inspenction.adapter.SuperviseAdapter;
-import com.zz.supervision.business.inspenction.presenter.SupervisePresenter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.chad.library.adapter.base.entity.node.BaseNode;
+import com.troila.customealert.CustomDialog;
+import com.zz.lib.commonlib.utils.ToolBarUtils;
+import com.zz.lib.core.utils.LoadingUtils;
+import com.zz.supervision.R;
+import com.zz.supervision.base.MyBaseActivity;
+import com.zz.supervision.bean.SuperviseBean;
+import com.zz.supervision.business.inspenction.adapter.SuperviseAdapter;
+import com.zz.supervision.business.inspenction.presenter.SupervisePresenter;
+import com.zz.supervision.net.ApiService;
+import com.zz.supervision.net.JsonT;
+import com.zz.supervision.net.RequestObserver;
+import com.zz.supervision.net.RxNetUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.zz.supervision.net.RxNetUtils.getApi;
 
 /**
  * 监督检查:食品销售日常
@@ -38,6 +50,8 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     TextView tvType;
     @BindView(R.id.tv_num)
     TextView tvNum;
+    @BindView(R.id.toolbar_subtitle)
+    TextView toolbaSubtitle;
     @BindView(R.id.rv)
     RecyclerView rv;
 
@@ -46,6 +60,8 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     String id;
     String url = "spxsInspectionRecord";
     int type = 0;
+    @BindView(R.id.bt_ok)
+    Button btOk;
 
     @Override
     protected int getContentView() {
@@ -99,7 +115,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
             url = "cyfwInspectionRecord";
         }
         mPresenter.getData(url);
-
+        toolbaSubtitle.setVisibility(View.VISIBLE);
         initData();
     }
 
@@ -144,22 +160,12 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         finish();
     }
 
-    ArrayList<SuperviseBean.PostBean> postBeans = new ArrayList<>();
-
-    @OnClick(R.id.bt_ok)
-    public void onViewClicked() {
-        mlist = adapter.getData();
-        postBeans = new ArrayList<>();
-        for (BaseNode node : mlist) {
-            if (node instanceof SuperviseBean.Children) {
-                if (((SuperviseBean.Children) node).getIsSatisfy() != 0) {
-                    postBeans.add(new SuperviseBean.PostBean(((SuperviseBean.Children) node).getId(), ((SuperviseBean.Children) node).getIsSatisfy() == 1 ? 1 : 0));
-                }
-            }
-        }
-        mPresenter.submitReData(url, id, postBeans);
-
+    @Override
+    public void showDelete() {
+        finish();
     }
+
+    ArrayList<SuperviseBean.PostBean> postBeans = new ArrayList<>();
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -170,4 +176,55 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
             }
         }
     }
+
+    private CustomDialog customDialog;
+
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.toolbar_subtitle:
+                if (TextUtils.isEmpty(url)) return;
+                if (TextUtils.isEmpty(id)) return;
+
+                CustomDialog.Builder builder = new CustomDialog.Builder(this)
+                        .setTitle("提示")
+                        .setMessage("确定删除？")
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mPresenter.delete(url, id);
+                            }
+                        });
+                customDialog = builder.create();
+                customDialog.show();
+                break;
+            case R.id.bt_ok:
+                mlist = adapter.getData();
+                postBeans = new ArrayList<>();
+                for (BaseNode node : mlist) {
+                    if (node instanceof SuperviseBean.Children) {
+                        if (((SuperviseBean.Children) node).getIsSatisfy() != 0) {
+                            postBeans.add(new SuperviseBean.PostBean(((SuperviseBean.Children) node).getId(), ((SuperviseBean.Children) node).getIsSatisfy() == 1 ? 1 : 0));
+                        }
+                    }
+                }
+                mPresenter.submitReData(url, id, postBeans);
+                break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (customDialog != null && customDialog.isShowing()) {
+            customDialog.dismiss();
+        }
+    }
+
 }

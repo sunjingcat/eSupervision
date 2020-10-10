@@ -2,6 +2,7 @@ package com.zz.supervision.business.risk;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -60,7 +61,8 @@ public class RiskSuperviseInfoActivity extends MyBaseActivity {
     Button btOk;
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-
+    @BindView(R.id.toolbar_subtitle)
+    TextView toolbaSubtitle;
     @Override
     protected int getContentView() {
         return R.layout.activity_select_risks;
@@ -88,7 +90,7 @@ public class RiskSuperviseInfoActivity extends MyBaseActivity {
             }
         }, 1);
         rv_dynamicRisks.setAdapter(adapter);
-
+        toolbaSubtitle.setVisibility(View.GONE);
 
         rv_staticRisks.setLayoutManager(new LinearLayoutManager(this));
 

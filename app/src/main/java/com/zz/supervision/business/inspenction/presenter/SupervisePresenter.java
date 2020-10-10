@@ -1,4 +1,5 @@
 package com.zz.supervision.business.inspenction.presenter;
+import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.business.inspenction.Contract;
 import com.zz.supervision.net.ApiService;
@@ -9,6 +10,8 @@ import com.zz.supervision.net.RxNetUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.zz.supervision.net.RxNetUtils.getApi;
 
 /**
  * Created by 77 on 2018/8/8.
@@ -30,6 +33,21 @@ public class SupervisePresenter extends MyBasePresenterImpl<Contract.IGetSupervi
 
             @Override
             protected void onFail2(JsonT<List<SuperviseBean>> stringJsonT) {
+                super.onFail2(stringJsonT);
+            }
+        }, mDialog);
+    }
+
+    @Override
+    public void delete(String url,String id) {
+        RxNetUtils.request(getApi(ApiService.class).removeSuperviseInfo(url, id), new RequestObserver<JsonT>() {
+            @Override
+            protected void onSuccess(JsonT jsonT) {
+                view.showDelete();
+            }
+
+            @Override
+            protected void onFail2(JsonT stringJsonT) {
                 super.onFail2(stringJsonT);
             }
         }, mDialog);

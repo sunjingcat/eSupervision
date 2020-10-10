@@ -77,6 +77,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
     Button btOk;
     @BindView(R.id.bg)
     LinearLayout bg;
+    @BindView(R.id.et_companyType)
+    TextView etCompanyType;
 
     @Override
     protected int getContentView() {
@@ -118,7 +120,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
         etContactInformation.setText(data.getContactInformation() + "");
         etFieldTime.setText(data.getFieldTime() + "");
         fieldTime = data.getFieldTime();
-        etLocation.setText(data.getLatitude() + "," + data.getLongitude());
+//        etLocation.setText(data.getLatitude() + "," + data.getLongitude());
+        etCompanyType.setText(data.getCompanyTypeText() + "");
         getImage(data.getId());
     }
 
@@ -155,7 +158,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
             case R.id.et_location:
                 if (companyBean == null) return;
                 if (companyBean.getLongitude() == 0.0) return;
-                startActivity(new Intent(this, ShowLocationActivity.class).putExtra("location_lat", companyBean.getLatitude()).putExtra("location_lng",companyBean.getLongitude()));
+                startActivity(new Intent(this, ShowLocationActivity.class).putExtra("location_lat", companyBean.getLatitude()).putExtra("location_lng", companyBean.getLongitude()));
                 break;
         }
     }
