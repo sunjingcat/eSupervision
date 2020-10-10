@@ -145,6 +145,10 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         params.put("dictType", "business_type");
         mPresenter.getBusinessType(params);
 
+        Map<String, Object> params1 = new HashMap<>();
+        params1.put("dictType", "company_type");
+        mPresenter.getCompanyType(params1);
+
     }
 
     @Override
@@ -534,7 +538,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 businessProject = content;
                 businessProjectText = str;
             }
-            if (requestCode == 2001) {
+            if (requestCode == 1002) {
                 if (data == null) return;
                 PoiInfo poiInfo = data.getParcelableExtra("location");
                 lat = poiInfo.location.latitude;
