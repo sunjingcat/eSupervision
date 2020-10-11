@@ -65,12 +65,13 @@
         <Button
             android:id="@+id/bt_ok"
             style="?android:attr/borderlessButtonStyle"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
+
             android:layout_height="45dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
-            android:background="#F6E0AD"
+            android:background="@drawable/border_radius_3_blue"
             android:text="完成"
-            android:textColor="#9C5F23" />
+            android:textColor="#ffffff" />
     </LinearLayout>
 </LinearLayout>
