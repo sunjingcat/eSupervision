@@ -157,12 +157,7 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
 
     @Override
     protected void initView() {
-        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+
         PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
             @Override
             public void onGranted() {
