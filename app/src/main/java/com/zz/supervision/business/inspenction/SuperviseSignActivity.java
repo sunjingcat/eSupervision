@@ -304,11 +304,13 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
                 break;
             case R.id.toolbar_subtitle:
+                if (resposeBean==null)return;
                 if (type == 1 || type == 2) {
                     startActivity(new Intent(this, SuperviseInfoActivity.class)
                             .putExtra("company", resposeBean.getCompanyInfo().getOperatorName())
                             .putExtra("id", resposeBean.getId() + "")
                             .putExtra("type", type)
+                            .putExtra("status", resposeBean.getStatus())
                             .putExtra("typeText", resposeBean.getTypeText() + "")
                             .putExtra("lawEnforcer", resposeBean.getLawEnforcer1Name() + "," + resposeBean.getLawEnforcer2Name())
                             .putExtra("inspectionTime", resposeBean.getCreateTime()));
@@ -317,6 +319,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                             .putExtra("company", resposeBean.getCompanyInfo().getOperatorName())
                             .putExtra("id", resposeBean.getId() + "")
                             .putExtra("type", type)
+                            .putExtra("status", resposeBean.getStatus())
                             .putExtra("typeText", resposeBean.getTypeText() + "")
                             .putExtra("lawEnforcer", resposeBean.getLawEnforcer1Name() + "," + resposeBean.getLawEnforcer2Name())
                             .putExtra("inspectionTime", resposeBean.getCreateTime()));

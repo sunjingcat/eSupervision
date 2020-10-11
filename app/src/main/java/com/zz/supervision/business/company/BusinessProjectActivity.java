@@ -1,14 +1,8 @@
 package com.zz.supervision.business.company;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
@@ -20,6 +14,9 @@ import com.zz.supervision.business.company.adapter.BusinessProjectAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,12 +43,12 @@ public class BusinessProjectActivity extends MyBaseActivity {
         rv.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BusinessProjectAdapter(R.layout.item_bn_pj_title, R.layout.item_bn_pj_content, mlist);
         rv.setAdapter(adapter);
-        String type = getIntent().getStringExtra("type" );
+        String type = getIntent().getStringExtra("type");
         mlist.clear();
-        if (type .equals("1")) {
+        if (type.equals("1")) {
             initXS();
             tvLeft.setText("食品销售");
-        } else if (type .equals("2") || type .equals("3")) {
+        } else if (type.equals("2") || type.equals("3")) {
             initFW();
             tvLeft.setText("餐饮服务");
         }
@@ -59,18 +56,28 @@ public class BusinessProjectActivity extends MyBaseActivity {
         adapter.setOnBnpjClickListener(new BusinessProjectAdapter.OnBnpjClickListener() {
             @Override
             public void onHeaderClick(View v, int p) {
-                for (int i =0;i<mlist.size();i++){
-                    if (mlist.get(i).getFatherValue()==mlist.get(p).getValue()){
-                        mlist.get(i).setSelect(!mlist.get(p).isSelect());
-                    }
-                }
+//
                 mlist.get(p).setSelect(!mlist.get(p).isSelect());
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onContentClick(View v, int p) {
+                boolean isSelect = false;
                 mlist.get(p).setSelect(!mlist.get(p).isSelect());
+                for (int i = 0; i < mlist.size(); i++) {
+                    if (mlist.get(i).getFatherValue() == mlist.get(p).getFatherValue()) {
+                        if (mlist.get(i).isSelect()) {
+                            isSelect = true;
+                        }
+                    }
+                }
+                for (int i = 0; i < mlist.size(); i++) {
+                    if (mlist.get(i).getValue() == mlist.get(p).getFatherValue()) {
+                        mlist.get(i).setSelect(isSelect);
+                    }
+                }
+
                 adapter.notifyDataSetChanged();
             }
 
@@ -79,7 +86,7 @@ public class BusinessProjectActivity extends MyBaseActivity {
 
     @Override
     protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar,1);
+        ToolBarUtils.getInstance().setNavigation(toolbar, 1);
     }
 
     @Override
@@ -88,7 +95,7 @@ public class BusinessProjectActivity extends MyBaseActivity {
     }
 
     void initXS() {
-        mlist.add(new BusinessProjectBean(true, "预包装食品销售", "1",""));
+        mlist.add(new BusinessProjectBean(true, "预包装食品销售", "1", ""));
         mlist.add(new BusinessProjectBean(false, "含冷藏冷冻食品", "1.1", "1"));
         mlist.add(new BusinessProjectBean(false, "不含冷藏冷冻食品", "1.2", "1"));
         mlist.add(new BusinessProjectBean(true, "散装食品销售", "2", "0"));
@@ -127,15 +134,15 @@ public class BusinessProjectActivity extends MyBaseActivity {
     public void onViewClicked() {
         ArrayList<BusinessProjectBean> selectList = new ArrayList<>();
         selectList.clear();
-        for (BusinessProjectBean businessProjectBean:mlist){
-            if (businessProjectBean.isSelect()){
+        for (BusinessProjectBean businessProjectBean : mlist) {
+            if (businessProjectBean.isSelect()) {
                 selectList.add(businessProjectBean);
             }
         }
 
         Intent intent = new Intent();
         intent.putExtra("bnpj", selectList);
-        setResult(RESULT_OK,intent);
+        setResult(RESULT_OK, intent);
         finish();
     }
 }

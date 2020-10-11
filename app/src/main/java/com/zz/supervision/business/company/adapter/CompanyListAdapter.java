@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 public class CompanyListAdapter extends BaseQuickAdapter<CompanyBean, BaseViewHolder> {
     public CompanyListAdapter(int layoutResId, @Nullable List<CompanyBean> data) {
         super(layoutResId, data);
-        addChildClickViewIds(R.id.mc_item_delete);
+//        addChildClickViewIds(R.id.mc_item_delete);
         addChildClickViewIds(R.id.content);
     }
 

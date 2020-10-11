@@ -9,7 +9,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorTextBlack99"
+        android:textColor="#444444"
         android:textSize="15dp"
         android:layout_margin="5dp"
         android:paddingTop="5dp"

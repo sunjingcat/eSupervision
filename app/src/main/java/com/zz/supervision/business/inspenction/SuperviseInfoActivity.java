@@ -1,18 +1,12 @@
 package com.zz.supervision.business.inspenction;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.chad.library.adapter.base.entity.node.BaseNode;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
@@ -29,6 +23,9 @@ import com.zz.supervision.net.RxNetUtils;
 
 import java.util.List;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -56,6 +53,7 @@ public class SuperviseInfoActivity extends MyBaseActivity {
     String id;
     String url = "spxsInspectionRecord";
     int type = 0;
+    int status = 0;
     @BindView(R.id.bt_ok)
     Button btOk;
     @BindView(R.id.toolbar_title)
@@ -91,13 +89,18 @@ public class SuperviseInfoActivity extends MyBaseActivity {
         }, 1);
         rv.setAdapter(adapter);
         type = getIntent().getIntExtra("type", 0);
+        status = getIntent().getIntExtra("status", 0);
         if (type == 1) {
             url = "spxsInspectionRecord";
         } else {
             url = "cyfwInspectionRecord";
         }
         initData();
+
         btOk.setText("打印");
+        btOk.setVisibility(status == 3 ? View.VISIBLE : View.GONE);
+
+
         toolbarTitle.setText("评分详情");
         toolbaSubtitle.setVisibility(View.GONE);
     }
@@ -145,7 +148,7 @@ public class SuperviseInfoActivity extends MyBaseActivity {
 
     @OnClick(R.id.bt_ok)
     public void onViewClicked() {
-        if (TextUtils.isEmpty(id))return;
-        startActivity(new Intent(this, ShowDocActivity.class).putExtra("id",id).putExtra("tinspectSheetType",2).putExtra("tinspectType",type));
+        if (TextUtils.isEmpty(id)) return;
+        startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", id).putExtra("tinspectSheetType", 2).putExtra("tinspectType", type));
     }
 }

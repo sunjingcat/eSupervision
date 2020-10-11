@@ -1,17 +1,16 @@
 package com.zz.supervision.business.company;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import com.blankj.utilcode.util.ToastUtils;
+import com.previewlibrary.ZoomMediaLoader;
+import com.troila.customealert.CustomDialog;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
@@ -25,10 +24,14 @@ import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
+import com.zz.supervision.utils.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -79,6 +82,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
     LinearLayout bg;
     @BindView(R.id.et_companyType)
     TextView etCompanyType;
+    private CustomDialog customDialog;
 
     @Override
     protected int getContentView() {
@@ -88,6 +92,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
+        ZoomMediaLoader.getInstance().init(new ImageLoader());
         itemRvImages.setLayoutManager(new GridLayoutManager(this, 3));
         adapter = new ImageItemAdapter(R.layout.item_image, images);
         itemRvImages.setAdapter(adapter);
@@ -145,7 +150,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.et_location})
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.et_location, R.id.bt_delete})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
@@ -159,6 +164,26 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 if (companyBean == null) return;
                 if (companyBean.getLongitude() == 0.0) return;
                 startActivity(new Intent(this, ShowLocationActivity.class).putExtra("location_lat", companyBean.getLatitude()).putExtra("location_lng", companyBean.getLongitude()));
+                break;
+            case R.id.bt_delete:
+                if (companyBean == null) return;
+                CustomDialog.Builder builder = new com.troila.customealert.CustomDialog.Builder(this)
+                        .setTitle("提示")
+                        .setMessage("确定删除记录？")
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteDate(companyBean.getId());
+                            }
+                        });
+                customDialog = builder.create();
+                customDialog.show();
                 break;
         }
     }
@@ -198,5 +223,28 @@ public class CompanyInfoActivity extends MyBaseActivity {
         images.addAll(showList);
 
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (customDialog != null && customDialog.isShowing()) {
+            customDialog.dismiss();
+        }
+    }
+
+    void deleteDate(String id) {
+        RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(id), new RequestObserver<JsonT>() {
+            @Override
+            protected void onSuccess(JsonT jsonT) {
+                finish();
+            }
+
+            @Override
+            protected void onFail2(JsonT stringJsonT) {
+                super.onFail2(stringJsonT);
+                ToastUtils.showShort(stringJsonT.getMessage());
+            }
+        }, LoadingUtils.build(this));
     }
 }

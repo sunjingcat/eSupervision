@@ -17,6 +17,7 @@ import com.codbking.widget.utils.UIAdjuster;
 import com.donkingliang.imageselector.utils.ImageSelector;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
 import com.google.gson.Gson;
+import com.previewlibrary.ZoomMediaLoader;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.commonlib.widget.SelectPopupWindows;
 import com.zz.supervision.CompanyBean;
@@ -29,6 +30,7 @@ import com.zz.supervision.business.company.adapter.ImageDeleteItemAdapter;
 import com.zz.supervision.business.company.mvp.Contract;
 import com.zz.supervision.business.company.mvp.presenter.CompanyAddPresenter;
 import com.zz.supervision.utils.BASE64;
+import com.zz.supervision.utils.ImageLoader;
 import com.zz.supervision.utils.TimeUtils;
 
 import java.io.File;
@@ -42,7 +44,6 @@ import java.util.Map;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -110,6 +111,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     @Override
     protected void initView() {
         ButterKnife.bind(this);
+        ZoomMediaLoader.getInstance().init(new ImageLoader());
         itemRvImages.setLayoutManager(new GridLayoutManager(this, 3));
         adapter = new ImageDeleteItemAdapter(this, images);
         itemRvImages.setAdapter(adapter);
@@ -310,6 +312,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         etBusinessType.setText(data.getBusinessTypeText() + "");
         etBusinessProject.setText(data.getBusinessProjectText() + "");
         businessType = data.getBusinessType();
+        companyType = data.getCompanyType();
         validDate = data.getValidDate();
         etEndTime.setText(data.getValidDate() + "");
         etContact.setText(data.getContact() + "");
@@ -317,6 +320,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         etFieldTime.setText(data.getFieldTime() + "");
         fieldTime = data.getFieldTime();
         mPresenter.getImage("company", data.getId());
+        etCompanyType.setText(data.getCompanyTypeText() + "");
     }
 
     @Override
@@ -496,7 +500,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         params.put("fieldTime", fieldTime);
         if (!TextUtils.isEmpty(id)) {
             params.put("id", id);
-
+            mPresenter.submitData(params);
         }
         mPresenter.submitData(params);
     }
@@ -555,7 +559,6 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
         }
     }
-
 
 
 }

@@ -1,6 +1,5 @@
 package com.zz.supervision.business.record;
 
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -9,12 +8,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnChangeLisener;
@@ -43,6 +36,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -151,7 +149,13 @@ public class CheckListActivity extends MyBaseActivity {
                 beginTime = "";
                 etEndTime.setText("");
                 endTime = "";
-                checkFragment1.setSearchStr("", "", inspectionResult, level, status, beginTime, endTime);
+                if (tablayout.getSelectedTabPosition() == 0) {
+                    checkFragment1.setSearchStr("", "", inspectionResult, level, status, beginTime, endTime);
+
+                } else {
+                    checkFragment2.setSearchStr("", "", inspectionResult, level, status, beginTime, endTime);
+
+                }
             }
 
             @Override
@@ -330,7 +334,13 @@ public class CheckListActivity extends MyBaseActivity {
                 beginTime = "";
                 etEndTime.setText("");
                 endTime = "";
-                checkFragment1.setSearchStr("", "", inspectionResult, level, status, beginTime, endTime);
+                if (tablayout.getSelectedTabPosition() == 0) {
+                    checkFragment1.setSearchStr("", "", inspectionResult, level, status, beginTime, endTime);
+
+                } else {
+                    checkFragment2.setSearchStr("", "", inspectionResult, level, status, beginTime, endTime);
+
+                }
                 drawer.closeDrawers();
                 break;
             case R.id.bt_ok:
@@ -341,7 +351,7 @@ public class CheckListActivity extends MyBaseActivity {
                 if (tablayout.getSelectedTabPosition() == 0) {
                     checkFragment1.setSearchStr(strCompany + "", strLawEnforcer + "", inspectionResult, level, status, beginTime, endTime);
                 } else {
-                    checkFragment1.setSearchStr(strCompany + "", strLawEnforcer + "", inspectionResult, level, status, beginTime, endTime);
+                    checkFragment2.setSearchStr(strCompany + "", strLawEnforcer + "", inspectionResult, level, status, beginTime, endTime);
                 }
                 break;
         }

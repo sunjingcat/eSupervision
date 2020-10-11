@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.guanaj.easyswipemenulibrary.EasySwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:contentView="@+id/content"
+    android:orientation="horizontal"
     app:rightMenuView="@+id/right">
 
     <LinearLayout
@@ -12,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
         android:layout_marginTop="12dp"
+        android:layout_marginRight="12dp"
         android:background="@drawable/border_radius_5_light"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -75,18 +76,19 @@
         android:id="@+id/right"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_marginTop="12dp"
         android:background="@android:color/holo_red_light"
-        android:orientation="horizontal"
-        android:layout_marginTop="12dp">
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/mc_item_delete"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/holo_red_light"
             android:layout_gravity="center"
+            android:background="@android:color/holo_red_light"
+            android:gravity="center"
             android:paddingHorizontal="20dp"
             android:text="删除"
             android:textColor="@color/white" />
     </LinearLayout>
-</com.guanaj.easyswipemenulibrary.EasySwipeMenuLayout>
+</LinearLayout>

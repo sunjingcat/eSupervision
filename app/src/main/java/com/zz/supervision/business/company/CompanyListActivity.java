@@ -56,7 +56,7 @@ public class CompanyListActivity extends MyBaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        getDate();
+
         select = getIntent().getStringExtra("select");
         if (TextUtils.isEmpty(select)) {
             toolbarSubtitle.setVisibility(View.VISIBLE);
@@ -143,5 +143,11 @@ public class CompanyListActivity extends MyBaseActivity {
             setResult(RESULT_OK, data);
             finish();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDate();
     }
 }

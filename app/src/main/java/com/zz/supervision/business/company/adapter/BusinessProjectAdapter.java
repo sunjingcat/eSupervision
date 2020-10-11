@@ -36,7 +36,7 @@ public class BusinessProjectAdapter extends BaseSectionQuickAdapter<BusinessProj
         if (businessProjectBean.isSelect()){
             baseViewHolder.setTextColor(R.id.title, Color.parseColor("#0851A2"));
         }else {
-            baseViewHolder.setTextColor(R.id.title, Color.parseColor("#999999"));
+            baseViewHolder.setTextColor(R.id.title, Color.parseColor("#444444"));
         }
     }
 

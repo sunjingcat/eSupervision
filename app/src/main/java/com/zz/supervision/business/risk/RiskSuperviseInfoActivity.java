@@ -57,6 +57,7 @@ public class RiskSuperviseInfoActivity extends MyBaseActivity {
     String id;
     String url = "spxsRiskRecord";
     int type = 0;
+    int status = 0;
     @BindView(R.id.bt_ok)
     Button btOk;
     @BindView(R.id.toolbar_title)
@@ -119,6 +120,7 @@ public class RiskSuperviseInfoActivity extends MyBaseActivity {
         }, 1);
         rv_staticRisks.setAdapter(staticSuperviseAdapter);
         type = getIntent().getIntExtra("type", 0);
+        status = getIntent().getIntExtra("status", 0);
         if (type == 3) {
             url = "spxsRiskRecord";
         } else {
@@ -126,6 +128,8 @@ public class RiskSuperviseInfoActivity extends MyBaseActivity {
 
         }
         btOk.setText("打印");
+        btOk.setVisibility(status == 3 ? View.VISIBLE : View.GONE);
+
         toolbarTitle.setText("评分详情");
         initData();
         getData();

@@ -105,25 +105,7 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
         adapter.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override
             public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
-                if (view.getId()==R.id.mc_item_delete) {
-                    CustomDialog.Builder builder = new com.troila.customealert.CustomDialog.Builder(getActivity())
-                            .setTitle("提示")
-                            .setMessage("确定删除记录？")
-                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    deleteDate(mlist.get(position).getId());
-                                }
-                            });
-                    customDialog = builder.create();
-                    customDialog.show();
-                }else if (view.getId()==R.id.content) {
+                if (view.getId()==R.id.content) {
                     if (TextUtils.isEmpty(select)) {
                         startActivity(new Intent(getActivity(), CompanyInfoActivity.class).putExtra("id", mlist.get(position).getId()));
                     } else {
@@ -142,9 +124,6 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        if (customDialog != null && customDialog.isShowing()) {
-            customDialog.dismiss();
-        }
     }
 
     @Override
@@ -188,21 +167,6 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
         }, LoadingUtils.build(getActivity()));
     }
 
-    void deleteDate(String id) {
-        RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(id), new RequestObserver<JsonT>() {
-            @Override
-            protected void onSuccess(JsonT jsonT) {
-                pagenum = 1;
-                getDate();
-            }
-
-            @Override
-            protected void onFail2(JsonT stringJsonT) {
-                super.onFail2(stringJsonT);
-                ToastUtils.showShort(stringJsonT.getMessage());
-            }
-        }, LoadingUtils.build(getActivity()));
-    }
 
 
     @Override
@@ -212,11 +176,5 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
         refreshLayout.finishLoadMore();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (customDialog != null && customDialog.isShowing()) {
-            customDialog.dismiss();
-        }
-    }
+
 }
