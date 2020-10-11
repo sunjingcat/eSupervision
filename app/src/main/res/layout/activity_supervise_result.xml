@@ -57,7 +57,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btn_cancel"
+                android:id="@+id/btn_jilu"
                 android:layout_width="wrap_content"
                 android:layout_height="34dp"
                 android:layout_weight="1"
@@ -71,7 +71,7 @@
                 android:layout_height="1dp" />
 
             <Button
-                android:id="@+id/btn_ok"
+                android:id="@+id/btn_pingfen"
                 android:layout_width="wrap_content"
                 android:layout_height="34dp"
                 android:layout_weight="1"

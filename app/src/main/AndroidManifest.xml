@@ -68,7 +68,7 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="WpcSzZmbGm2suikRU1TZKKXPCrwNNXek" />
+            android:value="kLe11G49nBGX4OGUGBGhigkr0RfgnYX3" />
 
         <service
             android:name="com.baidu.location.f"
@@ -170,6 +170,7 @@
         <activity android:name=".business.company.ShowLocationActivity" />
         <activity android:name=".business.company.SelectLocationActivity" />
         <activity android:name=".business.record.ShowDocActivity" />
+        <activity android:name=".business.record.SelectPrintActivity" />
     </application>
 
 </manifest>

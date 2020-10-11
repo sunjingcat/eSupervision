@@ -60,7 +60,7 @@
         app:elevation="0dp"
         android:background="@color/colorPrimary"
         android:layout_height="40dp"/>
-    <com.zz.supervision.widget.NoScrollViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

@@ -7,12 +7,14 @@ import android.net.nsd.NsdServiceInfo;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Toast;
 
+import com.zz.lib.commonlib.utils.CacheUtility;
+import com.zz.lib.core.http.utils.ToastUtils;
+import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.EventBusSimpleInfo;
-import com.zz.supervision.business.company.AddCompanyActivity;
 import com.zz.supervision.business.company.CompanyListActivity;
-import com.zz.supervision.business.inspenction.SignActivity;
 import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.business.mine.MineActivity;
 import com.zz.supervision.business.record.CheckListActivity;
@@ -21,13 +23,11 @@ import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.utils.UpdateManager;
-import com.zz.lib.commonlib.utils.CacheUtility;
-import com.zz.lib.core.http.utils.ToastUtils;
-import com.zz.lib.core.ui.mvp.BasePresenter;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +55,6 @@ public class MainActivity extends MyBaseActivity {
     protected void initView() {
         ButterKnife.bind(this);
         new UpdateManager(this).checkUpdate();
-        initPrint();
     }
 
     @Override
@@ -85,7 +84,7 @@ public class MainActivity extends MyBaseActivity {
                 intent2.setClass(MainActivity.this, CheckListActivity.class);
                 startActivity(intent2);
                 break;
-                case R.id.toolbar_subtitle:
+            case R.id.toolbar_subtitle:
                 startActivity(new Intent(MainActivity.this, MineActivity.class));
                 break;
         }
@@ -110,7 +109,7 @@ public class MainActivity extends MyBaseActivity {
 
         String info = event.getStringData();
         if ("putCid".equals(info)) {
-            putClientId();
+//            putClientId();
         }
     }
 
@@ -133,61 +132,7 @@ public class MainActivity extends MyBaseActivity {
             }
         }, null);
     }
-    void initPrint(){
-         String serviceType = "_ipp._tcp";
-         String serviceName = "nsdChat";
 
-        NsdServiceInfo nsdServiceInfo = new NsdServiceInfo();
-        nsdServiceInfo.setServiceType(serviceType);
-        nsdServiceInfo.setServiceName(serviceName);
-        nsdServiceInfo.setPort(9000);
 
-        NsdManager nsdManager = (NsdManager) getApplicationContext().getSystemService(Context.NSD_SERVICE);
-        NsdManager.ResolveListener resolveListener = new NsdManager.ResolveListener() {
-            @Override
-            public void onResolveFailed(NsdServiceInfo serviceInfo, int errorCode) {
-                Log.d("printer", "onServiceResolved:IP " );
-            }
-
-            @Override
-            public void onServiceResolved(NsdServiceInfo serviceInfo) {
-                Log.d("printer", "onServiceResolved:IP " + serviceInfo.getHost());
-                Log.d("printer", "onServiceResolved:Port " + serviceInfo.getPort());
-            }
-        };
-        NsdManager.DiscoveryListener discoveryListener = new NsdManager.DiscoveryListener() {
-            @Override
-            public void onStartDiscoveryFailed(String serviceType, int errorCode) {
-
-            }
-
-            @Override
-            public void onStopDiscoveryFailed(String serviceType, int errorCode) {
-
-            }
-
-            @Override
-            public void onDiscoveryStarted(String serviceType) {
-
-            }
-
-            @Override
-            public void onDiscoveryStopped(String serviceType) {
-
-            }
-
-            @Override
-            public void onServiceFound(NsdServiceInfo serviceInfo) {
-                Log.d("printer", "onServiceFound: " + serviceInfo.getServiceName());
-                nsdManager.resolveService(serviceInfo,resolveListener);
-            }
-
-            @Override
-            public void onServiceLost(NsdServiceInfo serviceInfo) {
-
-            }
-        };
-        nsdManager.discoverServices(serviceType, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
-    }
 
 }

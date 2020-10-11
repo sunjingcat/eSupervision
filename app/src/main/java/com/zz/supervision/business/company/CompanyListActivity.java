@@ -41,7 +41,7 @@ public class CompanyListActivity extends MyBaseActivity {
     @BindView(R.id.tablayout)
     TabLayout tablayout;
     @BindView(R.id.viewpager)
-    NoScrollViewPager viewpager;
+    ViewPager viewpager;
     public FmPagerAdapter pagerAdapter;
     @BindView(R.id.toolbar_subtitle)
     TextView toolbarSubtitle;

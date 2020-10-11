@@ -4,9 +4,14 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#fff">
+    android:background="#fff"
+    android:orientation="vertical">
 
+    <View
+
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:background="@color/white" />
 
     <RelativeLayout
         android:id="@+id/title"
@@ -19,9 +24,9 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="15dp"
+            android:text=""
             android:textColor="#4a5669"
-            android:textSize="16sp"
-            android:text="" />
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/back"
@@ -32,13 +37,29 @@
             android:paddingRight="15dp"
             android:src="@drawable/return_button" />
 
+        <Button
+            android:id="@+id/btn_printer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/border_radius_5_light"
+            android:onClick="onClickDownload"
+            android:text="打印"
+            android:textColor="@color/colorTextBlack33"
+            android:visibility="gone" />
     </RelativeLayout>
 
 
-    <View
+    <TextView
+        android:id="@+id/tv_print"
         android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:background="#f8f9fb"/>
+        android:layout_height="wrap_content"
+        android:background="#eeeeee"
+        android:drawableRight="@drawable/image_arrow"
+        android:hint="选择打印机"
+        android:padding="8dp"
+        android:textColor="@color/colorTextBlack99"
+        android:textSize="14dp" />
 
     <RelativeLayout
         android:id="@+id/rl_root"
@@ -57,9 +78,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:minHeight="100dp"
                 android:minWidth="100dp"
-                />
+                android:minHeight="100dp"
+                android:src="@drawable/pdf" />
 
             <ProgressBar
                 android:id="@+id/pg"
@@ -88,9 +109,12 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="15dp"
-                android:textColor="@color/white"
-                android:background="@drawable/border_radius_3_blue"
-                android:onClick="onClickDownload" />
+                android:background="@drawable/border_radius_5_light"
+                android:onClick="onClickDownload"
+                android:text="下载"
+                android:textColor="@color/colorTextBlack33" />
+
+
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

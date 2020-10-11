@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -18,8 +19,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.tencent.smtt.sdk.TbsReaderView;
 import com.zz.lib.commonlib.utils.PermissionUtils;
 import com.zz.lib.core.utils.LoadingUtils;
@@ -28,11 +27,17 @@ import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
+import com.zz.supervision.print.PrintUtil;
+import com.zz.supervision.print.model.DeviceDTO;
 import com.zz.supervision.utils.FileUtils;
 
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
@@ -41,6 +46,7 @@ public class ShowDocActivity extends AppCompatActivity implements TbsReaderView.
 
     private TbsReaderView mTbsReaderView;
     private Button mDownloadBtn;
+    private Button btnPrinter;
 
     private DownloadManager mDownloadManager;
     private long mRequestId;
@@ -51,6 +57,8 @@ public class ShowDocActivity extends AppCompatActivity implements TbsReaderView.
     private TextView tv;
     private LinearLayout ll;
     private TextView doc_title;
+    private TextView tv_print;
+    private DeviceDTO deviceDTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,9 +86,11 @@ public class ShowDocActivity extends AppCompatActivity implements TbsReaderView.
 
         mTbsReaderView = new TbsReaderView(this, this);
         mDownloadBtn = (Button) findViewById(R.id.btn_download);
+        btnPrinter = (Button) findViewById(R.id.btn_printer);
         doc_title = findViewById(R.id.doc_title);
         pg = (ProgressBar) findViewById(R.id.pg);
         tv = (TextView) findViewById(R.id.tv);
+        tv_print = (TextView) findViewById(R.id.tv_print);
         ll = (LinearLayout) findViewById(R.id.ll);
         String title = getIntent().getStringExtra("title");
         doc_title.setText(TextUtils.isEmpty(title) ? "文件" : title);
@@ -101,6 +111,27 @@ public class ShowDocActivity extends AppCompatActivity implements TbsReaderView.
                 }
             }
         });
+        tv_print.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(ShowDocActivity.this, SelectPrintActivity.class);
+                startActivityForResult(intent, 1001);
+            }
+        });
+        btnPrinter.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View v) {
+                String path = FileUtils.getLocalFile(mFileName).getPath();
+                if (TextUtils.isEmpty(path))return;
+                try {
+                    PrintUtil.printpdf(ShowDocActivity.this,FileUtils.getLocalFile(mFileName).getPath());
+                } catch (IOException e) {
+
+                }
+            }
+        });
 
     }
 
@@ -111,7 +142,9 @@ public class ShowDocActivity extends AppCompatActivity implements TbsReaderView.
         boolean result = mTbsReaderView.preOpen(FileUtils.parseFormat(mFileName), false);
         if (result) {
             mTbsReaderView.openFile(bundle);
+            btnPrinter.setVisibility(View.VISIBLE);
         }
+
     }
 
     private void startDownload() {
@@ -202,6 +235,7 @@ public class ShowDocActivity extends AppCompatActivity implements TbsReaderView.
         map.put("tinspectSheetType", tinspectSheetType);
         map.put("tinspectType", tinspectType);
         RxNetUtils.request(getApi(ApiService.class).getDocInfo(id, map), new RequestObserver<JsonT<String>>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             protected void onSuccess(JsonT<String> jsonT) {
                 mFileUrl = jsonT.getData();
@@ -220,5 +254,15 @@ public class ShowDocActivity extends AppCompatActivity implements TbsReaderView.
                 super.onFail2(stringJsonT);
             }
         }, LoadingUtils.build(this));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1001 && data != null) {
+            DeviceDTO deviceDTO = (DeviceDTO) data.getSerializableExtra("deviceDTO");
+            this.deviceDTO = deviceDTO;
+            tv_print.setText(deviceDTO.getPlayerName()+"-"+deviceDTO.getDeviceName() + "");
+        }
     }
 }

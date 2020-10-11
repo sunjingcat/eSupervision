@@ -41,7 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="25dp"
-            android:background="@drawable/line_radius_10_light"
+            android:paddingRight="10dp"
+            android:background="@drawable/border_radius_3_gray"
             android:hint="请输入旧密码"
             android:textSize="15dp" />
 
@@ -50,7 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/line_radius_10_light"
+            android:background="@drawable/border_radius_3_gray"
+            android:paddingRight="10dp"
             android:hint="请输入新密码"
             android:textSize="15dp" />
         <EditText
@@ -58,7 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/line_radius_10_light"
+            android:paddingRight="10dp"
+            android:background="@drawable/border_radius_3_gray"
             android:hint="请输入新密码"
             android:textSize="15dp" />
 

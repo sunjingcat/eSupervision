@@ -548,6 +548,8 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             if (requestCode == 1002) {
                 if (data == null) return;
                 PoiInfo poiInfo = data.getParcelableExtra("location");
+                if (poiInfo==null)return;
+                if (poiInfo.location==null)return;
                 lat = poiInfo.location.latitude;
                 lon = poiInfo.location.longitude;
 

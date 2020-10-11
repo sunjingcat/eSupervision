@@ -30,6 +30,7 @@ import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.utils.BASE64;
+import com.zz.supervision.utils.FileUtils;
 import com.zz.supervision.utils.GlideUtils;
 
 import butterknife.BindView;
@@ -297,7 +298,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
                     if (TextUtils.isEmpty(id)) return;
                     startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", id).putExtra("tinspectSheetType", 1).putExtra("tinspectType", type));
-
+//
                 } else {
                     postData();
                 }
