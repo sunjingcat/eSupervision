@@ -56,12 +56,12 @@ public class AboutActivity extends MyBaseActivity {
     protected void initView() {
         ButterKnife.bind(this);
         tvVersion.setText(getVersioName());
-        getData();
+        tvInfo.setText(getVersioName()+"");
     }
 
     @Override
     protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar);
+        ToolBarUtils.getInstance().setNavigation(toolbar,1);
     }
 
     @OnClick(R.id.bt_update)
@@ -77,24 +77,7 @@ public class AboutActivity extends MyBaseActivity {
         }
         return "";
     }
-    void getData() {
-        RxNetUtils.request(getApi(ApiService.class).getVersionInfo(getVersionCode()+""), new RequestObserver<JsonT<Version>>(this) {
-            @Override
-            protected void onSuccess(JsonT<Version> data) {
-                if (data.isSuccess()&&data.getData()!=null) {
-                    tvInfo.setText(data.getData().getChanges()+"");
-                } else {
 
-                }
-            }
-
-            @Override
-            protected void onFail2(JsonT<Version> jsonT) {
-                super.onFail2(jsonT);
-                showToast(jsonT.getMessage());
-            }
-        }, null);
-    }
     //获取app版本
     private int getVersionCode() {
         try {

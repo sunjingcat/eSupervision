@@ -137,6 +137,9 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
             @Override
             public void onclickDelete(View v, int option) {
+                if (option<imageBacks.size()){
+                    imageBacks.remove(option);
+                }
                 images.remove(option);
                 adapter.notifyDataSetChanged();
             }
@@ -330,8 +333,14 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             ArrayList<String> needUpload = new ArrayList<>();
             ArrayList<String> base64 = new ArrayList<>();
             for (int i = 0; i < images.size(); i++) {
-                if (BASE64.isBase64(images.get(i))) {
-                    ids.add(imageBacks.get(i).getId());
+                if (BASE64.isBase64(images.get(i))&&i<imageBacks.size()) {
+                    for (ImageBack imageBack:imageBacks){
+                        if (images.get(i).equals(imageBack.getBase64())){
+                            ids.add(imageBacks.get(i).getId());
+                            break;
+                        }
+                    }
+
                 } else {
                     needUpload.add(images.get(i));
                 }
@@ -500,7 +509,6 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         params.put("fieldTime", fieldTime);
         if (!TextUtils.isEmpty(id)) {
             params.put("id", id);
-            mPresenter.submitData(params);
         }
         mPresenter.submitData(params);
     }
@@ -522,8 +530,8 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 for (ImageBack imageBack : imageBacks) {
                     showList.add(imageBack.getBase64());
                 }
-                images.addAll(showList);
-                this.images.addAll(images);
+                showList.addAll(images);
+                this.images.addAll(showList);
 
                 adapter.notifyDataSetChanged();
             }

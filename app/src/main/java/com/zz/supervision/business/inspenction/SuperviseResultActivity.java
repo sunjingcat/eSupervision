@@ -32,10 +32,6 @@ public class SuperviseResultActivity extends MyBaseActivity {
 
     @BindView(R.id.info_rv)
     RecyclerView infoRv;
-    @BindView(R.id.btn_cancel)
-    Button btnCancel;
-    @BindView(R.id.btn_ok)
-    Button btnControl;
     List<DetailBean> mlist = new ArrayList<>();
     DetailAdapter adapter;
     SuperviseBean.ResposeBean deviceInfo;

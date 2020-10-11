@@ -21,8 +21,11 @@ import android.widget.TextView;
 
 import com.tencent.smtt.sdk.TbsReaderView;
 import com.zz.lib.commonlib.utils.PermissionUtils;
+import com.zz.lib.commonlib.utils.ToolBarUtils;
+import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
+import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -38,15 +41,17 @@ import java.util.Map;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
-public class ShowDocActivity extends AppCompatActivity implements TbsReaderView.ReaderCallback {
+public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.ReaderCallback {
 
 
     private TbsReaderView mTbsReaderView;
     private Button mDownloadBtn;
-    private Button btnPrinter;
+    private TextView btnPrinter;
+    private Toolbar toolbar;
 
     private DownloadManager mDownloadManager;
     private long mRequestId;
@@ -61,79 +66,11 @@ public class ShowDocActivity extends AppCompatActivity implements TbsReaderView.
     private DeviceDTO deviceDTO;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_doc);
-        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
-            @Override
-            public void onGranted() {
-                getDocInfo();
-            }
-
-            @Override
-            public void onDenied() {
-
-            }
-        });
-
-        mFileUrl = getIntent().getStringExtra("url");
-
-        mTbsReaderView = new TbsReaderView(this, this);
-        mDownloadBtn = (Button) findViewById(R.id.btn_download);
-        btnPrinter = (Button) findViewById(R.id.btn_printer);
-        doc_title = findViewById(R.id.doc_title);
-        pg = (ProgressBar) findViewById(R.id.pg);
-        tv = (TextView) findViewById(R.id.tv);
-        tv_print = (TextView) findViewById(R.id.tv_print);
-        ll = (LinearLayout) findViewById(R.id.ll);
-        String title = getIntent().getStringExtra("title");
-        doc_title.setText(TextUtils.isEmpty(title) ? "文件" : title);
-        RelativeLayout rootRl = (RelativeLayout) findViewById(R.id.rl_root);
-        rootRl.addView(mTbsReaderView, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-
-        mDownloadBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (FileUtils.isLocalExist(mFileName)) {
-                    ll.setVisibility(View.GONE);
-                    displayFile();
-
-                } else {
-                    startDownload();
-
-                }
-            }
-        });
-        tv_print.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(ShowDocActivity.this, SelectPrintActivity.class);
-                startActivityForResult(intent, 1001);
-            }
-        });
-        btnPrinter.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onClick(View v) {
-                String path = FileUtils.getLocalFile(mFileName).getPath();
-                if (TextUtils.isEmpty(path))return;
-                try {
-                    PrintUtil.printpdf(ShowDocActivity.this,FileUtils.getLocalFile(mFileName).getPath());
-                } catch (IOException e) {
-
-                }
-            }
-        });
+    protected int getContentView() {
+        return R.layout.activity_show_doc;
 
     }
+
 
     private void displayFile() {
         Bundle bundle = new Bundle();
@@ -208,9 +145,92 @@ public class ShowDocActivity extends AppCompatActivity implements TbsReaderView.
     }
 
     @Override
+    public BasePresenter initPresenter() {
+        return null;
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
 
+    }
+
+    @Override
+    protected void initView() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
+            @Override
+            public void onGranted() {
+                getDocInfo();
+            }
+
+            @Override
+            public void onDenied() {
+
+            }
+        });
+
+        mFileUrl = getIntent().getStringExtra("url");
+
+        mTbsReaderView = new TbsReaderView(this, this);
+        mDownloadBtn = (Button) findViewById(R.id.btn_download);
+        btnPrinter = (TextView) findViewById(R.id.toolbar_subtitle);
+        doc_title = findViewById(R.id.toolbar_title);
+        toolbar = findViewById(R.id.toolbar);
+        pg = (ProgressBar) findViewById(R.id.pg);
+        tv = (TextView) findViewById(R.id.tv);
+        tv_print = (TextView) findViewById(R.id.tv_print);
+        ll = (LinearLayout) findViewById(R.id.ll);
+        String title = getIntent().getStringExtra("title");
+        doc_title.setText(TextUtils.isEmpty(title) ? "文件" : title);
+        RelativeLayout rootRl = (RelativeLayout) findViewById(R.id.rl_root);
+        rootRl.addView(mTbsReaderView, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+
+        mDownloadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (FileUtils.isLocalExist(mFileName)) {
+                    ll.setVisibility(View.GONE);
+                    displayFile();
+
+                } else {
+                    startDownload();
+
+                }
+            }
+        });
+        tv_print.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(ShowDocActivity.this, SelectPrintActivity.class);
+                startActivityForResult(intent, 1001);
+            }
+        });
+        btnPrinter.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View v) {
+                String path = FileUtils.getLocalFile(mFileName).getPath();
+                if (TextUtils.isEmpty(path))return;
+                try {
+                    PrintUtil.printpdf(ShowDocActivity.this,FileUtils.getLocalFile(mFileName).getPath());
+                } catch (IOException e) {
+
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void initToolBar() {
+        ToolBarUtils.getInstance().setNavigation(toolbar,1);
     }
 
 
