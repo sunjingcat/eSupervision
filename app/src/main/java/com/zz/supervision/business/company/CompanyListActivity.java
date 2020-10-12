@@ -29,6 +29,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -82,10 +83,10 @@ public class CompanyListActivity extends MyBaseActivity {
     }
 
     void initFragment(List<CompanyType> list) {
-        String[] tabs = new String[list.size()];
+        fragments.clear();
         for (int i = 0; i < list.size(); i++) {
             fragments.add(new CompanyFragment(list.get(i).getCompanyType()));
-            tabs[i] = list.get(i).getCompanyTypeText();
+//            tabs[i] = list.get(i).getCompanyTypeText();
         }
 
 
@@ -94,7 +95,7 @@ public class CompanyListActivity extends MyBaseActivity {
         viewpager.setAdapter(pagerAdapter);
 
         for (int i = 0; i < list.size(); i++) {
-            tablayout.getTabAt(i).setText(list.get(i).getCompanyTypeText()+"("+list.get(i).getCount()+")");
+            tablayout.getTabAt(i).setText(list.get(i).getCompanyTypeText() + "(" + list.get(i).getCount() + ")");
         }
     }
 
