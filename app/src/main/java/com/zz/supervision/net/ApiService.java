@@ -111,8 +111,8 @@ public interface ApiService {
     @GET("/app/v1/supervise/dict/getDicts")
     Observable<JsonT<List<BusinessType>>> getDicts(@QueryMap Map<String, Object> params);
 
-    @GET("/app/v1/supervise/{url}/getItems")
-    Observable<JsonT<List<SuperviseBean>>> getSuperviseList(@Path("url")String url);
+    @GET("/app/v1/supervise/{url}/getItems/{id}")
+    Observable<JsonT<List<SuperviseBean>>> getSuperviseList(@Path("id")String id,@Path("url")String url);
 
 
     @GET("/app/v1/supervise/{url}/getItems")

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,14 +12,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -46,9 +39,12 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
@@ -75,6 +71,8 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
     private String searchStr = "";
     private String type = "";
     private CustomDialog customDialog;
+    boolean first = true;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_search_company_list;
@@ -98,7 +96,10 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
         } else {
             llNull.setVisibility(View.GONE);
         }
-        showSoftInputFromWindow(et_search);
+        if (first) {
+            showSoftInputFromWindow(et_search);
+            first = false;
+        }
     }
 
     void getDate() {
@@ -139,7 +140,6 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-
         rv.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CompanyListAdapter(R.layout.item_company, mlist);
         rv.setAdapter(adapter);
@@ -206,6 +206,7 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
     protected void initToolBar() {
         ToolBarUtils.getInstance().setNavigation(toolbar, 1);
     }
+
     void deleteDate(String id) {
         RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(id), new RequestObserver<JsonT>() {
             @Override
@@ -220,7 +221,8 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
             }
         }, LoadingUtils.build(this));
     }
-    public void showSoftInputFromWindow(EditText editText){
+
+    public void showSoftInputFromWindow(EditText editText) {
         editText.setFocusable(true);
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();

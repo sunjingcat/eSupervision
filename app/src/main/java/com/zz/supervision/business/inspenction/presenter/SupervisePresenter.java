@@ -24,8 +24,8 @@ public class SupervisePresenter extends MyBasePresenterImpl<Contract.IGetSupervi
     }
 
     @Override
-    public void getData(String url) {
-        RxNetUtils.request(getApi(ApiService.class).getSuperviseList(url), new RequestObserver<JsonT<List<SuperviseBean>>>(this) {
+    public void getData(String id,String url) {
+        RxNetUtils.request(getApi(ApiService.class).getSuperviseList(id,url), new RequestObserver<JsonT<List<SuperviseBean>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<SuperviseBean>> jsonT) {
                 view.showFoodSuperviseList(jsonT.getData());

@@ -17,7 +17,7 @@ public class Contract {
 
         void submitReData(String url,String id, ArrayList<SuperviseBean.PostBean> spxsInspectionPoints);
 
-        void getData(String url);
+        void getData(String id,String url);
         void delete(String url,String id);
 
     }

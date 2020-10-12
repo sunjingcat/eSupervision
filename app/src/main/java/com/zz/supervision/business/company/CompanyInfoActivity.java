@@ -97,10 +97,16 @@ public class CompanyInfoActivity extends MyBaseActivity {
         adapter = new ImageItemAdapter(R.layout.item_image, images);
         itemRvImages.setAdapter(adapter);
         id = getIntent().getStringExtra("id");
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if (!TextUtils.isEmpty(id)) {
             getData(id);
         }
-
     }
 
     @Override
@@ -169,7 +175,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 if (companyBean == null) return;
                 CustomDialog.Builder builder = new com.troila.customealert.CustomDialog.Builder(this)
                         .setTitle("提示")
-                        .setMessage("确定删除记录？")
+                        .setMessage("确定删除该企业及相关执法记录？")
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -237,6 +243,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
         RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(id), new RequestObserver<JsonT>() {
             @Override
             protected void onSuccess(JsonT jsonT) {
+                showToast("删除成功");
                 finish();
             }
 

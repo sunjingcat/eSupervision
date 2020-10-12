@@ -114,9 +114,10 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         } else {
             url = "cyfwInspectionRecord";
         }
-        mPresenter.getData(url);
+
         toolbaSubtitle.setVisibility(View.VISIBLE);
         initData();
+        mPresenter.getData(id,url);
     }
 
     @Override

@@ -266,31 +266,35 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
                 break;
             case R.id.ll_legalRepresentative_sign:
-                PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
-                    @Override
-                    public void onGranted() {
-                        startActivityForResult(new Intent(SuperviseSignActivity.this, SignActivity.class), 1002);
-                    }
+                if (resposeBean.getStatus()!=3) {
+                    PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
+                        @Override
+                        public void onGranted() {
+                            startActivityForResult(new Intent(SuperviseSignActivity.this, SignActivity.class), 1002);
+                        }
 
-                    @Override
-                    public void onDenied() {
+                        @Override
+                        public void onDenied() {
 
-                    }
-                });
+                        }
+                    });
+                }
 
                 break;
             case R.id.ll_reviewerSign_sign:
-                PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
-                    @Override
-                    public void onGranted() {
-                        startActivityForResult(new Intent(SuperviseSignActivity.this, SignActivity.class), 1003);
-                    }
+                if (resposeBean.getStatus()!=3) {
+                    PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
+                        @Override
+                        public void onGranted() {
+                            startActivityForResult(new Intent(SuperviseSignActivity.this, SignActivity.class), 1003);
+                        }
 
-                    @Override
-                    public void onDenied() {
+                        @Override
+                        public void onDenied() {
 
-                    }
-                });
+                        }
+                    });
+                }
 
                 break;
             case R.id.bt_ok:

@@ -42,12 +42,17 @@ public class RiskSuperviseBean {
         private Object params;
         private String pid;//
         private String remark;//
+        private String itemRemark;
         private String score;//
         private String searchValue;//
         private String unit;//
         private String updateBy;//
         private String updateTime;
         private boolean check;
+
+        public String getItemRemark() {
+            return itemRemark;
+        }
 
         public RiskItem() {
             setExpanded(true);

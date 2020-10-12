@@ -132,7 +132,7 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
                 @Override
                 protected void onSuccess(JsonT<String> jsonT) {
                     view.showSubmitResult((String) jsonT.getData());
-                    view.showToast(jsonT.getMessage());
+//                    view.showToast(jsonT.getMessage());
                 }
 
                 @Override
@@ -146,7 +146,7 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
                 @Override
                 protected void onSuccess(JsonT<String> jsonT) {
                     view.showSubmitResult((String) jsonT.getData());
-                    view.showToast(jsonT.getMessage());
+//                    view.showToast(jsonT.getMessage());
                 }
 
                 @Override
