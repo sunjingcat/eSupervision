@@ -207,7 +207,11 @@ public class RiskSuperviseBean {
         private String updateBy;//
         private String updateTime;
         private int isSelected;
+        private int isLastNotSatisfy;//
 
+        public int getIsLastNotSatisfy() {
+            return isLastNotSatisfy;
+        }
         private int isKey;// 0,
 
         public int isCheck() {

@@ -56,7 +56,7 @@ public class AboutActivity extends MyBaseActivity {
     protected void initView() {
         ButterKnife.bind(this);
         tvVersion.setText(getVersioName());
-        tvInfo.setText(getVersioName()+"");
+//        tvInfo.setText();
     }
 
     @Override

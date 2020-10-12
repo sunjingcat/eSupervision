@@ -88,7 +88,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                     ((SuperviseBean.Children) node).setIsSatisfy(type);
                     if (type == 2) {
                         for (BaseNode superviseBean : adapter.getData()) {
-                            if (superviseBean instanceof SuperviseBean) {
+                            if (superviseBean instanceof SuperviseBean&&((SuperviseBean) superviseBean).getId().equals(((SuperviseBean.Children) node).getItemPid())) {
                                 ((SuperviseBean) superviseBean).setCheck(false);
                             }
                         }

@@ -119,7 +119,10 @@
                     android:text="静态风险评分项"
                     android:textColor="#272727"
                     android:textSize="18dp" />
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/colorbg"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_staticRisks"
                     android:layout_width="match_parent"
@@ -142,7 +145,10 @@
                     android:text="动态风险评分项"
                     android:textColor="#272727"
                     android:textSize="18dp" />
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/colorbg"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_dynamicRisks"
                     android:layout_width="match_parent"

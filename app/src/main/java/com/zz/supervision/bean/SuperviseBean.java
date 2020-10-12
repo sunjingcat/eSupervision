@@ -27,6 +27,10 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
     private boolean check;//
     private ArrayList<Children> childrenList;
 
+    public SuperviseBean() {
+        setExpanded(false);
+    }
+
     public boolean isCheck() {
         return check;
     }
@@ -151,6 +155,12 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         private String searchValue;// ,
         private String updateBy;// ,
         private String updateTime;//
+        private int isLastNotSatisfy;//
+
+        public int getIsLastNotSatisfy() {
+            return isLastNotSatisfy;
+        }
+
         public String getCreateBy() {
             return createBy;
         }

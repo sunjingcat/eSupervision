@@ -1,5 +1,6 @@
 package com.zz.supervision.business.inspenction.adapter;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -40,7 +41,7 @@ public class SecondNodeProvider extends BaseNodeProvider {
         SuperviseBean.Children entity = (SuperviseBean.Children) data;
         baseViewHolder.setText(R.id.itemName, entity.getItemName());
         baseViewHolder.getView(R.id.item_isImportant).setVisibility(entity.getIsImportant() == 0 ? View.INVISIBLE : View.VISIBLE);
-
+        baseViewHolder.setBackgroundColor(R.id.itemName,((SuperviseBean.Children) data).getIsLastNotSatisfy()==1? Color.parseColor("#FFFCC2BF"):Color.parseColor("#ffffff"));
 
         if (((SuperviseBean.Children) data).getIsSatisfy() == 1) {
 

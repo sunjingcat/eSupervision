@@ -88,7 +88,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
                     ((RiskSuperviseBean.ChildRisk) node).setCheck(type);
                     if (type == 2) {
                         for (BaseNode superviseBean : adapter.getData()) {
-                            if (superviseBean instanceof RiskSuperviseBean.RiskItem) {
+                            if (superviseBean instanceof RiskSuperviseBean.RiskItem&&((RiskSuperviseBean.RiskItem) superviseBean).getId().equals(((RiskSuperviseBean.ChildRisk) node).getPid())) {
                                 ((RiskSuperviseBean.RiskItem) superviseBean).setCheck(false);
                             }
                         }

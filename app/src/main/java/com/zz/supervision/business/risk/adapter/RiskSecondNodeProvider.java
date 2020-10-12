@@ -1,5 +1,6 @@
 package com.zz.supervision.business.risk.adapter;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -45,6 +46,7 @@ public class RiskSecondNodeProvider extends BaseNodeProvider {
         } else {
             TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_uncheck_circle);
         }
+        baseViewHolder.setBackgroundColor(R.id.itemName,((RiskSuperviseBean.ChildRisk) data).getIsLastNotSatisfy()==1? Color.parseColor("#FFFCC2BF"):Color.parseColor("#ffffff"));
 
         if (((RiskSuperviseBean.ChildRisk) data).isCheck() == 2) {
             TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_check_circle);
