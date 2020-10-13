@@ -24,11 +24,20 @@ import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.utils.UpdateManager;
 
+import org.cups4j.CupsClient;
+import org.cups4j.CupsPrinter;
+import org.cups4j.PrintJob;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.ServerSocket;
+import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.ButterKnife;
@@ -133,6 +142,21 @@ public class MainActivity extends MyBaseActivity {
         }, null);
     }
 
+    void printer(String host,String post,String path)  {
+        try {
+            CupsClient cupsClient = new CupsClient(new URL(host+":"+post));
+            CupsPrinter printer = cupsClient.getDefaultPrinter();
+
+            InputStream inputStream = new FileInputStream(path);
+
+            PrintJob.Builder builder = new PrintJob.Builder(inputStream).userName("user").copies(1);
+
+            printer.print(builder.build());
+        }catch (Exception e){
+
+        }
+
+    }
 
 
 }

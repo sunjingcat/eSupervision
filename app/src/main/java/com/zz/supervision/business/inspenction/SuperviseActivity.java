@@ -16,16 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.troila.customealert.CustomDialog;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
-import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.business.inspenction.adapter.SuperviseAdapter;
 import com.zz.supervision.business.inspenction.presenter.SupervisePresenter;
-import com.zz.supervision.net.ApiService;
-import com.zz.supervision.net.JsonT;
-import com.zz.supervision.net.RequestObserver;
-import com.zz.supervision.net.RxNetUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +28,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.zz.supervision.net.RxNetUtils.getApi;
-
 /**
  * 监督检查:食品销售日常
  */
