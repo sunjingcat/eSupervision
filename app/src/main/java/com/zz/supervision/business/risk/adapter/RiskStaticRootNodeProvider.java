@@ -43,6 +43,13 @@ public class RiskStaticRootNodeProvider extends BaseNodeProvider {
                 entity.setCheck(!entity.isCheck());
             }
         });
+        baseViewHolder.setImageResource(R.id.image_fold, !entity.isExpanded() ? R.drawable.image_down : R.drawable.image_top);
 
+        baseViewHolder.getView(R.id.ll_itemName).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onProviderOnClick.onItemOnclick(data, 10);
+            }
+        });
     }
 }

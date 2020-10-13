@@ -38,8 +38,7 @@ public class RiskRootNodeProvider extends BaseNodeProvider {
         RiskSuperviseBean.RiskItem entity = (RiskSuperviseBean.RiskItem) data;
         baseViewHolder.setText(R.id.itemName, entity.getContent());
         baseViewHolder.setText(R.id.itemContent, entity.getItemRemark()+"");
-        ((CheckBox) baseViewHolder.getView(R.id.item_check)).setChecked(entity.isCheck());
-        baseViewHolder.getView(R.id.item_check).setOnClickListener(new View.OnClickListener() {
+         baseViewHolder.getView(R.id.item_check).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 entity.setCheck(!entity.isCheck());
@@ -47,6 +46,18 @@ public class RiskRootNodeProvider extends BaseNodeProvider {
 
             }
         });
+        baseViewHolder.setImageResource(R.id.image_fold, !entity.isExpanded() ? R.drawable.image_down : R.drawable.image_top);
+
+        baseViewHolder.getView(R.id.ll_itemName).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onProviderOnClick.onItemOnclick(data, 10);
+            }
+        });
+
+        baseViewHolder.getView(R.id.item_check).setEnabled(((RiskSuperviseBean.RiskItem) data).isExpanded());
+        ((CheckBox) baseViewHolder.getView(R.id.item_check)).setChecked(entity.isCheck());
+
         if (enable==1){
             baseViewHolder.getView(R.id.item_check).setVisibility(View.GONE);
         }else {
