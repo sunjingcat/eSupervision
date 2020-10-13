@@ -75,12 +75,12 @@ public class SuperviseInfoActivity extends MyBaseActivity {
         adapter = new SuperviseAdapter(new SuperviseAdapter.OnProviderOnClick() {
             @Override
             public void onItemOnclick(BaseNode node, int type) {
-                if (node instanceof SuperviseBean.RootFooterNode) {
+                if (type == 10) {
                     for (int i = 0; i < adapter.getData().size(); i++) {
                         BaseNode children = adapter.getData().get(i);
-                        if (children instanceof SuperviseBean && ((SuperviseBean) children).getId().equals(((SuperviseBean.RootFooterNode) node).getId())) {
+                        if (children instanceof SuperviseBean && ((SuperviseBean) children).getId().equals(((SuperviseBean) node).getId())) {
                             adapter.expandOrCollapse(i);
-                            ((SuperviseBean.RootFooterNode) node).setExpanded(((SuperviseBean) children).isExpanded());
+//                            ((SuperviseBean) node).setExpanded(((SuperviseBean) children).isExpanded());
                             break;
                         }
                     }
@@ -137,7 +137,9 @@ public class SuperviseInfoActivity extends MyBaseActivity {
         RxNetUtils.request(getApi(ApiService.class).getSuperviseInfo(url, id), new RequestObserver<JsonT<SuperviseInfoBean>>() {
             @Override
             protected void onSuccess(JsonT<SuperviseInfoBean> jsonT) {
+                if (jsonT==null)return;
                 showSuperviseList(jsonT.getData().getData());
+                tvNum.setText(jsonT.getData().getRemark()+"");
             }
 
             @Override

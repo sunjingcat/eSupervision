@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/colorbg"
+        android:visibility="gone"
 
         />
 
@@ -20,7 +21,8 @@
         android:layout_gravity="center"
         android:padding="10dp"
         android:scaleType="center"
-        android:src="@drawable/image_top" />
+        android:src="@drawable/image_top"
+        android:visibility="gone"/>
 
     <View
         android:layout_width="match_parent"

@@ -69,11 +69,22 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
             @Override
             public void onItemOnclick(BaseNode node, int type) {
                 if (node instanceof SuperviseBean) {
-                    for (SuperviseBean.Children children : ((SuperviseBean) node).getChildrenList()) {
-                        if (((SuperviseBean) node).isCheck()) {
-                            children.setIsSatisfy(1);
-                        } else {
-                            children.setIsSatisfy(0);
+                    if (type==10) {
+                        for (int i = 0; i < adapter.getData().size(); i++) {
+                            BaseNode children = adapter.getData().get(i);
+                            if (children instanceof SuperviseBean && ((SuperviseBean) children).getId().equals(((SuperviseBean) node).getId())) {
+                                adapter.expandOrCollapse(i);
+                                break;
+                            }
+                        }
+                    }else {
+                        if (!((SuperviseBean) node).isExpanded()) return;
+                        for (SuperviseBean.Children children : ((SuperviseBean) node).getChildrenList()) {
+                            if (((SuperviseBean) node).isCheck()) {
+                                children.setIsSatisfy(1);
+                            } else {
+                                children.setIsSatisfy(0);
+                            }
                         }
                     }
                 } else if (node instanceof SuperviseBean.Children) {
@@ -83,15 +94,6 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                             if (superviseBean instanceof SuperviseBean&&((SuperviseBean) superviseBean).getId().equals(((SuperviseBean.Children) node).getItemPid())) {
                                 ((SuperviseBean) superviseBean).setCheck(false);
                             }
-                        }
-                    }
-                } else if (node instanceof SuperviseBean.RootFooterNode) {
-                    for (int i = 0; i < adapter.getData().size(); i++) {
-                        BaseNode children = adapter.getData().get(i);
-                        if (children instanceof SuperviseBean && ((SuperviseBean) children).getId().equals(((SuperviseBean.RootFooterNode) node).getId())) {
-                            adapter.expandOrCollapse(i);
-                            ((SuperviseBean.RootFooterNode) node).setExpanded(((SuperviseBean) children).isExpanded());
-                            break;
                         }
                     }
                 }

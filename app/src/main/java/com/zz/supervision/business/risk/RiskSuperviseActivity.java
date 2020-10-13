@@ -77,6 +77,7 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
             @Override
             public void onItemOnclick(BaseNode node, int type) {
                 if (node instanceof RiskSuperviseBean.RiskItem) {
+                    if (!((RiskSuperviseBean.RiskItem) node).isExpanded())return;
                     for (RiskSuperviseBean.ChildRisk children : ((RiskSuperviseBean.RiskItem) node).getChildRisks()) {
                         if (((RiskSuperviseBean.RiskItem) node).isCheck()) {
                             children.setCheck(1);

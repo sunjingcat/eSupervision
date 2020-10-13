@@ -2,14 +2,11 @@ package com.zz.supervision.business.inspenction.adapter;
 
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.RadioButton;
 
-import com.chad.library.adapter.base.entity.node.BaseExpandNode;
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.chad.library.adapter.base.provider.BaseNodeProvider;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.zz.supervision.R;
-import com.zz.supervision.bean.ScoreBean;
 import com.zz.supervision.bean.SuperviseBean;
 
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +15,7 @@ public class RootNodeProvider extends BaseNodeProvider {
     SuperviseAdapter.OnProviderOnClick onProviderOnClick;
     int enable;
 
-    public RootNodeProvider(SuperviseAdapter.OnProviderOnClick onProviderOnClick,int enable) {
+    public RootNodeProvider(SuperviseAdapter.OnProviderOnClick onProviderOnClick, int enable) {
         this.onProviderOnClick = onProviderOnClick;
         this.enable = enable;
     }
@@ -46,10 +43,21 @@ public class RootNodeProvider extends BaseNodeProvider {
                 onProviderOnClick.onItemOnclick(data, 0);
             }
         });
+        baseViewHolder.setImageResource(R.id.image_fold, !entity.isExpanded() ? R.drawable.image_down : R.drawable.image_top);
+
+        baseViewHolder.getView(R.id.ll_itemName).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onProviderOnClick.onItemOnclick(data, 10);
+            }
+        });
+
+         baseViewHolder.getView(R.id.item_check).setEnabled(((SuperviseBean) data).isExpanded());
+
         ((CheckBox) baseViewHolder.getView(R.id.item_check)).setChecked(entity.isCheck());
-        if (enable==1){
+        if (enable == 1) {
             baseViewHolder.getView(R.id.item_check).setVisibility(View.GONE);
-        }else {
+        } else {
             baseViewHolder.getView(R.id.item_check).setVisibility(View.VISIBLE);
         }
     }
