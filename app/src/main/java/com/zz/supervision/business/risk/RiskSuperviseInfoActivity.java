@@ -64,6 +64,7 @@ public class RiskSuperviseInfoActivity extends MyBaseActivity {
     TextView toolbarTitle;
     @BindView(R.id.toolbar_subtitle)
     TextView toolbaSubtitle;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_select_risks;
@@ -76,12 +77,10 @@ public class RiskSuperviseInfoActivity extends MyBaseActivity {
         adapter = new RiskSuperviseAdapter(new RiskSuperviseAdapter.OnProviderOnClick() {
             @Override
             public void onItemOnclick(BaseNode node, int type) {
-                if (node instanceof RiskSuperviseBean.RootFooterNode) {
+                if (type == 10) {
                     for (int i = 0; i < adapter.getData().size(); i++) {
                         BaseNode children = adapter.getData().get(i);
-                        if (children instanceof RiskSuperviseBean.RiskItem && ((RiskSuperviseBean.RiskItem) children).getId().equals(((RiskSuperviseBean.RootFooterNode) node).getId())) {
-//                           ((RiskSuperviseBean.RiskItem)children).setExpanded(!((RiskSuperviseBean.RiskItem) children).isExpanded());
-                            ((RiskSuperviseBean.RootFooterNode) node).setExpanded(!((RiskSuperviseBean.RiskItem) children).isExpanded());
+                        if (children instanceof RiskSuperviseBean.RiskItem && ((RiskSuperviseBean.RiskItem) children).getId().equals(((RiskSuperviseBean.RiskItem) node).getId())) {
                             adapter.expandOrCollapse(i);
                             break;
                         }
@@ -98,10 +97,10 @@ public class RiskSuperviseInfoActivity extends MyBaseActivity {
         staticSuperviseAdapter = new RiskStaticAdapter(new RiskSuperviseAdapter.OnProviderOnClick() {
             @Override
             public void onItemOnclick(BaseNode node, int type) {
-                if (node instanceof RiskSuperviseBean.RootFooterNode) {
+                if (type==10) {
                     for (int i = 0; i < staticSuperviseAdapter.getData().size(); i++) {
                         BaseNode children = staticSuperviseAdapter.getData().get(i);
-                        if (children instanceof RiskSuperviseBean.RiskItem && ((RiskSuperviseBean.RiskItem) children).getId().equals(((RiskSuperviseBean.RootFooterNode) node).getId())) {
+                        if (children instanceof RiskSuperviseBean.RiskItem && ((RiskSuperviseBean.RiskItem) children).getId().equals(((RiskSuperviseBean.RiskItem) node).getId())) {
 
                             if (((RiskSuperviseBean.RiskItem) children).isExpanded()) {
                                 staticSuperviseAdapter.collapseAndChild(i);
@@ -181,9 +180,10 @@ public class RiskSuperviseInfoActivity extends MyBaseActivity {
             }
         }, LoadingUtils.build(this));
     }
+
     @OnClick(R.id.bt_ok)
     public void onViewClicked() {
-        if (TextUtils.isEmpty(id))return;
-        startActivity(new Intent(this, ShowDocActivity.class).putExtra("id",id).putExtra("tinspectSheetType",2).putExtra("tinspectType",type));
+        if (TextUtils.isEmpty(id)) return;
+        startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", id).putExtra("tinspectSheetType", 2).putExtra("tinspectType", type));
     }
 }

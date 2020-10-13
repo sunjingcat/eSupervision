@@ -161,7 +161,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
     @Override
     protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar);
+        ToolBarUtils.getInstance().setNavigation(toolbar,1);
     }
 
     @Override
@@ -229,7 +229,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                     showToast("请先选择主体业态");
                     return;
                 }
-                startActivityForResult(new Intent(this, BusinessProjectActivity.class).putExtra("type", businessType), 2001);
+                startActivityForResult(new Intent(this, BusinessProjectActivity.class).putExtra("type", businessType).putExtra("projectBeans", projectBeans), 2001);
                 break;
             case R.id.et_endTime:
                 DatePickDialog dialog = new DatePickDialog(AddCompanyActivity.this);
@@ -315,6 +315,12 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         etBusinessType.setText(data.getBusinessTypeText() + "");
         etBusinessProject.setText(data.getBusinessProjectText() + "");
         businessType = data.getBusinessType();
+        businessProject = data.getBusinessProject();
+        String[] split = businessProject.split(",");
+        projectBeans.clear();
+        for (int i =0;i<split.length;i++){
+            projectBeans.add(new BusinessProjectBean(false,"",split[i],""));
+        }
         companyType = data.getCompanyType();
         validDate = data.getValidDate();
         etEndTime.setText(data.getValidDate() + "");
@@ -512,7 +518,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         }
         mPresenter.submitData(params);
     }
-
+    ArrayList<BusinessProjectBean> projectBeans = new ArrayList<>();
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -538,6 +544,8 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             if (requestCode == 2001) {
                 //获取选择器返回的数据
                 ArrayList<BusinessProjectBean> projectBeans = data.getParcelableArrayListExtra("bnpj");
+               if (projectBeans == null) return;
+                this.projectBeans = projectBeans;
                 String str = "";
                 String content = "";
                 for (int i = 0; i < projectBeans.size(); i++) {
@@ -563,7 +571,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
                 String s = new BigDecimal(lat).toString();
                 String s1 = new BigDecimal(lon).toString();
-                etLocation.setText(s + "," + s1);
+                etLocation.setText(poiInfo.address+"");
             }
 
 

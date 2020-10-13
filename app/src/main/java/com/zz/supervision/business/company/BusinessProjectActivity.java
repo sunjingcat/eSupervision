@@ -44,6 +44,8 @@ public class BusinessProjectActivity extends MyBaseActivity {
         adapter = new BusinessProjectAdapter(R.layout.item_bn_pj_title, R.layout.item_bn_pj_content, mlist);
         rv.setAdapter(adapter);
         String type = getIntent().getStringExtra("type");
+        ArrayList<BusinessProjectBean> projectBeans  = getIntent().getParcelableArrayListExtra("projectBeans");
+
         mlist.clear();
         if (type.equals("1")) {
             initXS();
@@ -51,6 +53,15 @@ public class BusinessProjectActivity extends MyBaseActivity {
         } else if (type.equals("2") || type.equals("3")) {
             initFW();
             tvLeft.setText("餐饮服务");
+        }
+        if(projectBeans!=null&&projectBeans.size()>0){
+            for (BusinessProjectBean projectBean:projectBeans){
+                for (BusinessProjectBean projectBean1 :mlist){
+                    if (projectBean.getValue().equals(projectBean1.getValue())){
+                        projectBean1.setSelect(true);
+                    }
+                }
+            }
         }
         adapter.notifyDataSetChanged();
         adapter.setOnBnpjClickListener(new BusinessProjectAdapter.OnBnpjClickListener() {

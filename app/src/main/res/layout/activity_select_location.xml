@@ -10,13 +10,13 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@color/colorPrimary">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="选择地点"
-            android:textColor="@color/colorTextBlack33"
+            android:textColor="@color/white"
             android:textSize="18dp" />
         <TextView
             android:id="@+id/toolbar_subtitle"
@@ -27,7 +27,7 @@
             android:padding="8dp"
             android:singleLine="true"
             android:text="保存"
-            android:textColor="@color/colorTextBlack33"
+            android:textColor="@color/white"
             android:textSize="16dp" />
     </androidx.appcompat.widget.Toolbar>
     <TextView

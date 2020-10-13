@@ -15,14 +15,14 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@color/colorPrimary">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="企业详情"
-            android:textColor="#272727"
+            android:textColor="#ffffff"
             android:textSize="18dp" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:padding="8dp"
             android:singleLine="true"
             android:text="编辑"
-            android:textColor="@color/colorTextBlack33"
+            android:textColor="@color/white"
             android:textSize="16dp" />
     </androidx.appcompat.widget.Toolbar>
 

@@ -116,6 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="15dp"
+                    android:background="#CEE9F6"
                     android:text="静态风险评分项"
                     android:textColor="#272727"
                     android:textSize="18dp" />
@@ -139,11 +140,12 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="15dp"
                     android:text="动态风险评分项"
                     android:textColor="#272727"
+                    android:background="#CEE9F6"
                     android:textSize="18dp" />
                 <View
                     android:layout_width="match_parent"

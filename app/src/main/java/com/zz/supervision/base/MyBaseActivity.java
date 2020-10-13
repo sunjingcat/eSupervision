@@ -69,8 +69,9 @@ public abstract class MyBaseActivity<P extends com.zz.lib.core.ui.mvp.BasePresen
         initView();
         initToolBar();
         immersionBar = ImmersionBar.with(this);
-        immersionBar.statusBarDarkFont(false)
+        immersionBar.statusBarDarkFont(true)
                 .navigationBarColor(R.color.colorAccent)
+                .statusBarColor(R.color.colorPrimary)
                 .init();
     }
     @Override
