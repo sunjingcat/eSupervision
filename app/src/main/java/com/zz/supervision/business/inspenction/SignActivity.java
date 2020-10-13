@@ -8,11 +8,14 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import androidx.appcompat.widget.Toolbar;
+
+import com.blankj.utilcode.util.FileUtils;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.utils.BASE64;
+import com.zz.supervision.utils.LogUtils;
 import com.zz.supervision.widget.SignatureView;
 
 import java.io.File;
@@ -65,31 +68,10 @@ public class SignActivity extends MyBaseActivity {
             case R.id.btn_ok:
                 Bitmap imageBitmap = mView.getCachebBitmap();
                 String path = BASE64.saveBitmap(imageBitmap);
-                Luban.with(this)
-                        .load(path)
-                        .ignoreBy(64)
-                        .setCompressListener(new OnCompressListener() {
-                            @Override
-                            public void onStart() {
-                                // TODO 压缩开始前调用，可以在方法内启动 loading UI
-                            }
-
-                            @Override
-                            public void onSuccess(File file) {
-                                Intent intent= new Intent();
-                                intent.putExtra("sign",file.getAbsolutePath());
-                                setResult(RESULT_OK,intent);
-                                finish();
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                // TODO 当压缩过程出现问题时调用
-                            }
-                        }).launch();
-
-
-
+                Intent intent= new Intent();
+                intent.putExtra("sign",path);
+                setResult(RESULT_OK,intent);
+                finish();
                 break;
             case R.id.btn_clear:
                 mView.clear();
