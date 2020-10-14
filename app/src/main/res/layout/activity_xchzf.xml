@@ -52,7 +52,7 @@
                     style="@style/textLeftStyle"
                     android:layout_width="150dp"
 
-                    android:text="请选择企业" />
+                    android:text="企业" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                     android:drawableRight="@drawable/image_arrow"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
-                    android:hint=""
+                    android:hint="请选择"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:textColor="#333"
