@@ -3,14 +3,9 @@ package com.zz.supervision.business.inspenction;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.zz.supervision.R;
 import com.zz.supervision.bean.DetailBean;
@@ -20,6 +15,8 @@ import com.zz.supervision.business.inspenction.adapter.DetailAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -49,10 +46,10 @@ public class InfoActivity extends Activity {
         infoRv.setLayoutManager(new LinearLayoutManager(this));
         adapter = new DetailAdapter(R.layout.item_detail, mlist);
         infoRv.setAdapter(adapter);
-        int type = getIntent().getIntExtra("type",0);
+        int type = getIntent().getIntExtra("type", 0);
         deviceInfo = (SuperviseBean.ResposeConfirmBean) getIntent().getSerializableExtra("supervise_respose");
         if (deviceInfo != null) {
-            showIntent(deviceInfo,type);
+            showIntent(deviceInfo, type);
         }
 
     }
@@ -72,19 +69,20 @@ public class InfoActivity extends Activity {
         }
     }
 
-    public void showIntent(SuperviseBean.ResposeConfirmBean lightDevice,int type) {
+    public void showIntent(SuperviseBean.ResposeConfirmBean lightDevice, int type) {
         if (lightDevice == null) return;
         mlist.clear();
         List<DetailBean> list = new ArrayList<>();
         itemTitle.setText("执法详情预览");
-        if (type==1||type==2) {
+        if (type == 1 || type == 2) {
             list.add(new DetailBean("检查项数目", lightDevice.getSumCount() + ""));
             list.add(new DetailBean("重点项目", lightDevice.getImportantCount() + ""));
             list.add(new DetailBean("重点项问题数", lightDevice.getImportantProblemCount() + ""));
             list.add(new DetailBean("一般项数", lightDevice.getGeneralCount() + ""));
             list.add(new DetailBean("一般项问题数", lightDevice.getGeneralProblemCount() + ""));
-            list.add(new DetailBean("检查结果", lightDevice.getInspectionResultText()+""));
-        }else {
+            list.add(new DetailBean("检查结果", lightDevice.getInspectionResultText() + ""));
+            list.add(new DetailBean("处理结果", lightDevice.getResultReductionText() + ""));
+        } else {
             list.add(new DetailBean("静态评分项分数", lightDevice.getStaticScore() + ""));
             list.add(new DetailBean("动态评分项分数", lightDevice.getDynamicScore() + ""));
             list.add(new DetailBean("总分数", lightDevice.getTotalScore() + ""));

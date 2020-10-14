@@ -25,10 +25,12 @@ import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.utils.ImageLoader;
+import com.zz.supervision.utils.NavUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -97,16 +99,16 @@ public class CompanyInfoActivity extends MyBaseActivity {
         adapter = new ImageItemAdapter(R.layout.item_image, images);
         itemRvImages.setAdapter(adapter);
         id = getIntent().getStringExtra("id");
-
+        if (!TextUtils.isEmpty(id)) {
+            getData(id);
+        }
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (!TextUtils.isEmpty(id)) {
-            getData(id);
-        }
+
     }
 
     @Override
@@ -156,11 +158,11 @@ public class CompanyInfoActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.et_location, R.id.bt_delete})
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.et_location, R.id.bt_delete, R.id.et_nav})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
-                startActivity(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId()));
+                startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId()),1001);
                 break;
             case R.id.bt_ok:
                 if (companyBean == null) return;
@@ -171,6 +173,20 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 if (companyBean.getLongitude() == 0.0) return;
                 startActivity(new Intent(this, ShowLocationActivity.class).putExtra("location_lat", companyBean.getLatitude()).putExtra("location_lng", companyBean.getLongitude()));
                 break;
+                case R.id.et_nav:
+                if (companyBean == null) return;
+                if (companyBean.getLongitude() == 0.0) return;
+                    if (!NavUtils.isInstalled()) {
+                        com.zz.lib.core.http.utils.ToastUtils.showToast("未安装百度地图");
+                        return;
+                    } else {
+                        if (companyBean.getLatitude() > 0.0 && companyBean.getLongitude() > 0.0) {
+                            NavUtils.invokeNavi(this, null, "中智.智慧路灯", companyBean.getLatitude() + "," + companyBean.getLongitude());
+                        } else {
+                            com.zz.lib.core.http.utils.ToastUtils.showToast("坐标错误");
+                        }
+                    }
+                    break;
             case R.id.bt_delete:
                 if (companyBean == null) return;
                 CustomDialog.Builder builder = new com.troila.customealert.CustomDialog.Builder(this)
@@ -253,5 +269,15 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 ToastUtils.showShort(stringJsonT.getMessage());
             }
         }, LoadingUtils.build(this));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1001){
+            if (!TextUtils.isEmpty(id)) {
+                getData(id);
+            }
+        }
     }
 }

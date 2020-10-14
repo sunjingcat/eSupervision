@@ -265,6 +265,11 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         private String dynamicScore;
         private String totalScore;
         private String level;
+        private String resultReductionText;
+
+        public String getResultReductionText() {
+            return resultReductionText;
+        }
 
         public String getInspectionResultText() {
             return inspectionResultText;
