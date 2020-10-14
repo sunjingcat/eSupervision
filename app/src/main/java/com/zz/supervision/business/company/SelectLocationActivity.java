@@ -44,10 +44,12 @@ import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
+import com.zz.supervision.bean.PLocation;
 import com.zz.supervision.business.company.adapter.SearchLocationAdapter;
 import com.zz.supervision.utils.AMapUtils;
 import com.zz.supervision.utils.FileUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +84,7 @@ public class SelectLocationActivity extends MyBaseActivity implements OnGetGeoCo
     public BDLocationListener myListener = new MyLocationListener();
     List<PoiInfo> mlist = new ArrayList<>();
     SearchLocationAdapter adapter;
-    PoiInfo locationInfo = new PoiInfo();
+    PLocation locationInfo = new PLocation();
     String mCity = "天津";
     LatLng lastLngLat = null;
 
@@ -125,7 +127,8 @@ public class SelectLocationActivity extends MyBaseActivity implements OnGetGeoCo
                 double longitude = mlist.get(position).getLocation().longitude;
                 showLocation(latitude, longitude);
                 moveCenter(mlist.get(position).getLocation());
-                locationInfo = mlist.get(position);
+                locationInfo .setAddress(mlist.get(position).address);
+                locationInfo .setLocation(mlist.get(position).location);
 
             }
         });
@@ -198,7 +201,7 @@ public class SelectLocationActivity extends MyBaseActivity implements OnGetGeoCo
 
     @Override
     protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar);
+        ToolBarUtils.getInstance().setNavigation(toolbar,1);
     }
     GeoCoder geoCoder;
     private static final String CUSTOM_FILE_NAME_CX = "custom_map_config_CX.sty";
@@ -380,7 +383,6 @@ public class SelectLocationActivity extends MyBaseActivity implements OnGetGeoCo
 //                    mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
                 }
 
-                locationInfo = new PoiInfo();
                 locationInfo.setAddress(location.getAddrStr());
                 locationInfo.setLocation(latLng);
 

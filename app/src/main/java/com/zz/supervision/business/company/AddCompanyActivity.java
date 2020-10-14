@@ -26,6 +26,7 @@ import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.BusinessProjectBean;
 import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.ImageBack;
+import com.zz.supervision.bean.PLocation;
 import com.zz.supervision.business.company.adapter.ImageDeleteItemAdapter;
 import com.zz.supervision.business.company.mvp.Contract;
 import com.zz.supervision.business.company.mvp.presenter.CompanyAddPresenter;
@@ -563,15 +564,15 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             }
             if (requestCode == 1002) {
                 if (data == null) return;
-                PoiInfo poiInfo = data.getParcelableExtra("location");
+                PLocation poiInfo =  data.getParcelableExtra("location");
                 if (poiInfo==null)return;
-                if (poiInfo.location==null)return;
-                lat = poiInfo.location.latitude;
-                lon = poiInfo.location.longitude;
+                if (poiInfo.getLocation()==null)return;
+                lat = poiInfo.getLocation().latitude;
+                lon = poiInfo.getLocation().longitude;
 
                 String s = new BigDecimal(lat).toString();
                 String s1 = new BigDecimal(lon).toString();
-                etLocation.setText(poiInfo.address+"");
+                etLocation.setText(poiInfo.getAddress()+"");
             }
 
 
