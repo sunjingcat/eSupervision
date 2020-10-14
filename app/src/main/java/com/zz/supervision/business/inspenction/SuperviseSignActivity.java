@@ -222,10 +222,11 @@ public class SuperviseSignActivity extends MyBaseActivity {
         if (resposeBean.getStatus() == 3) {
             llLawEnforcerSign.setEnabled(false);
             llLegalRepresentativeSign.setEnabled(false);
-            bt_delete.setVisibility(View.VISIBLE);
+
         } else {
-            bt_delete.setVisibility(View.GONE);
+
         }
+        bt_delete.setVisibility(View.VISIBLE);
         tvType.setText(resposeBean.getTypeText() + "");
 
         if (type == 1 || type == 2) {

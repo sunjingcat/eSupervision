@@ -2,6 +2,7 @@ package com.zz.supervision.business.company.adapter;
 
 import android.content.Context;
 
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zz.supervision.R;
+import com.zz.supervision.utils.BASE64;
 import com.zz.supervision.utils.GlideUtils;
 import com.zz.supervision.utils.ImagePreview;
 
@@ -67,7 +69,16 @@ public class ImageDeleteItemAdapter extends RecyclerView.Adapter<ImageDeleteItem
                 if (holder.getAdapterPosition()==mDatas.size()) {
                     onclick.onclickAdd(v, holder.getAdapterPosition());
                 }else {
-                    ImagePreview.preview(mContext, mDatas.get(i));
+                    String str = mDatas.get(i);
+                    if (BASE64.isBase64(str)) {
+
+                        Bitmap s1 = GlideUtils.base64ToBitmap(str);
+                        String s = BASE64.saveBitmap(s1);
+                        ImagePreview.preview(mContext, s);
+                    }else {
+                        ImagePreview.preview(mContext, str);
+                    }
+
                 }
             }
         });
