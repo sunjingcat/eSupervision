@@ -85,7 +85,6 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
                             }
                         }
                     } else {
-                        if (!((RiskSuperviseBean.RiskItem) node).isExpanded()) return;
                         for (RiskSuperviseBean.ChildRisk children : ((RiskSuperviseBean.RiskItem) node).getChildRisks()) {
                             if (((RiskSuperviseBean.RiskItem) node).isCheck()) {
                                 children.setCheck(1);

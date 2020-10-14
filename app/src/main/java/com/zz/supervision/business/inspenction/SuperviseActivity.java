@@ -78,7 +78,6 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                             }
                         }
                     }else {
-                        if (!((SuperviseBean) node).isExpanded()) return;
                         for (SuperviseBean.Children children : ((SuperviseBean) node).getChildrenList()) {
                             if (((SuperviseBean) node).isCheck()) {
                                 children.setIsSatisfy(1);
@@ -203,9 +202,11 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                 mlist = adapter.getData();
                 postBeans = new ArrayList<>();
                 for (BaseNode node : mlist) {
-                    if (node instanceof SuperviseBean.Children) {
-                        if (((SuperviseBean.Children) node).getIsSatisfy() != 0) {
-                            postBeans.add(new SuperviseBean.PostBean(((SuperviseBean.Children) node).getId(), ((SuperviseBean.Children) node).getIsSatisfy() == 1 ? 1 : 0));
+                    if (node instanceof SuperviseBean) {
+                        for (SuperviseBean.Children children:((SuperviseBean) node).getChildrenList()) {
+                            if (children.getIsSatisfy() != 0) {
+                                postBeans.add(new SuperviseBean.PostBean(children.getId(), children.getIsSatisfy() == 1 ? 1 : 0));
+                            }
                         }
                     }
                 }

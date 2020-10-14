@@ -54,8 +54,6 @@ public class RiskRootNodeProvider extends BaseNodeProvider {
                 onProviderOnClick.onItemOnclick(data, 10);
             }
         });
-
-        baseViewHolder.getView(R.id.item_check).setEnabled(((RiskSuperviseBean.RiskItem) data).isExpanded());
         ((CheckBox) baseViewHolder.getView(R.id.item_check)).setChecked(entity.isCheck());
 
         if (enable==1){

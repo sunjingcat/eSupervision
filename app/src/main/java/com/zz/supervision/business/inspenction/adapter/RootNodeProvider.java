@@ -52,7 +52,7 @@ public class RootNodeProvider extends BaseNodeProvider {
             }
         });
 
-         baseViewHolder.getView(R.id.item_check).setEnabled(((SuperviseBean) data).isExpanded());
+//         baseViewHolder.getView(R.id.item_check).setEnabled(((SuperviseBean) data).isExpanded());
 
         ((CheckBox) baseViewHolder.getView(R.id.item_check)).setChecked(entity.isCheck());
         if (enable == 1) {
