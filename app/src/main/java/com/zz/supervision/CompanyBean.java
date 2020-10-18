@@ -14,6 +14,8 @@ public class CompanyBean implements Serializable {
     private String businessType;// ,
     private String businessTypeText;// ,
     private String companyType;// ,
+    private String specificType;// ,
+    private String specificTypeText;// ,
     private String companyTypeText;// ,
     private String contact;// ,
     private String contactInformation;// ,
@@ -34,6 +36,14 @@ public class CompanyBean implements Serializable {
     private String validDate;//
     private String  longitude;//123.63550307225523,
     private String       latitude;// 47.21882160905167,
+
+    public String getSpecificTypeText() {
+        return specificTypeText;
+    }
+
+    public String getSpecificType() {
+        return specificType;
+    }
 
     public String getRecordCount() {
         return recordCount;

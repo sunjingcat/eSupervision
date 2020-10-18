@@ -122,7 +122,7 @@ public class BASE64 {
                 file.delete();
             }
             out = new FileOutputStream(file);
-            bmp.compress(Bitmap.CompressFormat.PNG, 100, out);
+            bmp.compress(Bitmap.CompressFormat.PNG, 80, out);
 //            System.out.println("_________保存到____sd______指定目录文件夹下____________________");
             Log.e("saveBitMap", "saveBitmap: 图片保存到" + Environment.getExternalStorageDirectory() + "/zhongzhi/" + bitmapName);
 

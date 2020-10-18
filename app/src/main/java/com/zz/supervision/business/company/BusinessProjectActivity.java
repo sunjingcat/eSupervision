@@ -47,10 +47,10 @@ public class BusinessProjectActivity extends MyBaseActivity {
         ArrayList<BusinessProjectBean> projectBeans  = getIntent().getParcelableArrayListExtra("projectBeans");
 
         mlist.clear();
-        if (type.equals("1")) {
+        if (type.equals("1")||type.equals("2") ) {
             initXS();
             tvLeft.setText("食品销售");
-        } else if (type.equals("2") || type.equals("3")) {
+        } else if (type.equals("3") || type.equals("4")) {
             initFW();
             tvLeft.setText("餐饮服务");
         }

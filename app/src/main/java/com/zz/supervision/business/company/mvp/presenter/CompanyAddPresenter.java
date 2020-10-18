@@ -62,6 +62,21 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
     }
 
     @Override
+    public void getBusiness2Type(Map<String, Object> map) {
+        RxNetUtils.request(getApi(ApiService.class).getDicts(map), new RequestObserver<JsonT<List<BusinessType>>>(this) {
+            @Override
+            protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
+                view.showBusiness2Type(jsonT.getData());
+            }
+
+            @Override
+            protected void onFail2(JsonT<List<BusinessType>> stringJsonT) {
+                super.onFail2(stringJsonT);
+            }
+        }, mDialog);
+    }
+
+    @Override
     public void getCompanyType(Map<String, Object> map) {
         RxNetUtils.request(getApi(ApiService.class).getDicts(map), new RequestObserver<JsonT<List<BusinessType>>>(this) {
             @Override

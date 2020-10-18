@@ -91,14 +91,17 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     String fieldTime;
     String validDate;
     String businessType = "";
+    String specificType = "";
     String companyType = "";
     String businessProject = "";
     String businessProjectText = "";
     List<BusinessType> businessTypeList = new ArrayList<>();
+    List<BusinessType> business2TypeList = new ArrayList<>();
     List<BusinessType> companyTypeList = new ArrayList<>();
 
     SelectPopupWindows selectPopupWindows;
     SelectPopupWindows selectPopupWindows1;
+    SelectPopupWindows selectPopupWindows2;
     List<ImageBack> imageBacks = new ArrayList<>();
     String id;
     double lat = 0.0;
@@ -158,6 +161,11 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         params1.put("dictType", "company_type");
         mPresenter.getCompanyType(params1);
 
+
+        Map<String, Object> params2 = new HashMap<>();
+        params2.put("dictType", "specific_type");
+        mPresenter.getBusiness2Type(params2);
+
     }
 
     @Override
@@ -174,30 +182,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.et_businessType:
-                UIAdjuster.closeKeyBoard(this);
-                List<String> list = new ArrayList<>();
-                List<String> list1 = new ArrayList<>();
-                for (int i = 0; i < businessTypeList.size(); i++) {
-                    list.add(businessTypeList.get(i).getDictLabel());
-                    list1.add(businessTypeList.get(i).getDictValue());
-                }
-                String[] array = (String[]) list.toArray(new String[list.size()]);
-                String[] values = (String[]) list1.toArray(new String[list1.size()]);
-                selectPopupWindows = new SelectPopupWindows(this, array);
-                selectPopupWindows.showAtLocation(findViewById(R.id.bg),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                selectPopupWindows.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
-                    @Override
-                    public void onSelected(int index, String msg) {
-                        etBusinessType.setText(msg);
-                        businessType = values[index];
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        selectPopupWindows.dismiss();
-                    }
-                });
+                showSelectPopWindow1();
                 break;
             case R.id.et_companyType:
                 UIAdjuster.closeKeyBoard(this);
@@ -313,9 +298,10 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         etLegalRepresentative.setText(data.getLegalRepresentative() + "");
         etAddress.setText(data.getAddress() + "");
         etBusinessPlace.setText(data.getBusinessPlace() + "");
-        etBusinessType.setText(data.getBusinessTypeText() + "");
+        etBusinessType.setText(data.getBusinessTypeText() + ""+data.getSpecificTypeText());
         etBusinessProject.setText(data.getBusinessProjectText() + "");
         businessType = data.getBusinessType();
+        specificType = data.getSpecificType();
         businessProject = data.getBusinessProject();
         String[] split = businessProject.split(",");
         projectBeans.clear();
@@ -408,6 +394,14 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     }
 
     @Override
+    public void showBusiness2Type(List<BusinessType> list) {
+        if (list != null) {
+            business2TypeList.clear();
+            business2TypeList.addAll(list);
+        }
+    }
+
+    @Override
     public void showCompanyType(List<BusinessType> list) {
         if (list != null) {
             companyTypeList.clear();
@@ -436,32 +430,28 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         Map<String, Object> params = new HashMap<>();
 
         String operatorName = etOperatorName.getText().toString();
-        if (TextUtils.isEmpty(operatorName)) {
-            showToast("请填写经营者名称");
-            return;
+        if (!TextUtils.isEmpty(operatorName)) {
+            params.put("operatorName", operatorName);
         }
-        params.put("operatorName", operatorName);
+
 
         String socialCreditCode = etSocialCreditCode.getText().toString();
-        if (TextUtils.isEmpty(socialCreditCode)) {
-            showToast("请填写社会信用代码");
-            return;
+        if (!TextUtils.isEmpty(socialCreditCode)) {
+            params.put("socialCreditCode", socialCreditCode);
         }
-        params.put("socialCreditCode", socialCreditCode);
+
 
         String licenseNumber = etLicenseNumber.getText().toString();
-        if (TextUtils.isEmpty(licenseNumber)) {
-            showToast("请填写许可证编号");
-            return;
+        if (!TextUtils.isEmpty(licenseNumber)) {
+            params.put("licenseNumber", licenseNumber);
         }
-        params.put("licenseNumber", licenseNumber);
+
 
         String legalRepresentative = etLegalRepresentative.getText().toString();
-        if (TextUtils.isEmpty(legalRepresentative)) {
-            showToast("请填写法定代表人");
-            return;
+        if (!TextUtils.isEmpty(legalRepresentative)) {
+            params.put("legalRepresentative", legalRepresentative);
         }
-        params.put("legalRepresentative", legalRepresentative);
+
 
         String address = etAddress.getText().toString();
         if (!TextUtils.isEmpty(address)) {
@@ -470,23 +460,24 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
 
         String businessPlace = etBusinessPlace.getText().toString();
-        if (TextUtils.isEmpty(businessPlace)) {
-            showToast("请填写经营场所");
-            return;
+        if (!TextUtils.isEmpty(businessPlace)) {
+            params.put("businessPlace", businessPlace);
         }
-        params.put("businessPlace", businessPlace);
+
 
         if (!TextUtils.isEmpty(businessType)) {
             params.put("businessType", businessType);
         }
+        if (!TextUtils.isEmpty(specificType)) {
+            params.put("specificType", specificType);
+        }
         if (!TextUtils.isEmpty(companyType)) {
             params.put("companyType", companyType);
         }
-        if (TextUtils.isEmpty(validDate)) {
-            showToast("请选择有效期至");
-            return;
+        if (!TextUtils.isEmpty(validDate)) {
+            params.put("validDate", validDate);
         }
-        params.put("validDate", validDate);
+
         if (!TextUtils.isEmpty(businessProject)) {
             params.put("businessProject", businessProject);
             params.put("businessProjectText", businessProjectText);
@@ -502,18 +493,16 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         }
 
         String contactInformation = etContactInformation.getText().toString();
-        if (TextUtils.isEmpty(contactInformation)) {
-            showToast("请填写联系方式");
-            return;
+        if (!TextUtils.isEmpty(contactInformation)) {
+            params.put("contactInformation", contactInformation);
         }
-        params.put("contactInformation", contactInformation);
 
 
-        if (TextUtils.isEmpty(fieldTime)) {
-            showToast("请选择签发时间");
-            return;
+
+        if (!TextUtils.isEmpty(fieldTime)) {
+            params.put("fieldTime", fieldTime);
         }
-        params.put("fieldTime", fieldTime);
+
         if (!TextUtils.isEmpty(id)) {
             params.put("id", id);
         }
@@ -577,6 +566,63 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
 
         }
+    }
+    void showSelectPopWindow1(){
+        UIAdjuster.closeKeyBoard(this);
+        List<String> list = new ArrayList<>();
+        List<String> list1 = new ArrayList<>();
+        for (int i = 0; i < businessTypeList.size(); i++) {
+            list.add(businessTypeList.get(i).getDictLabel());
+            list1.add(businessTypeList.get(i).getDictValue());
+        }
+        String[] array = (String[]) list.toArray(new String[list.size()]);
+        String[] values = (String[]) list1.toArray(new String[list1.size()]);
+        selectPopupWindows = new SelectPopupWindows(this, array);
+        selectPopupWindows.showAtLocation(findViewById(R.id.bg),
+                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        selectPopupWindows.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
+            @Override
+            public void onSelected(int index, String msg) {
+                etBusinessType.setText(msg);
+                businessType = values[index];
+                if (businessType.equals("3")){
+                    showSelectPopWindow2();
+                }
+            }
+
+            @Override
+            public void onCancel() {
+                selectPopupWindows.dismiss();
+            }
+        });
+    }
+
+    void showSelectPopWindow2(){
+        UIAdjuster.closeKeyBoard(this);
+        List<String> list = new ArrayList<>();
+        List<String> list1 = new ArrayList<>();
+        for (int i = 0; i < business2TypeList.size(); i++) {
+            list.add(business2TypeList.get(i).getDictLabel());
+            list1.add(business2TypeList.get(i).getDictValue());
+        }
+        String[] array = (String[]) list.toArray(new String[list.size()]);
+        String[] values = (String[]) list1.toArray(new String[list1.size()]);
+        selectPopupWindows2 = new SelectPopupWindows(this, array);
+        selectPopupWindows2.showAtLocation(findViewById(R.id.bg),
+                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        selectPopupWindows2.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
+            @Override
+            public void onSelected(int index, String msg) {
+                etBusinessType.append("-"+msg);
+                specificType = values[index];
+            }
+
+            @Override
+            public void onCancel() {
+                selectPopupWindows2.dismiss();
+                showSelectPopWindow1();
+            }
+        });
     }
 
 

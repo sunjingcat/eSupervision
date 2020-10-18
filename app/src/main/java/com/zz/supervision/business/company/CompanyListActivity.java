@@ -17,8 +17,6 @@ import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
-import com.zz.supervision.utils.TabUtils;
-import com.zz.supervision.widget.NoScrollViewPager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +27,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -83,17 +80,20 @@ public class CompanyListActivity extends MyBaseActivity {
     }
 
     void initFragment(List<CompanyType> list) {
-        fragments.clear();
-        for (int i = 0; i < list.size(); i++) {
-            fragments.add(new CompanyFragment(list.get(i).getCompanyType()));
+        if (list.size() > 0 && list.size() == fragments.size()) {
+
+
+        } else {
+            fragments.clear();
+            for (int i = 0; i < list.size(); i++) {
+                fragments.add(new CompanyFragment(list.get(i).getCompanyType()));
 //            tabs[i] = list.get(i).getCompanyTypeText();
+            }
+            tablayout.setupWithViewPager(viewpager, false);
+            pagerAdapter = new FmPagerAdapter(fragments, getSupportFragmentManager());
+            viewpager.setAdapter(pagerAdapter);
+
         }
-
-
-        tablayout.setupWithViewPager(viewpager, false);
-        pagerAdapter = new FmPagerAdapter(fragments, getSupportFragmentManager());
-        viewpager.setAdapter(pagerAdapter);
-
         for (int i = 0; i < list.size(); i++) {
             tablayout.getTabAt(i).setText(list.get(i).getCompanyTypeText() + "(" + list.get(i).getCount() + ")");
         }

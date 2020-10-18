@@ -54,7 +54,8 @@ public class SelectPopupWindows extends PopupWindow {
             @Override
             public void onClick(View v) {
                 backgroundAlpha(context, 1f);
-                dismiss();
+                listener.onCancel();
+//                dismiss();
             }
         });
         //设置PopupWindow的View

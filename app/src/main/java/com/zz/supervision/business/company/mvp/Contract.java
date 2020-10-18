@@ -18,6 +18,7 @@ public class Contract {
         void getData(String url);
 
         void getBusinessType(Map<String, Object> map);
+        void getBusiness2Type(Map<String, Object> map);
         void getCompanyType(Map<String, Object> map);
 
         void postImage(String id,String files,List<Integer> ids);
@@ -34,6 +35,7 @@ public class Contract {
         void showPostImage();
 
         void showBusinessType(List<BusinessType> list);
+        void showBusiness2Type(List<BusinessType> list);
         void showCompanyType(List<BusinessType> list);
 
         void showImage(List<ImageBack> list);
