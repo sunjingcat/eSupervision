@@ -15,6 +15,7 @@ import com.codbking.widget.bean.DateType;
 import com.codbking.widget.utils.UIAdjuster;
 import com.donkingliang.imageselector.utils.ImageSelector;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
+import com.google.gson.Gson;
 import com.previewlibrary.ZoomMediaLoader;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.commonlib.widget.SelectPopupWindows;
@@ -319,15 +320,11 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
     @Override
     public void showSubmitResult(String id) {
-        String ids = "";
+        ArrayList<String> ids = new ArrayList<>();
         for (int i = 0; i < images.size(); i++) {
-            if (i == images.size() - 1) {
-                ids = ids + images.get(i).getId();
-            } else {
-                ids = ids + images.get(i).getId() + ",";
-            }
+            ids.add(images.get(i).getId());
         }
-        mPresenter.uploadCompanyImgs(id,ids);
+        mPresenter.uploadCompanyImgs(id,new Gson().toJson(ids));
     }
 
     @Override
