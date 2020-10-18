@@ -97,12 +97,11 @@ public interface ApiService {
     Observable<JsonT<String>> postCompanyInfo(@QueryMap Map<String, Object> params);
 
     @POST("/app/v1/supervise/companyInfo/uploadImgs/{id}")
-    @FormUrlEncoded
     Observable<JsonT> uploadCompanyImgs(@Path("id")String id,@Field("enclosureIds") String handleFile);
 
-    @POST("/app/v1/supervise/enclosure/upload")
+    @POST("/app/v1/supervise/enclosure/uploadSingle")
     @FormUrlEncoded
-    Observable<JsonT<List<Integer>>> uploadImgs( @Field("filebase64s") String handleFile);
+    Observable<JsonT<String>> uploadImg( @Field("base64") String handleFile);
 
 
     @GET("/app/v1/supervise/companyInfo/getLawEnforcerList")

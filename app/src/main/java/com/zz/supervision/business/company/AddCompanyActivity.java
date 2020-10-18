@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.baidu.mapapi.search.core.PoiInfo;
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnChangeLisener;
 import com.codbking.widget.OnSureLisener;
@@ -16,7 +15,6 @@ import com.codbking.widget.bean.DateType;
 import com.codbking.widget.utils.UIAdjuster;
 import com.donkingliang.imageselector.utils.ImageSelector;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
-import com.google.gson.Gson;
 import com.previewlibrary.ZoomMediaLoader;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.commonlib.widget.SelectPopupWindows;
@@ -84,7 +82,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     TextView etFieldTime;
     @BindView(R.id.et_location)
     TextView etLocation;
-    ArrayList<String> images = new ArrayList<>();
+    ArrayList<ImageBack> images = new ArrayList<>();
     ImageDeleteItemAdapter adapter;
     @BindView(R.id.item_rv_images)
     RecyclerView itemRvImages;
@@ -124,8 +122,8 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             public void onclickAdd(View v, int option) {
                 ArrayList<String> localPath = new ArrayList<>();
                 for (int i = 0; i < images.size(); i++) {
-                    if (!BASE64.isBase64(images.get(i))) {
-                        localPath.add(images.get(i));
+                    if (!BASE64.isBase64(images.get(i).getPath())) {
+                        localPath.add(images.get(i).getPath());
                     } else {
 
                     }
@@ -141,7 +139,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
             @Override
             public void onclickDelete(View v, int option) {
-                if (option<imageBacks.size()){
+                if (option < imageBacks.size()) {
                     imageBacks.remove(option);
                 }
                 images.remove(option);
@@ -170,7 +168,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
     @Override
     protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar,1);
+        ToolBarUtils.getInstance().setNavigation(toolbar, 1);
     }
 
     @Override
@@ -298,15 +296,15 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         etLegalRepresentative.setText(data.getLegalRepresentative() + "");
         etAddress.setText(data.getAddress() + "");
         etBusinessPlace.setText(data.getBusinessPlace() + "");
-        etBusinessType.setText(data.getBusinessTypeText() + ""+data.getSpecificTypeText());
+        etBusinessType.setText(data.getBusinessTypeText() + "" + data.getSpecificTypeText());
         etBusinessProject.setText(data.getBusinessProjectText() + "");
         businessType = data.getBusinessType();
         specificType = data.getSpecificType();
         businessProject = data.getBusinessProject();
         String[] split = businessProject.split(",");
         projectBeans.clear();
-        for (int i =0;i<split.length;i++){
-            projectBeans.add(new BusinessProjectBean(false,"",split[i],""));
+        for (int i = 0; i < split.length; i++) {
+            projectBeans.add(new BusinessProjectBean(false, "", split[i], ""));
         }
         companyType = data.getCompanyType();
         validDate = data.getValidDate();
@@ -321,68 +319,30 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
     @Override
     public void showSubmitResult(String id) {
-        if (this.images.size() > 0) {
-            ArrayList<Integer> ids = new ArrayList<>();
-            ArrayList<String> needUpload = new ArrayList<>();
-            ArrayList<String> base64 = new ArrayList<>();
-            for (int i = 0; i < images.size(); i++) {
-                if (BASE64.isBase64(images.get(i))&&i<imageBacks.size()) {
-                    for (ImageBack imageBack:imageBacks){
-                        if (images.get(i).equals(imageBack.getBase64())){
-                            ids.add(imageBacks.get(i).getId());
-                            break;
-                        }
-                    }
-
-                } else {
-                    needUpload.add(images.get(i));
-                }
-            }
-            if (needUpload.size() > 0) {
-                Luban.with(this)
-                        .load(needUpload)
-                        .ignoreBy(100)
-                        .setCompressListener(new OnCompressListener() {
-                            @Override
-                            public void onStart() {
-                                // TODO 压缩开始前调用，可以在方法内启动 loading UI
-                            }
-
-                            @Override
-                            public void onSuccess(File file) {
-                                base64.add("data:image/jpg;base64," + BASE64.imageToBase64(file.getPath()));
-                                if (base64.size() == needUpload.size()) {
-                                    String s = new Gson().toJson(base64);
-                                    mPresenter.postImage(id, s, ids);
-                                }
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                // TODO 当压缩过程出现问题时调用
-                            }
-                        }).launch();
+        String ids = "";
+        for (int i = 0; i < images.size(); i++) {
+            if (i == images.size() - 1) {
+                ids = ids + images.get(i).getId();
             } else {
-                mPresenter.postImage(id, null, ids);
+                ids = ids + images.get(i).getId() + ",";
             }
-        } else {
-
-            finish();
-
-            showToast("提交成功");
         }
-
+        mPresenter.uploadCompanyImgs(id,ids);
     }
 
     @Override
     public void showResult() {
+        finish();
 
+        showToast("提交成功");
     }
 
     @Override
-    public void showPostImage() {
-        finish();
-        showToast("提交成功");
+    public void showPostImage(int position, String id) {
+        if (!TextUtils.isEmpty(id)) {
+            images.get(position).setId(id);
+        }
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -412,17 +372,8 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     @Override
     public void showImage(List<ImageBack> list) {
         if (list == null) return;
-        imageBacks.clear();
-        imageBacks.addAll(list);
-
-        List<String> showList = new ArrayList<>();
-        for (ImageBack imageBack : list) {
-            showList.add(imageBack.getBase64());
-        }
         images.clear();
-
-        images.addAll(showList);
-
+        images.addAll(list);
         adapter.notifyDataSetChanged();
     }
 
@@ -498,7 +449,6 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         }
 
 
-
         if (!TextUtils.isEmpty(fieldTime)) {
             params.put("fieldTime", fieldTime);
         }
@@ -508,7 +458,9 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         }
         mPresenter.submitData(params);
     }
+
     ArrayList<BusinessProjectBean> projectBeans = new ArrayList<>();
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -517,24 +469,40 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             /*结果回调*/
             if (requestCode == 1101) {
                 //获取选择器返回的数据
-                ArrayList<String> images = data.getStringArrayListExtra(
+                ArrayList<String> selectImages = data.getStringArrayListExtra(
                         ImageSelectorUtils.SELECT_RESULT);
-                if (images.size() > 0) {
-                    this.images.clear();
-                }
-                List<String> showList = new ArrayList<>();
-                for (ImageBack imageBack : imageBacks) {
-                    showList.add(imageBack.getBase64());
-                }
-                showList.addAll(images);
-                this.images.addAll(showList);
+                for (String path : selectImages) {
+                    Luban.with(this)
+                            .load(path)
+                            .ignoreBy(100)
+                            .setCompressListener(new OnCompressListener() {
+                                @Override
+                                public void onStart() {
+                                    // TODO 压缩开始前调用，可以在方法内启动 loading UI
+                                }
 
-                adapter.notifyDataSetChanged();
+                                @Override
+                                public void onSuccess(File file) {
+                                    String base = "data:image/jpg;base64," + BASE64.imageToBase64(file.getPath());
+                                    ImageBack imageBack = new ImageBack();
+                                    imageBack.setPath(file.getPath());
+                                    imageBack.setBase64(base);
+                                    images.add(imageBack);
+                                    mPresenter.postImage(images.size() - 1, base);
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    // TODO 当压缩过程出现问题时调用
+                                }
+                            }).launch();
+
+                }
             }
             if (requestCode == 2001) {
                 //获取选择器返回的数据
                 ArrayList<BusinessProjectBean> projectBeans = data.getParcelableArrayListExtra("bnpj");
-               if (projectBeans == null) return;
+                if (projectBeans == null) return;
                 this.projectBeans = projectBeans;
                 String str = "";
                 String content = "";
@@ -553,21 +521,22 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             }
             if (requestCode == 1002) {
                 if (data == null) return;
-                PLocation poiInfo =  data.getParcelableExtra("location");
-                if (poiInfo==null)return;
-                if (poiInfo.getLocation()==null)return;
+                PLocation poiInfo = data.getParcelableExtra("location");
+                if (poiInfo == null) return;
+                if (poiInfo.getLocation() == null) return;
                 lat = poiInfo.getLocation().latitude;
                 lon = poiInfo.getLocation().longitude;
 
                 String s = new BigDecimal(lat).toString();
                 String s1 = new BigDecimal(lon).toString();
-                etLocation.setText(poiInfo.getAddress()+"");
+                etLocation.setText(poiInfo.getAddress() + "");
             }
 
 
         }
     }
-    void showSelectPopWindow1(){
+
+    void showSelectPopWindow1() {
         UIAdjuster.closeKeyBoard(this);
         List<String> list = new ArrayList<>();
         List<String> list1 = new ArrayList<>();
@@ -585,7 +554,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             public void onSelected(int index, String msg) {
                 etBusinessType.setText(msg);
                 businessType = values[index];
-                if (businessType.equals("3")){
+                if (businessType.equals("3")) {
                     showSelectPopWindow2();
                 }
             }
@@ -597,7 +566,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         });
     }
 
-    void showSelectPopWindow2(){
+    void showSelectPopWindow2() {
         UIAdjuster.closeKeyBoard(this);
         List<String> list = new ArrayList<>();
         List<String> list1 = new ArrayList<>();
@@ -613,7 +582,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         selectPopupWindows2.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
             @Override
             public void onSelected(int index, String msg) {
-                etBusinessType.append("-"+msg);
+                etBusinessType.append("-" + msg);
                 specificType = values[index];
             }
 

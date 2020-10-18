@@ -21,7 +21,8 @@ public class Contract {
         void getBusiness2Type(Map<String, Object> map);
         void getCompanyType(Map<String, Object> map);
 
-        void postImage(String id,String files,List<Integer> ids);
+        void postImage(int position,String files);
+        void uploadCompanyImgs(String id,String files);
 
         void getImage(String type,String modelId);
     }
@@ -32,7 +33,7 @@ public class Contract {
         void showSubmitResult(String id);
 
         void showResult();
-        void showPostImage();
+        void showPostImage(int position,String id);
 
         void showBusinessType(List<BusinessType> list);
         void showBusiness2Type(List<BusinessType> list);

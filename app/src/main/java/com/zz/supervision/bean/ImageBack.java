@@ -1,12 +1,29 @@
 package com.zz.supervision.bean;
 
 public class ImageBack {
-    Integer id;
+    String id;
+    String path;
     String base64 ;
     String modelId;
     String type;
 
-    public Integer getId() {
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public void setBase64(String base64) {
+        this.base64 = base64;
+    }
+
+    public String getId() {
         return id;
     }
 

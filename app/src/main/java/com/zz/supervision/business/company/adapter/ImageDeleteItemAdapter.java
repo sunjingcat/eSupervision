@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zz.supervision.R;
+import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.utils.BASE64;
 import com.zz.supervision.utils.GlideUtils;
 import com.zz.supervision.utils.ImagePreview;
@@ -32,10 +33,10 @@ public class ImageDeleteItemAdapter extends RecyclerView.Adapter<ImageDeleteItem
         void onclickAdd(View v, int option);
         void onclickDelete(View v, int option);
     }
-    private List<String> mDatas;
+    private List<ImageBack> mDatas;
     private Context mContext;
     private LayoutInflater inflater;
-    public ImageDeleteItemAdapter(Context context, List<String> datas){
+    public ImageDeleteItemAdapter(Context context, List<ImageBack> datas){
         this. mContext=context;
         this. mDatas=datas;
         inflater=LayoutInflater. from(mContext);
@@ -54,7 +55,7 @@ public class ImageDeleteItemAdapter extends RecyclerView.Adapter<ImageDeleteItem
             holder.imageView.setImageResource(R.drawable.image_add);
             holder.delete.setVisibility(View.GONE);
         }else {
-            GlideUtils.loadImage(mContext, mDatas.get(i),  holder.imageView);
+            GlideUtils.loadImage(mContext, mDatas.get(i).getPath(),  holder.imageView);
             holder.delete.setVisibility(View.VISIBLE);
         }
         holder. delete.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +70,7 @@ public class ImageDeleteItemAdapter extends RecyclerView.Adapter<ImageDeleteItem
                 if (holder.getAdapterPosition()==mDatas.size()) {
                     onclick.onclickAdd(v, holder.getAdapterPosition());
                 }else {
-                    String str = mDatas.get(i);
+                    String str = mDatas.get(i).getPath();
                     if (BASE64.isBase64(str)) {
 
                         Bitmap s1 = GlideUtils.base64ToBitmap(str);
