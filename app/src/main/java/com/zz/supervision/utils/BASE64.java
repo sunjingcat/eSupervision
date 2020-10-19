@@ -1,5 +1,6 @@
 package com.zz.supervision.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.text.TextUtils;
@@ -106,12 +107,12 @@ public class BASE64 {
         return "";
     }
 
-    public static String saveBitmap(Bitmap bmp) {
+    public static String saveBitmap(Context context, Bitmap bmp) {
         if (bmp==null)return "";
         FileOutputStream out;
         String bitmapName = new Date().getTime()+".png";
         try { // 获取SDCard指定目录下
-            String sdCardDir = Environment.getExternalStorageDirectory() + "/zhongzhi/";
+            String sdCardDir = context.getCacheDir() + "/zhongzhi/";
             File dirFile = new File(sdCardDir);  //目录转化成文件夹
             if (!dirFile.exists()) {              //如果不存在，那就建立这个文件夹
                 dirFile.mkdirs();
@@ -124,7 +125,7 @@ public class BASE64 {
             out = new FileOutputStream(file);
             bmp.compress(Bitmap.CompressFormat.PNG, 80, out);
 //            System.out.println("_________保存到____sd______指定目录文件夹下____________________");
-            Log.e("saveBitMap", "saveBitmap: 图片保存到" + Environment.getExternalStorageDirectory() + "/zhongzhi/" + bitmapName);
+            Log.e("saveBitMap", "saveBitmap: 图片保存到" + context.getCacheDir() + "/zhongzhi/" + bitmapName);
 
             out.flush();
             out.close();

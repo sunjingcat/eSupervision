@@ -71,14 +71,13 @@ public class ImageDeleteItemAdapter extends RecyclerView.Adapter<ImageDeleteItem
                     onclick.onclickAdd(v, holder.getAdapterPosition());
                 }else {
                     String str = mDatas.get(i).getPath();
-                    if (BASE64.isBase64(str)) {
-
-                        Bitmap s1 = GlideUtils.base64ToBitmap(str);
-                        String s = BASE64.saveBitmap(s1);
-                        ImagePreview.preview(mContext, s);
-                    }else {
+//                    if (BASE64.isBase64(str)) {
+//                        Bitmap s1 = GlideUtils.base64ToBitmap(str);
+//                        String s = BASE64.saveBitmap(mContext,s1);
+//                        ImagePreview.preview(mContext, s);
+//                    }else {
                         ImagePreview.preview(mContext, str);
-                    }
+//                    }
 
                 }
             }

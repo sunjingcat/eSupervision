@@ -2,6 +2,7 @@ package com.zz.supervision.business.company;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,8 @@ import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
+import com.zz.supervision.utils.BASE64;
+import com.zz.supervision.utils.GlideUtils;
 import com.zz.supervision.utils.ImageLoader;
 import com.zz.supervision.utils.NavUtils;
 
@@ -34,6 +37,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -113,7 +117,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
 
     @Override
     protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar,1);
+        ToolBarUtils.getInstance().setNavigation(toolbar, 1);
     }
 
 
@@ -162,7 +166,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
-                startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId()),1001);
+                startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId()), 1001);
                 break;
             case R.id.bt_ok:
                 if (companyBean == null) return;
@@ -173,20 +177,20 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 if (companyBean.getLongitude() == 0.0) return;
                 startActivity(new Intent(this, ShowLocationActivity.class).putExtra("location_lat", companyBean.getLatitude()).putExtra("location_lng", companyBean.getLongitude()));
                 break;
-                case R.id.et_nav:
+            case R.id.et_nav:
                 if (companyBean == null) return;
                 if (companyBean.getLongitude() == 0.0) return;
-                    if (!NavUtils.isInstalled()) {
-                        com.zz.lib.core.http.utils.ToastUtils.showToast("未安装百度地图");
-                        return;
+                if (!NavUtils.isInstalled()) {
+                    com.zz.lib.core.http.utils.ToastUtils.showToast("未安装百度地图");
+                    return;
+                } else {
+                    if (companyBean.getLatitude() > 0.0 && companyBean.getLongitude() > 0.0) {
+                        NavUtils.invokeNavi(this, null, "中智.智慧路灯", companyBean.getLatitude() + "," + companyBean.getLongitude());
                     } else {
-                        if (companyBean.getLatitude() > 0.0 && companyBean.getLongitude() > 0.0) {
-                            NavUtils.invokeNavi(this, null, "中智.智慧路灯", companyBean.getLatitude() + "," + companyBean.getLongitude());
-                        } else {
-                            com.zz.lib.core.http.utils.ToastUtils.showToast("坐标错误");
-                        }
+                        com.zz.lib.core.http.utils.ToastUtils.showToast("坐标错误");
                     }
-                    break;
+                }
+                break;
             case R.id.bt_delete:
                 if (companyBean == null) return;
                 CustomDialog.Builder builder = new com.troila.customealert.CustomDialog.Builder(this)
@@ -238,7 +242,9 @@ public class CompanyInfoActivity extends MyBaseActivity {
 
         List<String> showList = new ArrayList<>();
         for (ImageBack imageBack : list) {
-            showList.add(imageBack.getBase64());
+            Bitmap s1 = GlideUtils.base64ToBitmap(imageBack.getBase64());
+            String s = BASE64.saveBitmap(this, s1);
+            showList.add(s);
         }
         images.clear();
 
@@ -274,7 +280,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==1001){
+        if (requestCode == 1001) {
             if (!TextUtils.isEmpty(id)) {
                 getData(id);
             }

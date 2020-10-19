@@ -67,7 +67,7 @@ public class SignActivity extends MyBaseActivity {
         switch (view.getId()) {
             case R.id.btn_ok:
                 Bitmap imageBitmap = mView.getCachebBitmap();
-                String path = BASE64.saveBitmap(imageBitmap);
+                String path = BASE64.saveBitmap(this,imageBitmap);
                 Intent intent= new Intent();
                 intent.putExtra("sign",path);
                 setResult(RESULT_OK,intent);

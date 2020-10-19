@@ -1,6 +1,7 @@
 package com.zz.supervision.business.company;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -30,6 +31,7 @@ import com.zz.supervision.business.company.adapter.ImageDeleteItemAdapter;
 import com.zz.supervision.business.company.mvp.Contract;
 import com.zz.supervision.business.company.mvp.presenter.CompanyAddPresenter;
 import com.zz.supervision.utils.BASE64;
+import com.zz.supervision.utils.GlideUtils;
 import com.zz.supervision.utils.ImageLoader;
 import com.zz.supervision.utils.TimeUtils;
 
@@ -101,7 +103,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     SelectPopupWindows selectPopupWindows;
     SelectPopupWindows selectPopupWindows1;
     SelectPopupWindows selectPopupWindows2;
-    List<ImageBack> imageBacks = new ArrayList<>();
+
     String id;
     double lat = 0.0;
     double lon = 0.0;
@@ -123,16 +125,15 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             public void onclickAdd(View v, int option) {
                 ArrayList<String> localPath = new ArrayList<>();
                 for (int i = 0; i < images.size(); i++) {
-                    if (!BASE64.isBase64(images.get(i).getPath())) {
+                    if (!TextUtils.isEmpty(images.get(i).getPath())) {
                         localPath.add(images.get(i).getPath());
                     } else {
-
                     }
                 }
                 ImageSelector.builder()
                         .useCamera(true) // 设置是否使用拍照
                         .setSingle(false)  //设置是否单选
-                        .setMaxSelectCount(9 - imageBacks.size()) // 图片的最大选择数量，小于等于0时，不限数量。
+                        .setMaxSelectCount(9 - images.size()) // 图片的最大选择数量，小于等于0时，不限数量。
                         .setSelected(localPath) // 把已选的图片传入默认选中。
                         .setViewImage(true) //是否点击放大图片查看,，默认为true
                         .start(AddCompanyActivity.this, 1101); // 打开相册
@@ -140,9 +141,6 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
             @Override
             public void onclickDelete(View v, int option) {
-                if (option < imageBacks.size()) {
-                    imageBacks.remove(option);
-                }
                 images.remove(option);
                 adapter.notifyDataSetChanged();
             }
@@ -297,7 +295,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         etLegalRepresentative.setText(data.getLegalRepresentative() + "");
         etAddress.setText(data.getAddress() + "");
         etBusinessPlace.setText(data.getBusinessPlace() + "");
-        etBusinessType.setText(data.getBusinessTypeText() + "" + data.getSpecificTypeText());
+        etBusinessType.setText(data.getBusinessTypeText() + "" );
         etBusinessProject.setText(data.getBusinessProjectText() + "");
         businessType = data.getBusinessType();
         specificType = data.getSpecificType();
@@ -369,6 +367,11 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     @Override
     public void showImage(List<ImageBack> list) {
         if (list == null) return;
+        for (ImageBack imageBack:list){
+            Bitmap s1 = GlideUtils.base64ToBitmap(imageBack.getBase64());
+            String s = BASE64.saveBitmap(this,s1);
+            imageBack.setPath(s);
+        }
         images.clear();
         images.addAll(list);
         adapter.notifyDataSetChanged();
@@ -554,6 +557,8 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 if (businessType.equals("3")) {
                     showSelectPopWindow2();
                 }
+                businessProject = "";
+                etBusinessProject.setText("");
             }
 
             @Override

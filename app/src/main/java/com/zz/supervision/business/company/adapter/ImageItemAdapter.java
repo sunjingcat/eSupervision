@@ -36,7 +36,7 @@ public class ImageItemAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
             public void onClick(View v) {
                 String str = item;
                 Bitmap s1 = GlideUtils.base64ToBitmap(str);
-                String s = BASE64.saveBitmap(s1);
+                String s = BASE64.saveBitmap(getContext(),s1);
                 ImagePreview.preview(getContext(), s);
             }
         });

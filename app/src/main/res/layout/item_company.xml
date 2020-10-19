@@ -37,22 +37,29 @@
                 tools:text="黑龙江富电实业集团有限公司燃料" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/item_legalRepresentative"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
                     android:layout_height="wrap_content"
                     android:textColor="#999999"
+                    android:lines="1"
+                    android:ellipsize="end"
+
                     android:textSize="15dp"
                     tools:text="法人代表:张志强" />
 
                 <TextView
                     android:id="@+id/item_businessType"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:textColor="#999999"
