@@ -30,14 +30,13 @@ public class ImageItemAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     protected void convert(BaseViewHolder holder, final String item) {
         GlideUtils.loadImage(getContext(), item, (ImageView) holder.getView(R.id.image));
 
-
         holder.getView(R.id.image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String str = item;
-                Bitmap s1 = GlideUtils.base64ToBitmap(str);
-                String s = BASE64.saveBitmap(getContext(),s1);
-                ImagePreview.preview(getContext(), s);
+//                Bitmap s1 = GlideUtils.base64ToBitmap(str);
+//                String s = BASE64.saveBitmap(getContext(),s1);
+                ImagePreview.preview(getContext(), str);
             }
         });
     }

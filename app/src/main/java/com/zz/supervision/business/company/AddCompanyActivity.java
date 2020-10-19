@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.previewlibrary.ZoomMediaLoader;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.commonlib.widget.SelectPopupWindows;
+import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
@@ -46,6 +47,7 @@ import java.util.Map;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -149,6 +151,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         if (!TextUtils.isEmpty(id)) {
             mPresenter.getData(id);
             toolbarTitle.setText("编辑企业");
+            mPresenter.getImage("company", id);
         }
         Map<String, Object> params = new HashMap<>();
         params.put("dictType", "business_type");
@@ -295,7 +298,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         etLegalRepresentative.setText(data.getLegalRepresentative() + "");
         etAddress.setText(data.getAddress() + "");
         etBusinessPlace.setText(data.getBusinessPlace() + "");
-        etBusinessType.setText(data.getBusinessTypeText() + "" );
+        etBusinessType.setText(data.getBusinessTypeText() + "");
         etBusinessProject.setText(data.getBusinessProjectText() + "");
         businessType = data.getBusinessType();
         specificType = data.getSpecificType();
@@ -312,7 +315,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         etContactInformation.setText(data.getContactInformation() + "");
         etFieldTime.setText(data.getFieldTime() + "");
         fieldTime = data.getFieldTime();
-        mPresenter.getImage("company", data.getId());
+
         etCompanyType.setText(data.getCompanyTypeText() + "");
     }
 
@@ -322,7 +325,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         for (int i = 0; i < images.size(); i++) {
             ids.add(images.get(i).getId());
         }
-        mPresenter.uploadCompanyImgs(id,new Gson().toJson(ids));
+        mPresenter.uploadCompanyImgs(id, new Gson().toJson(ids));
     }
 
     @Override
@@ -367,10 +370,17 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     @Override
     public void showImage(List<ImageBack> list) {
         if (list == null) return;
-        for (ImageBack imageBack:list){
-            Bitmap s1 = GlideUtils.base64ToBitmap(imageBack.getBase64());
-            String s = BASE64.saveBitmap(this,s1);
-            imageBack.setPath(s);
+        for (ImageBack imageBack : list) {
+            String bitmapName = "company_" + imageBack.getId() + ".png";
+            String path = getCacheDir() + "/zhongzhi/" + bitmapName;
+            File file = new File(path);
+            if (file.exists()) {
+                imageBack.setPath(path);
+            } else {
+                Bitmap s1 = GlideUtils.base64ToBitmap(imageBack.getBase64());
+                String s = BASE64.saveBitmap(this, imageBack.getId(), s1);
+                imageBack.setPath(s);
+            }
         }
         images.clear();
         images.addAll(list);
@@ -559,6 +569,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 }
                 businessProject = "";
                 etBusinessProject.setText("");
+                projectBeans.clear();
             }
 
             @Override

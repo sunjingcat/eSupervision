@@ -107,10 +107,13 @@ public class BASE64 {
         return "";
     }
 
-    public static String saveBitmap(Context context, Bitmap bmp) {
+    public static String saveBitmap(Context context,String id, Bitmap bmp) {
         if (bmp==null)return "";
         FileOutputStream out;
-        String bitmapName = new Date().getTime()+".png";
+        if (TextUtils.isEmpty(id)){
+            id = new Date().getTime()+"";
+        }
+        String bitmapName = "company_"+id+".png";
         try { // 获取SDCard指定目录下
             String sdCardDir = context.getCacheDir() + "/zhongzhi/";
             File dirFile = new File(sdCardDir);  //目录转化成文件夹
@@ -136,6 +139,6 @@ public class BASE64 {
             e.printStackTrace();
         }
         return "";
-//        Toast.makeText(HahItemActivity.this,"保存已经至"+Environment.getExternalStorageDirectory()+"/CoolImage/"+"目录文件夹下", Toast.LENGTH_SHORT).show();
+
     }
 }

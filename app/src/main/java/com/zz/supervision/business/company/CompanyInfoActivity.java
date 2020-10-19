@@ -30,6 +30,7 @@ import com.zz.supervision.utils.GlideUtils;
 import com.zz.supervision.utils.ImageLoader;
 import com.zz.supervision.utils.NavUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -242,9 +243,17 @@ public class CompanyInfoActivity extends MyBaseActivity {
 
         List<String> showList = new ArrayList<>();
         for (ImageBack imageBack : list) {
-            Bitmap s1 = GlideUtils.base64ToBitmap(imageBack.getBase64());
-            String s = BASE64.saveBitmap(this, s1);
-            showList.add(s);
+            String bitmapName = "company_" + imageBack.getId() + ".png";
+            String path = getCacheDir() + "/zhongzhi/" + bitmapName;
+            File file = new File(path);
+            if (file.exists()){
+                showList.add(path);
+            }else {
+                Bitmap s1 = GlideUtils.base64ToBitmap(imageBack.getBase64());
+                String s = BASE64.saveBitmap(this, imageBack.getId(), s1);
+                showList.add(s);
+            }
+
         }
         images.clear();
 
