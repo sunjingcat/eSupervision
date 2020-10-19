@@ -256,7 +256,6 @@ public class CompanyInfoActivity extends MyBaseActivity {
 
         }
         images.clear();
-
         images.addAll(showList);
 
         adapter.notifyDataSetChanged();

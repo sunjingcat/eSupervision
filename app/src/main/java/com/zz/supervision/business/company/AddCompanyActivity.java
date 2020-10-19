@@ -147,6 +147,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 adapter.notifyDataSetChanged();
             }
         });
+        showLoading("");
         id = getIntent().getStringExtra("id");
         if (!TextUtils.isEmpty(id)) {
             mPresenter.getData(id);
@@ -369,7 +370,9 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
     @Override
     public void showImage(List<ImageBack> list) {
+
         if (list == null) return;
+        showLoading("");
         for (ImageBack imageBack : list) {
             String bitmapName = "company_" + imageBack.getId() + ".png";
             String path = getCacheDir() + "/zhongzhi/" + bitmapName;
@@ -385,6 +388,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         images.clear();
         images.addAll(list);
         adapter.notifyDataSetChanged();
+        dismissLoading();
     }
 
     private void postData() {
