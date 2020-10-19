@@ -317,7 +317,9 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         etContactInformation.setText(data.getContactInformation() + "");
         etFieldTime.setText(data.getFieldTime() + "");
         fieldTime = data.getFieldTime();
-
+        lat = data.getLatitude();
+        lon = data.getLongitude();
+        etLocation.setText("位置");
         etCompanyType.setText(data.getCompanyTypeText() + "");
     }
 
@@ -444,10 +446,10 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             params.put("validDate", validDate);
         }
 
-        if (!TextUtils.isEmpty(businessProject)) {
-            params.put("businessProject", businessProject);
-            params.put("businessProjectText", businessProjectText);
-        }
+
+        params.put("businessProject", businessProject + "");
+        params.put("businessProjectText", businessProjectText + "");
+
 
         if (lon != 0.0 && lat != 0.0) {
             params.put("longitude", lon);
@@ -573,6 +575,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                     showSelectPopWindow2();
                 }
                 businessProject = "";
+                businessProjectText = "";
                 etBusinessProject.setText("");
                 projectBeans.clear();
             }

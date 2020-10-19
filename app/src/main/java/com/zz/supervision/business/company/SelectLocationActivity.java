@@ -167,7 +167,7 @@ public class SelectLocationActivity extends MyBaseActivity implements OnGetGeoCo
 
         mSuggestionSearch.requestSuggestion((new SuggestionSearchOption())
                 .keyword(keyword)
-                .city("苏州"));
+                .city("天津"));
     }
 
     /**
@@ -189,7 +189,9 @@ public class SelectLocationActivity extends MyBaseActivity implements OnGetGeoCo
                     list.add(info);
                 }
                 if (list.size()>0) {
-                    showLocation(list.get(0).getLocation().latitude, list.get(0).getLocation().longitude);
+                    if (list.get(0).getLocation()!=null) {
+                        showLocation(list.get(0).getLocation().latitude, list.get(0).getLocation().longitude);
+                    }
                 }
                 mlist.clear();
                 mlist.addAll(list);
@@ -261,15 +263,16 @@ public class SelectLocationActivity extends MyBaseActivity implements OnGetGeoCo
                 //改变结束之后，获取地图可视范围的中心点坐标
                 LatLng latLng = status.target;
 
-                if (lastLngLat!=null&& AMapUtils.calculateLineDistance(latLng,lastLngLat)>5) {
+                if ((lastLngLat!=null&& AMapUtils.calculateLineDistance(latLng,lastLngLat)>5)||isFirstLoc) {
                     geoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(latLng));
                     showLocation(latLng.latitude, latLng.longitude);
                     LogUtils.v("sj--",latLng.toString());
+                    isFirstLoc = false;
+                    lastLngLat = latLng;
                 }
-
                 //拿到经纬度之后，就可以反地理编码获取地址信息了
                 //initGeoCoder(latLng)
-                lastLngLat = latLng;
+
 
             }
 
@@ -313,12 +316,19 @@ public class SelectLocationActivity extends MyBaseActivity implements OnGetGeoCo
     public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
         if (null != reverseGeoCodeResult) {
 
-            tv_name.setText(reverseGeoCodeResult.getAddress() + "");
+
             locationInfo.setLocation(reverseGeoCodeResult.getLocation());
-            locationInfo.setAddress(reverseGeoCodeResult.getAddress());
+
             List<PoiInfo> poiList = reverseGeoCodeResult.getPoiList();
             if (poiList == null) {
                 return;
+            }
+            if (poiList.size()>1) {
+                tv_name.setText(poiList.get(0).address + "");
+                locationInfo.setAddress(poiList.get(0).address);
+            }else {
+                tv_name.setText(reverseGeoCodeResult.getAddress() + "");
+                locationInfo.setAddress(reverseGeoCodeResult.getAddress() );
             }
             mlist.clear();
             mlist.addAll(poiList);
