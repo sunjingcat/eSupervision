@@ -147,12 +147,13 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 adapter.notifyDataSetChanged();
             }
         });
-        showLoading("");
+
         id = getIntent().getStringExtra("id");
         if (!TextUtils.isEmpty(id)) {
             mPresenter.getData(id);
             toolbarTitle.setText("编辑企业");
             mPresenter.getImage("company", id);
+            showLoading("");
         }
         Map<String, Object> params = new HashMap<>();
         params.put("dictType", "business_type");
