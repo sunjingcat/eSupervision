@@ -28,6 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 /**
  * 监督检查:食品销售日常
  */
@@ -69,7 +70,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
             @Override
             public void onItemOnclick(BaseNode node, int type) {
                 if (node instanceof SuperviseBean) {
-                    if (type==10) {
+                    if (type == 10) {
                         for (int i = 0; i < adapter.getData().size(); i++) {
                             BaseNode children = adapter.getData().get(i);
                             if (children instanceof SuperviseBean && ((SuperviseBean) children).getId().equals(((SuperviseBean) node).getId())) {
@@ -77,7 +78,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                                 break;
                             }
                         }
-                    }else {
+                    } else {
                         for (SuperviseBean.Children children : ((SuperviseBean) node).getChildrenList()) {
                             if (((SuperviseBean) node).isCheck()) {
                                 children.setIsSatisfy(1);
@@ -87,10 +88,27 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                         }
                     }
                 } else if (node instanceof SuperviseBean.Children) {
-                    ((SuperviseBean.Children) node).setIsSatisfy(type);
-                    if (type == 2) {
+                    if (type == ((SuperviseBean.Children) node).getIsSatisfy()) {
+                        ((SuperviseBean.Children) node).setIsSatisfy(0);
+                    } else {
+                        ((SuperviseBean.Children) node).setIsSatisfy(type);
+                    }
+                    if (type == 1) {
                         for (BaseNode superviseBean : adapter.getData()) {
-                            if (superviseBean instanceof SuperviseBean&&((SuperviseBean) superviseBean).getId().equals(((SuperviseBean.Children) node).getItemPid())) {
+                            if (superviseBean instanceof SuperviseBean && ((SuperviseBean) superviseBean).getId().equals(((SuperviseBean.Children) node).getItemPid())) {
+                                boolean isAllYes = true;
+                                for (SuperviseBean.Children children : ((SuperviseBean) superviseBean).getChildrenList()) {
+                                    if (children.getIsSatisfy()!=1){
+                                        isAllYes = false;
+                                    }
+                                }
+                                ((SuperviseBean) superviseBean).setCheck(isAllYes);
+                                break;
+                            }
+                        }
+                    }else if (type == 2){
+                        for (BaseNode superviseBean : adapter.getData()) {
+                            if (superviseBean instanceof SuperviseBean) {
                                 ((SuperviseBean) superviseBean).setCheck(false);
                             }
                         }
@@ -110,7 +128,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
 
         toolbaSubtitle.setVisibility(View.VISIBLE);
         initData();
-        mPresenter.getData(id,url);
+        mPresenter.getData(id, url);
     }
 
     @Override
@@ -203,7 +221,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                 postBeans = new ArrayList<>();
                 for (BaseNode node : mlist) {
                     if (node instanceof SuperviseBean) {
-                        for (SuperviseBean.Children children:((SuperviseBean) node).getChildrenList()) {
+                        for (SuperviseBean.Children children : ((SuperviseBean) node).getChildrenList()) {
                             if (children.getIsSatisfy() != 0) {
                                 postBeans.add(new SuperviseBean.PostBean(children.getId(), children.getIsSatisfy() == 1 ? 1 : 0));
                             }

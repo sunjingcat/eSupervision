@@ -122,13 +122,14 @@ public class SelectLocationActivity extends MyBaseActivity implements OnGetGeoCo
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
                 tv_name.setText(mlist.get(position).getAddress() + "");
-
-                double latitude = mlist.get(position).getLocation().latitude;
-                double longitude = mlist.get(position).getLocation().longitude;
-                showLocation(latitude, longitude);
-                moveCenter(mlist.get(position).getLocation());
-                locationInfo .setAddress(mlist.get(position).address);
-                locationInfo .setLocation(mlist.get(position).location);
+                if (mlist.get(position).getLocation()!=null) {
+                    double latitude = mlist.get(position).getLocation().latitude;
+                    double longitude = mlist.get(position).getLocation().longitude;
+                    showLocation(latitude, longitude);
+                    moveCenter(mlist.get(position).getLocation());
+                    locationInfo.setAddress(mlist.get(position).address);
+                    locationInfo.setLocation(mlist.get(position).location);
+                }
 
             }
         });
