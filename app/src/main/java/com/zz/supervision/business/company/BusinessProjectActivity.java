@@ -71,7 +71,7 @@ public class BusinessProjectActivity extends MyBaseActivity {
                 mlist.get(p).setSelect(!mlist.get(p).isSelect());
                 if (!mlist.get(p).isSelect()) {
                     for (int i = 0; i < mlist.size(); i++) {
-                        if (mlist.get(i).getValue() == mlist.get(p).getFatherValue()) {
+                        if (mlist.get(i).getFatherValue() == mlist.get(p).getValue()) {
                             mlist.get(i).setSelect(false);
                         }
                     }
@@ -82,25 +82,20 @@ public class BusinessProjectActivity extends MyBaseActivity {
             @Override
             public void onContentClick(View v, int p) {
                 boolean isSelect = false;
-                boolean unSelect = true;
                 mlist.get(p).setSelect(!mlist.get(p).isSelect());
                 for (int i = 0; i < mlist.size(); i++) {
                     if (mlist.get(i).getFatherValue() == mlist.get(p).getFatherValue()) {
                         if (mlist.get(i).isSelect()) {
                             isSelect = true;
-                            unSelect = false;
-                        }else {
-                            unSelect = true;
                         }
                     }
                 }
                 for (int i = 0; i < mlist.size(); i++) {
-                    if (mlist.get(i).getValue() == mlist.get(p).getFatherValue()) {
+                    if (mlist.get(i).getValue() == mlist.get(p).getFatherValue()&&isSelect) {
+
                         mlist.get(i).setSelect(isSelect);
                     }
-                    if (unSelect){
-                        mlist.get(i).setSelect(false);
-                    }
+
                 }
 
                 adapter.notifyDataSetChanged();

@@ -93,26 +93,24 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                     } else {
                         ((SuperviseBean.Children) node).setIsSatisfy(type);
                     }
-                    if (type == 1) {
-                        for (BaseNode superviseBean : adapter.getData()) {
-                            if (superviseBean instanceof SuperviseBean && ((SuperviseBean) superviseBean).getId().equals(((SuperviseBean.Children) node).getItemPid())) {
+
+                    for (BaseNode superviseBean : adapter.getData()) {
+                        if (superviseBean instanceof SuperviseBean && ((SuperviseBean) superviseBean).getId().equals(((SuperviseBean.Children) node).getItemPid())) {
+                            if (type == 1) {
                                 boolean isAllYes = true;
                                 for (SuperviseBean.Children children : ((SuperviseBean) superviseBean).getChildrenList()) {
-                                    if (children.getIsSatisfy()!=1){
+                                    if (children.getIsSatisfy() != 1) {
                                         isAllYes = false;
                                     }
                                 }
                                 ((SuperviseBean) superviseBean).setCheck(isAllYes);
-                                break;
-                            }
-                        }
-                    }else if (type == 2){
-                        for (BaseNode superviseBean : adapter.getData()) {
-                            if (superviseBean instanceof SuperviseBean) {
+                            } else if (type == 2) {
                                 ((SuperviseBean) superviseBean).setCheck(false);
                             }
+                            break;
                         }
                     }
+
                 }
                 adapter.notifyDataSetChanged();
             }

@@ -28,6 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -94,14 +95,31 @@ public class RiskSuperviseActivity extends MyBaseActivity<Contract.IsetRiskSuper
                         }
                     }
                 } else if (node instanceof RiskSuperviseBean.ChildRisk) {
-                    ((RiskSuperviseBean.ChildRisk) node).setCheck(type);
-                    if (type == 2) {
-                        for (BaseNode superviseBean : adapter.getData()) {
-                            if (superviseBean instanceof RiskSuperviseBean.RiskItem && ((RiskSuperviseBean.RiskItem) superviseBean).getId().equals(((RiskSuperviseBean.ChildRisk) node).getPid())) {
+                    if (type == ((RiskSuperviseBean.ChildRisk) node).isCheck()) {
+                        ((RiskSuperviseBean.ChildRisk) node).setCheck(0);
+                    } else {
+                        ((RiskSuperviseBean.ChildRisk) node).setCheck(type);
+                    }
+
+                    for (BaseNode superviseBean : adapter.getData()) {
+                        if (superviseBean instanceof RiskSuperviseBean.RiskItem && ((RiskSuperviseBean.RiskItem) superviseBean).getId().equals(((RiskSuperviseBean.ChildRisk) node).getPid())) {
+                            if (type == 1) {
+                                boolean isAllYes = true;
+                                for (RiskSuperviseBean.ChildRisk children : ((RiskSuperviseBean.RiskItem) superviseBean).getChildRisks()) {
+                                    if (children.isCheck() != 1) {
+                                        isAllYes = false;
+                                    }
+                                }
+                                ((RiskSuperviseBean.RiskItem) superviseBean).setCheck(isAllYes);
+                            } else if (type == 2) {
+
                                 ((RiskSuperviseBean.RiskItem) superviseBean).setCheck(false);
+
                             }
+                            break;
                         }
                     }
+
                 }
                 adapter.notifyDataSetChanged();
             }
