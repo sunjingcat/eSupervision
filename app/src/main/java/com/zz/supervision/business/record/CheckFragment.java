@@ -82,6 +82,7 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
     @Override
     public void onResume() {
         super.onResume();
+
         getDate();
     }
 
@@ -101,6 +102,7 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
         this.status = status;
         this.endTime = endTime;
         this.level = level;
+        pagenum = 1;
         getDate();
     }
 
@@ -171,12 +173,16 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
     }
 
     void getDate() {
+        String companyId = getActivity().getIntent().getStringExtra("id");
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", pagenum);
         map.put("pageSize", pagesize);
         map.put("inspectionType", type);
         if (!TextUtils.isEmpty(company)) {
             map.put("company", company);
+        }
+        if (!TextUtils.isEmpty(companyId)) {
+            map.put("companyId", companyId);
         }
         if (!TextUtils.isEmpty(lawEnforcer)) {
             map.put("lawEnforcer", lawEnforcer);

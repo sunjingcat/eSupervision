@@ -41,6 +41,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -112,6 +113,7 @@ public class CheckListActivity extends MyBaseActivity {
     CheckFragment checkFragment2;
 
     void initFragment() {
+
         checkFragment1 = new CheckFragment("1");
         checkFragment2 = new CheckFragment("2");
         for (int i = 0; i < tabs.length; i++) {

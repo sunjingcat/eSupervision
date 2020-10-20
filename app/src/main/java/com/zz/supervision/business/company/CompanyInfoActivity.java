@@ -21,6 +21,7 @@ import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.business.company.adapter.ImageItemAdapter;
 import com.zz.supervision.business.inspenction.XCHZFActivity;
+import com.zz.supervision.business.record.CheckListActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -163,7 +164,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.et_location, R.id.bt_delete, R.id.et_nav})
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
@@ -172,6 +173,10 @@ public class CompanyInfoActivity extends MyBaseActivity {
             case R.id.bt_ok:
                 if (companyBean == null) return;
                 startActivity(new Intent(this, XCHZFActivity.class).putExtra("company", companyBean));
+                break;
+            case R.id.et_record:
+
+                startActivity(new Intent(this, CheckListActivity.class).putExtra("id", companyBean.getId()));
                 break;
             case R.id.et_location:
                 if (companyBean == null) return;
@@ -246,9 +251,9 @@ public class CompanyInfoActivity extends MyBaseActivity {
             String bitmapName = "company_" + imageBack.getId() + ".png";
             String path = getCacheDir() + "/zhongzhi/" + bitmapName;
             File file = new File(path);
-            if (file.exists()){
+            if (file.exists()) {
                 showList.add(path);
-            }else {
+            } else {
                 Bitmap s1 = GlideUtils.base64ToBitmap(imageBack.getBase64());
                 String s = BASE64.saveBitmap(this, imageBack.getId(), s1);
                 showList.add(s);
