@@ -24,6 +24,7 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
     private String searchValue;// ,
     private String updateBy;// ,
     private String updateTime;//
+    private int isLastNotSatisfy;//
     private boolean check;//
     private ArrayList<Children> childrenList;
 
@@ -33,6 +34,10 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
 
     public boolean isCheck() {
         return check;
+    }
+
+    public int getIsLastNotSatisfy() {
+        return isLastNotSatisfy;
     }
 
     public void setCheck(boolean check) {

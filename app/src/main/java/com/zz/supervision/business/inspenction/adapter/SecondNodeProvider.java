@@ -41,7 +41,7 @@ public class SecondNodeProvider extends BaseNodeProvider {
         SuperviseBean.Children entity = (SuperviseBean.Children) data;
         baseViewHolder.setText(R.id.itemName, entity.getItemName());
         baseViewHolder.getView(R.id.item_isImportant).setVisibility(entity.getIsImportant() == 0 ? View.INVISIBLE : View.VISIBLE);
-        baseViewHolder.setBackgroundColor(R.id.itemName,((SuperviseBean.Children) data).getIsLastNotSatisfy()==1? Color.parseColor("#FFFCC2BF"):Color.parseColor("#ffffff"));
+        baseViewHolder.setTextColor(R.id.itemName,((SuperviseBean.Children) data).getIsLastNotSatisfy()==1? Color.parseColor("#FFC12A2A"):Color.parseColor("#4A4A4A"));
 
         if (((SuperviseBean.Children) data).getIsSatisfy() == 1) {
 
