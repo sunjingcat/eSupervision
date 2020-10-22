@@ -81,6 +81,7 @@ public class SelectLocationActivity extends MyBaseActivity implements OnGetGeoCo
     public LocationClient mLocationClient;
     private LatLng latLng;
     private boolean isFirstLoc = true; // 是否首次定位
+    private boolean isFirst = true; // 是否首次定位
     public BDLocationListener myListener = new MyLocationListener();
     List<PoiInfo> mlist = new ArrayList<>();
     SearchLocationAdapter adapter;
@@ -291,7 +292,7 @@ public class SelectLocationActivity extends MyBaseActivity implements OnGetGeoCo
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy
         );//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
         option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
-        int span = 1000;
+        int span = 0;
         option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
         option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
         option.setOpenGps(true);//可选，默认false,设置是否使用gps
@@ -349,7 +350,7 @@ public class SelectLocationActivity extends MyBaseActivity implements OnGetGeoCo
                 finish();
                 break;
             case R.id.my_site:
-                isFirstLoc= true;
+                isFirst= true;
                 //开启定位
                 mLocationClient.start();
                 //图片点击事件，回到定位点
@@ -376,10 +377,10 @@ public class SelectLocationActivity extends MyBaseActivity implements OnGetGeoCo
                 mBaiduMap.setMyLocationData(locData);
                 // 当不需要定位图层时关闭定位图层
                 //mBaiduMap.setMyLocationEnabled(false);
-                if (isFirstLoc) {
+                if (isFirst) {
 
                     showLocation(location.getLatitude(), location.getLongitude());
-                    isFirstLoc = false;
+                    isFirst = false;
                     // 设置定位数据
                     mBaiduMap.setMyLocationData(locData);
                     tv_name.setText(location.getAddrStr() + "");
@@ -441,7 +442,7 @@ public class SelectLocationActivity extends MyBaseActivity implements OnGetGeoCo
                 longitude);
         MapStatus.Builder builder = new MapStatus.Builder();
 
-        if (isFirstLoc){ builder.target(ll).zoom(18.0f);}
+        if (isFirst){ builder.target(ll).zoom(18.0f);}
         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
     }
 
