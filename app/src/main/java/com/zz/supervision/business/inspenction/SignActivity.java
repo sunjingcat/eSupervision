@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -34,6 +35,7 @@ public class SignActivity extends MyBaseActivity {
     FrameLayout flView;
     @BindView(R.id.btn_ok)
     Button btnOk;
+
     @BindView(R.id.btn_clear)
     Button btnClear;
     private SignatureView mView;

@@ -43,9 +43,10 @@ public class RiskSuperviseInfoActivity extends MyBaseActivity {
     TextView tvInspector;
     @BindView(R.id.tv_type)
     TextView tvType;
-    @BindView(R.id.tv_num)
-    TextView tvNum;
-
+    @BindView(R.id.tv_time)
+    TextView tvTime;
+    @BindView(R.id.tv_reason)
+    TextView tvReason;
     @BindView(R.id.rv_dynamicRisks)
     RecyclerView rv_dynamicRisks;
 
@@ -147,6 +148,13 @@ public class RiskSuperviseInfoActivity extends MyBaseActivity {
         tvCompany.setText(company);
         tvInspector.setText("检查员：" + lawEnforcerText);
         tvType.setText("检查类型：" + type + "");
+        String time = getIntent().getStringExtra("inspectionTime");
+        String reason = getIntent().getStringExtra("reason");
+        tvTime.setText("检查时间：" + time + "");
+        if (TextUtils.isEmpty(reason)){
+            tvReason.setVisibility(View.GONE);
+        }
+        tvReason.setText("检查事由：" +  reason+"");
     }
 
     @Override

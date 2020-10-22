@@ -53,6 +53,8 @@ public class CheckListActivity extends MyBaseActivity {
     Toolbar toolbar;
     @BindView(R.id.toolbar_subtitle)
     ImageView toolbarSubtitle;
+    @BindView(R.id.ll_company)
+    LinearLayout ll_company;
     @BindView(R.id.drawer)
     DrawerLayout drawer;
     @BindView(R.id.viewpager)
@@ -104,6 +106,12 @@ public class CheckListActivity extends MyBaseActivity {
             toolbarSubtitle.setVisibility(View.VISIBLE);
         } else {
             toolbarSubtitle.setVisibility(View.GONE);
+        }
+        String companyId = getIntent().getStringExtra("id");
+        if (!TextUtils.isEmpty(companyId)){
+            ll_company.setVisibility(View.GONE);
+        }else {
+            ll_company.setVisibility(View.VISIBLE);
         }
         getDate();
 

@@ -66,29 +66,37 @@
         android:fitsSystemWindows="true"
         android:orientation="vertical"
         android:padding="10dp"
+        android:layout_marginTop="30dp"
 
         >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="检查单位"
-            android:textColor="#ff929292"
-            android:textSize="13sp" />
-
-        <EditText
-            android:id="@+id/et_company"
+        <LinearLayout
+            android:id="@+id/ll_company"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginTop="10dp"
-            android:background="#F0F0F0"
-            android:drawableLeft="@drawable/image_search"
-            android:drawablePadding="10dp"
-            android:hint="输入相关关键词"
-            android:padding="10dp"
-            android:textSize="14sp" />
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="检查单位"
+                android:textColor="#ff929292"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/et_company"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#F0F0F0"
+                android:drawableLeft="@drawable/image_search"
+                android:drawablePadding="10dp"
+                android:hint="输入相关关键词"
+                android:padding="10dp"
+                android:textSize="14sp" />
+        </LinearLayout>
+
 
         <TextView
             android:layout_width="wrap_content"

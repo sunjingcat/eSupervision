@@ -126,16 +126,18 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
                                 .putExtra("id", recordBean.getId() + "")
                                 .putExtra("type", recordBean.getType())
                                 .putExtra("typeText", recordBean.getTypeText()+"")
+                                .putExtra("reason", recordBean.getReason()+"")
                                 .putExtra("lawEnforcer", recordBean.getLawEnforcer1Name()+","+recordBean.getLawEnforcer2Name())
-                                .putExtra("inspectionTime", recordBean.getCreateTime()));
+                                .putExtra("inspectionTime", recordBean.getInspectionTime()));
                     } else {
                         startActivity(new Intent(getActivity(), RiskSuperviseActivity.class)
                                 .putExtra("company", recordBean.getOperatorName())
                                 .putExtra("id", recordBean.getId() + "")
                                 .putExtra("type", recordBean.getType())
                                 .putExtra("typeText", recordBean.getTypeText()+"")
+                                .putExtra("reason", recordBean.getReason()+"")
                                 .putExtra("lawEnforcer", recordBean.getLawEnforcer1Name()+","+recordBean.getLawEnforcer2Name())
-                                .putExtra("inspectionTime", recordBean.getCreateTime())); }
+                                .putExtra("inspectionTime", recordBean.getInspectionTime())); }
 
                 } else {
                     startActivity(new Intent(getActivity(), SuperviseSignActivity.class).putExtra("id", mlist.get(position).getId() + "").putExtra("type", mlist.get(position).getType()));

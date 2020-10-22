@@ -11,6 +11,7 @@ public class RecordBean implements Serializable {
     private String remark;
     private Object params;
     private String deptId;
+    private String reason;
     private int id;
     private int type;
     private String typeText;
@@ -30,6 +31,10 @@ public class RecordBean implements Serializable {
     }
     public String getSearchValue() {
         return searchValue;
+    }
+
+    public String getReason() {
+        return reason;
     }
 
     public String getInspectionResultText() {

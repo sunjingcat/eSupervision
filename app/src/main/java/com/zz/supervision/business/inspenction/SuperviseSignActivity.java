@@ -126,6 +126,9 @@ public class SuperviseSignActivity extends MyBaseActivity {
     TextView tvPreLevel;
     @BindView(R.id.tv_time)
     TextView tvTime;
+
+    @BindView(R.id.tv_reason)
+    TextView tv_reason;
     @BindView(R.id.ll_risk)
     LinearLayout llRisk;
     @BindView(R.id.tv_resultReduction)
@@ -188,6 +191,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         tvYearCount.setText(resposeBean.getYearCount() + "");
         llYearCount.setVisibility(TextUtils.isEmpty(resposeBean.getYearCount()) ? View.GONE : View.VISIBLE);
         tvTime.setText(resposeBean.getInspectionTime() + "");
+        tv_reason.setText(resposeBean.getReason() + "");
         if (type == 1 || type == 2) {
             tvImportantCount.setText(resposeBean.getImportantCount() + "");
             tvImportantDetail.setText(resposeBean.getImportantDetail() + "");
@@ -319,7 +323,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                             .putExtra("status", resposeBean.getStatus())
                             .putExtra("typeText", resposeBean.getTypeText() + "")
                             .putExtra("lawEnforcer", resposeBean.getLawEnforcer1Name() + "," + resposeBean.getLawEnforcer2Name())
-                            .putExtra("inspectionTime", resposeBean.getCreateTime()));
+                            .putExtra("inspectionTime", resposeBean.getInspectionTime()));
                 } else {
                     startActivity(new Intent(this, RiskSuperviseInfoActivity.class)
                             .putExtra("company", resposeBean.getCompanyInfo().getOperatorName())
@@ -328,7 +332,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                             .putExtra("status", resposeBean.getStatus())
                             .putExtra("typeText", resposeBean.getTypeText() + "")
                             .putExtra("lawEnforcer", resposeBean.getLawEnforcer1Name() + "," + resposeBean.getLawEnforcer2Name())
-                            .putExtra("inspectionTime", resposeBean.getCreateTime()));
+                            .putExtra("inspectionTime", resposeBean.getInspectionTime()));
                 }
 
                 break;

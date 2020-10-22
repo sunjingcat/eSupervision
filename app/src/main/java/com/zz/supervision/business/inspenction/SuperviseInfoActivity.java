@@ -45,9 +45,12 @@ public class SuperviseInfoActivity extends MyBaseActivity {
     TextView tvInspector;
     @BindView(R.id.tv_type)
     TextView tvType;
-    @BindView(R.id.tv_num)
-    TextView tvNum;
-
+    @BindView(R.id.tv_time)
+    TextView tvTime;
+    @BindView(R.id.tv_reason)
+    TextView tvReason;
+    @BindView(R.id.tv_remark)
+    TextView tvRemark;
     @BindView(R.id.rv)
     RecyclerView rv;
     SuperviseAdapter adapter;
@@ -104,6 +107,7 @@ public class SuperviseInfoActivity extends MyBaseActivity {
 
         toolbarTitle.setText("评分详情");
         toolbaSubtitle.setVisibility(View.GONE);
+        tvReason.setVisibility(View.GONE);
     }
 
     @Override
@@ -119,6 +123,13 @@ public class SuperviseInfoActivity extends MyBaseActivity {
         tvCompany.setText(company + "");
         tvInspector.setText("检查员：" + lawEnforcerText);
         tvType.setText("检查类型：" + type + "");
+        String time = getIntent().getStringExtra("inspectionTime");
+        String reason = getIntent().getStringExtra("reason");
+        tvTime.setText("检查时间：" + time + "");
+        tvReason.setText("检查事由：" + reason + "");
+        if (TextUtils.isEmpty(reason)){
+            tvReason.setVisibility(View.GONE);
+        }
         getData();
     }
 
@@ -139,7 +150,8 @@ public class SuperviseInfoActivity extends MyBaseActivity {
             protected void onSuccess(JsonT<SuperviseInfoBean> jsonT) {
                 if (jsonT==null)return;
                 showSuperviseList(jsonT.getData().getData());
-                tvNum.setText(jsonT.getData().getRemark()+"");
+                tvRemark.setVisibility(View.VISIBLE);
+                tvRemark.setText(jsonT.getData().getRemark()+"");
             }
 
             @Override

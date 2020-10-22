@@ -42,7 +42,7 @@ public class GlideUtils {
             Bitmap bitmap = base64ToBitmap(url);
             if (bitmap == null) {
                 RequestOptions options = new RequestOptions()
-                        .centerCrop()
+                        .centerInside()
                         .placeholder(placeholderSoWhite)
                         .error(errorSoWhite)
                         //.priority(Priority.HIGH)
@@ -54,7 +54,7 @@ public class GlideUtils {
             }
         } else {
             RequestOptions options = new RequestOptions()
-                    .centerCrop()
+                    .centerInside()
                     .placeholder(placeholderSoWhite) //占位图
                     .error(R.color.colorWhite)       //错误图
                     // .priority(Priority.HIGH)

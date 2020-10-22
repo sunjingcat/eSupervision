@@ -96,13 +96,31 @@
                     tools:text="检查类型" />
 
                 <TextView
-                    android:id="@+id/tv_num"
+                    android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:textColor="#272727"
                     android:textSize="15dp"
-                    tools:text="检查次数" />
+                    tools:text="检查日期" />
+                <TextView
+                    android:id="@+id/tv_reason"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="#272727"
+                    android:textSize="15dp"
+                    tools:text="检查事由" />
+
+                <TextView
+                    android:id="@+id/tv_remark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="#272727"
+                    android:textSize="15dp"
+                    tools:text="检查事由"
+                    android:visibility="gone"/>
             </LinearLayout>
 
             <LinearLayout

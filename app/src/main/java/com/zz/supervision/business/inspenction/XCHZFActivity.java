@@ -249,6 +249,7 @@ public class XCHZFActivity extends MyBaseActivity {
         RxNetUtils.request(getApi(ApiService.class).createRecord(map), new RequestObserver<JsonT<Integer>>() {
             @Override
             protected void onSuccess(JsonT<Integer> jsonT) {
+                String reason = edCause.getText().toString();
                 if (type == 1 || type == 2) {
                     startActivity(new Intent(XCHZFActivity.this, SuperviseActivity.class)
                             .putExtra("company", companyBean.getOperatorName())
@@ -256,6 +257,7 @@ public class XCHZFActivity extends MyBaseActivity {
                             .putExtra("type", type)
                             .putExtra("typeText", etType.getText().toString())
                             .putExtra("lawEnforcer", names)
+                            .putExtra("reason", reason+"")
                             .putExtra("inspectionTime", inspectionTime));
                     finish();
                 } else if (type == 3 || type == 4) {
@@ -265,6 +267,7 @@ public class XCHZFActivity extends MyBaseActivity {
                             .putExtra("type", type)
                             .putExtra("typeText", etType.getText().toString())
                             .putExtra("lawEnforcer", names)
+                            .putExtra("reason", reason+"")
                             .putExtra("inspectionTime", inspectionTime));
                     finish();
                 }
