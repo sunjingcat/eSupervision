@@ -474,11 +474,6 @@
                     android:layout_width="150dp"
                     android:text="位置" />
 
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="50dp"
-                    android:drawableRight="@drawable/location"
-                    android:text="" />
 
                 <TextView
                     android:id="@+id/et_location"
@@ -501,7 +496,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="1dp"
                 android:layout_marginRight="10dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
@@ -534,7 +529,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="1dp"
                 android:layout_marginRight="10dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
@@ -564,26 +559,28 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/bt_ok"
+                android:id="@+id/bt_delete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:layout_margin="10dp"
-                android:background="@drawable/border_radius_3_blue"
-                android:text="开始执法"
-                android:textColor="@color/white"
+                android:background="@color/white"
+                android:text="删除"
+                android:textColor="@color/red"
                 android:textSize="16sp" />
 
             <Button
-                android:id="@+id/bt_delete"
+                android:id="@+id/bt_ok"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="@color/white"
-                android:text="删除"
-                android:textColor="@color/red"
+                android:background="@drawable/border_radius_3_blue"
+                android:text="开始执法"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
+
 
         </LinearLayout>
 
