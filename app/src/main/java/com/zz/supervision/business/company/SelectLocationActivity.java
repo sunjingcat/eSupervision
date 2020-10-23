@@ -169,7 +169,7 @@ public class SelectLocationActivity extends MyBaseActivity implements OnGetGeoCo
 
         mSuggestionSearch.requestSuggestion((new SuggestionSearchOption())
                 .keyword(keyword)
-                .city("天津"));
+                .city("黑龙江"));
     }
 
     /**

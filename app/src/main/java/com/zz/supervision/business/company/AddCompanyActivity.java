@@ -107,8 +107,8 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     SelectPopupWindows selectPopupWindows2;
 
     String id;
-    double lat = 0.0;
-    double lon = 0.0;
+    double lon = 123.6370661238426;
+    double lat = 47.216275430241495;
 
     @Override
     protected int getContentView() {
