@@ -243,8 +243,6 @@ public class CompanyInfoActivity extends MyBaseActivity {
 
     public void showImage(List<ImageBack> list) {
         if (list == null) return;
-        imageBacks.clear();
-        imageBacks.addAll(list);
 
         List<String> showList = new ArrayList<>();
         for (ImageBack imageBack : list) {
