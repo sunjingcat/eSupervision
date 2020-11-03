@@ -90,6 +90,7 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
     @Override
     public void onResume() {
         super.onResume();
+        pagenum = 1;
         getDate();
     }
 
