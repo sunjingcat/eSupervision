@@ -1,22 +1,27 @@
 package com.zz.supervision.business.company;
 
 import android.content.Intent;
+import android.os.Build;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
+import com.zz.lib.commonlib.widget.SelectPopupWindows;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
+import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.CompanyType;
 import com.zz.supervision.business.company.adapter.FmPagerAdapter;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
+import com.zz.supervision.widget.MenuWindows;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -124,7 +130,22 @@ public class CompanyListActivity extends MyBaseActivity {
         }, LoadingUtils.build(this));
     }
 
+    public void getCompanyType() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("dictType", "company_type");
+        RxNetUtils.request(getApi(ApiService.class).getDicts(map), new RequestObserver<JsonT<List<BusinessType>>>(this) {
+            @Override
+            protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
+                companyTypeList  =jsonT.getData();
+            }
 
+            @Override
+            protected void onFail2(JsonT<List<BusinessType>> stringJsonT) {
+                super.onFail2(stringJsonT);
+            }
+        }, LoadingUtils.build(this));
+    }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @OnClick({R.id.bt_search, R.id.toolbar_subtitle})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -132,7 +153,8 @@ public class CompanyListActivity extends MyBaseActivity {
                 startActivityForResult(new Intent(this, SearchCompanyActivity.class).putExtra("select", select), 1001);
                 break;
             case R.id.toolbar_subtitle:
-                startActivity(new Intent(this, AddCompanyActivity.class));
+                showCompanyType();
+
                 break;
         }
     }
@@ -150,5 +172,33 @@ public class CompanyListActivity extends MyBaseActivity {
     protected void onResume() {
         super.onResume();
         getDate();
+        getCompanyType();
+    }
+    MenuWindows menuPopupWindow;
+    List<BusinessType> companyTypeList = new ArrayList<>();
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    void showCompanyType(){
+        if (companyTypeList.size()==0)return;
+        ArrayList<String> list2 = new ArrayList<>();
+        ArrayList<String> list12 = new ArrayList<>();
+        for (int i = 0; i < companyTypeList.size(); i++) {
+            list2.add(companyTypeList.get(i).getDictLabel());
+            list12.add(companyTypeList.get(i).getDictValue());
+        }
+        menuPopupWindow = new MenuWindows(this, list2);
+        menuPopupWindow.showAsDropDown(toolbar,
+                 0, 0,Gravity.BOTTOM | Gravity.RIGHT);
+        menuPopupWindow.setOnItemClickListener(new MenuWindows.OnItemClickListener() {
+            @Override
+            public void onSelected(int index, String msg) {
+                startActivity(new Intent(CompanyListActivity.this, AddCompanyActivity.class)
+                .putExtra("companyType",list12.get(index)));
+            }
+
+            @Override
+            public void onCancel() {
+                menuPopupWindow.dismiss();
+            }
+        });
     }
 }

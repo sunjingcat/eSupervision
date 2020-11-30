@@ -82,7 +82,7 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
     @Override
     public void onResume() {
         super.onResume();
-
+        pagenum = 1;
         getDate();
     }
 

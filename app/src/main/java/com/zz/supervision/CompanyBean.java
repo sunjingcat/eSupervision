@@ -13,7 +13,7 @@ public class CompanyBean implements Serializable {
     private String businessProjectText;// ,
     private String businessType;// ,
     private String businessTypeText;// ,
-    private String companyType;// ,
+    private int companyType;// ,
     private String specificType;// ,
     private String specificTypeText;// ,
     private String companyTypeText;// ,
@@ -34,8 +34,13 @@ public class CompanyBean implements Serializable {
     private String updateBy;// ,
     private String updateTime;// ,
     private String validDate;//
+    private String loginAccount;//
     private String  longitude;//123.63550307225523,
     private String       latitude;// 47.21882160905167,
+
+    public String getLoginAccount() {
+        return loginAccount;
+    }
 
     public String getSpecificTypeText() {
         return specificTypeText;
@@ -89,7 +94,7 @@ public class CompanyBean implements Serializable {
         return businessType;
     }
 
-    public String getCompanyType() {
+    public int getCompanyType() {
         return companyType;
     }
 

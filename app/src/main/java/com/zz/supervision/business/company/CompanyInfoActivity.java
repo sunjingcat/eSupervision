@@ -75,6 +75,12 @@ public class CompanyInfoActivity extends MyBaseActivity {
     TextView etLocation;
     @BindView(R.id.et_fieldTime)
     TextView etFieldTime;
+    @BindView(R.id.et_loginAccount)
+    TextView etLoginAccount;
+    @BindView(R.id.ll_loginAccount)
+    LinearLayout ll_loginAccount;
+    @BindView(R.id.ll_user)
+    LinearLayout ll_user;
     ArrayList<String> images = new ArrayList<>();
     ImageItemAdapter adapter;
     @BindView(R.id.item_rv_images)
@@ -142,6 +148,15 @@ public class CompanyInfoActivity extends MyBaseActivity {
 //        etLocation.setText(data.getLatitude() + "," + data.getLongitude());
         etCompanyType.setText(data.getCompanyTypeText() + "");
         getImage(data.getId());
+
+        if (data.getCompanyType()==2){
+            ll_loginAccount.setVisibility(View.VISIBLE);
+            ll_user.setVisibility(View.VISIBLE);
+            etLoginAccount.setText(data.getLoginAccount()+"");
+        }else {
+            ll_loginAccount.setVisibility(View.GONE);
+            ll_user.setVisibility(View.GONE);
+        }
     }
 
     void getData(String id) {
@@ -164,10 +179,16 @@ public class CompanyInfoActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record})
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.bt_user, R.id.bt_password, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
+                startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId()), 1001);
+                break;
+            case R.id.bt_user:
+                startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId()), 1001);
+                break;
+            case R.id.bt_password:
                 startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId()), 1001);
                 break;
             case R.id.bt_ok:

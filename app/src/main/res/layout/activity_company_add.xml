@@ -215,36 +215,6 @@
                 </EditText>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="150dp"
-
-                    android:text="企业类型" />
-
-                <TextView
-                    android:id="@+id/et_companyType"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:drawableRight="@drawable/image_arrow"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="请选择"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#333"
-                    android:textSize="14dp">
-
-                </TextView>
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -429,6 +399,96 @@
                     android:textSize="14dp">
 
                 </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    style="@style/textLeftStyle"
+                    android:layout_width="150dp"
+
+                    android:text="登录账号" />
+
+                <EditText
+                    android:id="@+id/et_loginAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:hint="请填写"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#333"
+                    android:textSize="14dp">
+
+                </EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    style="@style/textLeftStyle"
+                    android:layout_width="150dp"
+
+                    android:text="密码" />
+
+                <EditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:hint="请填写"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#333"
+                    android:textSize="14dp">
+
+                </EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    style="@style/textLeftStyle"
+                    android:layout_width="150dp"
+
+                    android:text="确认密码" />
+
+                <EditText
+                    android:id="@+id/et_passwordCon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:hint="请填写"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#333"
+                    android:textSize="14dp">
+
+                </EditText>
             </LinearLayout>
 
             <LinearLayout

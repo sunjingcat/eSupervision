@@ -448,6 +448,39 @@
                     </TextView>
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/ll_loginAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
+                        android:text="登录账号"
+                        android:textColor="#929292" />
+
+                    <TextView
+                        android:id="@+id/et_loginAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:hint=""
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
+
+                    </TextView>
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -559,17 +592,6 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/bt_delete"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:layout_margin="10dp"
-                android:background="@color/white"
-                android:text="删除"
-                android:textColor="@color/red"
-                android:textSize="16sp" />
-
-            <Button
                 android:id="@+id/bt_ok"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -579,6 +601,46 @@
                 android:background="@drawable/border_radius_3_blue"
                 android:text="开始执法"
                 android:textColor="@color/white"
+                android:textSize="16sp" />
+            <LinearLayout
+                android:id="@+id/ll_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+            <Button
+                android:id="@+id/bt_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border_radius_3_blue"
+                android:text="冷库使用者"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/bt_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border_radius_3_blue"
+                android:text="重置密码"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+            </LinearLayout>
+            <Button
+                android:id="@+id/bt_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/white"
+                android:text="删除"
+                android:textColor="@color/red"
                 android:textSize="16sp" />
 
 

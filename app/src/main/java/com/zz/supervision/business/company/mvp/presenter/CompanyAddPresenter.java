@@ -70,20 +70,6 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
         }, mDialog);
     }
 
-    @Override
-    public void getCompanyType(Map<String, Object> map) {
-        RxNetUtils.request(getApi(ApiService.class).getDicts(map), new RequestObserver<JsonT<List<BusinessType>>>(this) {
-            @Override
-            protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
-                view.showCompanyType(jsonT.getData());
-            }
-
-            @Override
-            protected void onFail2(JsonT<List<BusinessType>> stringJsonT) {
-                super.onFail2(stringJsonT);
-            }
-        }, mDialog);
-    }
 
     @Override
     public void postImage(int position,String file) {

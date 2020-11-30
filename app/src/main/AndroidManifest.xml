@@ -171,6 +171,7 @@
         <activity android:name=".business.company.SelectLocationActivity" />
         <activity android:name=".business.record.ShowDocActivity" />
         <activity android:name=".business.record.SelectPrintActivity" />
+        <activity android:name=".business.company.ColdUserActivity" />
     </application>
 
 </manifest>

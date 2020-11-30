@@ -100,7 +100,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     String businessProjectText = "";
     List<BusinessType> businessTypeList = new ArrayList<>();
     List<BusinessType> business2TypeList = new ArrayList<>();
-    List<BusinessType> companyTypeList = new ArrayList<>();
+
 
     SelectPopupWindows selectPopupWindows;
     SelectPopupWindows selectPopupWindows1;
@@ -149,6 +149,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         });
 
         id = getIntent().getStringExtra("id");
+
         if (!TextUtils.isEmpty(id)) {
             mPresenter.getData(id);
             toolbarTitle.setText("编辑企业");
@@ -159,15 +160,12 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         params.put("dictType", "business_type");
         mPresenter.getBusinessType(params);
 
-        Map<String, Object> params1 = new HashMap<>();
-        params1.put("dictType", "company_type");
-        mPresenter.getCompanyType(params1);
-
 
         Map<String, Object> params2 = new HashMap<>();
         params2.put("dictType", "specific_type");
         mPresenter.getBusiness2Type(params2);
 
+        companyType = getIntent().getStringExtra("companyType");
     }
 
     @Override
@@ -180,37 +178,11 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         return new CompanyAddPresenter(this);
     }
 
-    @OnClick({R.id.et_companyType, R.id.et_location, R.id.et_businessType, R.id.et_businessProject, R.id.et_endTime, R.id.et_fieldTime, R.id.bt_ok})
+    @OnClick({ R.id.et_location, R.id.et_businessType, R.id.et_businessProject, R.id.et_endTime, R.id.et_fieldTime, R.id.bt_ok})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.et_businessType:
                 showSelectPopWindow1();
-                break;
-            case R.id.et_companyType:
-                UIAdjuster.closeKeyBoard(this);
-                List<String> list2 = new ArrayList<>();
-                List<String> list12 = new ArrayList<>();
-                for (int i = 0; i < companyTypeList.size(); i++) {
-                    list2.add(companyTypeList.get(i).getDictLabel());
-                    list12.add(companyTypeList.get(i).getDictValue());
-                }
-                String[] array2 = (String[]) list2.toArray(new String[list2.size()]);
-                String[] values2 = (String[]) list12.toArray(new String[list12.size()]);
-                selectPopupWindows1 = new SelectPopupWindows(this, array2);
-                selectPopupWindows1.showAtLocation(findViewById(R.id.bg),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                selectPopupWindows1.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
-                    @Override
-                    public void onSelected(int index, String msg) {
-                        etCompanyType.setText(msg);
-                        companyType = values2[index];
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        selectPopupWindows1.dismiss();
-                    }
-                });
                 break;
             case R.id.et_businessProject:
                 if (TextUtils.isEmpty(businessType)) {
@@ -310,7 +282,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         for (int i = 0; i < split.length; i++) {
             projectBeans.add(new BusinessProjectBean(false, "", split[i], ""));
         }
-        companyType = data.getCompanyType();
+        companyType = data.getCompanyType()+"";
         validDate = data.getValidDate();
         etEndTime.setText(data.getValidDate() + "");
         etContact.setText(data.getContact() + "");
@@ -363,13 +335,6 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         }
     }
 
-    @Override
-    public void showCompanyType(List<BusinessType> list) {
-        if (list != null) {
-            companyTypeList.clear();
-            companyTypeList.addAll(list);
-        }
-    }
 
     @Override
     public void showImage(List<ImageBack> list) {
