@@ -2,6 +2,7 @@ package com.zz.supervision.business.mine;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -29,6 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
+
 /**
  * 密码
  */
@@ -44,6 +46,7 @@ public class PasswordActivity extends MyBaseActivity {
     EditText edPasswordAgain;
     @BindView(R.id.bt_ok)
     Button btOk;
+    String page;
 
     @Override
     protected int getContentView() {
@@ -58,11 +61,17 @@ public class PasswordActivity extends MyBaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
+        page = getIntent().getStringExtra("page");
+        if (!TextUtils.isEmpty(page) && page.equals("company")) {
+            edPasswordOld.setVisibility(View.GONE);
+        } else {
+            edPasswordOld.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar,1);
+        ToolBarUtils.getInstance().setNavigation(toolbar, 1);
     }
 
 
@@ -72,51 +81,81 @@ public class PasswordActivity extends MyBaseActivity {
     }
 
     void getData() {
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         String edPasswordOld_ = edPasswordOld.getText().toString();
         String edPassword_ = edPassword.getText().toString();
         String edPasswordAgain_ = edPasswordAgain.getText().toString();
         String username = getIntent().getStringExtra("userName");
-        if (TextUtils.isEmpty(edPasswordOld_)){
-            showToast("请输入旧密码");
-            return;
+        String id = getIntent().getStringExtra("id");
+        if (TextUtils.isEmpty(page)) {
+            if (TextUtils.isEmpty(edPasswordOld_)) {
+                showToast("请输入旧密码");
+                return;
+            }
+            map.put("oldPassword", edPasswordOld_);
+            map.put("username", username);
+        } else {
+
         }
-        if (TextUtils.isEmpty(edPassword_)){
+        if (TextUtils.isEmpty(edPassword_)) {
             showToast("请输入新密码");
             return;
         }
-        if (TextUtils.isEmpty(edPasswordAgain_)){
+        if (TextUtils.isEmpty(edPasswordAgain_)) {
             showToast("请输入确认密码");
             return;
         }
-        if (!edPassword_.equals(edPasswordAgain_)){
+        if (!edPassword_.equals(edPasswordAgain_)) {
             showToast("两次新密码不一致");
             return;
         }
 
-        map.put("newPassword",edPassword_);
-        map.put("oldPassword",edPasswordOld_);
-        map.put("username",username);
-        RxNetUtils.request(getApi(ApiService.class).resetPwd(map), new RequestObserver<JsonT>(this) {
-            @Override
-            protected void onSuccess(JsonT data) {
-                if (data.isSuccess()) {
-                    CacheUtility.saveToken("");
-                    CacheUtility.clear();
-                    startActivity(new Intent(PasswordActivity.this, LoginActivity.class));
-                    EventBus.getDefault().post(new OutDateEvent());
-                    finish();
-                } else {
+        map.put("newPassword", edPassword_);
 
+
+        if (TextUtils.isEmpty(page)) {
+            RxNetUtils.request(getApi(ApiService.class).resetPwd(map), new RequestObserver<JsonT>(this) {
+                @Override
+                protected void onSuccess(JsonT data) {
+                    if (data.isSuccess()) {
+                        CacheUtility.saveToken("");
+                        CacheUtility.clear();
+                        startActivity(new Intent(PasswordActivity.this, LoginActivity.class));
+                        EventBus.getDefault().post(new OutDateEvent());
+                        finish();
+                    } else {
+
+                    }
                 }
-            }
 
-            @Override
-            protected void onFail2(JsonT userInfoJsonT) {
-                super.onFail2(userInfoJsonT);
-                showToast(userInfoJsonT.getMessage());
-            }
-        }, null);
+                @Override
+                protected void onFail2(JsonT userInfoJsonT) {
+                    super.onFail2(userInfoJsonT);
+                    showToast(userInfoJsonT.getMessage());
+                }
+            }, null);
+        }else {
+            RxNetUtils.request(getApi(ApiService.class).resetPwd(id,map), new RequestObserver<JsonT>(this) {
+                @Override
+                protected void onSuccess(JsonT data) {
+                    if (data.isSuccess()) {
+                        CacheUtility.saveToken("");
+                        CacheUtility.clear();
+                        startActivity(new Intent(PasswordActivity.this, LoginActivity.class));
+                        EventBus.getDefault().post(new OutDateEvent());
+                        finish();
+                    } else {
+
+                    }
+                }
+
+                @Override
+                protected void onFail2(JsonT userInfoJsonT) {
+                    super.onFail2(userInfoJsonT);
+                    showToast(userInfoJsonT.getMessage());
+                }
+            }, null);
+        }
     }
 
 }

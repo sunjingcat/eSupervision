@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.TextView;
+
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -70,7 +73,7 @@ public abstract class MyBaseActivity<P extends com.zz.lib.core.ui.mvp.BasePresen
         initToolBar();
         immersionBar = ImmersionBar.with(this);
         immersionBar.statusBarDarkFont(true)
-                .navigationBarColor(R.color.colorAccent)
+                .navigationBarColor(R.color.colorTextBlack33)
                 .statusBarColor(R.color.colorPrimary)
                 .init();
     }
@@ -165,5 +168,18 @@ public abstract class MyBaseActivity<P extends com.zz.lib.core.ui.mvp.BasePresen
     public void onError() {
 
     }
+    protected String getText(TextView textView) {
+        String string = textView.getText().toString();
+        if (TextUtils.isEmpty(string)) {
+            return "";
+        } else {
+            String trim = string.trim();
+            if (TextUtils.isEmpty(trim)) {
+                return "";
+            } else {
+                return trim;
+            }
+        }
 
+    }
 }

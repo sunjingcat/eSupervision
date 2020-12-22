@@ -21,6 +21,7 @@ import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.business.company.adapter.ImageItemAdapter;
 import com.zz.supervision.business.inspenction.XCHZFActivity;
+import com.zz.supervision.business.mine.PasswordActivity;
 import com.zz.supervision.business.record.CheckListActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
@@ -189,7 +190,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId()), 1001);
                 break;
             case R.id.bt_password:
-                startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId()), 1001);
+                startActivityForResult(new Intent(this, PasswordActivity.class).putExtra("id", companyBean.getId()).putExtra("page", "company"), 1001);
                 break;
             case R.id.bt_ok:
                 if (companyBean == null) return;

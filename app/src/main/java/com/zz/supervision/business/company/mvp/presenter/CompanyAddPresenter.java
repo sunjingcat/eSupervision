@@ -116,19 +116,23 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
     @Override
     public void submitData(Map<String, Object> map) {
         if (map.containsKey("id")) {
-            RxNetUtils.request(getApi(ApiService.class).editCompanyInfo(map), new RequestObserver<JsonT<String>>(this) {
-                @Override
-                protected void onSuccess(JsonT<String> jsonT) {
-                    view.showSubmitResult( jsonT.getData());
+            if (map.get("companyType").equals("2")) {
+                RxNetUtils.request(getApi(ApiService.class).editCompanyInfo(map), new RequestObserver<JsonT<String>>(this) {
+                    @Override
+                    protected void onSuccess(JsonT<String> jsonT) {
+                        view.showSubmitResult(jsonT.getData());
 //                    view.showToast(jsonT.getMessage());
-                }
+                    }
 
-                @Override
-                protected void onFail2(JsonT stringJsonT) {
-                    super.onFail2(stringJsonT);
-                    view.showToast(stringJsonT.getMessage());
-                }
-            }, mDialog);
+                    @Override
+                    protected void onFail2(JsonT stringJsonT) {
+                        super.onFail2(stringJsonT);
+                        view.showToast(stringJsonT.getMessage());
+                    }
+                }, mDialog);
+            }else {
+
+            }
         } else {
             RxNetUtils.request(getApi(ApiService.class).postCompanyInfo(map), new RequestObserver<JsonT<String>>(this) {
                 @Override

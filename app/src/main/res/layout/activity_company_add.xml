@@ -245,6 +245,36 @@
                     android:textSize="14dp">
 
                 </TextView>
+            </LinearLayout>   <LinearLayout
+            android:id="@+id/ll_coldstorage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    style="@style/textLeftStyle"
+                    android:layout_width="150dp"
+
+                    android:text="企业主体资质" />
+
+                <TextView
+                    android:id="@+id/et_coldstorage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:drawableRight="@drawable/image_arrow"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:hint="请选择"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#333"
+                    android:textSize="14dp">
+
+                </TextView>
             </LinearLayout>
 
 
@@ -402,6 +432,13 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_loginAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
@@ -490,7 +527,7 @@
 
                 </EditText>
             </LinearLayout>
-
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

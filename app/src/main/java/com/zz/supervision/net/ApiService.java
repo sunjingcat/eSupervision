@@ -61,6 +61,9 @@ public interface ApiService {
     @POST( "/app/v1/resetPwd")
     Observable<JsonT> resetPwd(@QueryMap Map<String, Object> params);
 
+    @POST( "/app/v1/supervise/coldstorage/resetPwd/{id}")
+    Observable<JsonT> resetPwd(@Path("id")String id,@QueryMap Map<String, Object> params);
+
     @GET("/app/v1/supervise/version/latest")
     Observable<JsonT<Version>> getVersion();
    @GET("/app/v1/supervise/version/versionCode/{versionCode}")

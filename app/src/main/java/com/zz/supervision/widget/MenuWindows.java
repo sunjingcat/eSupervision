@@ -11,12 +11,14 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.zz.supervision.R;
+import com.zz.supervision.bean.BusinessType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +31,13 @@ import java.util.List;
 public class MenuWindows extends PopupWindow {
 
     private static final String TAG = "FinishProjectPopupWindows";
-    private ArrayList<String> PLANETS ;
+    private ArrayList<BusinessType> PLANETS ;
     public Button btnCancelProject, btnOkProject;
     private View mView;
     private RecyclerView rv_menu;
     private OnItemClickListener listener;
 
-    public MenuWindows(final Activity context, ArrayList<String> strings
+    public MenuWindows(final Activity context, ArrayList<BusinessType> strings
                               ) {
         super(context);
 
@@ -44,6 +46,7 @@ public class MenuWindows extends PopupWindow {
         mView = inflater.inflate(R.layout.menu_popupwindow, null);
         PLANETS = strings;
         rv_menu = (RecyclerView) mView.findViewById(R.id.rv_menu);
+        rv_menu.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         rv_menu.setLayoutManager(new LinearLayoutManager(context));
         MenuAdapter wheelAdapter = new MenuAdapter(R.layout.item_menu,PLANETS);
         rv_menu.setAdapter(wheelAdapter);
@@ -67,7 +70,7 @@ public class MenuWindows extends PopupWindow {
         //设置SelectPicPopupWindow弹出窗体动画效果
 //        this.setAnimationStyle(R.style.Animation);
         //实例化一个ColorDrawable颜色为半透明
-        ColorDrawable dw = new ColorDrawable(0x70000000);
+        ColorDrawable dw = new ColorDrawable(0x00000000);
 //        设置SelectPicPopupWindow弹出窗体的背景
         this.setBackgroundDrawable(dw);
 //        backgroundAlpha(context, 0.5f);
@@ -94,7 +97,7 @@ public class MenuWindows extends PopupWindow {
     }
 
     public interface OnItemClickListener {
-        void onSelected(int index, String msg);
+        void onSelected(int index, BusinessType msg);
 
         void onCancel();
     }

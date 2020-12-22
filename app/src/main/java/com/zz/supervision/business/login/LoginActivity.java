@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.igexin.sdk.PushManager;
+import com.zz.supervision.BuildConfig;
 import com.zz.supervision.MainActivity;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
@@ -58,6 +59,10 @@ public class LoginActivity extends MyBaseActivity<Contract.IsetLoginPresenter> i
     @Override
     protected void initView() {
         ButterKnife.bind(this);
+        if (BuildConfig.DEBUG){
+            logNumber.setText("15846275069");
+            logPassword.setText("zdx123");
+        }
     }
 
     @Override

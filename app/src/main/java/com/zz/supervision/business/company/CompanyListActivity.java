@@ -136,7 +136,8 @@ public class CompanyListActivity extends MyBaseActivity {
         RxNetUtils.request(getApi(ApiService.class).getDicts(map), new RequestObserver<JsonT<List<BusinessType>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
-                companyTypeList  =jsonT.getData();
+                companyTypeList.clear();
+                companyTypeList.addAll(jsonT.getData());
             }
 
             @Override
@@ -175,24 +176,19 @@ public class CompanyListActivity extends MyBaseActivity {
         getCompanyType();
     }
     MenuWindows menuPopupWindow;
-    List<BusinessType> companyTypeList = new ArrayList<>();
+    ArrayList<BusinessType> companyTypeList = new ArrayList<>();
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     void showCompanyType(){
         if (companyTypeList.size()==0)return;
-        ArrayList<String> list2 = new ArrayList<>();
-        ArrayList<String> list12 = new ArrayList<>();
-        for (int i = 0; i < companyTypeList.size(); i++) {
-            list2.add(companyTypeList.get(i).getDictLabel());
-            list12.add(companyTypeList.get(i).getDictValue());
-        }
-        menuPopupWindow = new MenuWindows(this, list2);
+        menuPopupWindow = new MenuWindows(this, companyTypeList);
         menuPopupWindow.showAsDropDown(toolbar,
                  0, 0,Gravity.BOTTOM | Gravity.RIGHT);
         menuPopupWindow.setOnItemClickListener(new MenuWindows.OnItemClickListener() {
             @Override
-            public void onSelected(int index, String msg) {
+            public void onSelected(int index, BusinessType msg) {
                 startActivity(new Intent(CompanyListActivity.this, AddCompanyActivity.class)
-                .putExtra("companyType",list12.get(index)));
+                .putExtra("companyType",companyTypeList.get(index).getDictValue()));
+                menuPopupWindow.dismiss();
             }
 
             @Override

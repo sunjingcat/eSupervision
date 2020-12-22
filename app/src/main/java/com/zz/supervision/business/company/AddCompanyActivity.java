@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.codbking.widget.DatePickDialog;
@@ -81,6 +82,18 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     TextView etCompanyType;
     @BindView(R.id.et_contact)
     EditText etContact;
+    @BindView(R.id.et_password)
+    EditText et_password;
+    @BindView(R.id.et_passwordCon)
+    EditText et_passwordCon;
+    @BindView(R.id.et_loginAccount)
+    EditText et_loginAccount;
+    @BindView(R.id.et_coldstorage)
+    EditText et_coldstorage;
+    @BindView(R.id.ll_loginAccount)
+    LinearLayout ll_loginAccount;
+    @BindView(R.id.ll_coldstorage)
+    LinearLayout ll_coldstorage;
     @BindView(R.id.et_contactInformation)
     EditText etContactInformation;
     @BindView(R.id.et_fieldTime)
@@ -135,7 +148,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 ImageSelector.builder()
                         .useCamera(true) // 设置是否使用拍照
                         .setSingle(false)  //设置是否单选
-                        .setMaxSelectCount(9 - images.size()) // 图片的最大选择数量，小于等于0时，不限数量。
+                        .setMaxSelectCount(9) // 图片的最大选择数量，小于等于0时，不限数量。
                         .setSelected(localPath) // 把已选的图片传入默认选中。
                         .setViewImage(true) //是否点击放大图片查看,，默认为true
                         .start(AddCompanyActivity.this, 1101); // 打开相册
@@ -166,6 +179,12 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         mPresenter.getBusiness2Type(params2);
 
         companyType = getIntent().getStringExtra("companyType");
+        if (!TextUtils.isEmpty(companyType)&&companyType.equals("2")){
+            ll_loginAccount.setVisibility(View.VISIBLE);
+            ll_coldstorage.setVisibility(View.VISIBLE);
+        }else {
+            ll_loginAccount.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -293,6 +312,12 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         lon = data.getLongitude();
         etLocation.setText("位置");
         etCompanyType.setText(data.getCompanyTypeText() + "");
+        if (companyType.equals("2")){
+            ll_loginAccount.setVisibility(View.VISIBLE);
+            et_password.setVisibility(View.GONE);
+            et_passwordCon.setVisibility(View.GONE);
+            et_loginAccount.setText(data.getLoginAccount()+"");
+        }
     }
 
     @Override
@@ -437,6 +462,26 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
         if (!TextUtils.isEmpty(id)) {
             params.put("id", id);
+        }
+
+        if (companyType.equals("2")){
+            String edPassword_ = et_password.getText().toString();
+            String edPasswordAgain_ = et_passwordCon.getText().toString();
+            if (TextUtils.isEmpty(edPassword_)) {
+                showToast("请输入新密码");
+                return;
+            }
+            if (TextUtils.isEmpty(edPasswordAgain_)) {
+                showToast("请输入确认密码");
+                return;
+            }
+            if (!edPassword_.equals(edPasswordAgain_)) {
+                showToast("两次新密码不一致");
+                return;
+            }
+            params.put("loginAccount", getText(et_loginAccount));
+            params.put("password", getText(et_password));
+            params.put("coldstorage", getText(et_coldstorage));
         }
         mPresenter.submitData(params);
     }
