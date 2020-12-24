@@ -121,7 +121,9 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         type = getIntent().getIntExtra("type", 0);
         if (type == 1) {
             url = "spxsInspectionRecord";
-        } else {
+        } else if (type == 5) {
+            url = "llglInspectionRecord";
+        }else {
             url = "cyfwInspectionRecord";
         }
 

@@ -18,6 +18,7 @@ import com.zz.supervision.business.company.CompanyListActivity;
 import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.business.mine.MineActivity;
 import com.zz.supervision.business.record.CheckListActivity;
+import com.zz.supervision.business.record.RecordMainActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -90,7 +91,7 @@ public class MainActivity extends MyBaseActivity {
 
             case R.id.main_group_3:
                 Intent intent2 = new Intent();
-                intent2.setClass(MainActivity.this, CheckListActivity.class);
+                intent2.setClass(MainActivity.this, RecordMainActivity.class);
                 startActivity(intent2);
                 break;
             case R.id.toolbar_subtitle:

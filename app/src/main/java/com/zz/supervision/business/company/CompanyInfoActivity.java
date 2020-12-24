@@ -23,6 +23,7 @@ import com.zz.supervision.business.company.adapter.ImageItemAdapter;
 import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.business.mine.PasswordActivity;
 import com.zz.supervision.business.record.CheckListActivity;
+import com.zz.supervision.business.record.ColdCheckListActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -184,10 +185,16 @@ public class CompanyInfoActivity extends MyBaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
-                startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId()), 1001);
+                startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId())
+                        .putExtra("companyType",companyBean.getCompanyType())
+                        .putExtra("companyTypeText",companyBean.getCompanyTypeText())
+                        , 1001);
                 break;
             case R.id.bt_user:
-                startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId()), 1001);
+                startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId())
+                        .putExtra("companyType",companyBean.getCompanyType())
+                        .putExtra("companyTypeText",companyBean.getCompanyTypeText()),
+                        1001);
                 break;
             case R.id.bt_password:
                 startActivityForResult(new Intent(this, PasswordActivity.class).putExtra("id", companyBean.getId()).putExtra("page", "company"), 1001);
@@ -197,8 +204,13 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 startActivity(new Intent(this, XCHZFActivity.class).putExtra("company", companyBean));
                 break;
             case R.id.et_record:
+                if (companyBean == null) return;
+                if (companyBean.getCompanyType()==5){
+                    startActivity(new Intent(this, ColdCheckListActivity.class).putExtra("id", companyBean.getId()));
+                }else {
+                    startActivity(new Intent(this, CheckListActivity.class).putExtra("id", companyBean.getId()));
+                }
 
-                startActivity(new Intent(this, CheckListActivity.class).putExtra("id", companyBean.getId()));
                 break;
             case R.id.et_location:
                 if (companyBean == null) return;

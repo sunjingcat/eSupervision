@@ -78,7 +78,11 @@ public class SuperviseResultActivity extends MyBaseActivity {
             list.add(new DetailBean("一般项问题数", lightDevice.getGeneralProblemCount() + ""));
             list.add(new DetailBean("检查结果", lightDevice.getInspectionResultText() + ""));
             list.add(new DetailBean("处理结果", lightDevice.getResultReductionText() + ""));
-        } else {
+        } else if (type == 5) {
+            list.add(new DetailBean("检查项数目", lightDevice.getSumCount() + ""));
+            list.add(new DetailBean("问题数", lightDevice.getProblemCount() + ""));
+            list.add(new DetailBean("检查结果", lightDevice.getInspectionResultText() + ""));
+        }else {
             list.add(new DetailBean("静态评分项分数", lightDevice.getStaticScore() + ""));
             list.add(new DetailBean("动态评分项分数", lightDevice.getDynamicScore() + ""));
             list.add(new DetailBean("总分数", lightDevice.getTotalScore() + ""));

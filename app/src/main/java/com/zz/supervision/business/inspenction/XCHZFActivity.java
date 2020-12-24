@@ -21,6 +21,7 @@ import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
+import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.LawEnforcerBean;
 import com.zz.supervision.business.company.CompanyListActivity;
 import com.zz.supervision.business.company.PeopleActivity;
@@ -34,6 +35,8 @@ import com.zz.supervision.utils.TimeUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -81,8 +84,8 @@ public class XCHZFActivity extends MyBaseActivity {
     int type = 0;
     String inspectionTime = "";
     String names = "";
+    List<BusinessType> businessTypeList = new ArrayList<>();
     ArrayList<LawEnforcerBean> lawEnforcerBeanArrayList = new ArrayList<>();
-    private static final String[] PLANETS = new String[]{"食品销售日常监督检查", "餐饮服务日常监督检查", "食品销售风险因素量化分值", "餐饮服务风险因素量化分值"};
     SelectPopupWindows selectPopupWindows;
 
     @Override
@@ -101,6 +104,9 @@ public class XCHZFActivity extends MyBaseActivity {
         CompanyBean company = (CompanyBean) getIntent().getSerializableExtra("company");
         if (company != null) {
             showCompany(company);
+            getCompanyType();
+            etType.setText("");
+            type = 0;
         }
     }
 
@@ -119,15 +125,27 @@ public class XCHZFActivity extends MyBaseActivity {
                 startActivityForResult(new Intent(this, CompanyListActivity.class).putExtra("select", "xczf"), 1001);
                 break;
             case R.id.et_type:
+                if (businessTypeList.size() == 0) {
+                    showToast("请先选择企业");
+                    return;
+                }
                 UIAdjuster.closeKeyBoard(this);
-                selectPopupWindows = new SelectPopupWindows(this, PLANETS);
+                List<String> list = new ArrayList<>();
+                List<String> list1 = new ArrayList<>();
+                for (int i = 0; i < businessTypeList.size(); i++) {
+                    list.add(businessTypeList.get(i).getDictLabel());
+                    list1.add(businessTypeList.get(i).getDictValue());
+                }
+                String[] array = (String[]) list.toArray(new String[list.size()]);
+                String[] values = (String[]) list1.toArray(new String[list1.size()]);
+                selectPopupWindows = new SelectPopupWindows(this, array);
                 selectPopupWindows.showAtLocation(findViewById(R.id.bg),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 selectPopupWindows.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
                     @Override
                     public void onSelected(int index, String msg) {
                         etType.setText(msg);
-                        type = index + 1;
+                        type = Integer.parseInt(values[index]);
                     }
 
                     @Override
@@ -184,6 +202,9 @@ public class XCHZFActivity extends MyBaseActivity {
                 CompanyBean company = (CompanyBean) data.getSerializableExtra("company");
                 if (company != null) {
                     showCompany(company);
+                    getCompanyType();
+                    etType.setText("");
+                    type = 0;
                 }
             } else if (requestCode == 2001) {
                 ArrayList<LawEnforcerBean> arrayList = data.getParcelableArrayListExtra("select");
@@ -250,7 +271,7 @@ public class XCHZFActivity extends MyBaseActivity {
             @Override
             protected void onSuccess(JsonT<Integer> jsonT) {
                 String reason = edCause.getText().toString();
-                if (type == 1 || type == 2) {
+                if (type == 1 || type == 2|| type == 5) {
                     startActivity(new Intent(XCHZFActivity.this, SuperviseActivity.class)
                             .putExtra("company", companyBean.getOperatorName())
                             .putExtra("id", jsonT.getData() + "")
@@ -279,5 +300,21 @@ public class XCHZFActivity extends MyBaseActivity {
             }
         }, LoadingUtils.build(this));
     }
+    public void getCompanyType() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("companyType", companyBean.getCompanyType()+"");
+        RxNetUtils.request(getApi(ApiService.class).getInspectionTypeByCompanyType(map), new RequestObserver<JsonT<List<BusinessType>>>(this) {
+            @Override
+            protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
+                businessTypeList.clear();
+                businessTypeList.addAll(jsonT.getData());
+            }
 
+            @Override
+            protected void onFail2(JsonT<List<BusinessType>> stringJsonT) {
+                super.onFail2(stringJsonT);
+                businessTypeList.clear();
+            }
+        }, LoadingUtils.build(this));
+    }
 }

@@ -172,6 +172,8 @@
         <activity android:name=".business.record.ShowDocActivity" />
         <activity android:name=".business.record.SelectPrintActivity" />
         <activity android:name=".business.company.ColdUserActivity" />
+        <activity android:name=".business.record.RecordMainActivity" />
+        <activity android:name=".business.record.ColdCheckListActivity" />
     </application>
 
 </manifest>

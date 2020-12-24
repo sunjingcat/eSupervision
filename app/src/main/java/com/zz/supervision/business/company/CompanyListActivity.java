@@ -186,8 +186,12 @@ public class CompanyListActivity extends MyBaseActivity {
         menuPopupWindow.setOnItemClickListener(new MenuWindows.OnItemClickListener() {
             @Override
             public void onSelected(int index, BusinessType msg) {
-                startActivity(new Intent(CompanyListActivity.this, AddCompanyActivity.class)
-                .putExtra("companyType",companyTypeList.get(index).getDictValue()));
+                if (!msg.getDictValue().equals("2")) {
+                    startActivity(new Intent(CompanyListActivity.this, AddCompanyActivity.class)
+                            .putExtra("companyType", companyTypeList.get(index).getDictValue())
+                            .putExtra("companyTypeText", companyTypeList.get(index).getDictLabel())
+                    );
+                }
                 menuPopupWindow.dismiss();
             }
 

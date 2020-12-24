@@ -259,6 +259,7 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         private String companyId;// null,
         private String serialNumber;// null,
         private String sumCount;// 2,
+        private String problemCount;// 2,
         private String importantCount;// 0,
         private String generalCount;// 2,
         private String importantProblemCount;// 0,
@@ -271,6 +272,10 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         private String totalScore;
         private String level;
         private String resultReductionText;
+
+        public String getProblemCount() {
+            return problemCount;
+        }
 
         public String getResultReductionText() {
             return resultReductionText;
@@ -356,6 +361,7 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         private String reason;// null,
         private String inspectionTime;// 2020年09月28日,
         private String sumCount;// 5,
+        private String problemCount;// 5,
         private String importantCount;// 1,
         private String importantDetail;// *3.3,
         private String importantProblemCount;// 1,
@@ -388,6 +394,10 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         private String totalScore;
         private String level;
         private String typeText;
+
+        public String getProblemCount() {
+            return problemCount;
+        }
 
         public String getTypeText() {
             return typeText;

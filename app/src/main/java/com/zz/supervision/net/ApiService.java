@@ -79,6 +79,9 @@ public interface ApiService {
     @GET("/app/v1/supervise/universal/getRecordList")
     Observable<JsonT<List<RecordBean>>> getRecordList(@QueryMap Map<String, Object> params);
 
+   @GET("/app/v1/supervise/llglInspectionRecord/list")
+    Observable<JsonT<List<RecordBean>>> getColdRecordList(@QueryMap Map<String, Object> params);
+
     @DELETE("/app/v1/supervise/companyInfo/removeCompanyInfo/{id}")
     Observable<JsonT> removeCompanyInfo(@Path("id")String id);
 
@@ -113,6 +116,9 @@ public interface ApiService {
 
     @GET("/app/v1/supervise/dict/getDicts")
     Observable<JsonT<List<BusinessType>>> getDicts(@QueryMap Map<String, Object> params);
+
+    @GET("/app/v1/supervise/universal/getInspectionTypeByCompanyType")
+    Observable<JsonT<List<BusinessType>>> getInspectionTypeByCompanyType(@QueryMap Map<String, Object> params);
 
     @GET("/app/v1/supervise/{url}/getItems/{id}")
     Observable<JsonT<List<SuperviseBean>>> getSuperviseList(@Path("id")String id,@Path("url")String url);

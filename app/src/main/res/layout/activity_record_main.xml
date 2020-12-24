@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:background="@color/colorPrimary" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="执法记录"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/toolbar_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:padding="12dp"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="16dp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_shp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/border_radius_5_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/image_record_shp" />
+
+            <TextView
+                style="@style/textLeftStyle"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:drawableRight="@drawable/image_arrow"
+                android:text="食品安全" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/border_radius_5_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/image_record_ll" />
+
+            <TextView
+                style="@style/textLeftStyle"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:drawableRight="@drawable/image_arrow"
+                android:text="冷链监控" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_yx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/border_radius_5_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/image_record_yx" />
+
+            <TextView
+                style="@style/textLeftStyle"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:drawableRight="@drawable/image_arrow"
+                android:text="要些化" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_tzh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/border_radius_5_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/image_record_tzh" />
+
+            <TextView
+                style="@style/textLeftStyle"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:drawableRight="@drawable/image_arrow"
+                android:text="特种设备" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_zhd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/border_radius_5_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/image_record_shp" />
+
+            <TextView
+                style="@style/textLeftStyle"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:drawableRight="@drawable/image_arrow"
+                android:text="重点工业品" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

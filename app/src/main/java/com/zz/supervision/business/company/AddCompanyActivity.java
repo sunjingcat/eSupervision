@@ -78,8 +78,6 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     TextView etEndTime;
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    @BindView(R.id.et_companyType)
-    TextView etCompanyType;
     @BindView(R.id.et_contact)
     EditText etContact;
     @BindView(R.id.et_password)
@@ -100,6 +98,8 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     TextView etFieldTime;
     @BindView(R.id.et_location)
     TextView etLocation;
+    @BindView(R.id.et_companyType)
+    TextView et_companyType;
     ArrayList<ImageBack> images = new ArrayList<>();
     ImageDeleteItemAdapter adapter;
     @BindView(R.id.item_rv_images)
@@ -179,6 +179,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         mPresenter.getBusiness2Type(params2);
 
         companyType = getIntent().getStringExtra("companyType");
+        et_companyType .setText(getIntent().getStringExtra("companyTypeText")+""); ;
         if (!TextUtils.isEmpty(companyType)&&companyType.equals("2")){
             ll_loginAccount.setVisibility(View.VISIBLE);
             ll_coldstorage.setVisibility(View.VISIBLE);
@@ -311,7 +312,6 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         lat = data.getLatitude();
         lon = data.getLongitude();
         etLocation.setText("位置");
-        etCompanyType.setText(data.getCompanyTypeText() + "");
         if (companyType.equals("2")){
             ll_loginAccount.setVisibility(View.VISIBLE);
             et_password.setVisibility(View.GONE);
