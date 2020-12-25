@@ -479,7 +479,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 showToast("两次新密码不一致");
                 return;
             }
-            params.put("loginAccount", getText(et_loginAccount));
+            params.put("loginName", getText(et_loginAccount));
             params.put("password", getText(et_password));
             params.put("coldstorage", getText(et_coldstorage));
         }

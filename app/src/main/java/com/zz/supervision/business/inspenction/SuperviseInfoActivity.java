@@ -94,15 +94,19 @@ public class SuperviseInfoActivity extends MyBaseActivity {
         rv.setAdapter(adapter);
         type = getIntent().getIntExtra("type", 0);
         status = getIntent().getIntExtra("status", 0);
+        btOk.setText("打印");
+        btOk.setVisibility(status == 3 ? View.VISIBLE : View.GONE);
         if (type == 1) {
             url = "spxsInspectionRecord";
+        }else if (type == 5) {
+            url = "llglInspectionRecord";
+            btOk.setVisibility(View.GONE);
         } else {
             url = "cyfwInspectionRecord";
         }
         initData();
 
-        btOk.setText("打印");
-        btOk.setVisibility(status == 3 ? View.VISIBLE : View.GONE);
+
 
 
         toolbarTitle.setText("评分详情");

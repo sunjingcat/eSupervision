@@ -18,7 +18,9 @@ import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
+import com.zz.supervision.bean.DetailBean;
 import com.zz.supervision.bean.ImageBack;
+import com.zz.supervision.business.company.adapter.ComInfoAdapter;
 import com.zz.supervision.business.company.adapter.ImageItemAdapter;
 import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.business.mine.PasswordActivity;
@@ -40,6 +42,7 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
@@ -53,51 +56,31 @@ public class CompanyInfoActivity extends MyBaseActivity {
     Toolbar toolbar;
     @BindView(R.id.et_operatorName)
     TextView etOperatorName;
-    @BindView(R.id.et_socialCreditCode)
-    TextView etSocialCreditCode;
-    @BindView(R.id.et_licenseNumber)
-    TextView etLicenseNumber;
-    @BindView(R.id.et_legalRepresentative)
-    TextView etLegalRepresentative;
-    @BindView(R.id.et_address)
-    TextView etAddress;
-    @BindView(R.id.et_businessPlace)
-    TextView etBusinessPlace;
-    @BindView(R.id.et_businessType)
-    TextView etBusinessType;
-    @BindView(R.id.et_businessProject)
-    TextView etBusinessProject;
-    @BindView(R.id.et_endTime)
-    TextView etEndTime;
-    @BindView(R.id.et_contact)
-    TextView etContact;
-    @BindView(R.id.et_contactInformation)
-    TextView etContactInformation;
+
+
     @BindView(R.id.et_location)
     TextView etLocation;
-    @BindView(R.id.et_fieldTime)
-    TextView etFieldTime;
-    @BindView(R.id.et_loginAccount)
-    TextView etLoginAccount;
-    @BindView(R.id.ll_loginAccount)
-    LinearLayout ll_loginAccount;
+
     @BindView(R.id.ll_user)
     LinearLayout ll_user;
     ArrayList<String> images = new ArrayList<>();
+    ArrayList<DetailBean> mlist = new ArrayList<>();
     ImageItemAdapter adapter;
+    ComInfoAdapter infoAdapter;
     @BindView(R.id.item_rv_images)
     RecyclerView itemRvImages;
+    @BindView(R.id.rv)
+    RecyclerView rv;
     String fieldTime;
     String validDate;
     String businessType = "";
     String id;
+    String companyType;
     CompanyBean companyBean;
     @BindView(R.id.bt_ok)
     Button btOk;
     @BindView(R.id.bg)
     LinearLayout bg;
-    @BindView(R.id.et_companyType)
-    TextView etCompanyType;
     private CustomDialog customDialog;
 
     @Override
@@ -109,10 +92,14 @@ public class CompanyInfoActivity extends MyBaseActivity {
     protected void initView() {
         ButterKnife.bind(this);
         ZoomMediaLoader.getInstance().init(new ImageLoader());
+        rv.setLayoutManager(new LinearLayoutManager(this));
         itemRvImages.setLayoutManager(new GridLayoutManager(this, 3));
         adapter = new ImageItemAdapter(R.layout.item_image, images);
+        infoAdapter = new ComInfoAdapter(R.layout.item_com_info, mlist);
         itemRvImages.setAdapter(adapter);
+        rv.setAdapter(infoAdapter);
         id = getIntent().getStringExtra("id");
+        companyType = getIntent().getStringExtra("companyType");
         if (!TextUtils.isEmpty(id)) {
             getData(id);
         }
@@ -132,48 +119,69 @@ public class CompanyInfoActivity extends MyBaseActivity {
 
 
     public void showCompanyInfo(CompanyBean data) {
+        if (data == null) return;
+        companyBean = data;
+        mlist.clear();
         etOperatorName.setText(data.getOperatorName() + "");
-        etSocialCreditCode.setText(data.getSocialCreditCode() + "");
-        etLicenseNumber.setText(data.getLicenseNumber() + "");
-        etLegalRepresentative.setText(data.getLegalRepresentative() + "");
-        etAddress.setText(data.getAddress() + "");
-        etBusinessPlace.setText(data.getBusinessPlace() + "");
-        etBusinessType.setText(data.getBusinessTypeText() + "");
-        etBusinessProject.setText(data.getBusinessProjectText() + "");
+        mlist.add(new DetailBean("社会信用代码", data.getSocialCreditCode() + ""));
+        mlist.add(new DetailBean("许可证编号", data.getLicenseNumber() + ""));
+        mlist.add(new DetailBean("法定代表人", data.getLegalRepresentative() + ""));
+        mlist.add(new DetailBean("住所", data.getAddress() + ""));
+
+        mlist.add(new DetailBean("联系人", data.getContact() + ""));
+        mlist.add(new DetailBean("联系方式", data.getContactInformation() + ""));
+
         businessType = data.getBusinessType();
         validDate = data.getValidDate();
-        etEndTime.setText(data.getValidDate() + "");
-        etContact.setText(data.getContact() + "");
-        etContactInformation.setText(data.getContactInformation() + "");
-        etFieldTime.setText(data.getFieldTime() + "");
         fieldTime = data.getFieldTime();
-//        etLocation.setText(data.getLatitude() + "," + data.getLongitude());
-        etCompanyType.setText(data.getCompanyTypeText() + "");
         getImage(data.getId());
 
-        if (data.getCompanyType()==2){
-            ll_loginAccount.setVisibility(View.VISIBLE);
+        if (companyType.equals("2")) {
             ll_user.setVisibility(View.VISIBLE);
-            etLoginAccount.setText(data.getLoginAccount()+"");
-        }else {
-            ll_loginAccount.setVisibility(View.GONE);
+            mlist.add(new DetailBean("登录账号", data.getLoginAccount() + ""));
+            mlist.add(new DetailBean("冷库类型", data.getColdstorageType1Text() + ""));
+            mlist.add(new DetailBean("是否含第三方冷库", data.getColdstorageType2Text() + ""));
+        } else {
             ll_user.setVisibility(View.GONE);
+            mlist.add(new DetailBean("经营场所", data.getBusinessPlace() + ""));
+            mlist.add(new DetailBean("企业类型", data.getCompanyTypeText() + ""));
+            mlist.add(new DetailBean("主体业态", data.getBusinessTypeText() + ""));
+            mlist.add(new DetailBean("经营项目", data.getBusinessProjectText() + ""));
+            mlist.add(new DetailBean("有效期至", data.getValidDate() + ""));
+            mlist.add(new DetailBean("签发时间", data.getFieldTime() + ""));
         }
+        infoAdapter.notifyDataSetChanged();
     }
 
     void getData(String id) {
-        RxNetUtils.request(getApi(ApiService.class).getCompanyInfo(id), new RequestObserver<JsonT<CompanyBean>>(this) {
-            @Override
-            protected void onSuccess(JsonT<CompanyBean> jsonT) {
-                companyBean = jsonT.getData();
-                showCompanyInfo(jsonT.getData());
-            }
 
-            @Override
-            protected void onFail2(JsonT<CompanyBean> stringJsonT) {
-                super.onFail2(stringJsonT);
-            }
-        }, LoadingUtils.build(this));
+        if (companyType.equals("2")) {
+            RxNetUtils.request(getApi(ApiService.class).getColdstorage(id), new RequestObserver<JsonT<CompanyBean>>(this) {
+                @Override
+                protected void onSuccess(JsonT<CompanyBean> jsonT) {
+                    companyBean = jsonT.getData();
+                    showCompanyInfo(jsonT.getData());
+                }
+
+                @Override
+                protected void onFail2(JsonT<CompanyBean> stringJsonT) {
+                    super.onFail2(stringJsonT);
+                }
+            }, LoadingUtils.build(this));
+        } else {
+            RxNetUtils.request(getApi(ApiService.class).getCompanyInfo(id), new RequestObserver<JsonT<CompanyBean>>(this) {
+                @Override
+                protected void onSuccess(JsonT<CompanyBean> jsonT) {
+                    companyBean = jsonT.getData();
+                    showCompanyInfo(jsonT.getData());
+                }
+
+                @Override
+                protected void onFail2(JsonT<CompanyBean> stringJsonT) {
+                    super.onFail2(stringJsonT);
+                }
+            }, LoadingUtils.build(this));
+        }
     }
 
     @Override
@@ -186,14 +194,14 @@ public class CompanyInfoActivity extends MyBaseActivity {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
                 startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId())
-                        .putExtra("companyType",companyBean.getCompanyType())
-                        .putExtra("companyTypeText",companyBean.getCompanyTypeText())
+                                .putExtra("companyType", companyBean.getCompanyType())
+                                .putExtra("companyTypeText", companyBean.getCompanyTypeText())
                         , 1001);
                 break;
             case R.id.bt_user:
                 startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId())
-                        .putExtra("companyType",companyBean.getCompanyType())
-                        .putExtra("companyTypeText",companyBean.getCompanyTypeText()),
+                                .putExtra("companyType", companyBean.getCompanyType())
+                                .putExtra("companyTypeText", companyBean.getCompanyTypeText()),
                         1001);
                 break;
             case R.id.bt_password:
@@ -205,9 +213,9 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 break;
             case R.id.et_record:
                 if (companyBean == null) return;
-                if (companyBean.getCompanyType()==5){
+                if (companyBean.getCompanyType() == 5) {
                     startActivity(new Intent(this, ColdCheckListActivity.class).putExtra("id", companyBean.getId()));
-                }else {
+                } else {
                     startActivity(new Intent(this, CheckListActivity.class).putExtra("id", companyBean.getId()));
                 }
 

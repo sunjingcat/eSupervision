@@ -120,7 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginLeft="10dp"
                 android:drawableRight="@drawable/image_arrow"
-                android:text="要些化" />
+                android:text="药械化" />
 
 
         </LinearLayout>

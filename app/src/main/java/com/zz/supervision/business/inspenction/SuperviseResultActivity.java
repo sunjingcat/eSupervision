@@ -39,6 +39,8 @@ public class SuperviseResultActivity extends MyBaseActivity {
     Toolbar toolbar;
     @BindView(R.id.item_title)
     TextView itemTitle;
+    @BindView(R.id.btn_pingfen)
+    Button btn_pingfen;
     int type;
 
     @Override
@@ -57,6 +59,9 @@ public class SuperviseResultActivity extends MyBaseActivity {
         deviceInfo = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
         if (deviceInfo != null) {
             showIntent(deviceInfo, type);
+        }
+        if (type==5){
+            btn_pingfen.setVisibility(View.GONE);
         }
     }
 

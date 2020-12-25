@@ -92,6 +92,9 @@ public interface ApiService {
     @GET("/app/v1/supervise/companyInfo/{id}")
     Observable<JsonT<CompanyBean>> getCompanyInfo(@Path("id") String id);
 
+    @GET("/app/v1/supervise/coldstorage/{id}")
+    Observable<JsonT<CompanyBean>> getColdstorage(@Path("id") String id);
+
 
     @GET("/app/v1/supervise/companyInfo/selectCompanyGroupCount")
     Observable<JsonT<List<CompanyType>>> selectCompanyGroupCount(@QueryMap Map<String, Object> params);

@@ -34,12 +34,22 @@ public class CompanyBean implements Serializable {
     private String updateBy;// ,
     private String updateTime;// ,
     private String validDate;//
-    private String loginAccount;//
+    private String loginName;//
     private String  longitude;//123.63550307225523,
     private String       latitude;// 47.21882160905167,
+    private String       coldstorageType1Text;// 47.21882160905167,
+    private String       coldstorageType2Text;// 47.21882160905167,
+
+    public String getColdstorageType1Text() {
+        return coldstorageType1Text;
+    }
+
+    public String getColdstorageType2Text() {
+        return coldstorageType2Text;
+    }
 
     public String getLoginAccount() {
-        return loginAccount;
+        return loginName;
     }
 
     public String getSpecificTypeText() {

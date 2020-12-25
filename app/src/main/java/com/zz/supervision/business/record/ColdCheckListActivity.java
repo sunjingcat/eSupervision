@@ -163,7 +163,6 @@ public class ColdCheckListActivity extends MyBaseActivity implements OnRefreshLi
                 }
             }
         });
-        getType();
 
     }
 
@@ -202,22 +201,15 @@ public class ColdCheckListActivity extends MyBaseActivity implements OnRefreshLi
             case R.id.et_inspectionResult:
                 if (businessTypeList.size() == 0) return;
                 UIAdjuster.closeKeyBoard(this);
-                List<String> list = new ArrayList<>();
-                List<String> list1 = new ArrayList<>();
-                for (int i = 0; i < businessTypeList.size(); i++) {
-                    list.add(businessTypeList.get(i).getDictLabel());
-                    list1.add(businessTypeList.get(i).getDictValue());
-                }
-                String[] array = (String[]) list.toArray(new String[list.size()]);
-                String[] values = (String[]) list1.toArray(new String[list1.size()]);
-                selectPopupWindows = new SelectPopupWindows(this, array);
+                String[] PLANETS = new String[]{"合格", "不合格"};
+                selectPopupWindows = new SelectPopupWindows(this, PLANETS);
                 selectPopupWindows.showAtLocation(findViewById(R.id.drawer),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 selectPopupWindows.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
                     @Override
                     public void onSelected(int index, String msg) {
                         etInspectionResult.setText(msg);
-                        inspectionResult = values[index];
+                        inspectionResult =(index+1)+"";
                     }
 
                     @Override

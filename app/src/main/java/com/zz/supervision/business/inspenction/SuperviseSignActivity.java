@@ -165,6 +165,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
         } else if (type == 5) {
             url = "llglInspectionRecord";
             llReviewerSignSign.setVisibility(View.GONE);
+            tvSign1.setText("法人签字");
+            tvSign2.setText("执法人签字");
         } else if (type == 3) {
             url = "spxsRiskRecord";
             llReviewerSignSign.setVisibility(View.VISIBLE);
@@ -257,7 +259,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         bt_delete.setVisibility(View.VISIBLE);
         tvType.setText(resposeBean.getTypeText() + "");
 
-        if (type == 1 || type == 2|| type == 5) {
+        if (type == 1 || type == 2 || type == 5) {
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLawEnforcerSign);
 
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLegalRepresentativeSign);
@@ -295,7 +297,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
                 break;
             case R.id.ll_legalRepresentative_sign:
-                if (resposeBean.getStatus()!=3) {
+                if (resposeBean.getStatus() != 3) {
                     PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
                         @Override
                         public void onGranted() {
@@ -311,7 +313,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
                 break;
             case R.id.ll_reviewerSign_sign:
-                if (resposeBean.getStatus()!=3) {
+                if (resposeBean.getStatus() != 3) {
                     PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
                         @Override
                         public void onGranted() {
@@ -338,8 +340,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
                 break;
             case R.id.toolbar_subtitle:
-                if (resposeBean==null)return;
-                if (type == 1 || type == 2|| type == 5) {
+                if (resposeBean == null) return;
+                if (type == 1 || type == 2 || type == 5) {
                     startActivity(new Intent(this, SuperviseInfoActivity.class)
                             .putExtra("company", resposeBean.getCompanyInfo().getOperatorName())
                             .putExtra("id", resposeBean.getId() + "")
@@ -412,16 +414,25 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
     void postData() {
         if (TextUtils.isEmpty(lawEnforcer_sign)) {
-            if (type == 1 || type == 2|| type == 5) {
-                showToast("执法人签字");
+            if (type == 1 || type == 2) {
+                if (type == 5) {
+                    showToast("法人签字");
+                }else {
+                    showToast("执法人签字");
+                }
             } else {
                 showToast("填表人签字");
             }
             return;
         }
         if (TextUtils.isEmpty(legalRepresentative_sign)) {
-            if (type == 1 || type == 2|| type == 5) {
-                showToast("企业负责人签字");
+            if (type == 1 || type == 2 || type == 5) {
+                if (type == 5) {
+                    showToast("执法人签字");
+                }else {
+                    showToast("企业负责人签字");
+                }
+
             } else {
                 showToast("企业法定代表人签字");
             }
@@ -439,7 +450,11 @@ public class SuperviseSignActivity extends MyBaseActivity {
         String officerSign = BASE64.imageToBase64(legalRepresentative_sign);
         String reviewerSign = BASE64.imageToBase64(reviewerSign_sign);
 
-        if (type == 1 || type == 2|| type == 5) {
+        if (type == 1 || type == 2 || type == 5) {
+            if (type == 5) {
+                companySign = BASE64.imageToBase64(legalRepresentative_sign);
+                officerSign = BASE64.imageToBase64(lawEnforcer_sign);
+            }
             RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
