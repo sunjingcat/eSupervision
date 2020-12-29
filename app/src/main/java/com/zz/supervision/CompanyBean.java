@@ -26,6 +26,7 @@ public class CompanyBean implements Serializable {
     private String legalRepresentative;// ,
     private String licenseNumber;// ,
     private String operatorName;// ,
+    private String operatorFullName;// ,
     private Object params;// {},
     private String remark;// ,
     private String searchValue;// ,
@@ -70,6 +71,10 @@ public class CompanyBean implements Serializable {
         }else {
             return Double.parseDouble(longitude);
         }
+    }
+
+    public String getOperatorFullName() {
+        return operatorFullName;
     }
 
     public Double getLatitude() {

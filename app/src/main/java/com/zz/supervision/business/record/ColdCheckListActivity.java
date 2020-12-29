@@ -199,7 +199,6 @@ public class ColdCheckListActivity extends MyBaseActivity implements OnRefreshLi
 
                 break;
             case R.id.et_inspectionResult:
-                if (businessTypeList.size() == 0) return;
                 UIAdjuster.closeKeyBoard(this);
                 String[] PLANETS = new String[]{"合格", "不合格"};
                 selectPopupWindows = new SelectPopupWindows(this, PLANETS);

@@ -60,6 +60,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
 
     @BindView(R.id.et_location)
     TextView etLocation;
+    @BindView(R.id.toolbar_subtitle)
+    TextView toolbar_subtitle;
 
     @BindView(R.id.ll_user)
     LinearLayout ll_user;
@@ -79,6 +81,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
     CompanyBean companyBean;
     @BindView(R.id.bt_ok)
     Button btOk;
+    @BindView(R.id.bt_delete)
+    Button bt_delete;
     @BindView(R.id.bg)
     LinearLayout bg;
     private CustomDialog customDialog;
@@ -103,6 +107,10 @@ public class CompanyInfoActivity extends MyBaseActivity {
         if (!TextUtils.isEmpty(id)) {
             getData(id);
         }
+        if (companyType.equals("2")){
+            toolbar_subtitle.setVisibility(View.GONE);
+            bt_delete.setVisibility(View.GONE);
+        }
 
     }
 
@@ -123,6 +131,9 @@ public class CompanyInfoActivity extends MyBaseActivity {
         companyBean = data;
         mlist.clear();
         etOperatorName.setText(data.getOperatorName() + "");
+        if (companyType.equals("2")) {
+            mlist.add(new DetailBean("经营者全称", data.getOperatorFullName() + ""));
+        }
         mlist.add(new DetailBean("社会信用代码", data.getSocialCreditCode() + ""));
         mlist.add(new DetailBean("许可证编号", data.getLicenseNumber() + ""));
         mlist.add(new DetailBean("法定代表人", data.getLegalRepresentative() + ""));
@@ -189,7 +200,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.bt_user, R.id.bt_password, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record})
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok,  R.id.bt_password, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
@@ -197,12 +208,6 @@ public class CompanyInfoActivity extends MyBaseActivity {
                                 .putExtra("companyType", companyBean.getCompanyType())
                                 .putExtra("companyTypeText", companyBean.getCompanyTypeText())
                         , 1001);
-                break;
-            case R.id.bt_user:
-                startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId())
-                                .putExtra("companyType", companyBean.getCompanyType())
-                                .putExtra("companyTypeText", companyBean.getCompanyTypeText()),
-                        1001);
                 break;
             case R.id.bt_password:
                 startActivityForResult(new Intent(this, PasswordActivity.class).putExtra("id", companyBean.getId()).putExtra("page", "company"), 1001);
@@ -213,7 +218,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 break;
             case R.id.et_record:
                 if (companyBean == null) return;
-                if (companyBean.getCompanyType() == 5) {
+                if (companyBean.getCompanyType() == 2) {
                     startActivity(new Intent(this, ColdCheckListActivity.class).putExtra("id", companyBean.getId()));
                 } else {
                     startActivity(new Intent(this, CheckListActivity.class).putExtra("id", companyBean.getId()));
