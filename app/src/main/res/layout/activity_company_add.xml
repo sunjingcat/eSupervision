@@ -124,6 +124,7 @@
 
                 </EditText>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -246,6 +247,7 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_businessType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
@@ -274,8 +276,10 @@
                     android:textSize="14dp">
 
                 </TextView>
-            </LinearLayout>   <LinearLayout
-            android:id="@+id/ll_coldstorage"
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_coldstorage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
@@ -309,6 +313,7 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_businessProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
@@ -324,6 +329,38 @@
 
                 <TextView
                     android:id="@+id/et_businessProject"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:drawableRight="@drawable/image_arrow"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:hint="请选择"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#333"
+                    android:textSize="14dp">
+
+                </TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_jtcompanyType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/textLeftStyle"
+                    android:layout_width="150dp"
+
+                    android:text="具体类型" />
+
+                <TextView
+                    android:id="@+id/et_jtcompanyType"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/white"
@@ -465,99 +502,101 @@
                 android:id="@+id/ll_loginAccount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="150dp"
-
-                    android:text="登录账号" />
-
-                <EditText
-                    android:id="@+id/et_loginAccount"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
                     android:background="@color/white"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="请填写"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#333"
-                    android:textSize="14dp">
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-                </EditText>
-            </LinearLayout>
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp">
+                        android:text="登录账号" />
 
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="150dp"
+                    <EditText
+                        android:id="@+id/et_loginAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="请填写"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
 
-                    android:text="密码" />
+                    </EditText>
+                </LinearLayout>
 
-                <EditText
-                    android:id="@+id/et_password"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
                     android:background="@color/white"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="请填写"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#333"
-                    android:textSize="14dp">
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-                </EditText>
-            </LinearLayout>
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp">
+                        android:text="密码" />
 
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="150dp"
+                    <EditText
+                        android:id="@+id/et_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="请填写"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
 
-                    android:text="确认密码" />
+                    </EditText>
+                </LinearLayout>
 
-                <EditText
-                    android:id="@+id/et_passwordCon"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
                     android:background="@color/white"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="请填写"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#333"
-                    android:textSize="14dp">
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-                </EditText>
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
+
+                        android:text="确认密码" />
+
+                    <EditText
+                        android:id="@+id/et_passwordCon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="请填写"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
+
+                    </EditText>
+                </LinearLayout>
             </LinearLayout>
-            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

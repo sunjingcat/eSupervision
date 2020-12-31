@@ -12,6 +12,7 @@ import com.zz.supervision.net.MyBasePresenterImpl;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,11 +42,13 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
     }
 
     @Override
-    public void getBusinessType(Map<String, Object> map) {
-        RxNetUtils.request(getApi(ApiService.class).getDicts(map), new RequestObserver<JsonT<List<BusinessType>>>(this) {
+    public void getDicts(String type) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("dictType", type);
+        RxNetUtils.request(getApi(ApiService.class).getDicts(params), new RequestObserver<JsonT<List<BusinessType>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
-                view.showBusinessType(jsonT.getData());
+                view.showDicts(type,jsonT.getData());
             }
 
             @Override
@@ -54,22 +57,6 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
             }
         }, mDialog);
     }
-
-    @Override
-    public void getBusiness2Type(Map<String, Object> map) {
-        RxNetUtils.request(getApi(ApiService.class).getDicts(map), new RequestObserver<JsonT<List<BusinessType>>>(this) {
-            @Override
-            protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
-                view.showBusiness2Type(jsonT.getData());
-            }
-
-            @Override
-            protected void onFail2(JsonT<List<BusinessType>> stringJsonT) {
-                super.onFail2(stringJsonT);
-            }
-        }, mDialog);
-    }
-
 
     @Override
     public void postImage(int position,String file) {

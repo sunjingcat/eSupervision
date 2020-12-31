@@ -132,7 +132,7 @@ public class CompanyListActivity extends MyBaseActivity {
 
     public void getCompanyType() {
         Map<String, Object> map = new HashMap<>();
-        map.put("dictType", "company_type");
+        map.put("dictType", "addCompanyType");
         RxNetUtils.request(getApi(ApiService.class).getDicts(map), new RequestObserver<JsonT<List<BusinessType>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<BusinessType>> jsonT) {

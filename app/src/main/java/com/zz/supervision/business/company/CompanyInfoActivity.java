@@ -133,26 +133,37 @@ public class CompanyInfoActivity extends MyBaseActivity {
         etOperatorName.setText(data.getOperatorName() + "");
         if (companyType.equals("2")) {
             mlist.add(new DetailBean("经营者全称", data.getOperatorFullName() + ""));
-        }
-        mlist.add(new DetailBean("社会信用代码", data.getSocialCreditCode() + ""));
-        mlist.add(new DetailBean("许可证编号", data.getLicenseNumber() + ""));
-        mlist.add(new DetailBean("法定代表人", data.getLegalRepresentative() + ""));
-        mlist.add(new DetailBean("住所", data.getAddress() + ""));
-
-        mlist.add(new DetailBean("联系人", data.getContact() + ""));
-        mlist.add(new DetailBean("联系方式", data.getContactInformation() + ""));
-
-        businessType = data.getBusinessType();
-        validDate = data.getValidDate();
-        fieldTime = data.getFieldTime();
-        getImage(data.getId());
-
-        if (companyType.equals("2")) {
+            mlist.add(new DetailBean("社会信用代码", data.getSocialCreditCode() + ""));
+            mlist.add(new DetailBean("许可证编号", data.getLicenseNumber() + ""));
+            mlist.add(new DetailBean("法定代表人", data.getLegalRepresentative() + ""));
+            mlist.add(new DetailBean("住所", data.getAddress() + ""));
+            mlist.add(new DetailBean("联系人", data.getContact() + ""));
+            mlist.add(new DetailBean("联系方式", data.getContactInformation() + ""));
             ll_user.setVisibility(View.VISIBLE);
             mlist.add(new DetailBean("登录账号", data.getLoginAccount() + ""));
             mlist.add(new DetailBean("冷库类型", data.getColdstorageType1Text() + ""));
             mlist.add(new DetailBean("是否含第三方冷库", data.getColdstorageType2Text() + ""));
+        } else if (companyType.equals("3")||companyType.equals("4")) {
+            mlist.add(new DetailBean("经营者名称", data.getOperatorName() + ""));
+            mlist.add(new DetailBean("社会信用代码", data.getSocialCreditCode() + ""));
+            mlist.add(new DetailBean("许可证编号", data.getLicenseNumber() + ""));
+            mlist.add(new DetailBean("法定代表人", data.getLegalRepresentative() + ""));
+            mlist.add(new DetailBean("住所", data.getAddress() + ""));
+            mlist.add(new DetailBean("联系人", data.getContact() + ""));
+            mlist.add(new DetailBean("联系方式", data.getContactInformation() + ""));
+            ll_user.setVisibility(View.GONE);
+            mlist.add(new DetailBean("经营场所", data.getBusinessPlace() + ""));
+            mlist.add(new DetailBean("企业类型", data.getCompanyTypeText() + ""));
+            mlist.add(new DetailBean("具体类型", data.getCompanyTypeText() + ""));
+            mlist.add(new DetailBean("有效期至", data.getValidDate() + ""));
+            mlist.add(new DetailBean("签发时间", data.getFieldTime() + ""));
         } else {
+            mlist.add(new DetailBean("社会信用代码", data.getSocialCreditCode() + ""));
+            mlist.add(new DetailBean("许可证编号", data.getLicenseNumber() + ""));
+            mlist.add(new DetailBean("法定代表人", data.getLegalRepresentative() + ""));
+            mlist.add(new DetailBean("住所", data.getAddress() + ""));
+            mlist.add(new DetailBean("联系人", data.getContact() + ""));
+            mlist.add(new DetailBean("联系方式", data.getContactInformation() + ""));
             ll_user.setVisibility(View.GONE);
             mlist.add(new DetailBean("经营场所", data.getBusinessPlace() + ""));
             mlist.add(new DetailBean("企业类型", data.getCompanyTypeText() + ""));
@@ -161,6 +172,13 @@ public class CompanyInfoActivity extends MyBaseActivity {
             mlist.add(new DetailBean("有效期至", data.getValidDate() + ""));
             mlist.add(new DetailBean("签发时间", data.getFieldTime() + ""));
         }
+
+
+        businessType = data.getBusinessType();
+        validDate = data.getValidDate();
+        fieldTime = data.getFieldTime();
+        getImage(data.getId());
+
         infoAdapter.notifyDataSetChanged();
     }
 

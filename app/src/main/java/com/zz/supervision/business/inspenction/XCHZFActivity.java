@@ -158,6 +158,10 @@ public class XCHZFActivity extends MyBaseActivity {
                 startActivityForResult(new Intent(this, PeopleActivity.class), 2001);
                 break;
             case R.id.et_startTime:
+                if (businessTypeList.size() == 0) {
+                    showToast("请先选择企业");
+                    return;
+                }
                 DatePickDialog dialog = new DatePickDialog(XCHZFActivity.this);
                 //设置上下年分限制
                 //设置上下年分限制
@@ -165,7 +169,7 @@ public class XCHZFActivity extends MyBaseActivity {
                 //设置标题
                 dialog.setTitle("选择时间");
                 //设置类型
-                dialog.setType(DateType.TYPE_YMD);
+                dialog.setType(companyBean.getCompanyType()==3||companyBean.getCompanyType()==4?DateType.TYPE_YMDHM:DateType.TYPE_YMD);
                 //设置消息体的显示格式，日期格式
                 dialog.setMessageFormat("yyyy-MM-dd");
                 //设置选择回调
