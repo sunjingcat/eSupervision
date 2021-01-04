@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,6 +17,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.codbking.widget.DatePickDialog;
+import com.codbking.widget.OnChangeLisener;
+import com.codbking.widget.OnSureLisener;
+import com.codbking.widget.bean.DateType;
 import com.troila.customealert.CustomDialog;
 import com.zz.lib.commonlib.utils.PermissionUtils;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
@@ -25,6 +30,7 @@ import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.DetailBean;
 import com.zz.supervision.bean.SuperviseBean;
+import com.zz.supervision.business.company.AddCompanyActivity;
 import com.zz.supervision.business.inspenction.adapter.DetailAdapter;
 import com.zz.supervision.business.inspenction.adapter.SignInfoAdapter;
 import com.zz.supervision.business.record.ShowDocActivity;
@@ -37,8 +43,10 @@ import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.utils.BASE64;
 import com.zz.supervision.utils.FileUtils;
 import com.zz.supervision.utils.GlideUtils;
+import com.zz.supervision.utils.TimeUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,18 +87,23 @@ public class SuperviseSignActivity extends MyBaseActivity {
     String lawEnforcer_sign;
     String legalRepresentative_sign;
     String reviewerSign_sign;
-    String url;
-    String id;
+    String url="";
+    String id="";
+    String reformTime="" ;
     @BindView(R.id.ll_lawEnforcer_sign)
     LinearLayout llLawEnforcerSign;
     @BindView(R.id.ll_legalRepresentative_sign)
     LinearLayout llLegalRepresentativeSign;
     @BindView(R.id.ll_violation)
     LinearLayout ll_violation;
+    @BindView(R.id.ll_reformTime)
+    LinearLayout ll_reformTime;
     @BindView(R.id.ll_sumCount)
     LinearLayout llSumCount;
     @BindView(R.id.tv_sign_1)
     TextView tvSign1;
+    @BindView(R.id.et_reformTime)
+    TextView et_reformTime;
     @BindView(R.id.tv_sign_2)
     TextView tvSign2;
     @BindView(R.id.tv_reviewerSign_sign)
@@ -143,6 +156,16 @@ public class SuperviseSignActivity extends MyBaseActivity {
             llReviewerSignSign.setVisibility(View.GONE);
             tvSign1.setText("法人签字");
             tvSign2.setText("执法人签字");
+        }else if (type == 6) {
+            url = "ypInspectionRecord";
+            llReviewerSignSign.setVisibility(View.GONE);
+            tvSign1.setText("法人签字");
+            tvSign2.setText("执法人签字");
+        }else if (type == 7) {
+            url = "ylqxInspectionRecord";
+            llReviewerSignSign.setVisibility(View.GONE);
+            tvSign1.setText("法人签字");
+            tvSign2.setText("执法人签字");
         }
         resposeBean = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
         if (resposeBean != null) {
@@ -186,6 +209,9 @@ public class SuperviseSignActivity extends MyBaseActivity {
         }  else if (type == 6||type == 7) {
             mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + ""));
             mlist.add(new DetailBean("问题数", resposeBean.getProblemCount() + ""));
+            if (resposeBean.getProblemCount()>0){
+                ll_reformTime.setVisibility(View.VISIBLE);
+            }
         } else {
             mlist.add(new DetailBean("静态评分项分数", resposeBean.getStaticScore() + ""));
             mlist.add(new DetailBean("动态评分项分数", resposeBean.getDynamicScore() + ""));
@@ -202,7 +228,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         bt_delete.setVisibility(View.VISIBLE);
         tvType.setText(resposeBean.getTypeText() + "");
 
-        if (type == 1 || type == 2 || type == 5) {
+        if (type == 1 || type == 2 || type == 5|| type == 6|| type == 7) {
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLawEnforcerSign);
 
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLegalRepresentativeSign);
@@ -222,7 +248,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.ll_lawEnforcer_sign, R.id.ll_legalRepresentative_sign, R.id.bt_ok, R.id.bt_delete, R.id.ll_reviewerSign_sign, R.id.toolbar_subtitle})
+    @OnClick({R.id.ll_lawEnforcer_sign, R.id.ll_legalRepresentative_sign, R.id.et_reformTime,R.id.bt_ok, R.id.bt_delete, R.id.ll_reviewerSign_sign, R.id.toolbar_subtitle})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_lawEnforcer_sign:
@@ -284,7 +310,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 break;
             case R.id.toolbar_subtitle:
                 if (resposeBean == null) return;
-                if (type == 1 || type == 2 || type == 5) {
+                if (type == 1 || type == 2 || type == 5|| type == 6 || type == 7) {
                     startActivity(new Intent(this, SuperviseInfoActivity.class)
                             .putExtra("company", resposeBean.getCompanyInfo().getOperatorName())
                             .putExtra("id", resposeBean.getId() + "")
@@ -324,6 +350,36 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 customDialog = builder.create();
                 customDialog.show();
                 break;
+                case R.id.et_reformTime:
+                    DatePickDialog dialog = new DatePickDialog(SuperviseSignActivity.this);
+                    //设置上下年分限制
+                    //设置上下年分限制
+                    dialog.setYearLimt(20);
+                    //设置标题
+                    dialog.setTitle("选择时间");
+                    //设置类型
+                    dialog.setType(DateType.TYPE_YMD);
+                    //设置消息体的显示格式，日期格式
+                    dialog.setMessageFormat("yyyy-MM-dd");
+                    //设置选择回调
+                    dialog.setOnChangeLisener(new OnChangeLisener() {
+                        @Override
+                        public void onChanged(Date date) {
+                            Log.v("+++", date.toString());
+                        }
+                    });
+                    //设置点击确定按钮回调
+                    dialog.setOnSureLisener(new OnSureLisener() {
+                        @Override
+                        public void onSure(Date date) {
+
+                            String time = TimeUtils.getTime(date.getTime(), TimeUtils.DATE_FORMAT_DATE);
+                            reformTime = time;
+                            et_reformTime.setText(time);
+                        }
+                    });
+                    dialog.show();
+                break;
         }
     }
 
@@ -358,7 +414,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
     void postData() {
         if (TextUtils.isEmpty(lawEnforcer_sign)) {
             if (type == 1 || type == 2) {
-                if (type == 5) {
+                if (type == 5||type == 6||type == 7) {
                     showToast("法人签字");
                 }else {
                     showToast("执法人签字");
@@ -369,8 +425,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
             return;
         }
         if (TextUtils.isEmpty(legalRepresentative_sign)) {
-            if (type == 1 || type == 2 || type == 5) {
-                if (type == 5) {
+            if (type == 1 || type == 2 || type == 5|| type == 6 || type == 7) {
+                if (type == 5||type == 6||type == 7) {
                     showToast("执法人签字");
                 }else {
                     showToast("企业负责人签字");
@@ -393,7 +449,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         String officerSign = BASE64.imageToBase64(legalRepresentative_sign);
         String reviewerSign = BASE64.imageToBase64(reviewerSign_sign);
 
-        if (type == 1 || type == 2 || type == 5) {
+        if (type == 1 || type == 2 || type == 5||type == 6||type == 7) {
             RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {

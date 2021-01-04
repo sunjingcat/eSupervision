@@ -256,18 +256,36 @@
                 android:id="@+id/rv_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:id="@+id/ll_reformTime"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:visibility="gone"
+                android:orientation="horizontal">
 
+                <TextView
+                    style="@style/textLeftStyle"
+                    android:layout_width="150dp"
+                    android:text="整改期限" />
 
+                <TextView
+                    android:id="@+id/et_reformTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:drawableRight="@drawable/image_arrow"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:hint="请选择"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#333"
+                    android:textSize="14dp">
 
-
-
-
-
-
-
-
-
-
+                </TextView>
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/ll_violation"
                 android:layout_width="match_parent"
