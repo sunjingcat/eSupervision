@@ -121,14 +121,14 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         type = getIntent().getIntExtra("type", 0);
         if (type == 1) {
             url = "spxsInspectionRecord";
-        }if (type == 1) {
-            url = "spxsInspectionRecord";
-        }if (type == 1) {
-            url = "ypInspectionRecord";
+        }else if (type == 2){
+            url = "cyfwInspectionRecord";
         } else if (type == 5) {
             url = "llglInspectionRecord";
-        }else {
-            url = "cyfwInspectionRecord";
+        }else if (type == 6) {
+            url = "ypInspectionRecord";
+        }else if (type == 7) {
+            url = "ylqxInspectionRecord";
         }
 
         toolbaSubtitle.setVisibility(View.VISIBLE);

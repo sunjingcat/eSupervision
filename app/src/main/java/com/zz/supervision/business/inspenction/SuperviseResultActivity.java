@@ -87,6 +87,9 @@ public class SuperviseResultActivity extends MyBaseActivity {
             list.add(new DetailBean("检查项数目", lightDevice.getSumCount() + ""));
             list.add(new DetailBean("问题数", lightDevice.getProblemCount() + ""));
             list.add(new DetailBean("检查结果", lightDevice.getInspectionResultText() + ""));
+        }else if (type == 6||type == 7) {
+            list.add(new DetailBean("检查项数目", lightDevice.getSumCount() + ""));
+            list.add(new DetailBean("问题数", lightDevice.getProblemCount() + ""));
         }else {
             list.add(new DetailBean("静态评分项分数", lightDevice.getStaticScore() + ""));
             list.add(new DetailBean("动态评分项分数", lightDevice.getDynamicScore() + ""));

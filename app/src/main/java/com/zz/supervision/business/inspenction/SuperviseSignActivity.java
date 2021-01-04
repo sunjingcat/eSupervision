@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.troila.customealert.CustomDialog;
 import com.zz.lib.commonlib.utils.PermissionUtils;
@@ -21,7 +23,10 @@ import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
+import com.zz.supervision.bean.DetailBean;
 import com.zz.supervision.bean.SuperviseBean;
+import com.zz.supervision.business.inspenction.adapter.DetailAdapter;
+import com.zz.supervision.business.inspenction.adapter.SignInfoAdapter;
 import com.zz.supervision.business.record.ShowDocActivity;
 import com.zz.supervision.business.risk.RiskSuperviseActivity;
 import com.zz.supervision.business.risk.RiskSuperviseInfoActivity;
@@ -32,6 +37,8 @@ import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.utils.BASE64;
 import com.zz.supervision.utils.FileUtils;
 import com.zz.supervision.utils.GlideUtils;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,30 +65,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
     TextView tvLawEnforcer;
     @BindView(R.id.tv_yearCount)
     TextView tvYearCount;
-    @BindView(R.id.tv_importantCount)
-    TextView tvImportantCount;
 
-    @BindView(R.id.tv_count)
-    TextView tv_count;
-
-    @BindView(R.id.tv_problemCount)
-    TextView tv_problemCount;
-    @BindView(R.id.tv_importantDetail)
-    TextView tvImportantDetail;
-    @BindView(R.id.tv_importantProblemCount)
-    TextView tvImportantProblemCount;
-    @BindView(R.id.tv_importantProblemDetail)
-    TextView tvImportantProblemDetail;
-    @BindView(R.id.tv_generalCount)
-    TextView tvGeneralCount;
-    @BindView(R.id.tv_generalDetail)
-    TextView tvGeneralDetail;
-    @BindView(R.id.tv_generalProblemCount)
-    TextView tvGeneralProblemCount;
-    @BindView(R.id.tv_generalProblemDetail)
-    TextView tvGeneralProblemDetail;
-    @BindView(R.id.tv_inspectionResult)
-    TextView tvInspectionResult;
     @BindView(R.id.tv_violation)
     TextView tvViolation;
     @BindView(R.id.tv_lawEnforcer_sign)
@@ -114,36 +98,17 @@ public class SuperviseSignActivity extends MyBaseActivity {
     @BindView(R.id.ll_reviewerSign_sign)
     LinearLayout llReviewerSignSign;
     int type;
-    @BindView(R.id.ll_important)
-    LinearLayout llImportant;
-    @BindView(R.id.ll_general)
-    LinearLayout llGeneral;
     @BindView(R.id.ll_yearCount)
     LinearLayout llYearCount;
-    @BindView(R.id.ll_inspectionResult)
-    LinearLayout llInspectionResult;
-    @BindView(R.id.ll_cold)
-    LinearLayout ll_cold;
-    @BindView(R.id.tv_staticScore)
-    TextView tvStaticScore;
-    @BindView(R.id.tv_dynamicScore)
-    TextView tvDynamicScore;
-    @BindView(R.id.tv_totalScore)
-    TextView tvTotalScore;
-    @BindView(R.id.tv_preLevel)
-    TextView tvPreLevel;
     @BindView(R.id.tv_time)
     TextView tvTime;
 
     @BindView(R.id.tv_reason)
     TextView tv_reason;
-    @BindView(R.id.ll_risk)
-    LinearLayout llRisk;
-    @BindView(R.id.tv_resultReduction)
-    TextView tvResultReduction;
-    @BindView(R.id.ll_resultReduction)
-    LinearLayout llResultReduction;
-
+   @BindView(R.id.rv_info)
+   RecyclerView rv_info;
+    SignInfoAdapter adapter;
+    ArrayList<DetailBean> mlist = new ArrayList<>();
     @Override
     protected int getContentView() {
         return R.layout.activity_supervise_sign;
@@ -152,32 +117,32 @@ public class SuperviseSignActivity extends MyBaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-
+        rv_info.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new SignInfoAdapter(R.layout.item_sign_info,mlist);
+        rv_info.setAdapter(adapter);
 
         type = getIntent().getIntExtra("type", 0);
         if (type == 1) {
             url = "spxsInspectionRecord";
             llReviewerSignSign.setVisibility(View.GONE);
-
         } else if (type == 2) {
             url = "cyfwInspectionRecord";
             llReviewerSignSign.setVisibility(View.GONE);
-        } else if (type == 5) {
-            url = "llglInspectionRecord";
-            llReviewerSignSign.setVisibility(View.GONE);
-            tvSign1.setText("法人签字");
-            tvSign2.setText("执法人签字");
-        } else if (type == 3) {
+        }  else if (type == 3) {
             url = "spxsRiskRecord";
             llReviewerSignSign.setVisibility(View.VISIBLE);
             tvSign1.setText("填表人签字");
             tvSign2.setText("企业法定代表人签字");
-        } else {
+        } else if (type == 4) {
             url = "cyfwRiskRecord";
             llReviewerSignSign.setVisibility(View.VISIBLE);
             tvSign1.setText("填表人签字");
             tvSign2.setText("企业法定代表人签字");
-
+        }else if (type == 5) {
+            url = "llglInspectionRecord";
+            llReviewerSignSign.setVisibility(View.GONE);
+            tvSign1.setText("法人签字");
+            tvSign2.setText("执法人签字");
         }
         resposeBean = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
         if (resposeBean != null) {
@@ -206,54 +171,32 @@ public class SuperviseSignActivity extends MyBaseActivity {
         tvTime.setText(resposeBean.getInspectionTime() + "");
         tv_reason.setText(resposeBean.getReason() + "");
         if (type == 1 || type == 2) {
-            tvImportantCount.setText(resposeBean.getImportantCount() + "");
-            tvImportantDetail.setText(resposeBean.getImportantDetail() + "");
-            tvImportantProblemCount.setText(resposeBean.getImportantProblemCount() + "");
-            tvImportantProblemDetail.setText(resposeBean.getImportantProblemDetail() + "");
-            tvGeneralCount.setText(resposeBean.getGeneralCount() + "");
-            tvGeneralDetail.setText(resposeBean.getGeneralDetail() + "");
-            tvGeneralProblemCount.setText(resposeBean.getGeneralProblemCount() + "");
-            tvGeneralProblemDetail.setText(resposeBean.getGeneralProblemDetail() + "");
-            tvInspectionResult.setText(resposeBean.getInspectionResultText() + "");
-            tvViolation.setText(resposeBean.getViolation() + "");
-            tvResultReduction.setText(resposeBean.getResultReductionText() + "");
+            mlist.add(new DetailBean("重点项目", resposeBean.getImportantCount() + "",true));
+            mlist.add(new DetailBean("重点项问题数", resposeBean.getImportantProblemCount() + ""));
+            mlist.add(new DetailBean("一般项数", resposeBean.getGeneralCount() + "",true));
+            mlist.add(new DetailBean("一般项问题数", resposeBean.getGeneralProblemCount() + ""));
+            mlist.add(new DetailBean("检查结果", resposeBean.getInspectionResultText() + "",true));
+            mlist.add(new DetailBean("处理结果", resposeBean.getResultReductionText() + "",true));
+            tvViolation.setText(resposeBean.getViolation()+"");
             ll_violation.setVisibility(TextUtils.isEmpty(resposeBean.getViolation()) ? View.GONE : View.VISIBLE);
-            llGeneral.setVisibility(View.VISIBLE);
-            llImportant.setVisibility(View.VISIBLE);
-            llInspectionResult.setVisibility(View.VISIBLE);
-            llRisk.setVisibility(View.GONE);
-            ll_cold.setVisibility(View.GONE);
-            llResultReduction.setVisibility(View.VISIBLE);
         } else if (type == 5) {
-            tv_count.setText(resposeBean.getSumCount() + "");
-            tv_problemCount.setText(resposeBean.getProblemCount() + "");
-            tvInspectionResult.setText(resposeBean.getInspectionResultText() + "");
-            llGeneral.setVisibility(View.GONE);
-            llImportant.setVisibility(View.GONE);
-            llInspectionResult.setVisibility(View.VISIBLE);
-            ll_violation.setVisibility(View.GONE);
-            llRisk.setVisibility(View.GONE);
-            ll_cold.setVisibility(View.VISIBLE);
-            llResultReduction.setVisibility(View.GONE);
+            mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + ""));
+            mlist.add(new DetailBean("问题数", resposeBean.getProblemCount() + ""));
+            mlist.add(new DetailBean("检查结果", resposeBean.getInspectionResultText() + "",true));
+        }  else if (type == 6||type == 7) {
+            mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + ""));
+            mlist.add(new DetailBean("问题数", resposeBean.getProblemCount() + ""));
         } else {
-            tvStaticScore.setText(resposeBean.getStaticScore() + "");
-            tvDynamicScore.setText(resposeBean.getDynamicScore() + "");
-            tvTotalScore.setText(resposeBean.getTotalScore() + "");
-            tvPreLevel.setText(resposeBean.getLevel() + "");
-            llGeneral.setVisibility(View.GONE);
-            llImportant.setVisibility(View.GONE);
-            llInspectionResult.setVisibility(View.GONE);
-            ll_violation.setVisibility(View.GONE);
-            llRisk.setVisibility(View.VISIBLE);
-            ll_cold.setVisibility(View.GONE);
-            llResultReduction.setVisibility(View.GONE);
+            mlist.add(new DetailBean("静态评分项分数", resposeBean.getStaticScore() + ""));
+            mlist.add(new DetailBean("动态评分项分数", resposeBean.getDynamicScore() + ""));
+            mlist.add(new DetailBean("总分数", resposeBean.getTotalScore() + ""));
+            mlist.add(new DetailBean("风险等级", resposeBean.getLevel() + ""));
         }
+        adapter.notifyDataSetChanged();
         bt_ok.setText(resposeBean.getStatus() == 3 ? "打印" : "确定");
         if (resposeBean.getStatus() == 3) {
             llLawEnforcerSign.setEnabled(false);
             llLegalRepresentativeSign.setEnabled(false);
-
-        } else {
 
         }
         bt_delete.setVisibility(View.VISIBLE);

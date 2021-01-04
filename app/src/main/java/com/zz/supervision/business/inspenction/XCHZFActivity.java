@@ -171,7 +171,7 @@ public class XCHZFActivity extends MyBaseActivity {
                 //设置类型
                 dialog.setType(companyBean.getCompanyType()==3||companyBean.getCompanyType()==4?DateType.TYPE_YMDHM:DateType.TYPE_YMD);
                 //设置消息体的显示格式，日期格式
-                dialog.setMessageFormat("yyyy-MM-dd");
+                dialog.setMessageFormat(companyBean.getCompanyType()==3||companyBean.getCompanyType()==4?"yyyy-MM-dd HH:mm":"yyyy-MM-dd");
                 //设置选择回调
                 dialog.setOnChangeLisener(new OnChangeLisener() {
                     @Override

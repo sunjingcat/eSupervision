@@ -27,6 +27,7 @@ import java.util.List;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -98,15 +99,13 @@ public class SuperviseInfoActivity extends MyBaseActivity {
         btOk.setVisibility(status == 3 ? View.VISIBLE : View.GONE);
         if (type == 1) {
             url = "spxsInspectionRecord";
-        }else if (type == 5) {
+        } else if (type == 2) {
+            url = "cyfwInspectionRecord";
+        } else if (type == 5) {
             url = "llglInspectionRecord";
             btOk.setVisibility(View.GONE);
-        } else {
-            url = "cyfwInspectionRecord";
         }
         initData();
-
-
 
 
         toolbarTitle.setText("评分详情");
@@ -131,7 +130,7 @@ public class SuperviseInfoActivity extends MyBaseActivity {
         String reason = getIntent().getStringExtra("reason");
         tvTime.setText("检查时间：" + time + "");
         tvReason.setText("检查事由：" + reason + "");
-        if (TextUtils.isEmpty(reason)){
+        if (TextUtils.isEmpty(reason)) {
             tvReason.setVisibility(View.GONE);
         }
         getData();
@@ -152,10 +151,10 @@ public class SuperviseInfoActivity extends MyBaseActivity {
         RxNetUtils.request(getApi(ApiService.class).getSuperviseInfo(url, id), new RequestObserver<JsonT<SuperviseInfoBean>>() {
             @Override
             protected void onSuccess(JsonT<SuperviseInfoBean> jsonT) {
-                if (jsonT==null)return;
+                if (jsonT == null) return;
                 showSuperviseList(jsonT.getData().getData());
                 tvRemark.setVisibility(View.VISIBLE);
-                tvRemark.setText(jsonT.getData().getRemark()+"");
+                tvRemark.setText(jsonT.getData().getRemark() + "");
             }
 
             @Override
