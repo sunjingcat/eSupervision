@@ -451,10 +451,6 @@ public class SuperviseSignActivity extends MyBaseActivity {
         String reviewerSign = BASE64.imageToBase64(reviewerSign_sign);
 
         if (type == 1 || type == 2 || type == 5) {
-            if (type == 5) {
-                companySign = BASE64.imageToBase64(legalRepresentative_sign);
-                officerSign = BASE64.imageToBase64(lawEnforcer_sign);
-            }
             RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
