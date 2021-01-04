@@ -236,7 +236,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 break;
             case R.id.et_record:
                 if (companyBean == null) return;
-                if (companyBean.getCompanyType() == 2) {
+                if (companyType.equals("2")) {
                     startActivity(new Intent(this, ColdCheckListActivity.class).putExtra("id", companyBean.getId()));
                 } else {
                     startActivity(new Intent(this, CheckListActivity.class).putExtra("id", companyBean.getId()));
