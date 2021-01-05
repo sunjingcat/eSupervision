@@ -203,17 +203,17 @@ public class SuperviseSignActivity extends MyBaseActivity {
             tvViolation.setText(resposeBean.getViolation()+"");
             ll_violation.setVisibility(TextUtils.isEmpty(resposeBean.getViolation()) ? View.GONE : View.VISIBLE);
         } else if (type == 5) {
-            mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + ""));
+            mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + "",true));
             mlist.add(new DetailBean("问题数", resposeBean.getProblemCount() + ""));
             mlist.add(new DetailBean("检查结果", resposeBean.getInspectionResultText() + "",true));
         }  else if (type == 6||type == 7) {
-            mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + ""));
+            mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + "",true));
             mlist.add(new DetailBean("问题数", resposeBean.getProblemCount() + ""));
             if (resposeBean.getProblemCount()>0){
                 ll_reformTime.setVisibility(View.VISIBLE);
             }
         } else {
-            mlist.add(new DetailBean("静态评分项分数", resposeBean.getStaticScore() + ""));
+            mlist.add(new DetailBean("静态评分项分数", resposeBean.getStaticScore() + "",true));
             mlist.add(new DetailBean("动态评分项分数", resposeBean.getDynamicScore() + ""));
             mlist.add(new DetailBean("总分数", resposeBean.getTotalScore() + ""));
             mlist.add(new DetailBean("风险等级", resposeBean.getLevel() + ""));
@@ -450,7 +450,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         String reviewerSign = BASE64.imageToBase64(reviewerSign_sign);
 
         if (type == 1 || type == 2 || type == 5||type == 6||type == 7) {
-            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign), new RequestObserver<JsonT>(this) {
+            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign,reformTime), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
                     if (jsonT.isSuccess()) {
@@ -466,7 +466,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 }
             }, LoadingUtils.build(this));
         } else {
-            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign, reviewerSign), new RequestObserver<JsonT>(this) {
+            RxNetUtils.request(getApi(ApiService.class).submitSignRisk(url, id, companySign, officerSign, reviewerSign), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
                     if (jsonT.isSuccess()) {

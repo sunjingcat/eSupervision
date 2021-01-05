@@ -17,10 +17,10 @@
         android:orientation="horizontal"
         android:background="@drawable/line_radius_10_light"
         android:gravity="center_vertical"
-        android:padding="15dp">
+        android:padding="13dp">
     <TextView
         android:id="@+id/item_title"
-        android:layout_width="120dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:textColor="#444444"
         android:textSize="14dp"
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:textColor="#999999"
+        android:textColor="#333"
         android:textSize="14dp"
         tools:text="ffffffffff" />
     </LinearLayout>

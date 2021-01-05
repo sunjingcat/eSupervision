@@ -79,8 +79,11 @@ public interface ApiService {
     @GET("/app/v1/supervise/universal/getRecordList")
     Observable<JsonT<List<RecordBean>>> getRecordList(@QueryMap Map<String, Object> params);
 
-   @GET("/app/v1/supervise/llglInspectionRecord/list")
+    @GET("/app/v1/supervise/llglInspectionRecord/list")
     Observable<JsonT<List<RecordBean>>> getColdRecordList(@QueryMap Map<String, Object> params);
+
+    @GET("/app/v1/supervise/{url}/list")
+    Observable<JsonT<List<RecordBean>>> getYaoRecordList(@Path("url") String url,@QueryMap Map<String, Object> params);
 
     @DELETE("/app/v1/supervise/companyInfo/removeCompanyInfo/{id}")
     Observable<JsonT> removeCompanyInfo(@Path("id")String id);
@@ -163,11 +166,11 @@ public interface ApiService {
 
     @FormUrlEncoded
     @PUT("/app/v1/supervise/{url}/submitSign/{id}")
-    Observable<JsonT> submitSign(@Path("url")String url,@Path("id")String id,@Field("companySign") String companySign, @Field("officerSign") String officerSign);
+    Observable<JsonT> submitSign(@Path("url")String url,@Path("id")String id,@Field("companySign") String companySign, @Field("officerSign") String officerSign,@Field("reformTime") String  reformTime);
 
     @FormUrlEncoded
     @PUT("/app/v1/supervise/{url}/submitSign/{id}")
-    Observable<JsonT> submitSign(@Path("url")String url,@Path("id")String id,@Field("fillerSign") String fillerSign, @Field("ownerSign") String  ownerSign,@Field("reviewerSign") String  reviewerSign);
+    Observable<JsonT> submitSignRisk(@Path("url")String url,@Path("id")String id,@Field("fillerSign") String fillerSign, @Field("ownerSign") String  ownerSign,@Field("reviewerSign") String  reviewerSign);
 
     @GET("/app/v1/supervise/{url}/{id}")
     Observable<JsonT<SuperviseBean.ResposeBean>> getSuperviseDetail(@Path("url") String url, @Path("id") String id);

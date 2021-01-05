@@ -183,7 +183,7 @@ public class XCHZFActivity extends MyBaseActivity {
                 dialog.setOnSureLisener(new OnSureLisener() {
                     @Override
                     public void onSure(Date date) {
-                        String time = TimeUtils.getTime(date.getTime(), TimeUtils.DATE_FORMAT_DATE);
+                        String time = TimeUtils.getTime(date.getTime(), companyBean.getCompanyType()==3||companyBean.getCompanyType()==4?TimeUtils.DEFAULT_DATE_FORMAT1:TimeUtils.DATE_FORMAT_DATE);
                         inspectionTime = time;
                         etStartTime.setText(time);
                     }
@@ -275,7 +275,7 @@ public class XCHZFActivity extends MyBaseActivity {
             @Override
             protected void onSuccess(JsonT<Integer> jsonT) {
                 String reason = edCause.getText().toString();
-                if (type == 1 || type == 2|| type == 5) {
+                if (type == 1 || type == 2|| type == 5|| type == 6|| type == 7) {
                     startActivity(new Intent(XCHZFActivity.this, SuperviseActivity.class)
                             .putExtra("company", companyBean.getOperatorName())
                             .putExtra("id", jsonT.getData() + "")

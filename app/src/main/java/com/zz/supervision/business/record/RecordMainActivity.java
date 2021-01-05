@@ -63,7 +63,7 @@ public class RecordMainActivity extends MyBaseActivity {
                 break;
 
             case R.id.ll_yx:
-                showToast("暂未开放，敬请期待");
+                startActivity(new Intent(RecordMainActivity.this, YaoCheckListActivity.class));
                 break;
             case R.id.ll_tzh:
                 showToast("暂未开放，敬请期待");

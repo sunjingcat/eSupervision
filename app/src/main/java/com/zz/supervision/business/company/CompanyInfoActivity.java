@@ -26,6 +26,7 @@ import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.business.mine.PasswordActivity;
 import com.zz.supervision.business.record.CheckListActivity;
 import com.zz.supervision.business.record.ColdCheckListActivity;
+import com.zz.supervision.business.record.YaoCheckListActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -238,6 +239,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 if (companyBean == null) return;
                 if (companyType.equals("2")) {
                     startActivity(new Intent(this, ColdCheckListActivity.class).putExtra("id", companyBean.getId()));
+                } else if (companyType.equals("3")||companyType.equals("4")) {
+                    startActivity(new Intent(this, YaoCheckListActivity.class).putExtra("id", companyBean.getId()));
                 } else {
                     startActivity(new Intent(this, CheckListActivity.class).putExtra("id", companyBean.getId()));
                 }

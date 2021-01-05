@@ -17,6 +17,7 @@ public class RecordBean implements Serializable {
     private String typeText;
     private String operatorName;
     private String licenseNumber;
+    private String problemCount;
     private int yearCount;
     private String inspectionResult;
     private String inspectionResultText;
@@ -31,6 +32,10 @@ public class RecordBean implements Serializable {
     }
     public String getSearchValue() {
         return searchValue;
+    }
+
+    public String getProblemCount() {
+        return problemCount;
     }
 
     public String getReason() {

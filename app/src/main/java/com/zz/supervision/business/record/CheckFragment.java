@@ -204,17 +204,31 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
         if (status != 0) {
             map.put("status", status);
         }
-        RxNetUtils.request(getApi(ApiService.class).getRecordList(map), new RequestObserver<JsonT<List<RecordBean>>>() {
-            @Override
-            protected void onSuccess(JsonT<List<RecordBean>> jsonT) {
-                showResult(jsonT.getData());
-            }
+        if ("1".equals(type)||"2".equals(type)){
+            RxNetUtils.request(getApi(ApiService.class).getRecordList(map), new RequestObserver<JsonT<List<RecordBean>>>() {
+                @Override
+                protected void onSuccess(JsonT<List<RecordBean>> jsonT) {
+                    showResult(jsonT.getData());
+                }
 
-            @Override
-            protected void onFail2(JsonT<List<RecordBean>> stringJsonT) {
-                super.onFail2(stringJsonT);
-            }
-        }, LoadingUtils.build(getActivity()));
+                @Override
+                protected void onFail2(JsonT<List<RecordBean>> stringJsonT) {
+                    super.onFail2(stringJsonT);
+                }
+            }, LoadingUtils.build(getActivity()));
+        }else {
+            RxNetUtils.request(getApi(ApiService.class).getYaoRecordList("3".equals(type)?"ypInspectionRecord":"ylqxInspectionRecord", map), new RequestObserver<JsonT<List<RecordBean>>>() {
+                @Override
+                protected void onSuccess(JsonT<List<RecordBean>> jsonT) {
+                    showResult(jsonT.getData());
+                }
+
+                @Override
+                protected void onFail2(JsonT<List<RecordBean>> stringJsonT) {
+                    super.onFail2(stringJsonT);
+                }
+            }, LoadingUtils.build(getActivity()));
+        }
     }
 
 
