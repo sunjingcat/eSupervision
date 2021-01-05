@@ -206,7 +206,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + "",true));
             mlist.add(new DetailBean("问题数", resposeBean.getProblemCount() + ""));
             mlist.add(new DetailBean("检查结果", resposeBean.getInspectionResultText() + "",true));
-        }  else if (type == 6||type == 7) {
+        }  else if (type == 6||type == 7||type == 8||type == 9||type == 10) {
             mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + "",true));
             mlist.add(new DetailBean("问题数", resposeBean.getProblemCount() + ""));
             if (resposeBean.getProblemCount()>0){
@@ -228,7 +228,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         bt_delete.setVisibility(View.VISIBLE);
         tvType.setText(resposeBean.getTypeText() + "");
 
-        if (type == 1 || type == 2 || type == 5|| type == 6|| type == 7) {
+        if (type == 1 || type == 2 || type == 5|| type == 6|| type == 7||type == 8||type == 9||type == 10) {
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLawEnforcerSign);
 
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLegalRepresentativeSign);
@@ -310,7 +310,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 break;
             case R.id.toolbar_subtitle:
                 if (resposeBean == null) return;
-                if (type == 1 || type == 2 || type == 5|| type == 6 || type == 7) {
+                if (type == 1 || type == 2 || type == 5|| type == 6 || type == 7||type == 8||type == 9||type == 10) {
                     startActivity(new Intent(this, SuperviseInfoActivity.class)
                             .putExtra("company", resposeBean.getCompanyInfo().getOperatorName())
                             .putExtra("id", resposeBean.getId() + "")

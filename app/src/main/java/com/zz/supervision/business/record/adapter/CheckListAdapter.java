@@ -26,7 +26,7 @@ public class CheckListAdapter extends BaseQuickAdapter<RecordBean, BaseViewHolde
             helper.setText(R.id.tv_inspectionResult, "" + item.getLevel());
             helper.setText(R.id.tv_inspectionResult_tv, "风险等级");
         } else {
-            if (item.getType() == 6 || item.getType() == 7) {
+            if (item.getType() == 6 || item.getType() == 7||item.getType() == 8 || item.getType() == 9||item.getType() == 10) {
                 helper.getView(R.id.ll_yearCount).setVisibility(View.VISIBLE);
                 helper.setText(R.id.tv_inspectionResult, "" + item.getProblemCount());
                 helper.setText(R.id.tv_inspectionResult_tv, "问题项数");
