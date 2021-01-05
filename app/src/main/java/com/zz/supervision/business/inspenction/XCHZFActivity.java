@@ -275,7 +275,7 @@ public class XCHZFActivity extends MyBaseActivity {
             @Override
             protected void onSuccess(JsonT<Integer> jsonT) {
                 String reason = edCause.getText().toString();
-                if (type == 1 || type == 2|| type == 5|| type == 6|| type == 7) {
+                if (type == 1 || type == 2|| type == 5|| type == 6|| type == 7|| type == 8|| type == 9|| type == 10) {
                     startActivity(new Intent(XCHZFActivity.this, SuperviseActivity.class)
                             .putExtra("company", companyBean.getOperatorName())
                             .putExtra("id", jsonT.getData() + "")

@@ -156,12 +156,12 @@ public class SuperviseSignActivity extends MyBaseActivity {
             llReviewerSignSign.setVisibility(View.GONE);
             tvSign1.setText("法人签字");
             tvSign2.setText("执法人签字");
-        }else if (type == 6) {
+        }else if (type == 6||type == 7) {
             url = "ypInspectionRecord";
             llReviewerSignSign.setVisibility(View.GONE);
             tvSign1.setText("法人签字");
             tvSign2.setText("执法人签字");
-        }else if (type == 7) {
+        }else if (type == 8||type == 9||type == 10) {
             url = "ylqxInspectionRecord";
             llReviewerSignSign.setVisibility(View.GONE);
             tvSign1.setText("法人签字");
@@ -413,8 +413,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
     void postData() {
         if (TextUtils.isEmpty(lawEnforcer_sign)) {
-            if (type == 1 || type == 2) {
-                if (type == 5||type == 6||type == 7) {
+            if (type == 1 || type == 2||type == 5||type == 6||type == 7||type == 8||type == 9||type == 10) {
+                if (type == 5||type == 6||type == 7||type == 8||type == 9||type == 10) {
                     showToast("法人签字");
                 }else {
                     showToast("执法人签字");
@@ -425,8 +425,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
             return;
         }
         if (TextUtils.isEmpty(legalRepresentative_sign)) {
-            if (type == 1 || type == 2 || type == 5|| type == 6 || type == 7) {
-                if (type == 5||type == 6||type == 7) {
+            if (type == 1 || type == 2 || type == 5|| type == 6 || type == 7||type == 8||type == 9||type == 10) {
+                if (type == 5||type == 6||type == 7||type == 8||type == 9||type == 10) {
                     showToast("执法人签字");
                 }else {
                     showToast("企业负责人签字");
@@ -449,7 +449,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         String officerSign = BASE64.imageToBase64(legalRepresentative_sign);
         String reviewerSign = BASE64.imageToBase64(reviewerSign_sign);
 
-        if (type == 1 || type == 2 || type == 5||type == 6||type == 7) {
+        if (type == 1 || type == 2 || type == 5||type == 6||type == 7||type == 8||type == 9||type == 10) {
             RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign,reformTime), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {

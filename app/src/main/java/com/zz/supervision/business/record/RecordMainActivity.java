@@ -19,7 +19,39 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- *
+ * [{
+ * 		"companyType": "0",
+ * 		"companyTypeText": "全部",
+ * 		"count": "51"
+ *        }, {
+ * 		"companyType": "1",
+ * 		"companyTypeText": "食品",   监督 type=1,2  风险 3,4
+ * 		"count": "51"
+ *    }, {
+ * 		"companyType": "2",
+ * 		"companyTypeText": "冷链", type =5
+ * 		"count": "4"
+ *    }, {
+ * 		"companyType": "3",
+ * 		"companyTypeText": "药品",type = 6,7
+ * 		"count": "3"
+ *    }, {
+ * 		"companyType": "4",
+ * 		"companyTypeText": "医疗器械",type = 8,9,10
+ * 		"count": "2"
+ *    }, {
+ * 		"companyType": "5",
+ * 		"companyTypeText": "化妆品",
+ * 		"count": "0"
+ *    }, {
+ * 		"companyType": "6",
+ * 		"companyTypeText": "特种设备",
+ * 		"count": "0"
+ *    }, {
+ * 		"companyType": "7",
+ * 		"companyTypeText": "重点工业品",
+ * 		"count": "0"
+ *    }]
  */
 public class RecordMainActivity extends MyBaseActivity {
 

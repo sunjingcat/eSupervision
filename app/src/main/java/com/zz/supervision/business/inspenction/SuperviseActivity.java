@@ -125,9 +125,9 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
             url = "cyfwInspectionRecord";
         } else if (type == 5) {
             url = "llglInspectionRecord";
-        }else if (type == 6) {
+        }else if (type == 6||type == 7) {
             url = "ypInspectionRecord";
-        }else if (type == 7) {
+        }else if (type == 8||type == 9||type == 10) {
             url = "ylqxInspectionRecord";
         }
 

@@ -104,6 +104,10 @@ public class SuperviseInfoActivity extends MyBaseActivity {
         } else if (type == 5) {
             url = "llglInspectionRecord";
             btOk.setVisibility(View.GONE);
+        }else if (type == 6||type == 7) {
+            url = "ypInspectionRecord";
+        }else if (type == 8||type == 9||type == 10) {
+            url = "ylqxInspectionRecord";
         }
         initData();
 
