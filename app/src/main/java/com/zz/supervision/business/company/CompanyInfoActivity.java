@@ -184,9 +184,15 @@ public class CompanyInfoActivity extends MyBaseActivity {
     }
 
     void getData(String id) {
-
-        if (companyType.equals("2")) {
-            RxNetUtils.request(getApi(ApiService.class).getColdstorage(id), new RequestObserver<JsonT<CompanyBean>>(this) {
+            String url = "companyInfo";
+            if (companyType.equals("2")) {
+                url = "coldstorage";
+            }else if (companyType.equals("3")) {
+                url = "ypCompanyInfo";
+            }else if (companyType.equals("4")) {
+                url = "ylqxCompanyInfo";
+            }
+            RxNetUtils.request(getApi(ApiService.class).getCompanyInfo(url,id), new RequestObserver<JsonT<CompanyBean>>(this) {
                 @Override
                 protected void onSuccess(JsonT<CompanyBean> jsonT) {
                     companyBean = jsonT.getData();
@@ -198,20 +204,6 @@ public class CompanyInfoActivity extends MyBaseActivity {
                     super.onFail2(stringJsonT);
                 }
             }, LoadingUtils.build(this));
-        } else {
-            RxNetUtils.request(getApi(ApiService.class).getCompanyInfo(id), new RequestObserver<JsonT<CompanyBean>>(this) {
-                @Override
-                protected void onSuccess(JsonT<CompanyBean> jsonT) {
-                    companyBean = jsonT.getData();
-                    showCompanyInfo(jsonT.getData());
-                }
-
-                @Override
-                protected void onFail2(JsonT<CompanyBean> stringJsonT) {
-                    super.onFail2(stringJsonT);
-                }
-            }, LoadingUtils.build(this));
-        }
     }
 
     @Override
