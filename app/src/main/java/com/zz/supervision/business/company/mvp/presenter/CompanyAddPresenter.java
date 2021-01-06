@@ -27,8 +27,14 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
     }
 
     @Override
-    public void getData(String url) {
-        RxNetUtils.request(getApi(ApiService.class).getCompanyInfo(url), new RequestObserver<JsonT<CompanyBean>>(this) {
+    public void getData(String type,String id) {
+        String url = "companyInfo";
+        if (type.equals("3")) {
+            url = "ypCompanyInfo";
+        }else if (type.equals("4")) {
+            url = "ylqxCompanyInfo";
+        }
+        RxNetUtils.request(getApi(ApiService.class).getCompanyInfo(url,id), new RequestObserver<JsonT<CompanyBean>>(this) {
             @Override
             protected void onSuccess(JsonT<CompanyBean> jsonT) {
                 view.showCompanyInfo(jsonT.getData());
@@ -48,7 +54,7 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
         RxNetUtils.request(getApi(ApiService.class).getDicts(params), new RequestObserver<JsonT<List<BusinessType>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
-                view.showDicts(type,jsonT.getData());
+                view.showDicts(type, jsonT.getData());
             }
 
             @Override
@@ -59,13 +65,13 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
     }
 
     @Override
-    public void postImage(int position,String file) {
+    public void postImage(int position, String file) {
 
         RxNetUtils.request(getApi(ApiService.class).uploadImg(file), new RequestObserver<JsonT<String>>(this) {
             @Override
             protected void onSuccess(JsonT<String> data) {
                 if (data.isSuccess()) {
-                    view.showPostImage(position,data.getData());
+                    view.showPostImage(position, data.getData());
                 } else {
 
                 }
@@ -103,6 +109,25 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
     @Override
     public void submitData(Map<String, Object> map) {
         if (map.containsKey("id")) {
+            if (map.containsKey("companyType") && (map.get("companyType").equals("3") || map.get("companyType").equals("4"))) {
+                String url = "ylqxCompanyInfo";
+                if (map.get("companyType").equals("3")) {
+                    url = "ypCompanyInfo";
+                }
+                RxNetUtils.request(getApi(ApiService.class).editYaoCompanyInfo(url,map), new RequestObserver<JsonT<String>>(this) {
+                    @Override
+                    protected void onSuccess(JsonT<String> jsonT) {
+                        view.showSubmitResult(jsonT.getData());
+//                    view.showToast(jsonT.getMessage());
+                    }
+
+                    @Override
+                    protected void onFail2(JsonT stringJsonT) {
+                        super.onFail2(stringJsonT);
+                        view.showToast(stringJsonT.getMessage());
+                    }
+                }, mDialog);
+            }else {
                 RxNetUtils.request(getApi(ApiService.class).editCompanyInfo(map), new RequestObserver<JsonT<String>>(this) {
                     @Override
                     protected void onSuccess(JsonT<String> jsonT) {
@@ -116,27 +141,53 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
                         view.showToast(stringJsonT.getMessage());
                     }
                 }, mDialog);
+            }
 
         } else {
-            RxNetUtils.request(getApi(ApiService.class).postCompanyInfo(map), new RequestObserver<JsonT<String>>(this) {
-                @Override
-                protected void onSuccess(JsonT<String> jsonT) {
-                    view.showSubmitResult((String) jsonT.getData());
-//                    view.showToast(jsonT.getMessage());
+            if (map.containsKey("companyType") && (map.get("companyType").equals("3") || map.get("companyType").equals("4"))) {
+                String url = "ylqxCompanyInfo";
+                if (map.get("companyType").equals("3")) {
+                    url = "ypCompanyInfo";
                 }
+                RxNetUtils.request(getApi(ApiService.class).postYaoCompanyInfo(url, map), new RequestObserver<JsonT<String>>(this) {
+                    @Override
+                    protected void onSuccess(JsonT<String> jsonT) {
+                        view.showSubmitResult((String) jsonT.getData());
+                    }
 
-                @Override
-                protected void onFail2(JsonT stringJsonT) {
-                    super.onFail2(stringJsonT);
-                    view.showToast(stringJsonT.getMessage());
-                }
-            }, mDialog);
+                    @Override
+                    protected void onFail2(JsonT stringJsonT) {
+                        super.onFail2(stringJsonT);
+                        view.showToast(stringJsonT.getMessage());
+                    }
+                }, mDialog);
+            } else {
+                RxNetUtils.request(getApi(ApiService.class).postCompanyInfo(map), new RequestObserver<JsonT<String>>(this) {
+                    @Override
+                    protected void onSuccess(JsonT<String> jsonT) {
+                        view.showSubmitResult((String) jsonT.getData());
+//                    view.showToast(jsonT.getMessage());
+                    }
+
+                    @Override
+                    protected void onFail2(JsonT stringJsonT) {
+                        super.onFail2(stringJsonT);
+                        view.showToast(stringJsonT.getMessage());
+                    }
+                }, mDialog);
+            }
         }
     }
-    @Override
-    public void uploadCompanyImgs(String id,String files) {
 
-        RxNetUtils.request(getApi(ApiService.class).uploadCompanyImgs(id,files), new RequestObserver<JsonT>(this) {
+    @Override
+    public void uploadCompanyImgs(String type, String id, String files) {
+        String url = "companyInfo";
+        if (type.equals("3")) {
+            url = "ypCompanyInfo";
+        }else if (type.equals("4")) {
+            url = "ylqxCompanyInfo";
+        }
+        RxNetUtils.request(getApi(ApiService.class).uploadCompanyImgs(url, id, files), new RequestObserver<JsonT>(this) {
             @Override
             protected void onSuccess(JsonT data) {
                 if (data.isSuccess()) {

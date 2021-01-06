@@ -259,7 +259,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
                     return;
                 } else {
                     if (companyBean.getLatitude() > 0.0 && companyBean.getLongitude() > 0.0) {
-                        NavUtils.invokeNavi(this, null, "中智.智慧路灯", companyBean.getLatitude() + "," + companyBean.getLongitude());
+                        NavUtils.invokeNavi(this, null, "中智.智慧监督", companyBean.getLatitude() + "," + companyBean.getLongitude());
                     } else {
                         com.zz.lib.core.http.utils.ToastUtils.showToast("坐标错误");
                     }

@@ -92,8 +92,8 @@ public interface ApiService {
     @DELETE("/app/v1/supervise/{url}/{id}")
     Observable<JsonT> removeSuperviseInfo(@Path("url")String url,@Path("id")String id);
 
-    @GET("/app/v1/supervise/companyInfo/{id}")
-    Observable<JsonT<CompanyBean>> getCompanyInfo(@Path("id") String id);
+    @GET("/app/v1/supervise/{url}/{id}")
+    Observable<JsonT<CompanyBean>> getCompanyInfo(@Path("url")String url,@Path("id") String id);
 
     @GET("/app/v1/supervise/coldstorage/{id}")
     Observable<JsonT<CompanyBean>> getColdstorage(@Path("id") String id);
@@ -105,12 +105,18 @@ public interface ApiService {
     @POST("/app/v1/supervise/companyInfo/editCompanyInfo")
     Observable<JsonT<String>> editCompanyInfo(@QueryMap Map<String, Object> params);
 
+    @PUT("/app/v1/supervise/{url}")
+    Observable<JsonT<String>> editYaoCompanyInfo(@Path("url")String url,@QueryMap Map<String, Object> params);
+
     @POST("/app/v1/supervise/companyInfo/addCompanyInfo")
     Observable<JsonT<String>> postCompanyInfo(@QueryMap Map<String, Object> params);
 
-    @POST("/app/v1/supervise/companyInfo/uploadImgs/{id}")
+    @POST("/app/v1/supervise/{url}")
+    Observable<JsonT<String>> postYaoCompanyInfo(@Path("url")String url,@QueryMap Map<String, Object> params);
+
+    @POST("/app/v1/supervise/{url}/uploadImgs/{id}")
     @FormUrlEncoded
-    Observable<JsonT> uploadCompanyImgs(@Path("id")String id,@Field("enclosureIds") String handleFile);
+    Observable<JsonT> uploadCompanyImgs(@Path("url")String url,@Path("id")String id,@Field("enclosureIds") String handleFile);
 
     @POST("/app/v1/supervise/enclosure/uploadSingle")
     @FormUrlEncoded

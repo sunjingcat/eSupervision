@@ -16,13 +16,13 @@ import okhttp3.MultipartBody;
 public class Contract {
     public interface IsetCompanyAddPresenter extends BasePresenter {
         void submitData(Map<String, Object> map);
-        void getData(String url);
+        void getData(String type,String url);
 
         void getDicts(String type);
 
 
         void postImage(int position,String files);
-        void uploadCompanyImgs(String id,String files);
+        void uploadCompanyImgs(String type,String id,String files);
 
         void getImage(String type,String modelId);
     }

@@ -117,6 +117,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     String businessType = "";
     String specificType = "";
     String companyType = "";
+    String url = "";
      String ypCompanyType="";// ,
      String ylqxCompanyType="";// ,
     String businessProject = "";
@@ -173,16 +174,13 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         });
 
         id = getIntent().getStringExtra("id");
-
+        companyType = getIntent().getStringExtra("companyType") + "";
         if (!TextUtils.isEmpty(id)) {
-            mPresenter.getData(id);
+            mPresenter.getData(companyType,id);
             toolbarTitle.setText("编辑企业");
             mPresenter.getImage("company", id);
             showLoading("");
         }
-
-
-        companyType = getIntent().getStringExtra("companyType") + "";
         et_companyType.setText(getIntent().getStringExtra("companyTypeText") + "");
         if (companyType.equals("1")) {
             ll_loginAccount.setVisibility(View.GONE);
@@ -349,7 +347,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         for (int i = 0; i < images.size(); i++) {
             ids.add(images.get(i).getId());
         }
-        mPresenter.uploadCompanyImgs(id, new Gson().toJson(ids));
+        mPresenter.uploadCompanyImgs(companyType,id, new Gson().toJson(ids));
     }
 
     @Override

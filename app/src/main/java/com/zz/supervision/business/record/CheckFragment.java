@@ -120,7 +120,7 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
                 RecordBean recordBean = mlist.get(position);
                 if (recordBean.getStatus() == 1) {
-                    if (recordBean.getType() == 1 ||recordBean.getType() == 2) {
+                    if (recordBean.getType() == 1 ||recordBean.getType() == 2||recordBean.getType() == 6||recordBean.getType() == 7||recordBean.getType() == 8||recordBean.getType() == 9||recordBean.getType() == 10) {
                         startActivity(new Intent(getActivity(), SuperviseActivity.class)
                                 .putExtra("company", recordBean.getOperatorName())
                                 .putExtra("id", recordBean.getId() + "")
