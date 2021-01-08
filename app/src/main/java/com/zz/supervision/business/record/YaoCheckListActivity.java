@@ -114,7 +114,6 @@ public class YaoCheckListActivity extends MyBaseActivity {
             ll_company.setVisibility(View.VISIBLE);
         }
         getDate();
-
     }
 
     CheckFragment checkFragment1;
@@ -135,18 +134,10 @@ public class YaoCheckListActivity extends MyBaseActivity {
             tablayout.getTabAt(i).setText(tabs[i]);
         }
         llLevel.setVisibility(View.GONE);
-        llInspectionResult.setVisibility(View.VISIBLE);
+        llInspectionResult.setVisibility(View.GONE);
         tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-                if (position == 0) {
-                    llLevel.setVisibility(View.GONE);
-                    llInspectionResult.setVisibility(View.VISIBLE);
-                } else {
-                    llLevel.setVisibility(View.VISIBLE);
-                    llInspectionResult.setVisibility(View.GONE);
-                }
                 etCompany.setText("");
                 etLawEnforcer.setText("");
                 inspectionResult = "";

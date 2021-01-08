@@ -14,10 +14,6 @@ public class CompanyBean implements Serializable {
     private String businessType;// ,
     private String businessTypeText;// ,
     private int companyType;// ,
-    private String ypCompanyType;// ,
-    private String ypCompanyTypeText;// ,
-    private String ylqxCompanyType;// ,
-    private String ylqxCompanyTypeText;// ,
     private String specificType;// ,
     private String specificTypeText;// ,
     private String companyTypeText;// ,
@@ -75,22 +71,6 @@ public class CompanyBean implements Serializable {
         }else {
             return Double.parseDouble(longitude);
         }
-    }
-
-    public String getYpCompanyType() {
-        return ypCompanyType;
-    }
-
-    public String getYpCompanyTypeText() {
-        return ypCompanyTypeText;
-    }
-
-    public String getYlqxCompanyType() {
-        return ylqxCompanyType;
-    }
-
-    public String getYlqxCompanyTypeText() {
-        return ylqxCompanyTypeText;
     }
 
     public String getOperatorFullName() {

@@ -216,7 +216,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
                 startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId())
-                                .putExtra("companyType", companyBean.getCompanyType())
+                                .putExtra("companyType", companyBean.getCompanyType()+"")
                                 .putExtra("companyTypeText", companyBean.getCompanyTypeText())
                         , 1001);
                 break;

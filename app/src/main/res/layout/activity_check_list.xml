@@ -168,8 +168,7 @@
             android:layout_marginTop="1dp"
             android:background="@color/white"
             android:orientation="horizontal"
-            android:padding="10dp"
-            android:visibility="gone">
+            android:padding="10dp">
 
             <TextView
                 style="@style/textLeftStyle"

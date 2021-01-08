@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,13 +22,16 @@ import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnChangeLisener;
 import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
+import com.codbking.widget.utils.UIAdjuster;
 import com.troila.customealert.CustomDialog;
 import com.zz.lib.commonlib.utils.PermissionUtils;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
+import com.zz.lib.commonlib.widget.SelectPopupWindows;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
+import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.DetailBean;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.business.company.AddCompanyActivity;
@@ -47,6 +51,9 @@ import com.zz.supervision.utils.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -122,6 +129,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
    RecyclerView rv_info;
     SignInfoAdapter adapter;
     ArrayList<DetailBean> mlist = new ArrayList<>();
+    List<BusinessType> reformTimeList = new ArrayList<>();
     @Override
     protected int getContentView() {
         return R.layout.activity_supervise_sign;
@@ -211,6 +219,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             mlist.add(new DetailBean("问题数", resposeBean.getProblemCount() + ""));
             if (resposeBean.getProblemCount()>0){
                 ll_reformTime.setVisibility(View.VISIBLE);
+                getDicts();
             }
         } else {
             mlist.add(new DetailBean("静态评分项分数", resposeBean.getStaticScore() + "",true));
@@ -351,34 +360,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 customDialog.show();
                 break;
                 case R.id.et_reformTime:
-                    DatePickDialog dialog = new DatePickDialog(SuperviseSignActivity.this);
-                    //设置上下年分限制
-                    //设置上下年分限制
-                    dialog.setYearLimt(20);
-                    //设置标题
-                    dialog.setTitle("选择时间");
-                    //设置类型
-                    dialog.setType(DateType.TYPE_YMD);
-                    //设置消息体的显示格式，日期格式
-                    dialog.setMessageFormat("yyyy-MM-dd");
-                    //设置选择回调
-                    dialog.setOnChangeLisener(new OnChangeLisener() {
-                        @Override
-                        public void onChanged(Date date) {
-                            Log.v("+++", date.toString());
-                        }
-                    });
-                    //设置点击确定按钮回调
-                    dialog.setOnSureLisener(new OnSureLisener() {
-                        @Override
-                        public void onSure(Date date) {
-
-                            String time = TimeUtils.getTime(date.getTime(), TimeUtils.DATE_FORMAT_DATE);
-                            reformTime = time;
-                            et_reformTime.setText(time);
-                        }
-                    });
-                    dialog.show();
+                    showSelectPopWindow1();
                 break;
         }
     }
@@ -518,5 +500,49 @@ public class SuperviseSignActivity extends MyBaseActivity {
             }
         }, LoadingUtils.build(this));
     }
+    public void getDicts() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("dictType", "reformTime");
+        RxNetUtils.request(getApi(ApiService.class).getDicts(params), new RequestObserver<JsonT<List<BusinessType>>>(this) {
+            @Override
+            protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
+                reformTimeList.clear();
+                reformTimeList.addAll(jsonT.getData());
+            }
 
+            @Override
+            protected void onFail2(JsonT<List<BusinessType>> stringJsonT) {
+                super.onFail2(stringJsonT);
+            }
+        },  LoadingUtils.build(this));
+    }
+
+    SelectPopupWindows selectPopupWindows;
+    void showSelectPopWindow1() {
+        UIAdjuster.closeKeyBoard(this);
+        List<String> list = new ArrayList<>();
+        List<String> list1 = new ArrayList<>();
+        for (int i = 0; i < reformTimeList.size(); i++) {
+            list.add(reformTimeList.get(i).getDictLabel());
+            list1.add(reformTimeList.get(i).getDictValue());
+        }
+        String[] array = (String[]) list.toArray(new String[list.size()]);
+        String[] values = (String[]) list1.toArray(new String[list1.size()]);
+        selectPopupWindows = new SelectPopupWindows(this, array);
+        selectPopupWindows.showAtLocation(findViewById(R.id.bg),
+                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        selectPopupWindows.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
+            @Override
+            public void onSelected(int index, String msg) {
+                et_reformTime.setText(msg);
+                reformTime = values[index];
+
+            }
+
+            @Override
+            public void onCancel() {
+                selectPopupWindows.dismiss();
+            }
+        });
+    }
 }

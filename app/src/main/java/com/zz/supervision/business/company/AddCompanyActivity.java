@@ -303,6 +303,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
     @Override
     public void showCompanyInfo(CompanyBean data) {
+        if (data ==null)return;
         etOperatorName.setText(data.getOperatorName() + "");
         etSocialCreditCode.setText(data.getSocialCreditCode() + "");
         etLicenseNumber.setText(data.getLicenseNumber() + "");
@@ -313,11 +314,13 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         etBusinessProject.setText(data.getBusinessProjectText() + "");
         businessType = data.getBusinessType();
         specificType = data.getSpecificType();
-        businessProject = data.getBusinessProject();
-        String[] split = businessProject.split(",");
-        projectBeans.clear();
-        for (int i = 0; i < split.length; i++) {
-            projectBeans.add(new BusinessProjectBean(false, "", split[i], ""));
+        businessProject = data.getBusinessProject()+"";
+        if (businessProject.contains(",")) {
+            String[] split = businessProject.split(",");
+            projectBeans.clear();
+            for (int i = 0; i < split.length; i++) {
+                projectBeans.add(new BusinessProjectBean(false, "", split[i], ""));
+            }
         }
         companyType = data.getCompanyType() + "";
         validDate = data.getValidDate();
@@ -335,9 +338,11 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             et_passwordCon.setVisibility(View.GONE);
             et_loginAccount.setText(data.getLoginAccount() + "");
         }else if (companyType.equals("3")) {
-            et_jtcompanyType.setText(data.getYpCompanyTypeText()+"");
+            et_jtcompanyType.setText(data.getSpecificTypeText()+"");
+            ypCompanyType = data.getSpecificType();
         }else if (companyType.equals("4")) {
-            et_jtcompanyType.setText(data.getYlqxCompanyTypeText()+"");
+            et_jtcompanyType.setText(data.getCompanyTypeText()+"");
+            ylqxCompanyType = data.getSpecificType();
         }
     }
 
@@ -507,9 +512,11 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             params.put("password", getText(et_password));
             params.put("coldstorage", getText(et_coldstorage));
         }
-        if (companyType.equals("3")||companyType.equals("4")){
-            params.put("ypCompanyType", ypCompanyType + "");
-            params.put("ylqxCompanyType", ylqxCompanyType + "");
+        if (companyType.equals("3")){
+            params.put("specificType", ylqxCompanyType + "");
+        }
+        if (companyType.equals("4")){
+            params.put("specificType", ylqxCompanyType + "");
         }
         mPresenter.submitData(params);
     }
@@ -642,7 +649,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             @Override
             public void onSelected(int index, String msg) {
                 etBusinessType.append("-" + msg);
-                specificType = values[index];
+                businessType = values[index];
             }
 
             @Override
