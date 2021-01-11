@@ -341,7 +341,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             et_jtcompanyType.setText(data.getSpecificTypeText()+"");
             ypCompanyType = data.getSpecificType();
         }else if (companyType.equals("4")) {
-            et_jtcompanyType.setText(data.getCompanyTypeText()+"");
+            et_jtcompanyType.setText(data.getSpecificTypeText()+"");
             ylqxCompanyType = data.getSpecificType();
         }
     }

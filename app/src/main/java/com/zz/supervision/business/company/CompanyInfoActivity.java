@@ -155,7 +155,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
             ll_user.setVisibility(View.GONE);
             mlist.add(new DetailBean("经营场所", data.getBusinessPlace() + ""));
             mlist.add(new DetailBean("企业类型", data.getCompanyTypeText() + ""));
-            mlist.add(new DetailBean("具体类型", data.getCompanyTypeText() + ""));
+            mlist.add(new DetailBean("具体类型", data.getSpecificTypeText() + ""));
             mlist.add(new DetailBean("有效期至", data.getValidDate() + ""));
             mlist.add(new DetailBean("签发时间", data.getFieldTime() + ""));
         } else {

@@ -9,10 +9,13 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.zz.lib.commonlib.utils.CacheUtility;
 import com.zz.lib.core.http.utils.ToastUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.supervision.base.MyBaseActivity;
+import com.zz.supervision.bean.DetailBean;
+import com.zz.supervision.bean.DictBean;
 import com.zz.supervision.bean.EventBusSimpleInfo;
 import com.zz.supervision.business.company.CompanyListActivity;
 import com.zz.supervision.business.inspenction.XCHZFActivity;
@@ -30,6 +33,8 @@ import org.cups4j.CupsPrinter;
 import org.cups4j.PrintJob;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -37,6 +42,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.ServerSocket;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,6 +87,7 @@ public class MainActivity extends MyBaseActivity {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, XCHZFActivity.class);
                 startActivity(intent);
+
                 break;
             case R.id.main_group_2:
                 Intent intent1 = new Intent();

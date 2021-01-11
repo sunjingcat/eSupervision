@@ -81,7 +81,7 @@ public class YaoCheckListActivity extends MyBaseActivity {
     @BindView(R.id.ll_level)
     LinearLayout llLevel;
     private ArrayList<Fragment> fragments = new ArrayList<>();
-    String[] tabs = {"药品", "医疗器械"};
+    String[] tabs = {"  药品 ", "医疗器械"};
     String inspectionResult = "";
     String beginTime = "";
     String endTime = "";
