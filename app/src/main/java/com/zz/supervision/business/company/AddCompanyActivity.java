@@ -513,7 +513,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             params.put("coldstorage", getText(et_coldstorage));
         }
         if (companyType.equals("3")){
-            params.put("specificType", ylqxCompanyType + "");
+            params.put("specificType", ypCompanyType + "");
         }
         if (companyType.equals("4")){
             params.put("specificType", ylqxCompanyType + "");
