@@ -281,7 +281,15 @@ public class CompanyInfoActivity extends MyBaseActivity {
     }
 
     public void getImage(String id) {
-        RxNetUtils.request(getApi(ApiService.class).getImageBase64("company", id), new RequestObserver<JsonT<List<ImageBack>>>(this) {
+        String url = "company";
+        if (companyType.equals("2")) {
+            url = "coldstorage";
+        }else if (companyType.equals("3")) {
+            url = "ypCompany";
+        }else if (companyType.equals("4")) {
+            url = "ylqxCompany";
+        }
+        RxNetUtils.request(getApi(ApiService.class).getImageBase64(url, id), new RequestObserver<JsonT<List<ImageBack>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<ImageBack>> data) {
                 if (data.isSuccess()) {

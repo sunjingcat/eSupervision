@@ -88,7 +88,15 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
 
     @Override
     public void getImage(String type, String modelId) {
-        RxNetUtils.request(getApi(ApiService.class).getImageBase64(type, modelId), new RequestObserver<JsonT<List<ImageBack>>>(this) {
+        String url = "company";
+        if (type.equals("2")) {
+            url = "coldstorage";
+        }else if (type.equals("3")) {
+            url = "ypCompany";
+        }else if (type.equals("4")) {
+            url = "ylqxCompany";
+        }
+        RxNetUtils.request(getApi(ApiService.class).getImageBase64(url, modelId), new RequestObserver<JsonT<List<ImageBack>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<ImageBack>> data) {
                 if (data.isSuccess()) {
