@@ -232,7 +232,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
         if (resposeBean.getStatus() == 3) {
             llLawEnforcerSign.setEnabled(false);
             llLegalRepresentativeSign.setEnabled(false);
-
+            et_reformTime.setEnabled(false);
+            et_reformTime.setText(resposeBean.getReformTime());
         }
         bt_delete.setVisibility(View.VISIBLE);
         tvType.setText(resposeBean.getTypeText() + "");

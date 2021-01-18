@@ -246,7 +246,7 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
 
         String id = getIntent().getStringExtra("id");
         int tinspectType = getIntent().getIntExtra("tinspectType", 0);
-        if (tinspectType==7){
+        if (tinspectType==6||tinspectType==7){
             tinspectType = 7;
         }else if(tinspectType==8||tinspectType==9||tinspectType==10){
             tinspectType = 6;
