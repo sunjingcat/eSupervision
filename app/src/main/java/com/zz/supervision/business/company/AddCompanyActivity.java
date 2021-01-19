@@ -134,7 +134,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     String id;
     double lon = 123.6370661238426;
     double lat = 47.216275430241495;
-
+    ArrayList<String> localPath = new ArrayList<>();
     @Override
     protected int getContentView() {
         return R.layout.activity_company_add;
@@ -150,17 +150,22 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         adapter.setOnclick(new ImageDeleteItemAdapter.Onclick() {
             @Override
             public void onclickAdd(View v, int option) {
-                ArrayList<String> localPath = new ArrayList<>();
+               localPath.clear();
+               int sever = 0;
                 for (int i = 0; i < images.size(); i++) {
                     if (!TextUtils.isEmpty(images.get(i).getPath())) {
-                        localPath.add(images.get(i).getPath());
-                    } else {
+                        if (!images.get(i).getPath().contains("zhongzhi")){
+                            localPath.add(images.get(i).getPath());
+                        }else {
+                            sever++;
+                        }
                     }
+
                 }
                 ImageSelector.builder()
                         .useCamera(true) // 设置是否使用拍照
                         .setSingle(false)  //设置是否单选
-                        .setMaxSelectCount(9) // 图片的最大选择数量，小于等于0时，不限数量。
+                        .setMaxSelectCount(9-sever) // 图片的最大选择数量，小于等于0时，不限数量。
                         .setSelected(localPath) // 把已选的图片传入默认选中。
                         .setViewImage(true) //是否点击放大图片查看,，默认为true
                         .start(AddCompanyActivity.this, 1101); // 打开相册
@@ -178,7 +183,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         if (!TextUtils.isEmpty(id)) {
             mPresenter.getData(companyType,id);
             toolbarTitle.setText("编辑企业");
-            mPresenter.getImage("company", id);
+            mPresenter.getImage(companyType, id);
             showLoading("");
         }
         et_companyType.setText(getIntent().getStringExtra("companyTypeText") + "");
@@ -534,6 +539,9 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 ArrayList<String> selectImages = data.getStringArrayListExtra(
                         ImageSelectorUtils.SELECT_RESULT);
                 for (String path : selectImages) {
+                    if (localPath.contains(path)){
+                        continue;
+                    }
                     Luban.with(this)
                             .load(path)
                             .ignoreBy(100)
@@ -547,7 +555,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                                 public void onSuccess(File file) {
                                     String base = "data:image/jpg;base64," + BASE64.imageToBase64(file.getPath());
                                     ImageBack imageBack = new ImageBack();
-                                    imageBack.setPath(file.getPath());
+                                    imageBack.setPath(path);
                                     imageBack.setBase64(base);
                                     images.add(imageBack);
                                     mPresenter.postImage(images.size() - 1, base);

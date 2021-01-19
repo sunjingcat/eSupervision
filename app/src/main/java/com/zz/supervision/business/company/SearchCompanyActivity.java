@@ -184,6 +184,7 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
         et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                pagenum = 1;
                 getDate();//搜索方法
                 //隐藏软键盘
                 @SuppressLint("WrongConstant") InputMethodManager imm = (InputMethodManager) context.getSystemService("input_method");
