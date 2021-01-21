@@ -354,6 +354,7 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         private Object params;// {},
         private String deptId;// 110,
         private String reformTime;// 110,
+        private String reformTimeText;// 110,
         private String id;// 22,
         private String serialNumber;// spxs20200928140145564,
         private String companyId;// 22,
@@ -395,6 +396,10 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         private String totalScore;
         private String level;
         private String typeText;
+
+        public String getReformTimeText() {
+            return reformTimeText;
+        }
 
         public String getReformTime() {
             return reformTime;
