@@ -47,6 +47,12 @@ public class BusinessProjectActivity extends MyBaseActivity {
         ArrayList<BusinessProjectBean> projectBeans  = getIntent().getParcelableArrayListExtra("projectBeans");
 
         mlist.clear();
+        if (type.contains(".")){
+            String[] split = type.split("\\.");
+            if (split.length>1) {
+                type = split[0];
+            }
+        }
         if (type.equals("1")||type.equals("2") ) {
             initXS();
             tvLeft.setText("食品销售");
