@@ -657,7 +657,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             @Override
             public void onSelected(int index, String msg) {
                 etBusinessType.append("-" + msg);
-                businessType = values[index];
+                specificType = values[index];
             }
 
             @Override
