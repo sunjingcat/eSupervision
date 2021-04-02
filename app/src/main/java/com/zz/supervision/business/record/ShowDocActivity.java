@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.sun.jna.platform.win32.WinNT;
 import com.tencent.smtt.sdk.TbsReaderView;
 import com.zz.lib.commonlib.utils.PermissionUtils;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
@@ -33,6 +34,7 @@ import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.print.PrintUtil;
 import com.zz.supervision.print.model.DeviceDTO;
 import com.zz.supervision.utils.FileUtils;
+import com.zz.supervision.utils.LogUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -74,7 +76,7 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
 
     private void displayFile() {
         Bundle bundle = new Bundle();
-        bundle.putString("filePath", FileUtils.getLocalFile(mFileName).getPath());
+        bundle.putString("filePath", FileUtils.getLocalFile(context,mFileName).getPath());
         bundle.putString("tempPath", Environment.getExternalStorageDirectory().getPath());
         boolean result = mTbsReaderView.preOpen(FileUtils.parseFormat(mFileName), false);
         if (result) {
@@ -90,12 +92,13 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
 
         mDownloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(mFileUrl));
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, mFileName);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,mFileName);
         request.allowScanningByMediaScanner();
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
         try {
             mRequestId = mDownloadManager.enqueue(request);
         } catch (Exception e) {
+            LogUtils.v(e.toString());
 
         }
     }
@@ -190,7 +193,7 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
         mDownloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (FileUtils.isLocalExist(mFileName)) {
+                if (FileUtils.isLocalExist(context,mFileName)) {
                     ll.setVisibility(View.GONE);
                     displayFile();
 
@@ -212,10 +215,10 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                String path = FileUtils.getLocalFile(mFileName).getPath();
+                String path = FileUtils.getLocalFile(context,mFileName).getPath();
                 if (TextUtils.isEmpty(path))return;
                 try {
-                    PrintUtil.printpdf(ShowDocActivity.this,FileUtils.getLocalFile(mFileName).getPath());
+                    PrintUtil.printpdf(ShowDocActivity.this,FileUtils.getLocalFile(context,mFileName).getPath());
                 } catch (IOException e) {
 
                 }
@@ -261,7 +264,7 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
                 mFileUrl = jsonT.getData();
                 mFileName = FileUtils.parseName(mFileUrl);
                 tv.setText(mFileName);
-                if (FileUtils.isLocalExist(mFileName)) {
+                if (FileUtils.isLocalExist(context,mFileName)) {
                     ll.setVisibility(View.GONE);
                     displayFile();
                 } else {

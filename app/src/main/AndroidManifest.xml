@@ -175,6 +175,9 @@
         <activity android:name=".business.record.RecordMainActivity" />
         <activity android:name=".business.record.ColdCheckListActivity" />
         <activity android:name=".business.record.YaoCheckListActivity" />
+        <activity android:name=".business.equipment.AddEquipmentActivity" />
+        <activity android:name=".business.equipment.EquipmentListActivity" />
+        <activity android:name=".business.equipment.EquipmentInfoActivity" />
     </application>
 
 </manifest>

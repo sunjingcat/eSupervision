@@ -6,6 +6,91 @@ import android.text.TextUtils;
 
 import java.io.Serializable;
 
+/*"data": [{
+		"searchValue": null,
+		"createBy": null,
+		"createTime": null,
+		"updateBy": null,
+		"updateTime": null,
+		"remark": null,
+		"params": {},
+		"deptId": null,
+		"companyType": "0",
+		"companyTypeText": "全部",
+		"count": "78"
+	}, {
+		"searchValue": null,
+		"createBy": null,
+		"createTime": null,
+		"updateBy": null,
+		"updateTime": null,
+		"remark": null,
+		"params": {},
+		"deptId": null,
+		"companyType": "1",
+		"companyTypeText": "食品",
+		"count": "59"
+	}, {
+		"searchValue": null,
+		"createBy": null,
+		"createTime": null,
+		"updateBy": null,
+		"updateTime": null,
+		"remark": null,
+		"params": {},
+		"deptId": null,
+		"companyType": "2",
+		"companyTypeText": "冷链",
+		"count": "5"
+	}, {
+		"searchValue": null,
+		"createBy": null,
+		"createTime": null,
+		"updateBy": null,
+		"updateTime": null,
+		"remark": null,
+		"params": {},
+		"deptId": null,
+		"companyType": "3",
+		"companyTypeText": "药品",
+		"count": "5"
+	}, {
+		"searchValue": null,
+		"createBy": null,
+		"createTime": null,
+		"updateBy": null,
+		"updateTime": null,
+		"remark": null,
+		"params": {},
+		"deptId": null,
+		"companyType": "4",
+		"companyTypeText": "医疗器械",
+		"count": "1"
+	}, {
+		"searchValue": null,
+		"createBy": null,
+		"createTime": null,
+		"updateBy": null,
+		"updateTime": null,
+		"remark": null,
+		"params": {},
+		"deptId": null,
+		"companyType": "5",
+		"companyTypeText": "化妆品",
+		"count": "4"
+	}, {
+		"searchValue": null,
+		"createBy": null,
+		"createTime": null,
+		"updateBy": null,
+		"updateTime": null,
+		"remark": null,
+		"params": {},
+		"deptId": null,
+		"companyType": "6",
+		"companyTypeText": "特种设备",
+		"count": "4"
+	}]*/
 public class CompanyBean implements Serializable {
     private String address;// ,
     private String businessPlace;// ,

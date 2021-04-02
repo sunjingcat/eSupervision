@@ -1,29 +1,21 @@
-package com.zz.supervision.business.company;
+package com.zz.supervision.business.equipment;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -32,8 +24,8 @@ import com.troila.customealert.CustomDialog;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
+import com.zz.supervision.business.company.CompanyInfoActivity;
 import com.zz.supervision.business.company.adapter.CompanyListAdapter;
-import com.zz.supervision.business.equipment.EquipmentListActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -46,7 +38,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
@@ -56,7 +47,7 @@ import static com.zz.supervision.net.RxNetUtils.getApi;
  * fragment
  */
 @SuppressLint("ValidFragment")
-public class CompanyFragment extends Fragment implements OnRefreshListener, OnLoadMoreListener {
+public class EquipmentFragment extends Fragment implements OnRefreshListener, OnLoadMoreListener {
     @BindView(R.id.ll_null)
     LinearLayout llNull;
     @BindView(R.id.rv)
@@ -76,7 +67,7 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_company_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_equipment_list, container, false);
 
         unbinder = ButterKnife.bind(this, view);
         init(view);
@@ -84,7 +75,7 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
     }
 
     @SuppressLint("ValidFragment")
-    public CompanyFragment(String type) {
+    public EquipmentFragment(String type) {
         this.type = type;
     }
 
@@ -109,12 +100,7 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
             public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
                 if (view.getId()==R.id.content) {
                     if (TextUtils.isEmpty(select)) {
-                        if(mlist.get(position).getCompanyType()==1){
-                            startActivity(new Intent(getActivity(), EquipmentListActivity.class).putExtra("id", mlist.get(position).getId()).putExtra("companyType", mlist.get(position).getCompanyType() + ""));
-
-                        }else {
-                            startActivity(new Intent(getActivity(), CompanyInfoActivity.class).putExtra("id", mlist.get(position).getId()).putExtra("companyType", mlist.get(position).getCompanyType() + ""));
-                        }
+                        startActivity(new Intent(getActivity(), EquipmentInfoActivity.class).putExtra("id", mlist.get(position).getId()).putExtra("equipmentType", mlist.get(position).getCompanyType()+""));
                     } else {
                         Intent intent = new Intent();
                         intent.putExtra("company", mlist.get(position));

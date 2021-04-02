@@ -240,9 +240,13 @@ public class SuperviseSignActivity extends MyBaseActivity {
         bt_delete.setVisibility(View.VISIBLE);
         tvType.setText(resposeBean.getTypeText() + "");
 
-        if (type == 1 || type == 2 || type == 5|| type == 6|| type == 7||type == 8||type == 9||type == 10) {
+        if (type == 5|| type == 6|| type == 7||type == 8||type == 9||type == 10) {
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLawEnforcerSign);
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLegalRepresentativeSign);
+
+        }if (type == 1||type == 2  ) {
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLegalRepresentativeSign);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLawEnforcerSign);
 
         } else {
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getFillerSign(), tvLawEnforcerSign);

@@ -18,6 +18,7 @@ import com.zz.supervision.bean.DetailBean;
 import com.zz.supervision.bean.DictBean;
 import com.zz.supervision.bean.EventBusSimpleInfo;
 import com.zz.supervision.business.company.CompanyListActivity;
+import com.zz.supervision.business.equipment.AddEquipmentActivity;
 import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.business.mine.MineActivity;
 import com.zz.supervision.business.record.CheckListActivity;
@@ -85,7 +86,7 @@ public class MainActivity extends MyBaseActivity {
             case R.id.main_group_1:
 
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this, XCHZFActivity.class);
+                intent.setClass(MainActivity.this, AddEquipmentActivity.class);
                 startActivity(intent);
 
                 break;

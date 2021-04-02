@@ -68,11 +68,29 @@ public class FileUtils {
     }
 
 
-    public static File getLocalFile(String mFileName) {
-        return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), mFileName);
+    public static File getLocalFile(Context context,String mFileName) {
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), mFileName);
+
+        return file;
     }
-    public static boolean isLocalExist(String mFileName) {
-        return getLocalFile(mFileName).exists();
+    public static boolean isLocalExist(Context context,String mFileName) {
+
+        try
+        {
+            File f=getLocalFile(context,mFileName);
+            LogUtils.v("-----"+f.getPath());
+            if(!f.exists())
+            {
+                return false;
+            }
+
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+
+        return true;
     }
 
 public static     void getDocInfo(Activity activity,String id,int tinspectSheetType,int tinspectType) {
