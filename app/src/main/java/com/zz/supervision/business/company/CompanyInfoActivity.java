@@ -166,6 +166,15 @@ public class CompanyInfoActivity extends MyBaseActivity {
             mlist.add(new DetailBean("具体类型", data.getSpecificTypeText() + ""));
             mlist.add(new DetailBean("有效期至", data.getValidDate() + ""));
             mlist.add(new DetailBean("签发时间", data.getFieldTime() + ""));
+        }else if (companyType.equals("6")) {
+            mlist.add(new DetailBean("单位名称", data.getOperatorFullName() + ""));
+            mlist.add(new DetailBean("单位地址", data.getSocialCreditCode() + ""));
+            mlist.add(new DetailBean("社会信用代码", data.getLicenseNumber() + ""));
+            mlist.add(new DetailBean("法定代表人", data.getLegalRepresentative() + ""));
+            mlist.add(new DetailBean("安全管理联系人", data.getAddress() + ""));
+            mlist.add(new DetailBean("安全管理联系电话", data.getContact() + ""));
+            ll_user.setVisibility(View.GONE);
+
         } else {
             mlist.add(new DetailBean("社会信用代码", data.getSocialCreditCode() + ""));
             mlist.add(new DetailBean("许可证编号", data.getLicenseNumber() + ""));

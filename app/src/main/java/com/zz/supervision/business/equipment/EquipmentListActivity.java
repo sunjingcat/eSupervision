@@ -69,7 +69,7 @@ public class EquipmentListActivity extends MyBaseActivity {
         ButterKnife.bind(this);
 
         id = getIntent().getStringExtra("id");
-        companyType = getIntent().getStringExtra("companyType");
+        companyType = getIntent().getStringExtra("equipmentType");
         if (TextUtils.isEmpty(select)) {
             toolbarSubtitle.setVisibility(View.VISIBLE);
         } else {
@@ -140,7 +140,7 @@ public class EquipmentListActivity extends MyBaseActivity {
 
     public void getCompanyType() {
         Map<String, Object> map = new HashMap<>();
-        map.put("dictType", "addCompanyType");
+        map.put("dictType", "addEquipmentType");
         RxNetUtils.request(getApi(ApiService.class).getDicts(map), new RequestObserver<JsonT<List<BusinessType>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
@@ -198,8 +198,8 @@ public class EquipmentListActivity extends MyBaseActivity {
             public void onSelected(int index, BusinessType msg) {
                 if (!msg.getDictValue().equals("2")) {
                     startActivity(new Intent(EquipmentListActivity.this, AddCompanyActivity.class)
-                            .putExtra("companyType", companyTypeList.get(index).getDictValue())
-                            .putExtra("companyTypeText", companyTypeList.get(index).getDictLabel())
+                            .putExtra("equipmentType", companyTypeList.get(index).getDictValue())
+                            .putExtra("equipmentTypeText", companyTypeList.get(index).getDictLabel())
                     );
                 }
                 menuPopupWindow.dismiss();

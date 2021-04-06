@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:background="@color/colorPrimary" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="检查设备"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/toolbar_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="16dp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="检验责任主体机构名称" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="组织机构代码" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:isSelect="true"
+        app:title="检验责任主体组织单元" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:isSelect="true"
+        app:title="检验性质" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:isSelect="true"
+        app:title="首次检验日期" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

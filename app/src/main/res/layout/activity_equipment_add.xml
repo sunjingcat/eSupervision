@@ -38,17 +38,82 @@
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:edt_hint_content="测试"
-
-        />
+        app:title="设备代码" />
 
     <com.zz.supervision.widget.ItemGroup
-        android:id="@+id/name1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:isSelect="true"
-        app:title="aaa"
+        app:title="设备型号" />
 
-        />
-
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="设备类型1"
+        app:isSelect="true"/>
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="设备类型2"
+        app:isSelect="true"/>
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="设备类型3"
+        app:isSelect="true"/>
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="设备名称" />
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="注册状态" />
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="注册登记机构" />
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="注册时间" />
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="注册登记人员" />
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="注册登记证编号" />
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="注册代码" />
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="使用状态" />
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="使用状态变更日期" />
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="制造单位" />
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="产品编号" />
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="制造日期" />
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="安装单位" />
+    <com.zz.supervision.widget.ItemGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="竣工日期" />
 </LinearLayout>

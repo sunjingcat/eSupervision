@@ -24,8 +24,10 @@ import com.troila.customealert.CustomDialog;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
+import com.zz.supervision.bean.EquipmentBean;
 import com.zz.supervision.business.company.CompanyInfoActivity;
 import com.zz.supervision.business.company.adapter.CompanyListAdapter;
+import com.zz.supervision.business.equipment.adapter.EquipmentAdapter;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -56,13 +58,12 @@ public class EquipmentFragment extends Fragment implements OnRefreshListener, On
     SmartRefreshLayout refreshLayout;
     Unbinder unbinder;
     private RecyclerView recyclerView;
-    private CompanyListAdapter adapter;
-    List<CompanyBean> mlist = new ArrayList<>();
+    private EquipmentAdapter adapter;
+    List<EquipmentBean> mlist = new ArrayList<>();
     private int pagenum = 1;
     private int pagesize = 20;
     private String searchStr = "";
     private String type = "";
-    private CustomDialog customDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,7 +90,7 @@ public class EquipmentFragment extends Fragment implements OnRefreshListener, On
     private void init(View view) {
         recyclerView = view.findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new CompanyListAdapter(R.layout.item_company, mlist);
+        adapter = new EquipmentAdapter(R.layout.item_equipment, mlist);
         recyclerView.setAdapter(adapter);
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setOnLoadMoreListener(this);
@@ -100,10 +101,10 @@ public class EquipmentFragment extends Fragment implements OnRefreshListener, On
             public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
                 if (view.getId()==R.id.content) {
                     if (TextUtils.isEmpty(select)) {
-                        startActivity(new Intent(getActivity(), EquipmentInfoActivity.class).putExtra("id", mlist.get(position).getId()).putExtra("equipmentType", mlist.get(position).getCompanyType()+""));
+                        startActivity(new Intent(getActivity(), EquipmentInfoActivity.class).putExtra("id", mlist.get(position).getId()).putExtra("equipmentType", mlist.get(position).getEquipmentType()+""));
                     } else {
                         Intent intent = new Intent();
-                        intent.putExtra("company", mlist.get(position));
+                        intent.putExtra("equipment", mlist.get(position));
                         getActivity().setResult(getActivity().RESULT_OK, intent);
                         getActivity().finish();
                     }
@@ -126,7 +127,7 @@ public class EquipmentFragment extends Fragment implements OnRefreshListener, On
         refreshlayout.finishRefresh();
     }
 
-    public void showResult(List<CompanyBean> data) {
+    public void showResult(List<EquipmentBean> data) {
         if (pagenum == 1) {
             mlist.clear();
         }
@@ -143,18 +144,18 @@ public class EquipmentFragment extends Fragment implements OnRefreshListener, On
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", pagenum);
         map.put("pageSize", pagesize);
-        map.put("companyType", type);
+        map.put("equipmentType", type);
         if (!TextUtils.isEmpty(searchStr)) {
             map.put("searchValue", searchStr);
         }
-        RxNetUtils.request(getApi(ApiService.class).getCompanyInfoList(map), new RequestObserver<JsonT<List<CompanyBean>>>() {
+        RxNetUtils.request(getApi(ApiService.class).getEquipmentInfoList(map), new RequestObserver<JsonT<List<EquipmentBean>>>() {
             @Override
-            protected void onSuccess(JsonT<List<CompanyBean>> jsonT) {
+            protected void onSuccess(JsonT<List<EquipmentBean>> jsonT) {
                 showResult(jsonT.getData());
             }
 
             @Override
-            protected void onFail2(JsonT<List<CompanyBean>> stringJsonT) {
+            protected void onFail2(JsonT<List<EquipmentBean>> stringJsonT) {
                 super.onFail2(stringJsonT);
             }
         }, LoadingUtils.build(getActivity()));

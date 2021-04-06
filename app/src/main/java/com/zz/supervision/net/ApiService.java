@@ -6,6 +6,7 @@ package com.zz.supervision.net;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.CompanyType;
+import com.zz.supervision.bean.EquipmentBean;
 import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.bean.ImageBean;
 import com.zz.supervision.bean.LawEnforcerBean;
@@ -75,6 +76,9 @@ public interface ApiService {
 
     @GET("/app/v1/supervise/companyInfo/list")
     Observable<JsonT<List<CompanyBean>>> getCompanyInfoList(@QueryMap Map<String, Object> params);
+
+    @GET("/app/v1/supervise/companyInfo/list")
+    Observable<JsonT<List<EquipmentBean>>> getEquipmentInfoList(@QueryMap Map<String, Object> params);
 
     @GET("/app/v1/supervise/universal/getRecordList")
     Observable<JsonT<List<RecordBean>>> getRecordList(@QueryMap Map<String, Object> params);
