@@ -114,6 +114,10 @@ public class ItemGroup extends FrameLayout {
         });
     }
 
+    public void setTitle(String titleTv) {
+        this.titleTv.setText(titleTv+"");
+    }
+
     public void setChooseContent(String choose) {
         this.chooseTv .setText(choose+"");
     }
