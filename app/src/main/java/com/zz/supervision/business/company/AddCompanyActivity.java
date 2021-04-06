@@ -32,10 +32,12 @@ import com.zz.supervision.bean.PLocation;
 import com.zz.supervision.business.company.adapter.ImageDeleteItemAdapter;
 import com.zz.supervision.business.company.mvp.Contract;
 import com.zz.supervision.business.company.mvp.presenter.CompanyAddPresenter;
+import com.zz.supervision.business.equipment.AddEquipmentActivity;
 import com.zz.supervision.utils.BASE64;
 import com.zz.supervision.utils.GlideUtils;
 import com.zz.supervision.utils.ImageLoader;
 import com.zz.supervision.utils.TimeUtils;
+import com.zz.supervision.widget.ItemGroup;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -94,6 +96,8 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     LinearLayout ll_coldstorage;
     @BindView(R.id.ll_jtcompanyType)
     LinearLayout ll_jtcompanyType;
+    @BindView(R.id.ll_yp)
+    LinearLayout ll_yp;
     @BindView(R.id.ll_businessType)
     LinearLayout ll_businessType;
     @BindView(R.id.ll_businessProject)
@@ -106,20 +110,29 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     TextView etLocation;
     @BindView(R.id.et_companyType)
     TextView et_companyType;
+    @BindView(R.id.tv_contact)
+    TextView tv_contact;
     @BindView(R.id.et_jtcompanyType)
     TextView et_jtcompanyType;
     ArrayList<ImageBack> images = new ArrayList<>();
     ImageDeleteItemAdapter adapter;
     @BindView(R.id.item_rv_images)
     RecyclerView itemRvImages;
+    @BindView(R.id.ig_qualityContact)
+    ItemGroup ig_qualityContact;
+    @BindView(R.id.ig_warehouseAddress)
+    ItemGroup ig_warehouseAddress;
+    @BindView(R.id.ig_businessScope)
+    ItemGroup ig_businessScope;
     String fieldTime;
     String validDate;
     String businessType = "";
     String specificType = "";
     String companyType = "";
+    String businessScope = "";
     String url = "";
-     String ypCompanyType="";// ,
-     String ylqxCompanyType="";// ,
+    String ypCompanyType = "";// ,
+    String ylqxCompanyType = "";// ,
     String businessProject = "";
     String businessProjectText = "";
     List<BusinessType> businessTypeList = new ArrayList<>();
@@ -135,6 +148,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     double lon = 123.6370661238426;
     double lat = 47.216275430241495;
     ArrayList<String> localPath = new ArrayList<>();
+
     @Override
     protected int getContentView() {
         return R.layout.activity_company_add;
@@ -150,13 +164,13 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         adapter.setOnclick(new ImageDeleteItemAdapter.Onclick() {
             @Override
             public void onclickAdd(View v, int option) {
-               localPath.clear();
-               int sever = 0;
+                localPath.clear();
+                int sever = 0;
                 for (int i = 0; i < images.size(); i++) {
                     if (!TextUtils.isEmpty(images.get(i).getPath())) {
-                        if (!images.get(i).getPath().contains("zhongzhi")){
+                        if (!images.get(i).getPath().contains("zhongzhi")) {
                             localPath.add(images.get(i).getPath());
-                        }else {
+                        } else {
                             sever++;
                         }
                     }
@@ -165,7 +179,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 ImageSelector.builder()
                         .useCamera(true) // 设置是否使用拍照
                         .setSingle(false)  //设置是否单选
-                        .setMaxSelectCount(9-sever) // 图片的最大选择数量，小于等于0时，不限数量。
+                        .setMaxSelectCount(9 - sever) // 图片的最大选择数量，小于等于0时，不限数量。
                         .setSelected(localPath) // 把已选的图片传入默认选中。
                         .setViewImage(true) //是否点击放大图片查看,，默认为true
                         .start(AddCompanyActivity.this, 1101); // 打开相册
@@ -181,7 +195,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         id = getIntent().getStringExtra("id");
         companyType = getIntent().getStringExtra("companyType") + "";
         if (!TextUtils.isEmpty(id)) {
-            mPresenter.getData(companyType,id);
+            mPresenter.getData(companyType, id);
             toolbarTitle.setText("编辑企业");
             mPresenter.getImage(companyType, id);
             showLoading("");
@@ -194,17 +208,27 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         } else if (companyType.equals("2")) {
             ll_loginAccount.setVisibility(View.VISIBLE);
             ll_coldstorage.setVisibility(View.VISIBLE);
-        } else if (companyType.equals("3") || companyType.equals("4")) {
+        } else if (companyType.equals("3") || companyType.equals("4")) {//"companyType": "3","companyTypeText": "药品",
             ll_loginAccount.setVisibility(View.GONE);
             ll_coldstorage.setVisibility(View.GONE);
             ll_businessType.setVisibility(View.GONE);
             ll_businessProject.setVisibility(View.GONE);
             ll_jtcompanyType.setVisibility(View.VISIBLE);
-            mPresenter.getDicts(companyType.equals("3")?"ypCompanyType":"ylqxCompanyType");
+            mPresenter.getDicts(companyType.equals("3") ? "ypCompanyType" : "ylqxCompanyType");
+            if (companyType.equals("3")) {
+                ll_yp.setVisibility(View.VISIBLE);
+                tv_contact.setText("企业负责人");
+            }
 
         } else {
 
         }
+        ig_businessScope.setItemOnClickListener(new ItemGroup.ItemOnClickListener() {
+            @Override
+            public void onClickRight(View view) {
+                startActivityForResult(new Intent(AddCompanyActivity.this, OperatingitemsActivity.class), 3001);
+            }
+        });
     }
 
     @Override
@@ -308,7 +332,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
     @Override
     public void showCompanyInfo(CompanyBean data) {
-        if (data ==null)return;
+        if (data == null) return;
         etOperatorName.setText(data.getOperatorName() + "");
         etSocialCreditCode.setText(data.getSocialCreditCode() + "");
         etLicenseNumber.setText(data.getLicenseNumber() + "");
@@ -319,7 +343,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         etBusinessProject.setText(data.getBusinessProjectText() + "");
         businessType = data.getBusinessType();
         specificType = data.getSpecificType();
-        businessProject = data.getBusinessProject()+"";
+        businessProject = data.getBusinessProject() + "";
         if (businessProject.contains(",")) {
             String[] split = businessProject.split(",");
             projectBeans.clear();
@@ -342,13 +366,15 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             et_password.setVisibility(View.GONE);
             et_passwordCon.setVisibility(View.GONE);
             et_loginAccount.setText(data.getLoginAccount() + "");
-        }else if (companyType.equals("3")) {
-            et_jtcompanyType.setText(data.getSpecificTypeText()+"");
+        } else if (companyType.equals("3")) {
+            et_jtcompanyType.setText(data.getSpecificTypeText() + "");
             ypCompanyType = data.getSpecificType();
-        }else if (companyType.equals("4")) {
-            et_jtcompanyType.setText(data.getSpecificTypeText()+"");
+        } else if (companyType.equals("4")) {
+            et_jtcompanyType.setText(data.getSpecificTypeText() + "");
             ylqxCompanyType = data.getSpecificType();
         }
+        ig_businessScope.setChooseContent(data.getBusinessScopeText());
+        businessScope = data.getBusinessScope();
     }
 
     @Override
@@ -357,7 +383,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         for (int i = 0; i < images.size(); i++) {
             ids.add(images.get(i).getId());
         }
-        mPresenter.uploadCompanyImgs(companyType,id, new Gson().toJson(ids));
+        mPresenter.uploadCompanyImgs(companyType, id, new Gson().toJson(ids));
     }
 
     @Override
@@ -381,16 +407,15 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             if ("business_type".equals(type)) {
                 businessTypeList.clear();
                 businessTypeList.addAll(list);
-            }else if ("specific_type".equals(type)) {
+            } else if ("specific_type".equals(type)) {
                 business2TypeList.clear();
                 business2TypeList.addAll(list);
-            }else if ("ypCompanyType".equals(type)||"ylqxCompanyType".equals(type)) {
+            } else if ("ypCompanyType".equals(type) || "ylqxCompanyType".equals(type)) {
                 jtCompanyTypeList.clear();
                 jtCompanyTypeList.addAll(list);
             }
         }
     }
-
 
 
     @Override
@@ -473,7 +498,6 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         params.put("businessProjectText", businessProjectText + "");
 
 
-
         if (lon != 0.0 && lat != 0.0) {
             params.put("longitude", lon);
             params.put("latitude", lat);
@@ -517,10 +541,13 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             params.put("password", getText(et_password));
             params.put("coldstorage", getText(et_coldstorage));
         }
-        if (companyType.equals("3")){
+        if (companyType.equals("3")) {
             params.put("specificType", ypCompanyType + "");
+            params.put("businessScope", businessScope + "");
+            params.put("warehouseAddress", getText(ig_warehouseAddress) + "");
+            params.put("qualityContact", getText(ig_qualityContact) + "");
         }
-        if (companyType.equals("4")){
+        if (companyType.equals("4")) {
             params.put("specificType", ylqxCompanyType + "");
         }
         mPresenter.submitData(params);
@@ -539,7 +566,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 ArrayList<String> selectImages = data.getStringArrayListExtra(
                         ImageSelectorUtils.SELECT_RESULT);
                 for (String path : selectImages) {
-                    if (localPath.contains(path)){
+                    if (localPath.contains(path)) {
                         continue;
                     }
                     Luban.with(this)
@@ -600,6 +627,24 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 String s = new BigDecimal(lat).toString();
                 String s1 = new BigDecimal(lon).toString();
                 etLocation.setText(poiInfo.getAddress() + "");
+            }
+            if (requestCode == 3001) {
+                if (data == null) return;
+                ArrayList<BusinessType> select = data.getParcelableArrayListExtra("select");
+                if (select == null) return;
+                String str = "";
+                String content = "";
+                for (int i = 0; i < select.size(); i++) {
+                    if (i == select.size() - 1) {
+                        str = str + select.get(i).getDictLabel();
+                        content = content + select.get(i).getDictValue();
+                    } else {
+                        str = str + select.get(i).getDictLabel() + ",";
+                        content = content + select.get(i).getDictValue() + ",";
+                    }
+                }
+                ig_businessScope.setChooseContent(str);
+                businessScope = content;
             }
 
 
@@ -667,6 +712,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             }
         });
     }
+
     void showSelectPopWindow3() {
         UIAdjuster.closeKeyBoard(this);
         List<String> list = new ArrayList<>();
@@ -684,9 +730,9 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             @Override
             public void onSelected(int index, String msg) {
                 et_jtcompanyType.setText(msg);
-                if (companyType.equals("3")){
-                    ypCompanyType= values[index];
-                }else {
+                if (companyType.equals("3")) {
+                    ypCompanyType = values[index];
+                } else {
                     ylqxCompanyType = values[index];
                 }
             }

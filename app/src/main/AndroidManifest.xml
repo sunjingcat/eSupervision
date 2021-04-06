@@ -178,6 +178,7 @@
         <activity android:name=".business.equipment.AddEquipmentActivity" />
         <activity android:name=".business.equipment.EquipmentListActivity" />
         <activity android:name=".business.equipment.EquipmentInfoActivity" />
+        <activity android:name=".business.company.OperatingitemsActivity" />
     </application>
 
 </manifest>

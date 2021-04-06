@@ -3,6 +3,7 @@ package com.zz.supervision.widget;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,7 +100,7 @@ public class ItemGroup extends FrameLayout {
         contentEdt.setText(content);
         contentEdt.setTextSize(contentSize);
         contentEdt.setTextColor(contentColor);
-        contentEdt.setHint(hintContent);
+        contentEdt.setHint(TextUtils.isEmpty(hintContent)?isSelect?"请选择":"请填写":hintContent);
         contentEdt.setHintTextColor(hintColor);
         contentEdt.setFocusableInTouchMode(isEditable); //设置输入框是否可以编辑
         contentEdt.setLongClickable(false); //输入框不允许长按
@@ -111,6 +112,10 @@ public class ItemGroup extends FrameLayout {
                 itemOnClickListener.onClickRight(v);
             }
         });
+    }
+
+    public void setChooseContent(String choose) {
+        this.chooseTv .setText(choose+"");
     }
 
     public String getValue() {

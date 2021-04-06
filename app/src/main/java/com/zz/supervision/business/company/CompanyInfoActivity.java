@@ -150,7 +150,15 @@ public class CompanyInfoActivity extends MyBaseActivity {
             mlist.add(new DetailBean("许可证编号", data.getLicenseNumber() + ""));
             mlist.add(new DetailBean("法定代表人", data.getLegalRepresentative() + ""));
             mlist.add(new DetailBean("住所", data.getAddress() + ""));
-            mlist.add(new DetailBean("联系人", data.getContact() + ""));
+            if (companyType.equals("3")){
+                mlist.add(new DetailBean("企业负责人", data.getContact() + ""));
+                mlist.add(new DetailBean("质量负责人", data.getQualityContact() + ""));
+                mlist.add(new DetailBean("仓库地址", data.getWarehouseAddress() + ""));
+                mlist.add(new DetailBean("经营范围", data.getBusinessScopeText() + ""));
+            }else {
+                mlist.add(new DetailBean("联系人", data.getContact() + ""));
+            }
+
             mlist.add(new DetailBean("联系方式", data.getContactInformation() + ""));
             ll_user.setVisibility(View.GONE);
             mlist.add(new DetailBean("经营场所", data.getBusinessPlace() + ""));

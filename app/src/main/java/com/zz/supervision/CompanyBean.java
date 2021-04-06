@@ -96,6 +96,10 @@ public class CompanyBean implements Serializable {
     private String businessPlace;// ,
     private String businessProject;// ,
     private String businessProjectText;// ,
+    private String businessScope;// ,
+    private String businessScopeText;// ,
+    private String warehouseAddress;// ,
+    private String qualityContact;// ,
     private String businessType;// ,
     private String businessTypeText;// ,
     private int companyType;// ,
@@ -168,6 +172,22 @@ public class CompanyBean implements Serializable {
         }else {
             return Double.parseDouble(latitude);
         }
+    }
+
+    public String getBusinessScope() {
+        return businessScope;
+    }
+
+    public String getBusinessScopeText() {
+        return businessScopeText;
+    }
+
+    public String getWarehouseAddress() {
+        return warehouseAddress;
+    }
+
+    public String getQualityContact() {
+        return qualityContact;
     }
 
     public String getCompanyTypeText() {
