@@ -61,17 +61,17 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.et_operatorName)
-    EditText etOperatorName;
+    ItemGroup etOperatorName;
     @BindView(R.id.et_socialCreditCode)
-    EditText etSocialCreditCode;
+    ItemGroup etSocialCreditCode;
     @BindView(R.id.et_licenseNumber)
-    EditText etLicenseNumber;
+    ItemGroup etLicenseNumber;
     @BindView(R.id.et_legalRepresentative)
-    EditText etLegalRepresentative;
+    ItemGroup etLegalRepresentative;
     @BindView(R.id.et_address)
-    EditText etAddress;
+    ItemGroup etAddress;
     @BindView(R.id.et_businessPlace)
-    EditText etBusinessPlace;
+    ItemGroup etBusinessPlace;
     @BindView(R.id.et_businessType)
     TextView etBusinessType;
     @BindView(R.id.et_businessProject)
@@ -81,37 +81,37 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
     @BindView(R.id.et_contact)
-    EditText etContact;
+    ItemGroup etContact;
     @BindView(R.id.et_password)
-    EditText et_password;
+    ItemGroup et_password;
     @BindView(R.id.et_passwordCon)
-    EditText et_passwordCon;
+    ItemGroup et_passwordCon;
     @BindView(R.id.et_loginAccount)
-    EditText et_loginAccount;
+    ItemGroup et_loginAccount;
     @BindView(R.id.et_coldstorage)
-    EditText et_coldstorage;
+    ItemGroup et_coldstorage;
     @BindView(R.id.ll_loginAccount)
     LinearLayout ll_loginAccount;
-    @BindView(R.id.ll_coldstorage)
-    LinearLayout ll_coldstorage;
     @BindView(R.id.ll_jtcompanyType)
     LinearLayout ll_jtcompanyType;
     @BindView(R.id.ll_yp)
     LinearLayout ll_yp;
+    @BindView(R.id.ll_fieldTime)
+    LinearLayout ll_fieldTime;
+    @BindView(R.id.ll_jingying)
+    LinearLayout ll_jingying;
     @BindView(R.id.ll_businessType)
     LinearLayout ll_businessType;
     @BindView(R.id.ll_businessProject)
     LinearLayout ll_businessProject;
     @BindView(R.id.et_contactInformation)
-    EditText etContactInformation;
+    ItemGroup etContactInformation;
     @BindView(R.id.et_fieldTime)
     TextView etFieldTime;
     @BindView(R.id.et_location)
     TextView etLocation;
     @BindView(R.id.et_companyType)
     TextView et_companyType;
-    @BindView(R.id.tv_contact)
-    TextView tv_contact;
     @BindView(R.id.et_jtcompanyType)
     TextView et_jtcompanyType;
     ArrayList<ImageBack> images = new ArrayList<>();
@@ -207,21 +207,33 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             mPresenter.getDicts("specific_type");
         } else if (companyType.equals("2")) {
             ll_loginAccount.setVisibility(View.VISIBLE);
-            ll_coldstorage.setVisibility(View.VISIBLE);
+            et_coldstorage.setVisibility(View.VISIBLE);
         } else if (companyType.equals("3") || companyType.equals("4")) {//"companyType": "3","companyTypeText": "药品",
             ll_loginAccount.setVisibility(View.GONE);
-            ll_coldstorage.setVisibility(View.GONE);
+            et_coldstorage.setVisibility(View.GONE);
             ll_businessType.setVisibility(View.GONE);
             ll_businessProject.setVisibility(View.GONE);
             ll_jtcompanyType.setVisibility(View.VISIBLE);
             mPresenter.getDicts(companyType.equals("3") ? "ypCompanyType" : "ylqxCompanyType");
             if (companyType.equals("3")) {
                 ll_yp.setVisibility(View.VISIBLE);
-                tv_contact.setText("企业负责人");
+                etContact.setTitle("企业负责人");
             }
 
-        } else {
-
+        } else if (companyType.equals("6")){
+            ll_loginAccount.setVisibility(View.GONE);
+            et_coldstorage.setVisibility(View.GONE);
+            ll_businessType.setVisibility(View.GONE);
+            ll_businessProject.setVisibility(View.GONE);
+            etLicenseNumber.setVisibility(View.GONE);
+            ll_jingying.setVisibility(View.GONE);
+            ll_fieldTime.setVisibility(View.GONE);
+            etOperatorName.setTitle("单位名称");
+            etAddress.setTitle("单位地址");
+            etSocialCreditCode.setTitle("社会信用代码");
+            etLegalRepresentative.setTitle("法定代表人");
+            etContact.setTitle("安全管理联系人");
+            etContactInformation.setTitle("安全管理联系电话");
         }
         ig_businessScope.setItemOnClickListener(new ItemGroup.ItemOnClickListener() {
             @Override
@@ -333,12 +345,12 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     @Override
     public void showCompanyInfo(CompanyBean data) {
         if (data == null) return;
-        etOperatorName.setText(data.getOperatorName() + "");
-        etSocialCreditCode.setText(data.getSocialCreditCode() + "");
-        etLicenseNumber.setText(data.getLicenseNumber() + "");
-        etLegalRepresentative.setText(data.getLegalRepresentative() + "");
-        etAddress.setText(data.getAddress() + "");
-        etBusinessPlace.setText(data.getBusinessPlace() + "");
+        etOperatorName.setChooseContent(data.getOperatorName() + "");
+        etSocialCreditCode.setChooseContent(data.getSocialCreditCode() + "");
+        etLicenseNumber.setChooseContent(data.getLicenseNumber() + "");
+        etLegalRepresentative.setChooseContent(data.getLegalRepresentative() + "");
+        etAddress.setChooseContent(data.getAddress() + "");
+        etBusinessPlace.setChooseContent(data.getBusinessPlace() + "");
         etBusinessType.setText(data.getBusinessTypeText() + "");
         etBusinessProject.setText(data.getBusinessProjectText() + "");
         businessType = data.getBusinessType();
@@ -354,8 +366,8 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         companyType = data.getCompanyType() + "";
         validDate = data.getValidDate();
         etEndTime.setText(data.getValidDate() + "");
-        etContact.setText(data.getContact() + "");
-        etContactInformation.setText(data.getContactInformation() + "");
+        etContact.setChooseContent(data.getContact() + "");
+        etContactInformation.setChooseContent(data.getContactInformation() + "");
         etFieldTime.setText(data.getFieldTime() + "");
         fieldTime = data.getFieldTime();
         lat = data.getLatitude();
@@ -365,7 +377,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             ll_loginAccount.setVisibility(View.VISIBLE);
             et_password.setVisibility(View.GONE);
             et_passwordCon.setVisibility(View.GONE);
-            et_loginAccount.setText(data.getLoginAccount() + "");
+            et_loginAccount.setChooseContent(data.getLoginAccount() + "");
         } else if (companyType.equals("3")) {
             et_jtcompanyType.setText(data.getSpecificTypeText() + "");
             ypCompanyType = data.getSpecificType();
@@ -373,9 +385,9 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             et_jtcompanyType.setText(data.getSpecificTypeText() + "");
             ylqxCompanyType = data.getSpecificType();
         }
-        ig_businessScope.setChooseContent(data.getBusinessScopeText()+"");
-        ig_qualityContact.setChooseContent(data.getQualityContact()+"");
-        ig_warehouseAddress.setChooseContent(data.getWarehouseAddress()+"");
+        ig_businessScope.setChooseContent(data.getBusinessScopeText() + "");
+        ig_qualityContact.setChooseContent(data.getQualityContact() + "");
+        ig_warehouseAddress.setChooseContent(data.getWarehouseAddress() + "");
         businessScope = data.getBusinessScope();
 
 
@@ -448,37 +460,37 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     private void postData() {
         Map<String, Object> params = new HashMap<>();
 
-        String operatorName = etOperatorName.getText().toString();
+        String operatorName = etOperatorName.getValue();
         if (!TextUtils.isEmpty(operatorName)) {
             params.put("operatorName", operatorName);
         }
 
 
-        String socialCreditCode = etSocialCreditCode.getText().toString();
+        String socialCreditCode = etSocialCreditCode.getValue().toString();
         if (!TextUtils.isEmpty(socialCreditCode)) {
             params.put("socialCreditCode", socialCreditCode);
         }
 
 
-        String licenseNumber = etLicenseNumber.getText().toString();
+        String licenseNumber = etLicenseNumber.getValue().toString();
         if (!TextUtils.isEmpty(licenseNumber)) {
             params.put("licenseNumber", licenseNumber);
         }
 
 
-        String legalRepresentative = etLegalRepresentative.getText().toString();
+        String legalRepresentative = etLegalRepresentative.getValue().toString();
         if (!TextUtils.isEmpty(legalRepresentative)) {
             params.put("legalRepresentative", legalRepresentative);
         }
 
 
-        String address = etAddress.getText().toString();
+        String address = etAddress.getValue().toString();
         if (!TextUtils.isEmpty(address)) {
             params.put("address", address);
         }
 
 
-        String businessPlace = etBusinessPlace.getText().toString();
+        String businessPlace = etBusinessPlace.getValue().toString();
         if (!TextUtils.isEmpty(businessPlace)) {
             params.put("businessPlace", businessPlace);
         }
@@ -506,12 +518,12 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             params.put("longitude", lon);
             params.put("latitude", lat);
         }
-        String contact = etContact.getText().toString();
+        String contact = etContact.getValue().toString();
         if (!TextUtils.isEmpty(contact)) {
             params.put("contact", contact);
         }
 
-        String contactInformation = etContactInformation.getText().toString();
+        String contactInformation = etContactInformation.getValue().toString();
         if (!TextUtils.isEmpty(contactInformation)) {
             params.put("contactInformation", contactInformation);
         }
@@ -527,8 +539,8 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
 
         if (companyType.equals("2")) {
-            String edPassword_ = et_password.getText().toString();
-            String edPasswordAgain_ = et_passwordCon.getText().toString();
+            String edPassword_ = et_password.getValue().toString();
+            String edPasswordAgain_ = et_passwordCon.getValue().toString();
             if (TextUtils.isEmpty(edPassword_)) {
                 showToast("请输入新密码");
                 return;

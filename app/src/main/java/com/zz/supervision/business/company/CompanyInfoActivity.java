@@ -167,12 +167,13 @@ public class CompanyInfoActivity extends MyBaseActivity {
             mlist.add(new DetailBean("有效期至", data.getValidDate() + ""));
             mlist.add(new DetailBean("签发时间", data.getFieldTime() + ""));
         }else if (companyType.equals("6")) {
-            mlist.add(new DetailBean("单位名称", data.getOperatorFullName() + ""));
-            mlist.add(new DetailBean("单位地址", data.getSocialCreditCode() + ""));
-            mlist.add(new DetailBean("社会信用代码", data.getLicenseNumber() + ""));
+
+            mlist.add(new DetailBean("单位名称", data.getOperatorName() + ""));
+            mlist.add(new DetailBean("单位地址", data.getAddress() + ""));
+            mlist.add(new DetailBean("社会信用代码", data.getSocialCreditCode() + ""));
             mlist.add(new DetailBean("法定代表人", data.getLegalRepresentative() + ""));
-            mlist.add(new DetailBean("安全管理联系人", data.getAddress() + ""));
-            mlist.add(new DetailBean("安全管理联系电话", data.getContact() + ""));
+            mlist.add(new DetailBean("安全管理联系人", data.getContact() + ""));
+            mlist.add(new DetailBean("安全管理联系电话", data.getContactInformation() + ""));
             ll_user.setVisibility(View.GONE);
 
         } else {
@@ -208,6 +209,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 url = "ypCompanyInfo";
             }else if (companyType.equals("4")) {
                 url = "ylqxCompanyInfo";
+            }else if (companyType.equals("6")) {
+                url = "tzsbCompanyInfo";
             }
             RxNetUtils.request(getApi(ApiService.class).getCompanyInfo(url,id), new RequestObserver<JsonT<CompanyBean>>(this) {
                 @Override
@@ -305,6 +308,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
             url = "ypCompany";
         }else if (companyType.equals("4")) {
             url = "ylqxCompany";
+        }else if (companyType.equals("6")) {
+            url = "tzsbCompanyInfo";
         }
         RxNetUtils.request(getApi(ApiService.class).getImageBase64(url, id), new RequestObserver<JsonT<List<ImageBack>>>(this) {
             @Override

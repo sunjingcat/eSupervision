@@ -33,6 +33,8 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
             url = "ypCompanyInfo";
         }else if (type.equals("4")) {
             url = "ylqxCompanyInfo";
+        }else if (type.equals("6")) {
+            url = "tzsbCompanyInfo";
         }
         RxNetUtils.request(getApi(ApiService.class).getCompanyInfo(url,id), new RequestObserver<JsonT<CompanyBean>>(this) {
             @Override
@@ -95,6 +97,8 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
             url = "ypCompany";
         }else if (type.equals("4")) {
             url = "ylqxCompany";
+        }else if (type.equals("6")) {
+            url = "tzsbCompanyInfo";
         }
         RxNetUtils.request(getApi(ApiService.class).getImageBase64(url, modelId), new RequestObserver<JsonT<List<ImageBack>>>(this) {
             @Override
@@ -117,10 +121,12 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
     @Override
     public void submitData(Map<String, Object> map) {
         if (map.containsKey("id")) {
-            if (map.containsKey("companyType") && (map.get("companyType").equals("3") || map.get("companyType").equals("4"))) {
+            if (map.containsKey("companyType") && (map.get("companyType").equals("3") || map.get("companyType").equals("4")|| map.get("companyType").equals("6"))) {
                 String url = "ylqxCompanyInfo";
                 if (map.get("companyType").equals("3")) {
                     url = "ypCompanyInfo";
+                }else if (map.get("companyType").equals("6")) {
+                    url = "tzsbCompanyInfo";
                 }
                 RxNetUtils.request(getApi(ApiService.class).editYaoCompanyInfo(url,map), new RequestObserver<JsonT<String>>(this) {
                     @Override
@@ -152,10 +158,12 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
             }
 
         } else {
-            if (map.containsKey("companyType") && (map.get("companyType").equals("3") || map.get("companyType").equals("4"))) {
+            if (map.containsKey("companyType") && (map.get("companyType").equals("3") || map.get("companyType").equals("4")|| map.get("companyType").equals("6"))) {
                 String url = "ylqxCompanyInfo";
                 if (map.get("companyType").equals("3")) {
                     url = "ypCompanyInfo";
+                }else if (map.get("companyType").equals("6")) {
+                    url = "tzsbCompanyInfo";
                 }
                 RxNetUtils.request(getApi(ApiService.class).postYaoCompanyInfo(url, map), new RequestObserver<JsonT<String>>(this) {
                     @Override
@@ -194,6 +202,8 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
             url = "ypCompanyInfo";
         }else if (type.equals("4")) {
             url = "ylqxCompanyInfo";
+        }else if (type.equals("6")) {
+            url = "tzsbCompanyInfo";
         }
         RxNetUtils.request(getApi(ApiService.class).uploadCompanyImgs(url, id, files), new RequestObserver<JsonT>(this) {
             @Override

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -36,35 +36,24 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/et_operatorName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp">
+                app:title="经营者名称" />
 
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="150dp"
 
-                    android:text="经营者名称" />
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/et_socialCreditCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="社会信用代码" />
 
-                <EditText
-                    android:id="@+id/et_operatorName"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="请填写"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#333"
-                    android:textSize="14dp">
-
-                </EditText>
-            </LinearLayout>
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/et_licenseNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="许可证编号" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -77,67 +66,6 @@
                 <TextView
                     style="@style/textLeftStyle"
                     android:layout_width="150dp"
-
-                    android:text="社会信用代码" />
-
-                <EditText
-                    android:id="@+id/et_socialCreditCode"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="请填写"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#333"
-                    android:textSize="14dp">
-
-                </EditText>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="150dp"
-
-                    android:text="许可证编号" />
-
-                <EditText
-                    android:id="@+id/et_licenseNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="请填写"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#333"
-                    android:textSize="14dp">
-
-                </EditText>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="150dp"
-
                     android:text="企业类型" />
 
                 <TextView
@@ -156,342 +84,207 @@
                 </TextView>
             </LinearLayout>
 
-            <LinearLayout
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/et_legalRepresentative"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp">
+                app:title="法定代表人" />
 
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="150dp"
-
-                    android:text="法定代表人" />
-
-                <EditText
-                    android:id="@+id/et_legalRepresentative"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="请填写"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#333"
-                    android:textSize="14dp">
-
-                </EditText>
-            </LinearLayout>
-
-            <LinearLayout
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/et_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="150dp"
-
-                    android:text="住所" />
-
-                <EditText
-                    android:id="@+id/et_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="请填写"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#333"
-                    android:textSize="14dp">
-
-                </EditText>
-            </LinearLayout>
+                app:title="住所" />
 
             <LinearLayout
+                android:id="@+id/ll_jingying"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="150dp"
-
-                    android:text="经营场所" />
-
-                <EditText
+                android:orientation="vertical">
+                <com.zz.supervision.widget.ItemGroup
                     android:id="@+id/et_businessPlace"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="请填写"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#333"
-                    android:textSize="14dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:title="经营场所" />
 
-                </EditText>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/ll_businessType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="150dp"
-
-                    android:text="主体业态" />
-
-                <TextView
-                    android:id="@+id/et_businessType"
+                <LinearLayout
+                    android:id="@+id/ll_businessType"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
                     android:background="@color/white"
-                    android:drawableRight="@drawable/image_arrow"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="请选择"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#333"
-                    android:textSize="14dp">
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-                </TextView>
-            </LinearLayout>
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
 
-            <LinearLayout
-                android:id="@+id/ll_coldstorage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp"
-                android:visibility="gone">
+                        android:text="主体业态" />
 
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="150dp"
+                    <TextView
+                        android:id="@+id/et_businessType"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:drawableRight="@drawable/image_arrow"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="请选择"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
 
-                    android:text="企业主体资质" />
-
-                <EditText
+                    </TextView>
+                </LinearLayout>
+                <com.zz.supervision.widget.ItemGroup
                     android:id="@+id/et_coldstorage"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:drawableRight="@drawable/image_arrow"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="请填写"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#333"
-                    android:textSize="14dp">
+                    android:layout_height="wrap_content"
+                    app:title="企业主体资质"
+                    android:visibility="gone"/>
 
-                </EditText>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/ll_businessProject"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="150dp"
-
-                    android:text="经营项目" />
-
-                <TextView
-                    android:id="@+id/et_businessProject"
+                <LinearLayout
+                    android:id="@+id/ll_businessProject"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
                     android:background="@color/white"
-                    android:drawableRight="@drawable/image_arrow"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="请选择"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#333"
-                    android:textSize="14dp">
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-                </TextView>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/ll_jtcompanyType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp"
-                android:visibility="gone">
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
 
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="150dp"
+                        android:text="经营项目" />
 
-                    android:text="具体类型" />
+                    <TextView
+                        android:id="@+id/et_businessProject"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:drawableRight="@drawable/image_arrow"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="请选择"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
 
-                <TextView
-                    android:id="@+id/et_jtcompanyType"
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_jtcompanyType"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
                     android:background="@color/white"
-                    android:drawableRight="@drawable/image_arrow"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="请选择"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#333"
-                    android:textSize="14dp">
+                    android:orientation="horizontal"
+                    android:padding="8dp"
+                    android:visibility="gone">
 
-                </TextView>
-            </LinearLayout>
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp">
+                        android:text="具体类型" />
 
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="150dp"
+                    <TextView
+                        android:id="@+id/et_jtcompanyType"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:drawableRight="@drawable/image_arrow"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="请选择"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
 
-                    android:text="有效期至" />
+                    </TextView>
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/et_endTime"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
                     android:background="@color/white"
-                    android:drawableRight="@drawable/image_arrow"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="请选择"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#333"
-                    android:textSize="14dp">
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-                </TextView>
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
+
+                        android:text="有效期至" />
+
+                    <TextView
+                        android:id="@+id/et_endTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:drawableRight="@drawable/image_arrow"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="请选择"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
+
+                    </TextView>
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/et_contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp">
+                app:title="联系人" />
 
-                <TextView
-                    android:id="@+id/tv_contact"
-                    style="@style/textLeftStyle"
-                    android:layout_width="150dp"
 
-                    android:text="联系人" />
-
-                <EditText
-                    android:id="@+id/et_contact"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="请填写"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#333"
-                    android:textSize="14dp">
-
-                </EditText>
-            </LinearLayout>
             <LinearLayout
                 android:id="@+id/ll_yp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="gone">
+
                 <com.zz.supervision.widget.ItemGroup
                     android:id="@+id/ig_qualityContact"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:title="质量负责人"/>
+                    app:title="质量负责人" />
+
                 <com.zz.supervision.widget.ItemGroup
                     android:id="@+id/ig_warehouseAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:title="仓库地址"/>
+                    app:title="仓库地址" />
+
                 <com.zz.supervision.widget.ItemGroup
                     android:id="@+id/ig_businessScope"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:title="经营范围"
-                    app:isSelect="true"/>
+                    app:isSelect="true"
+                    app:title="经营范围" />
             </LinearLayout>
-            <LinearLayout
+
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/et_contactInformation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="150dp"
-
-                    android:text="联系方式" />
-
-                <EditText
-                    android:id="@+id/et_contactInformation"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="请填写"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#333"
-                    android:textSize="14dp">
-
-                </EditText>
-            </LinearLayout>
-
+                app:title="联系方式" />
             <LinearLayout
+                android:id="@+id/ll_fieldTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
@@ -529,96 +322,22 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <com.zz.supervision.widget.ItemGroup
+                    android:id="@+id/et_loginAccount"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:background="@color/white"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
-
-                    <TextView
-                        style="@style/textLeftStyle"
-                        android:layout_width="150dp"
-
-                        android:text="登录账号" />
-
-                    <EditText
-                        android:id="@+id/et_loginAccount"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/white"
-                        android:drawablePadding="5dp"
-                        android:gravity="center_vertical"
-                        android:hint="请填写"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:textColor="#333"
-                        android:textSize="14dp">
-
-                    </EditText>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                    app:title="登录账号" />
+                <com.zz.supervision.widget.ItemGroup
+                    android:id="@+id/et_password"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:background="@color/white"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
-
-                    <TextView
-                        style="@style/textLeftStyle"
-                        android:layout_width="150dp"
-
-                        android:text="密码" />
-
-                    <EditText
-                        android:id="@+id/et_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/white"
-                        android:drawablePadding="5dp"
-                        android:gravity="center_vertical"
-                        android:hint="请填写"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:textColor="#333"
-                        android:textSize="14dp">
-
-                    </EditText>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                    app:title="密码" />
+                <com.zz.supervision.widget.ItemGroup
+                    android:id="@+id/et_passwordCon"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:background="@color/white"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    app:title="确认密码" />
 
-                    <TextView
-                        style="@style/textLeftStyle"
-                        android:layout_width="150dp"
-
-                        android:text="确认密码" />
-
-                    <EditText
-                        android:id="@+id/et_passwordCon"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/white"
-                        android:drawablePadding="5dp"
-                        android:gravity="center_vertical"
-                        android:hint="请填写"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:textColor="#333"
-                        android:textSize="14dp">
-
-                    </EditText>
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout

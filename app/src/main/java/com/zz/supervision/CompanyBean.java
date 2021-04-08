@@ -102,6 +102,8 @@ public class CompanyBean implements Serializable {
     private String qualityContact;// ,
     private String businessType;// ,
     private String businessTypeText;// ,
+    private int alarmStatus;// ,
+    private String alarmStatusText;// ,
     private int companyType;// ,
     private String specificType;// ,
     private String specificTypeText;// ,
@@ -129,6 +131,14 @@ public class CompanyBean implements Serializable {
     private String       latitude;// 47.21882160905167,
     private String       coldstorageType1Text;// 47.21882160905167,
     private String       coldstorageType2Text;// 47.21882160905167,
+
+    public int getAlarmStatus() {
+        return alarmStatus;
+    }
+
+    public String getAlarmStatusText() {
+        return alarmStatusText;
+    }
 
     public String getColdstorageType1Text() {
         return coldstorageType1Text;

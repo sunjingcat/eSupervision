@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    def API_RELEASE_HOST = "\"http://121.89.175.40:8787/\""
-    def API_DEV_HOST = "\"http://121.89.175.40:8787/\""
+    def API_RELEASE_HOST = "\"http://101.201.149.1:5555/\""
+    def API_DEV_HOST = "\"http://101.201.149.1:5555/\""
 
     compileSdkVersion 28
     defaultConfig {
