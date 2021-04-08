@@ -58,6 +58,8 @@ public class XCHZFActivity extends MyBaseActivity {
     TextView etCompany;
     @BindView(R.id.et_type)
     TextView etType;
+    @BindView(R.id.et_InspectionType)
+    TextView et_InspectionType;
     @BindView(R.id.et_people)
     TextView etPeople;
     @BindView(R.id.et_startTime)
@@ -82,9 +84,11 @@ public class XCHZFActivity extends MyBaseActivity {
     LinearLayout llCompanyInfo;
     CompanyBean companyBean;
     int type = 0;
+    int inspectionType = 0;
     String inspectionTime = "";
     String names = "";
     List<BusinessType> businessTypeList = new ArrayList<>();
+    List<BusinessType> inspectionList = new ArrayList<>();
     ArrayList<LawEnforcerBean> lawEnforcerBeanArrayList = new ArrayList<>();
     SelectPopupWindows selectPopupWindows;
 
@@ -104,9 +108,12 @@ public class XCHZFActivity extends MyBaseActivity {
         CompanyBean company = (CompanyBean) getIntent().getSerializableExtra("company");
         if (company != null) {
             showCompany(company);
-            getCompanyType();
+            getLawEnforcerType();
             etType.setText("");
             type = 0;
+            if (company.getCompanyType() == 6) {
+                getInspectionType();
+            }
         }
     }
 
@@ -115,7 +122,7 @@ public class XCHZFActivity extends MyBaseActivity {
         ToolBarUtils.getInstance().setNavigation(toolbar, 1);
     }
 
-    @OnClick({R.id.ll_company, R.id.ll_company_info, R.id.et_type, R.id.et_people, R.id.et_startTime, R.id.bt_ok})
+    @OnClick({R.id.ll_company, R.id.ll_company_info, R.id.et_type, R.id.et_InspectionType, R.id.et_people, R.id.et_startTime, R.id.bt_ok})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_company:
@@ -154,6 +161,36 @@ public class XCHZFActivity extends MyBaseActivity {
                     }
                 });
                 break;
+            case R.id.et_InspectionType:
+                if (inspectionList.size() == 0) {
+                    showToast("请先选择企业");
+                    return;
+                }
+                UIAdjuster.closeKeyBoard(this);
+                List<String> list2 = new ArrayList<>();
+                List<String> list3 = new ArrayList<>();
+                for (int i = 0; i < inspectionList.size(); i++) {
+                    list2.add(inspectionList.get(i).getDictLabel());
+                    list3.add(inspectionList.get(i).getDictValue());
+                }
+                String[] array1 = (String[]) list2.toArray(new String[list2.size()]);
+                String[] values1 = (String[]) list3.toArray(new String[list3.size()]);
+                selectPopupWindows = new SelectPopupWindows(this, array1);
+                selectPopupWindows.showAtLocation(findViewById(R.id.bg),
+                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                selectPopupWindows.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
+                    @Override
+                    public void onSelected(int index, String msg) {
+                        et_InspectionType.setText(msg);
+                        type = Integer.parseInt(values1[index]);
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        selectPopupWindows.dismiss();
+                    }
+                });
+                break;
             case R.id.et_people:
                 startActivityForResult(new Intent(this, PeopleActivity.class), 2001);
                 break;
@@ -169,9 +206,9 @@ public class XCHZFActivity extends MyBaseActivity {
                 //设置标题
                 dialog.setTitle("选择时间");
                 //设置类型
-                dialog.setType(companyBean.getCompanyType()==3||companyBean.getCompanyType()==4?DateType.TYPE_YMDHM:DateType.TYPE_YMD);
+                dialog.setType(companyBean.getCompanyType() == 3 || companyBean.getCompanyType() == 4 ? DateType.TYPE_YMDHM : DateType.TYPE_YMD);
                 //设置消息体的显示格式，日期格式
-                dialog.setMessageFormat(companyBean.getCompanyType()==3||companyBean.getCompanyType()==4?"yyyy-MM-dd HH:mm":"yyyy-MM-dd");
+                dialog.setMessageFormat(companyBean.getCompanyType() == 3 || companyBean.getCompanyType() == 4 ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd");
                 //设置选择回调
                 dialog.setOnChangeLisener(new OnChangeLisener() {
                     @Override
@@ -183,7 +220,7 @@ public class XCHZFActivity extends MyBaseActivity {
                 dialog.setOnSureLisener(new OnSureLisener() {
                     @Override
                     public void onSure(Date date) {
-                        String time = TimeUtils.getTime(date.getTime(), companyBean.getCompanyType()==3||companyBean.getCompanyType()==4?TimeUtils.DEFAULT_DATE_FORMAT1:TimeUtils.DATE_FORMAT_DATE);
+                        String time = TimeUtils.getTime(date.getTime(), companyBean.getCompanyType() == 3 || companyBean.getCompanyType() == 4 ? TimeUtils.DEFAULT_DATE_FORMAT1 : TimeUtils.DATE_FORMAT_DATE);
                         inspectionTime = time;
                         etStartTime.setText(time);
                     }
@@ -206,7 +243,7 @@ public class XCHZFActivity extends MyBaseActivity {
                 CompanyBean company = (CompanyBean) data.getSerializableExtra("company");
                 if (company != null) {
                     showCompany(company);
-                    getCompanyType();
+                    getLawEnforcerType();
                     etType.setText("");
                     type = 0;
                 }
@@ -275,14 +312,14 @@ public class XCHZFActivity extends MyBaseActivity {
             @Override
             protected void onSuccess(JsonT<Integer> jsonT) {
                 String reason = edCause.getText().toString();
-                if (type == 1 || type == 2|| type == 5|| type == 6|| type == 7|| type == 8|| type == 9|| type == 10) {
+                if (type == 1 || type == 2 || type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
                     startActivity(new Intent(XCHZFActivity.this, SuperviseActivity.class)
                             .putExtra("company", companyBean.getOperatorName())
                             .putExtra("id", jsonT.getData() + "")
                             .putExtra("type", type)
                             .putExtra("typeText", etType.getText().toString())
                             .putExtra("lawEnforcer", names)
-                            .putExtra("reason", reason+"")
+                            .putExtra("reason", reason + "")
                             .putExtra("inspectionTime", inspectionTime));
                     finish();
                 } else if (type == 3 || type == 4) {
@@ -292,7 +329,7 @@ public class XCHZFActivity extends MyBaseActivity {
                             .putExtra("type", type)
                             .putExtra("typeText", etType.getText().toString())
                             .putExtra("lawEnforcer", names)
-                            .putExtra("reason", reason+"")
+                            .putExtra("reason", reason + "")
                             .putExtra("inspectionTime", inspectionTime));
                     finish();
                 }
@@ -304,9 +341,10 @@ public class XCHZFActivity extends MyBaseActivity {
             }
         }, LoadingUtils.build(this));
     }
-    public void getCompanyType() {
+
+    public void getLawEnforcerType() {
         Map<String, Object> map = new HashMap<>();
-        map.put("companyType", companyBean.getCompanyType()+"");
+        map.put("companyType", companyBean.getCompanyType() + "");
         RxNetUtils.request(getApi(ApiService.class).getInspectionTypeByCompanyType(map), new RequestObserver<JsonT<List<BusinessType>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
@@ -318,6 +356,24 @@ public class XCHZFActivity extends MyBaseActivity {
             protected void onFail2(JsonT<List<BusinessType>> stringJsonT) {
                 super.onFail2(stringJsonT);
                 businessTypeList.clear();
+            }
+        }, LoadingUtils.build(this));
+    }
+
+    public void getInspectionType() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("dictType", "tzsb_check_type");
+        RxNetUtils.request(getApi(ApiService.class).getDicts(map), new RequestObserver<JsonT<List<BusinessType>>>(this) {
+            @Override
+            protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
+                inspectionList.clear();
+                inspectionList.addAll(jsonT.getData());
+            }
+
+            @Override
+            protected void onFail2(JsonT<List<BusinessType>> stringJsonT) {
+                super.onFail2(stringJsonT);
+                inspectionList.clear();
             }
         }, LoadingUtils.build(this));
     }

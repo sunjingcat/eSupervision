@@ -34,8 +34,7 @@
                 android:lines="1"
                 android:textColor="#272727"
                 android:textSize="18dp"
-                tools:text="黑龙江富电实业集团有限公司燃料"
-                android:drawableRight="@drawable/icon_user"/>
+                tools:text="黑龙江富电实业集团有限公司燃料" />
 
             <LinearLayout
                 android:layout_width="match_parent"

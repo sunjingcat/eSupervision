@@ -87,7 +87,7 @@ public class MainActivity extends MyBaseActivity {
             case R.id.main_group_1:
 
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this, InspectActivity.class);
+                intent.setClass(MainActivity.this, XCHZFActivity.class);
                 startActivity(intent);
 
                 break;

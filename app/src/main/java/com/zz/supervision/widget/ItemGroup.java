@@ -119,7 +119,11 @@ public class ItemGroup extends FrameLayout {
     }
 
     public void setChooseContent(String choose) {
-        this.chooseTv .setText(choose+"");
+        if (this.chooseTv.getVisibility()==View.VISIBLE) {
+            this.chooseTv.setText(choose + "");
+        }else {
+            this.contentEdt.setText(choose+"");
+        }
     }
 
     public String getValue() {

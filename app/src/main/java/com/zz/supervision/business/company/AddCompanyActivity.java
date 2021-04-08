@@ -373,8 +373,12 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             et_jtcompanyType.setText(data.getSpecificTypeText() + "");
             ylqxCompanyType = data.getSpecificType();
         }
-        ig_businessScope.setChooseContent(data.getBusinessScopeText());
+        ig_businessScope.setChooseContent(data.getBusinessScopeText()+"");
+        ig_qualityContact.setChooseContent(data.getQualityContact()+"");
+        ig_warehouseAddress.setChooseContent(data.getWarehouseAddress()+"");
         businessScope = data.getBusinessScope();
+
+
     }
 
     @Override

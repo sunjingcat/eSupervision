@@ -109,7 +109,7 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
             public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
                 if (view.getId()==R.id.content) {
                     if (TextUtils.isEmpty(select)) {
-                        if(mlist.get(position).getCompanyType()==1){
+                        if(mlist.get(position).getCompanyType()==6){
                             startActivity(new Intent(getActivity(), EquipmentListActivity.class).putExtra("id", mlist.get(position).getId()).putExtra("companyType", mlist.get(position).getCompanyType() + ""));
 
                         }else {
