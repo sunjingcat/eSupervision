@@ -54,6 +54,9 @@ import butterknife.OnClick;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
+/**
+ * 设备详情
+ */
 public class EquipmentInfoActivity extends MyBaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;

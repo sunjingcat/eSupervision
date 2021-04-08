@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- *设备
+ *设备添加
  */
 public class AddEquipmentActivity extends MyBaseActivity {
 

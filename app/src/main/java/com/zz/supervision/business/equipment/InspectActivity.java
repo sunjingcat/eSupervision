@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- *
+ *检查
  */
 public class InspectActivity extends MyBaseActivity {
 

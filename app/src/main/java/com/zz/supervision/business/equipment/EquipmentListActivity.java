@@ -42,7 +42,7 @@ import butterknife.OnClick;
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
 /**
- *
+ *设备列表
  */
 public class EquipmentListActivity extends MyBaseActivity {
     @BindView(R.id.toolbar)
