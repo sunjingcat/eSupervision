@@ -35,84 +35,102 @@
     </androidx.appcompat.widget.Toolbar>
 
     <com.zz.supervision.widget.ItemGroup
-        android:id="@+id/name"
+        android:id="@+id/ig_deviceCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="设备代码" />
 
     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_deviceModel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="设备型号" />
 
     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_deviceType1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="设备类型1"
         app:isSelect="true"/>
     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_deviceType2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="设备类型2"
         app:isSelect="true"/>
     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_deviceType3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="设备类型3"
         app:isSelect="true"/>
     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_deviceName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="设备名称" />
     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_registStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="注册状态" />
     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_registOrganizationId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="注册登记机构" />
     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_registTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="注册时间" />
     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_registRecorder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="注册登记人员" />
     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_registNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="注册登记证编号" />
     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_registCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="注册代码" />
-    <com.zz.supervision.widget.ItemGroup
+     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_usageStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="使用状态" />
-    <com.zz.supervision.widget.ItemGroup
+     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_usageUpdateDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="使用状态变更日期" />
-    <com.zz.supervision.widget.ItemGroup
+     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_manufacturerName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="制造单位" />
-    <com.zz.supervision.widget.ItemGroup
+     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_projectNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="产品编号" />
-    <com.zz.supervision.widget.ItemGroup
+     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_manufacturerDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="制造日期" />
-    <com.zz.supervision.widget.ItemGroup
+     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_installationCompany"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="安装单位" />
-    <com.zz.supervision.widget.ItemGroup
+     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_completionDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="竣工日期" />

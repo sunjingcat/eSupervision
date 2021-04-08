@@ -22,6 +22,7 @@ import com.zz.supervision.bean.DetailBean;
 import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.business.company.adapter.ComInfoAdapter;
 import com.zz.supervision.business.company.adapter.ImageItemAdapter;
+import com.zz.supervision.business.equipment.AddEquipmentActivity;
 import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.business.mine.PasswordActivity;
 import com.zz.supervision.business.record.CheckListActivity;
@@ -82,6 +83,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
     CompanyBean companyBean;
     @BindView(R.id.bt_ok)
     Button btOk;
+    @BindView(R.id.bt_add_device)
+    Button bt_add_device;
     @BindView(R.id.bt_delete)
     Button bt_delete;
     @BindView(R.id.bg)
@@ -108,9 +111,12 @@ public class CompanyInfoActivity extends MyBaseActivity {
         if (!TextUtils.isEmpty(id)) {
             getData(id);
         }
-        if (companyType.equals("2")){
+        if (companyType.equals("2")) {
             toolbar_subtitle.setVisibility(View.GONE);
             bt_delete.setVisibility(View.GONE);
+        }
+        if (companyType.equals("6")) {
+            bt_add_device.setVisibility(View.VISIBLE);
         }
 
     }
@@ -144,18 +150,18 @@ public class CompanyInfoActivity extends MyBaseActivity {
             mlist.add(new DetailBean("登录账号", data.getLoginAccount() + ""));
             mlist.add(new DetailBean("冷库类型", data.getColdstorageType1Text() + ""));
             mlist.add(new DetailBean("是否含第三方冷库", data.getColdstorageType2Text() + ""));
-        } else if (companyType.equals("3")||companyType.equals("4")) {
+        } else if (companyType.equals("3") || companyType.equals("4")) {
             mlist.add(new DetailBean("经营者名称", data.getOperatorName() + ""));
             mlist.add(new DetailBean("社会信用代码", data.getSocialCreditCode() + ""));
             mlist.add(new DetailBean("许可证编号", data.getLicenseNumber() + ""));
             mlist.add(new DetailBean("法定代表人", data.getLegalRepresentative() + ""));
             mlist.add(new DetailBean("住所", data.getAddress() + ""));
-            if (companyType.equals("3")){
+            if (companyType.equals("3")) {
                 mlist.add(new DetailBean("企业负责人", data.getContact() + ""));
                 mlist.add(new DetailBean("质量负责人", data.getQualityContact() + ""));
                 mlist.add(new DetailBean("仓库地址", data.getWarehouseAddress() + ""));
                 mlist.add(new DetailBean("经营范围", data.getBusinessScopeText() + ""));
-            }else {
+            } else {
                 mlist.add(new DetailBean("联系人", data.getContact() + ""));
             }
 
@@ -166,7 +172,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
             mlist.add(new DetailBean("具体类型", data.getSpecificTypeText() + ""));
             mlist.add(new DetailBean("有效期至", data.getValidDate() + ""));
             mlist.add(new DetailBean("签发时间", data.getFieldTime() + ""));
-        }else if (companyType.equals("6")) {
+        } else if (companyType.equals("6")) {
 
             mlist.add(new DetailBean("单位名称", data.getOperatorName() + ""));
             mlist.add(new DetailBean("单位地址", data.getAddress() + ""));
@@ -202,28 +208,28 @@ public class CompanyInfoActivity extends MyBaseActivity {
     }
 
     void getData(String id) {
-            String url = "companyInfo";
-            if (companyType.equals("2")) {
-                url = "coldstorage";
-            }else if (companyType.equals("3")) {
-                url = "ypCompanyInfo";
-            }else if (companyType.equals("4")) {
-                url = "ylqxCompanyInfo";
-            }else if (companyType.equals("6")) {
-                url = "tzsbCompanyInfo";
+        String url = "companyInfo";
+        if (companyType.equals("2")) {
+            url = "coldstorage";
+        } else if (companyType.equals("3")) {
+            url = "ypCompanyInfo";
+        } else if (companyType.equals("4")) {
+            url = "ylqxCompanyInfo";
+        } else if (companyType.equals("6")) {
+            url = "tzsbCompanyInfo";
+        }
+        RxNetUtils.request(getApi(ApiService.class).getCompanyInfo(url, id), new RequestObserver<JsonT<CompanyBean>>(this) {
+            @Override
+            protected void onSuccess(JsonT<CompanyBean> jsonT) {
+                companyBean = jsonT.getData();
+                showCompanyInfo(jsonT.getData());
             }
-            RxNetUtils.request(getApi(ApiService.class).getCompanyInfo(url,id), new RequestObserver<JsonT<CompanyBean>>(this) {
-                @Override
-                protected void onSuccess(JsonT<CompanyBean> jsonT) {
-                    companyBean = jsonT.getData();
-                    showCompanyInfo(jsonT.getData());
-                }
 
-                @Override
-                protected void onFail2(JsonT<CompanyBean> stringJsonT) {
-                    super.onFail2(stringJsonT);
-                }
-            }, LoadingUtils.build(this));
+            @Override
+            protected void onFail2(JsonT<CompanyBean> stringJsonT) {
+                super.onFail2(stringJsonT);
+            }
+        }, LoadingUtils.build(this));
     }
 
     @Override
@@ -231,12 +237,12 @@ public class CompanyInfoActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok,  R.id.bt_password, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record})
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.bt_password, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record, R.id.bt_add_device})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
                 startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId())
-                                .putExtra("companyType", companyBean.getCompanyType()+"")
+                                .putExtra("companyType", companyBean.getCompanyType() + "")
                                 .putExtra("companyTypeText", companyBean.getCompanyTypeText())
                         , 1001);
                 break;
@@ -247,11 +253,15 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 if (companyBean == null) return;
                 startActivity(new Intent(this, XCHZFActivity.class).putExtra("company", companyBean));
                 break;
+            case R.id.bt_add_device:
+                if (companyBean == null) return;
+                startActivity(new Intent(this, AddEquipmentActivity.class).putExtra("company", companyBean));
+                break;
             case R.id.et_record:
                 if (companyBean == null) return;
                 if (companyType.equals("2")) {
                     startActivity(new Intent(this, ColdCheckListActivity.class).putExtra("id", companyBean.getId()));
-                } else if (companyType.equals("3")||companyType.equals("4")) {
+                } else if (companyType.equals("3") || companyType.equals("4")) {
                     startActivity(new Intent(this, YaoCheckListActivity.class).putExtra("id", companyBean.getId()));
                 } else {
                     startActivity(new Intent(this, CheckListActivity.class).putExtra("id", companyBean.getId()));
@@ -304,11 +314,11 @@ public class CompanyInfoActivity extends MyBaseActivity {
         String url = "company";
         if (companyType.equals("2")) {
             url = "coldstorage";
-        }else if (companyType.equals("3")) {
+        } else if (companyType.equals("3")) {
             url = "ypCompany";
-        }else if (companyType.equals("4")) {
+        } else if (companyType.equals("4")) {
             url = "ylqxCompany";
-        }else if (companyType.equals("6")) {
+        } else if (companyType.equals("6")) {
             url = "tzsbCompanyInfo";
         }
         RxNetUtils.request(getApi(ApiService.class).getImageBase64(url, id), new RequestObserver<JsonT<List<ImageBack>>>(this) {
