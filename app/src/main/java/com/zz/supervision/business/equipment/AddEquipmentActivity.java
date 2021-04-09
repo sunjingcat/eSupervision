@@ -1,6 +1,7 @@
 package com.zz.supervision.business.equipment;
 
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +9,10 @@ import android.widget.Button;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.codbking.widget.DatePickDialog;
+import com.codbking.widget.OnChangeLisener;
+import com.codbking.widget.OnSureLisener;
+import com.codbking.widget.bean.DateType;
 import com.codbking.widget.utils.UIAdjuster;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.commonlib.widget.SelectPopupWindows;
@@ -20,12 +25,15 @@ import com.zz.supervision.bean.EquipmentBean;
 import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.business.equipment.mvp.Contract;
 import com.zz.supervision.business.equipment.mvp.presenter.EquipmentAddPresenter;
+import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.utils.LogUtils;
+import com.zz.supervision.utils.TimeUtils;
 import com.zz.supervision.widget.ItemGroup;
 
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,10 +106,34 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
         ButterKnife.bind(this);
         mPresenter.getDeviceType();
         mPresenter.getDicts("tzsb_regist_status");
+        ig_registTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectTime(ig_registTime);
+            }
+        });
+        ig_usageUpdateDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectTime(ig_usageUpdateDate);
+            }
+        });
+        ig_manufacturerDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectTime(ig_manufacturerDate);
+            }
+        });
+        ig_completionDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectTime(ig_completionDate);
+            }
+        });
         ig_registStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showSelectPopWindow1("tzsb_regist_status",list_regist_status);
             }
         });
         ig_deviceType.setOnClickListener(new View.OnClickListener() {
@@ -238,7 +270,7 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
 
     }
     SelectPopupWindows selectPopupWindows;
-    void showSelectPopWindow1(String type,ArrayList<BusinessType> businessTypeList) {
+    void showSelectPopWindow1(String type,List<BusinessType> businessTypeList) {
         UIAdjuster.closeKeyBoard(this);
         List<String> list = new ArrayList<>();
         List<String> list1 = new ArrayList<>();
@@ -265,5 +297,36 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
                 selectPopupWindows.dismiss();
             }
         });
+    }
+
+    private void selectTime(ItemGroup itemGroup){
+        DatePickDialog dialog = new DatePickDialog(AddEquipmentActivity.this);
+        //设置上下年分限制
+        //设置上下年分限制
+        dialog.setYearLimt(20);
+        //设置标题
+        dialog.setTitle("选择时间");
+        //设置类型
+        dialog.setType( DateType.TYPE_YMD);
+        //设置消息体的显示格式，日期格式
+        dialog.setMessageFormat("yyyy-MM-dd");
+        //设置选择回调
+        dialog.setOnChangeLisener(new OnChangeLisener() {
+            @Override
+            public void onChanged(Date date) {
+                Log.v("+++", date.toString());
+            }
+        });
+        //设置点击确定按钮回调
+        dialog.setOnSureLisener(new OnSureLisener() {
+            @Override
+            public void onSure(Date date) {
+                String time = TimeUtils.getTime(date.getTime(),  TimeUtils.DATE_FORMAT_DATE);
+
+                    itemGroup.setChooseContent(time);
+
+            }
+        });
+        dialog.show();
     }
 }
