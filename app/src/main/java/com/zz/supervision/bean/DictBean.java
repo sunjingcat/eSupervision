@@ -1,8 +1,13 @@
 package com.zz.supervision.bean;
 
-import java.io.Serializable;
+import android.text.TextUtils;
 
-public class DictBean implements Serializable {
+import com.contrarywind.interfaces.IPickerViewData;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class DictBean implements IPickerViewData {
     private String cssClass;    //string
     private Integer dictCode;//'	integer
     private String dictLabel;//	string
@@ -12,6 +17,11 @@ public class DictBean implements Serializable {
     private String isDefault;//	string
     private String listClass;//	string
     private String status;//string
+    private ArrayList<DictBean> clist;//string
+
+    public ArrayList<DictBean> getClist() {
+        return clist;
+    }
 
     public String getCssClass() {
         return cssClass;
@@ -47,5 +57,13 @@ public class DictBean implements Serializable {
 
     public String getStatus() {
         return status;
+    }
+
+    @Override
+    public String getPickerViewText() {
+        if(TextUtils.isEmpty(dictLabel)){
+            return "";
+        }
+        return  dictLabel;
     }
 }

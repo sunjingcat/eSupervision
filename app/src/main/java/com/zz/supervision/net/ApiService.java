@@ -6,6 +6,8 @@ package com.zz.supervision.net;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.CompanyType;
+import com.zz.supervision.bean.DeviceType;
+import com.zz.supervision.bean.DictBean;
 import com.zz.supervision.bean.EquipmentBean;
 import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.bean.ImageBean;
@@ -77,7 +79,7 @@ public interface ApiService {
     @GET("/app/v1/supervise/companyInfo/list")
     Observable<JsonT<List<CompanyBean>>> getCompanyInfoList(@QueryMap Map<String, Object> params);
 
-    @GET("/app/v1/supervise/companyInfo/list")
+    @GET("/app/v1/supervise/tzsbDeviceInfo/list")
     Observable<JsonT<List<EquipmentBean>>> getEquipmentInfoList(@QueryMap Map<String, Object> params);
 
     @GET("/app/v1/supervise/universal/getRecordList")
@@ -99,6 +101,9 @@ public interface ApiService {
     @GET("/app/v1/supervise/{url}/{id}")
     Observable<JsonT<CompanyBean>> getCompanyInfo(@Path("url")String url,@Path("id") String id);
 
+    @GET("/app/v1/supervise/{url}/{id}")
+    Observable<JsonT<EquipmentBean>> getEquipmentInfo(@Path("id") String id);
+
     @GET("/app/v1/supervise/companyInfo/selectCompanyGroupCount")
     Observable<JsonT<List<CompanyType>>> selectCompanyGroupCount(@QueryMap Map<String, Object> params);
 
@@ -110,6 +115,14 @@ public interface ApiService {
 
     @POST("/app/v1/supervise/companyInfo/addCompanyInfo")
     Observable<JsonT<String>> postCompanyInfo(@QueryMap Map<String, Object> params);
+
+
+    @PUT("/app/v1/supervise/tzsbDeviceInfo")
+    Observable<JsonT<String>> editTzsbDeviceInfo(@QueryMap Map<String, Object> params);
+
+    @POST("/app/v1/supervise/tzsbDeviceInfo")
+    Observable<JsonT<String>> postTzsbDeviceInfo(@QueryMap Map<String, Object> params);
+
 
     @POST("/app/v1/supervise/{url}")
     Observable<JsonT<String>> postYaoCompanyInfo(@Path("url")String url,@QueryMap Map<String, Object> params);
@@ -128,6 +141,13 @@ public interface ApiService {
 
     @GET("/app/v1/supervise/dict/getDicts")
     Observable<JsonT<List<BusinessType>>> getDicts(@QueryMap Map<String, Object> params);
+
+
+    @GET("/app/v1/supervise/tzsbDeviceInfo/selectTzsbCompanyTypeGroupCount/{companyId}")
+    Observable<JsonT<List<DeviceType>>> selectTzsbCompanyTypeGroupCount(@Path("companyId")String companyId);
+
+    @GET("/app/v1/supervise/tzsbDeviceInfo/selectTzsbDeviceType")
+    Observable<JsonT<List<DictBean>>> selectTzsbDeviceType();
 
     @GET("/app/v1/supervise/universal/getInspectionTypeByCompanyType")
     Observable<JsonT<List<BusinessType>>> getInspectionTypeByCompanyType(@QueryMap Map<String, Object> params);

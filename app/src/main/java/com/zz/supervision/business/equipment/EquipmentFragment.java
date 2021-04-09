@@ -101,7 +101,7 @@ public class EquipmentFragment extends Fragment implements OnRefreshListener, On
             public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
                 if (view.getId()==R.id.content) {
                     if (TextUtils.isEmpty(select)) {
-                        startActivity(new Intent(getActivity(), EquipmentInfoActivity.class).putExtra("id", mlist.get(position).getId()).putExtra("equipmentType", mlist.get(position).getEquipmentType()+""));
+                        startActivity(new Intent(getActivity(), EquipmentInfoActivity.class).putExtra("id", mlist.get(position).getId()).putExtra("equipmentType", mlist.get(position).getBusinessType()+""));
                     } else {
                         Intent intent = new Intent();
                         intent.putExtra("equipment", mlist.get(position));
@@ -141,10 +141,12 @@ public class EquipmentFragment extends Fragment implements OnRefreshListener, On
     }
 
     void getDate() {
+       String id = getActivity().getIntent().getStringExtra("id");
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", pagenum);
         map.put("pageSize", pagesize);
-        map.put("equipmentType", type);
+        map.put("deviceType", type);
+        map.put("companyId", id);
         if (!TextUtils.isEmpty(searchStr)) {
             map.put("searchValue", searchStr);
         }

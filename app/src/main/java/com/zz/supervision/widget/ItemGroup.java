@@ -25,12 +25,14 @@ public class ItemGroup extends FrameLayout {
     private TextView titleTv; //标题
     private TextView chooseTv; //标题
     private EditText contentEdt; //输入框
-    private ItemOnClickListener itemOnClickListener; //Item的点击事件
+    private OnClickListener itemOnClickListener; //Item的点击事件
 
     public ItemGroup(@NonNull Context context) {
         super(context);
         initView(context);
     }
+
+
 
     public ItemGroup(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -44,7 +46,7 @@ public class ItemGroup extends FrameLayout {
         initAttrs(context, attrs);
     }
 
-    public void setItemOnClickListener(ItemOnClickListener itemOnClickListener) {
+    public void setOnClickListener(OnClickListener itemOnClickListener) {
         this.itemOnClickListener = itemOnClickListener;
     }
 
@@ -109,9 +111,10 @@ public class ItemGroup extends FrameLayout {
         chooseTv.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemOnClickListener.onClickRight(v);
+                itemOnClickListener.onClick(v);
             }
         });
+
     }
 
     public void setTitle(String titleTv) {
@@ -130,7 +133,4 @@ public class ItemGroup extends FrameLayout {
         return contentEdt.getText().toString();
     }
 
-    public interface ItemOnClickListener {
-        void onClickRight(View view);
-    }
 }

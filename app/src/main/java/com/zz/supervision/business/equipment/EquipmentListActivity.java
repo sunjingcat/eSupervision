@@ -15,6 +15,7 @@ import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.CompanyType;
+import com.zz.supervision.bean.DeviceType;
 import com.zz.supervision.business.company.AddCompanyActivity;
 import com.zz.supervision.business.company.SearchCompanyActivity;
 import com.zz.supervision.business.company.adapter.FmPagerAdapter;
@@ -69,7 +70,7 @@ public class EquipmentListActivity extends MyBaseActivity {
         ButterKnife.bind(this);
 
         id = getIntent().getStringExtra("id");
-        companyType = getIntent().getStringExtra("equipmentType");
+        companyType = getIntent().getStringExtra("companyType");
         if (TextUtils.isEmpty(select)) {
             toolbarSubtitle.setVisibility(View.VISIBLE);
         } else {
@@ -93,14 +94,14 @@ public class EquipmentListActivity extends MyBaseActivity {
         });
     }
 
-    void initFragment(List<CompanyType> list) {
+    void initFragment(List<DeviceType> list) {
         if (list.size() > 0 && list.size() == fragments.size()) {
 
 
         } else {
             fragments.clear();
             for (int i = 0; i < list.size(); i++) {
-                fragments.add(new EquipmentFragment(list.get(i).getCompanyType()));
+                fragments.add(new EquipmentFragment(list.get(i).getDeviceType()));
 //            tabs[i] = list.get(i).getCompanyTypeText();
             }
             tablayout.setupWithViewPager(viewpager, false);
@@ -109,7 +110,7 @@ public class EquipmentListActivity extends MyBaseActivity {
 
         }
         for (int i = 0; i < list.size(); i++) {
-            tablayout.getTabAt(i).setText(list.get(i).getCompanyTypeText() + "(" + list.get(i).getCount() + ")");
+            tablayout.getTabAt(i).setText(list.get(i).getDeviceTypeText() + "(" + list.get(i).getCount() + ")");
         }
     }
 
@@ -124,36 +125,20 @@ public class EquipmentListActivity extends MyBaseActivity {
     }
 
     void getDate() {
-        Map<String, Object> map = new HashMap<>();
-        RxNetUtils.request(getApi(ApiService.class).selectCompanyGroupCount(map), new RequestObserver<JsonT<List<CompanyType>>>() {
+        RxNetUtils.request(getApi(ApiService.class).selectTzsbCompanyTypeGroupCount(id), new RequestObserver<JsonT<List<DeviceType>>>() {
             @Override
-            protected void onSuccess(JsonT<List<CompanyType>> jsonT) {
+            protected void onSuccess(JsonT<List<DeviceType>> jsonT) {
                 initFragment(jsonT.getData());
             }
 
             @Override
-            protected void onFail2(JsonT<List<CompanyType>> stringJsonT) {
+            protected void onFail2(JsonT<List<DeviceType>> stringJsonT) {
                 super.onFail2(stringJsonT);
             }
         }, LoadingUtils.build(this));
     }
 
-    public void getCompanyType() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("dictType", "addEquipmentType");
-        RxNetUtils.request(getApi(ApiService.class).getDicts(map), new RequestObserver<JsonT<List<BusinessType>>>(this) {
-            @Override
-            protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
-                companyTypeList.clear();
-                companyTypeList.addAll(jsonT.getData());
-            }
-
-            @Override
-            protected void onFail2(JsonT<List<BusinessType>> stringJsonT) {
-                super.onFail2(stringJsonT);
-            }
-        }, LoadingUtils.build(this));
-    }
+//
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @OnClick({R.id.bt_search, R.id.toolbar_subtitle})
     public void onViewClicked(View view) {
@@ -162,9 +147,9 @@ public class EquipmentListActivity extends MyBaseActivity {
                 startActivityForResult(new Intent(this, SearchCompanyActivity.class).putExtra("select", select), 1001);
                 break;
             case R.id.toolbar_subtitle:
-                startActivity(new Intent(EquipmentListActivity.this, AddEquipmentActivity.class));
-//                        .putExtra("equipmentType", companyTypeList.get(index).getDictValue())
-//                        .putExtra("equipmentTypeText", companyTypeList.get(index).getDictLabel()));
+                startActivity(new Intent(EquipmentListActivity.this, AddEquipmentActivity.class)
+                        .putExtra("companyType", companyType)
+                        );
 
                 break;
         }
@@ -183,32 +168,6 @@ public class EquipmentListActivity extends MyBaseActivity {
     protected void onResume() {
         super.onResume();
         getDate();
-        getCompanyType();
     }
-    MenuWindows menuPopupWindow;
-    ArrayList<BusinessType> companyTypeList = new ArrayList<>();
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    void showCompanyType(){
-        if (companyTypeList.size()==0)return;
-        menuPopupWindow = new MenuWindows(this, companyTypeList);
-        menuPopupWindow.showAsDropDown(toolbar,
-                0, 0, Gravity.BOTTOM | Gravity.RIGHT);
-        menuPopupWindow.setOnItemClickListener(new MenuWindows.OnItemClickListener() {
-            @Override
-            public void onSelected(int index, BusinessType msg) {
-                if (!msg.getDictValue().equals("2")) {
-                    startActivity(new Intent(EquipmentListActivity.this, AddCompanyActivity.class)
-                            .putExtra("equipmentType", companyTypeList.get(index).getDictValue())
-                            .putExtra("equipmentTypeText", companyTypeList.get(index).getDictLabel())
-                    );
-                }
-                menuPopupWindow.dismiss();
-            }
 
-            @Override
-            public void onCancel() {
-                menuPopupWindow.dismiss();
-            }
-        });
-    }
 }

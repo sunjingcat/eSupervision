@@ -235,9 +235,10 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             etContact.setTitle("安全管理联系人");
             etContactInformation.setTitle("安全管理联系电话");
         }
-        ig_businessScope.setItemOnClickListener(new ItemGroup.ItemOnClickListener() {
+        ig_businessScope.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClickRight(View view) {
+            public void onClick(View view) {
                 startActivityForResult(new Intent(AddCompanyActivity.this, OperatingitemsActivity.class), 3001);
             }
         });
