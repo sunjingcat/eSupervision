@@ -57,25 +57,11 @@
                 app:title="设备型号" />
 
             <com.zz.supervision.widget.ItemGroup
-                android:id="@+id/ig_deviceType1"
+                android:id="@+id/ig_deviceType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:isSelect="true"
-                app:title="设备类型1" />
-
-            <com.zz.supervision.widget.ItemGroup
-                android:id="@+id/ig_deviceType2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:isSelect="true"
-                app:title="设备类型2" />
-
-            <com.zz.supervision.widget.ItemGroup
-                android:id="@+id/ig_deviceType3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:isSelect="true"
-                app:title="设备类型3" />
+                app:title="设备类型" />
 
             <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_deviceName"
@@ -87,6 +73,7 @@
                 android:id="@+id/ig_registStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:isSelect="true"
                 app:title="注册状态" />
 
             <com.zz.supervision.widget.ItemGroup

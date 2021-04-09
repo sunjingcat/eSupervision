@@ -32,8 +32,6 @@ public class ItemGroup extends FrameLayout {
         initView(context);
     }
 
-
-
     public ItemGroup(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initView(context);
@@ -114,7 +112,6 @@ public class ItemGroup extends FrameLayout {
                 itemOnClickListener.onClick(v);
             }
         });
-
     }
 
     public void setTitle(String titleTv) {
@@ -131,6 +128,13 @@ public class ItemGroup extends FrameLayout {
 
     public String getValue() {
         return contentEdt.getText().toString();
+    }
+    private String selectValue;
+    public String getSelectValue() {
+        return selectValue;
+    }
+    public void setSelectValue(String selectValue) {
+       this.selectValue =selectValue;
     }
 
 }
