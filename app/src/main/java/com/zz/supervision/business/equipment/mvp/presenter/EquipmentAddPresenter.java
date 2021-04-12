@@ -28,7 +28,7 @@ public class EquipmentAddPresenter extends MyBasePresenterImpl<Contract.IGetEqui
     }
 
     @Override
-    public void getData(String type, String id) {
+    public void getData( String id) {
         RxNetUtils.request(getApi(ApiService.class).getEquipmentInfo(id), new RequestObserver<JsonT<EquipmentBean>>(this) {
             @Override
             protected void onSuccess(JsonT<EquipmentBean> jsonT) {
@@ -120,7 +120,7 @@ public class EquipmentAddPresenter extends MyBasePresenterImpl<Contract.IGetEqui
     }
 
     @Override
-    public void getImage(String type, String modelId) {
+    public void getImage( String modelId) {
         RxNetUtils.request(getApi(ApiService.class).getImageBase64("tzsbDeviceInfo", modelId), new RequestObserver<JsonT<List<ImageBack>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<ImageBack>> data) {

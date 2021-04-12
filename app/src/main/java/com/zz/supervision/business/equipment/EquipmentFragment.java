@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -96,20 +97,17 @@ public class EquipmentFragment extends Fragment implements OnRefreshListener, On
         refreshLayout.setOnLoadMoreListener(this);
         String select = getActivity().getIntent().getStringExtra("select");
 
-        adapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+        adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
-                if (view.getId()==R.id.content) {
-                    if (TextUtils.isEmpty(select)) {
-                        startActivity(new Intent(getActivity(), EquipmentInfoActivity.class).putExtra("id", mlist.get(position).getId()));
-                    } else {
-                        Intent intent = new Intent();
-                        intent.putExtra("equipment", mlist.get(position));
-                        getActivity().setResult(getActivity().RESULT_OK, intent);
-                        getActivity().finish();
-                    }
+            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+                if (TextUtils.isEmpty(select)) {
+                    startActivity(new Intent(getActivity(), EquipmentInfoActivity.class).putExtra("id", mlist.get(position).getId()));
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra("equipment", mlist.get(position));
+                    getActivity().setResult(getActivity().RESULT_OK, intent);
+                    getActivity().finish();
                 }
-
             }
         });
     }
@@ -141,7 +139,7 @@ public class EquipmentFragment extends Fragment implements OnRefreshListener, On
     }
 
     void getDate() {
-       String id = getActivity().getIntent().getStringExtra("id");
+        String id = getActivity().getIntent().getStringExtra("id");
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", pagenum);
         map.put("pageSize", pagesize);
@@ -162,7 +160,6 @@ public class EquipmentFragment extends Fragment implements OnRefreshListener, On
             }
         }, LoadingUtils.build(getActivity()));
     }
-
 
 
     @Override

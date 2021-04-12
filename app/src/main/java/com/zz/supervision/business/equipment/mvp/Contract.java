@@ -14,7 +14,7 @@ import java.util.Map;
 public class Contract {
     public interface IsetEquipmentAddPresenter extends BasePresenter {
         void submitData(Map<String, Object> map);
-        void getData(String type,String url);
+        void getData(String url);
 
         void getDicts(String type);
         void getDeviceType();
@@ -23,7 +23,7 @@ public class Contract {
         void postImage(int position,String files);
         void uploadEquipmentImgs(String id,String files);
 
-        void getImage(String type,String modelId);
+        void getImage(String modelId);
     }
 
     public interface IGetEquipmentAddView extends BaseView {

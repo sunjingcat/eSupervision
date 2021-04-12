@@ -159,6 +159,20 @@
                 app:isSelect="true"
                 app:title="竣工日期" />
             <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_totalLength"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSelect="true"
+                app:title="管道总长度"
+                android:visibility="gone"/>
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_licensePlate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSelect="true"
+                app:title="车牌号码"
+                android:visibility="gone"/>
+            <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

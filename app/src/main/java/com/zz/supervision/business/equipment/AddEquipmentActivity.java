@@ -2,6 +2,7 @@ package com.zz.supervision.business.equipment;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -39,6 +40,7 @@ import com.zz.supervision.business.equipment.mvp.Contract;
 import com.zz.supervision.business.equipment.mvp.presenter.EquipmentAddPresenter;
 import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.utils.BASE64;
+import com.zz.supervision.utils.GlideUtils;
 import com.zz.supervision.utils.LogUtils;
 import com.zz.supervision.utils.TimeUtils;
 import com.zz.supervision.widget.ItemGroup;
@@ -102,6 +104,11 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
     ItemGroup ig_installationCompany;
     @BindView(R.id.ig_completionDate)
     ItemGroup ig_completionDate;
+    @BindView(R.id.ig_totalLength)
+    ItemGroup ig_totalLength;
+    @BindView(R.id.ig_licensePlate)
+    ItemGroup ig_licensePlate;
+
     @BindView(R.id.ig_location)
     ItemGroup ig_location;
     @BindView(R.id.bt_ok)
@@ -117,6 +124,7 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
     @BindView(R.id.item_rv_images)
     RecyclerView itemRvImages;
     String companyId;
+    String id;
 
     double lon = 123.6370661238426;
     double lat = 47.216275430241495;
@@ -135,7 +143,12 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        companyId =getIntent().getStringExtra("companyId");
+        companyId = getIntent().getStringExtra("companyId");
+        id = getIntent().getStringExtra("id");
+        if (!TextUtils.isEmpty(id)){
+            mPresenter.getData(id);
+            mPresenter.getImage( id);
+        }
         mPresenter.getDeviceType();
         mPresenter.getDicts("tzsb_regist_status");
         mPresenter.getDicts("tzsb_usage_status");
@@ -195,7 +208,7 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
 
     private void postData() {
         Map<String, Object> params = new HashMap<>();
-        params.put("companyId", companyId+"");
+        params.put("companyId", companyId + "");
         params.put("deviceCode", getText(ig_deviceCode));
         params.put("deviceModel", getText(ig_deviceModel));
         params.put("deviceType1", deviceType1 + "");
@@ -209,9 +222,14 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
         params.put("registNumber", getText(ig_registNumber) + "");
         params.put("registCode", getText(ig_registCode) + "");
         params.put("usageStatus", ig_usageStatus.getSelectValue() + "");
+        params.put("usageUpdateDate", getText(ig_usageUpdateDate) + "");
+        params.put("manufacturerDate", getText(ig_manufacturerDate) + "");
+        params.put("completionDate", getText(ig_completionDate) + "");
         params.put("manufacturerName", getText(ig_manufacturerName) + "");
         params.put("projectNumber", getText(ig_projectNumber) + "");
         params.put("installationCompany", getText(ig_installationCompany) + "");
+        params.put("licensePlate", getText(ig_licensePlate) + "");
+        params.put("totalLength", getText(ig_totalLength) + "");
         if (lon != 0.0 && lat != 0.0) {
             params.put("longitude", lon);
             params.put("latitude", lat);
@@ -283,7 +301,34 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
 
     @Override
     public void showEquipmentInfo(EquipmentBean data) {
-
+        ig_deviceCode.setChooseContent(data.getDeviceCode() + "");
+        ig_deviceModel.setChooseContent(data.getDeviceModel() + "");
+        ig_deviceType.setChooseContent(data.getDeviceType1Text() + "" + data.getDeviceType2Text() + "" + data.getDeviceType3Text());
+        deviceType1 = data.getDeviceType1();
+        deviceType2 = data.getDeviceType2();
+        deviceType3 = data.getDeviceType3();
+        ig_deviceName.setChooseContent(data.getDeviceName() + "");
+        ig_registStatus.setChooseContent(data.getRegistStatusText() + "");
+        ig_registStatus.setSelectValue(data.getRegistStatus() + "");
+        ig_registOrganizationId.setChooseContent(data.getRegistOrganizationName());
+        ig_registOrganizationId.setSelectValue(data.getRegistOrganizationId() + "");
+        ig_registTime.setChooseContent(data.getRegistTime() + "");
+        ig_registRecorder.setChooseContent(data.getRegistRecorder() + "");
+        ig_registNumber.setChooseContent(data.getRegistNumber() + "");
+        ig_registCode.setChooseContent(data.getRegistCode() + "");
+        ig_usageStatus.setChooseContent(data.getUsageStatusText() + "");
+        ig_usageStatus.setSelectValue(data.getUsageStatus() + "");
+        ig_manufacturerName.setChooseContent(data.getManufacturerName() + "");
+        ig_usageUpdateDate.setChooseContent(data.getUsageUpdateDate() + "");
+        ig_manufacturerDate.setChooseContent(data.getManufacturerDate() + "");
+        ig_completionDate.setChooseContent(data.getCompletionDate() + "");
+        ig_projectNumber.setChooseContent(data.getProjectNumber() + "");
+        ig_installationCompany.setChooseContent(data.getInstallationCompany() + "");
+        ig_totalLength.setChooseContent(data.getTotalLength() + "");
+        ig_licensePlate.setChooseContent(data.getLicensePlate() + "");
+//        ig_location.setChooseContent();
+        lon = data.getLongitude();
+        lat = data.getLatitude();
     }
 
     @Override
@@ -355,7 +400,24 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
 
     @Override
     public void showImage(List<ImageBack> list) {
-
+        if (list == null) return;
+        showLoading("");
+        for (ImageBack imageBack : list) {
+            String bitmapName = "company_" + imageBack.getId() + ".png";
+            String path = getCacheDir() + "/zhongzhi/" + bitmapName;
+            File file = new File(path);
+            if (file.exists()) {
+                imageBack.setPath(path);
+            } else {
+                Bitmap s1 = GlideUtils.base64ToBitmap(imageBack.getBase64());
+                String s = BASE64.saveBitmap(this, imageBack.getId(), s1);
+                imageBack.setPath(s);
+            }
+        }
+        images.clear();
+        images.addAll(list);
+        adapter.notifyDataSetChanged();
+        dismissLoading();
     }
 
     void init() {
@@ -430,6 +492,9 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
                         ig_deviceType.setChooseContent(tx);
                         deviceType1 = options1Items.get(options1).getDictValue();
                         deviceType2 = options2Items.get(options1).get(option2).getDictValue();
+                        ig_totalLength.setVisibility(deviceType1.equals("3") ? View.VISIBLE : View.GONE);
+                        ig_licensePlate.setVisibility(deviceType1.equals("8") ? View.VISIBLE : View.GONE);
+
                     }
                 }).build();
                 pvOptions.setPicker(options1Items, options2Items, options3Items);

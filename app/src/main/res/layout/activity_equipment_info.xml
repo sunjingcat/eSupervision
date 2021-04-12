@@ -138,7 +138,8 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="8dp"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/textLeftStyle"
@@ -205,29 +206,10 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/border_radius_3_blue"
-                android:text="开始执法"
+                android:text="检验"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
-            <LinearLayout
-                android:id="@+id/ll_user"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="vertical">
 
-
-            <Button
-                android:id="@+id/bt_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/border_radius_3_blue"
-                android:text="重置密码"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-            </LinearLayout>
             <Button
                 android:id="@+id/bt_delete"
                 android:layout_width="match_parent"

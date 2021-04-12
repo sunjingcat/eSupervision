@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:contentView="@+id/content"
-    android:orientation="horizontal"
-    app:rightMenuView="@+id/right">
+    android:orientation="horizontal">
 
     <LinearLayout
         android:id="@+id/content"
@@ -26,16 +24,28 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/item_title"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:lines="1"
-                android:textColor="#272727"
-                android:textSize="18dp"
-                tools:text="黑龙江富电实业集团有限公司燃料"
-                android:drawableRight="@drawable/icon_user"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/item_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:textColor="#272727"
+                    android:textSize="18dp"
+                    tools:text="黑龙江富电实业集团有限公司燃料" />
+
+                <TextView
+                    android:id="@+id/tv_alarmStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:visibility="gone" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,25 +54,25 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/item_legalRepresentative"
+                    android:id="@+id/item_use_status"
                     android:layout_width="0dp"
-                    android:layout_weight="1.5"
                     android:layout_height="wrap_content"
-                    android:textColor="#999999"
-                    android:lines="1"
+                    android:layout_weight="1.5"
                     android:ellipsize="end"
+                    android:lines="1"
+                    android:textColor="#999999"
 
                     android:textSize="15dp"
                     tools:text="法人代表:张志强" />
 
                 <TextView
-                    android:id="@+id/item_businessType"
+                    android:id="@+id/item_reg_time"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:lines="1"
-                    android:ellipsize="end"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:lines="1"
                     android:textColor="#999999"
                     android:textSize="15dp"
                     tools:text="主体业态:单位食堂" />
@@ -80,23 +90,4 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/right"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginTop="12dp"
-        android:background="@android:color/holo_red_light"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/mc_item_delete"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@android:color/holo_red_light"
-            android:gravity="center"
-            android:paddingHorizontal="20dp"
-            android:text="删除"
-            android:textColor="@color/white" />
-    </LinearLayout>
 </LinearLayout>

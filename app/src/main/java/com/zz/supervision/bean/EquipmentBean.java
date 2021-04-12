@@ -1,5 +1,7 @@
 package com.zz.supervision.bean;
 
+import android.text.TextUtils;
+
 import java.io.Serializable;
 
 public class EquipmentBean implements Serializable {
@@ -12,8 +14,12 @@ public class EquipmentBean implements Serializable {
     String    deviceType1;// 1,
     String   deviceType2;// 1.3,
     String    deviceType3;// 1.3.1,
+      String    deviceType1Text;// 1,
+    String   deviceType2Text;// 1.3,
+    String    deviceType3Text;// 1.3.1,
     String   deviceName;// 锅炉一号,
     int   registStatus;// 1,
+    String   registStatusText;// 1,
     String   registOrganizationId;// 1,
     String     registOrganizationName;// 注册机构,
     String registTime;// 2020-11-11,
@@ -21,6 +27,7 @@ public class EquipmentBean implements Serializable {
     String   registNumber;// 22222,
     String   registCode;// 37020002,
     int usageStatus;// 1,
+    String usageStatusText;// 1,
     String   usageUpdateDate;// 2020-11-11,
     String  manufacturerName;// 特种设备制造有限公司,
     String  manufacturerDate;// 2015-06-03,
@@ -36,6 +43,26 @@ public class EquipmentBean implements Serializable {
     String    alarmStatus;// null,
     String   alarmStatusText;// null,
     String   nextCheckDate;// null
+
+    public String getDeviceType1Text() {
+        return deviceType1Text;
+    }
+
+    public String getDeviceType2Text() {
+        return deviceType2Text;
+    }
+
+    public String getDeviceType3Text() {
+        return deviceType3Text;
+    }
+
+    public String getRegistStatusText() {
+        return registStatusText;
+    }
+
+    public String getUsageStatusText() {
+        return usageStatusText;
+    }
 
     public String getDeviceCode() {
         return deviceCode;
@@ -149,14 +176,22 @@ public class EquipmentBean implements Serializable {
         return mapAddress;
     }
 
-    public String getLongitude() {
-        return longitude;
+    public Double getLongitude() {
+        if (TextUtils.isEmpty(longitude)){
+            return 0.0;
+        }else {
+            return Double.parseDouble(longitude);
+        }
     }
 
-    public String getLatitude() {
-        return latitude;
-    }
 
+    public Double getLatitude() {
+        if (TextUtils.isEmpty(latitude)){
+            return 0.0;
+        }else {
+            return Double.parseDouble(latitude);
+        }
+    }
     public String getAlarmStatus() {
         return alarmStatus;
     }

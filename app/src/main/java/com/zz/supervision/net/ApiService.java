@@ -102,7 +102,7 @@ public interface ApiService {
     @GET("/app/v1/supervise/{url}/{id}")
     Observable<JsonT<CompanyBean>> getCompanyInfo(@Path("url")String url,@Path("id") String id);
 
-    @GET("/app/v1/supervise/{url}/{id}")
+    @GET("/app/v1/supervise/tzsbDeviceInfo/{id}")
     Observable<JsonT<EquipmentBean>> getEquipmentInfo(@Path("id") String id);
 
     @GET("/app/v1/supervise/companyInfo/selectCompanyGroupCount")

@@ -25,6 +25,9 @@ public class EquipmentAdapter extends BaseQuickAdapter<EquipmentBean, BaseViewHo
 
     @Override
     protected void convert(BaseViewHolder holder, final EquipmentBean item) {
-        holder.setText(R.id.item_title,item.getOperatorName()+"");
+        holder.setText(R.id.item_title, item.getDeviceName() + "-" + item.getDeviceModel());
+        holder.setText(R.id.tv_alarmStatus, item.getAlarmStatusText() + "");
+        holder.setText(R.id.item_use_status, item.getUsageStatusText() + "");
+        holder.setText(R.id.item_reg_time, item.getRegistTime() + "");
     }
 }

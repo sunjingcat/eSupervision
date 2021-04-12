@@ -21,10 +21,10 @@ import com.troila.customealert.CustomDialog;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
-import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.DetailBean;
+import com.zz.supervision.bean.EquipmentBean;
 import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.business.company.AddCompanyActivity;
 import com.zz.supervision.business.company.ShowLocationActivity;
@@ -79,12 +79,8 @@ public class EquipmentInfoActivity extends MyBaseActivity {
     RecyclerView itemRvImages;
     @BindView(R.id.rv)
     RecyclerView rv;
-    String fieldTime;
-    String validDate;
-    String businessType = "";
     String id;
-    String companyType;
-    CompanyBean companyBean;
+    EquipmentBean equipmentBean;
     @BindView(R.id.bt_ok)
     Button btOk;
     @BindView(R.id.bt_delete)
@@ -95,7 +91,7 @@ public class EquipmentInfoActivity extends MyBaseActivity {
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_company_info;
+        return R.layout.activity_equipment_info;
     }
 
     @Override
@@ -109,14 +105,10 @@ public class EquipmentInfoActivity extends MyBaseActivity {
         itemRvImages.setAdapter(adapter);
         rv.setAdapter(infoAdapter);
         id = getIntent().getStringExtra("id");
-        companyType = getIntent().getStringExtra("companyType");
         if (!TextUtils.isEmpty(id)) {
             getData(id);
         }
-        if (companyType.equals("2")){
-            toolbar_subtitle.setVisibility(View.GONE);
-            bt_delete.setVisibility(View.GONE);
-        }
+
 
     }
 
@@ -132,83 +124,55 @@ public class EquipmentInfoActivity extends MyBaseActivity {
     }
 
 
-    public void showCompanyInfo(CompanyBean data) {
+    public void showCompanyInfo(EquipmentBean data) {
         if (data == null) return;
-        companyBean = data;
+        equipmentBean = data;
         mlist.clear();
-        etOperatorName.setText(data.getOperatorName() + "");
-        if (companyType.equals("2")) {
-            mlist.add(new DetailBean("经营者全称", data.getOperatorFullName() + ""));
-            mlist.add(new DetailBean("社会信用代码", data.getSocialCreditCode() + ""));
-            mlist.add(new DetailBean("许可证编号", data.getLicenseNumber() + ""));
-            mlist.add(new DetailBean("法定代表人", data.getLegalRepresentative() + ""));
-            mlist.add(new DetailBean("住所", data.getAddress() + ""));
-            mlist.add(new DetailBean("联系人", data.getContact() + ""));
-            mlist.add(new DetailBean("联系方式", data.getContactInformation() + ""));
-            ll_user.setVisibility(View.VISIBLE);
-            mlist.add(new DetailBean("登录账号", data.getLoginAccount() + ""));
-            mlist.add(new DetailBean("冷库类型", data.getColdstorageType1Text() + ""));
-            mlist.add(new DetailBean("是否含第三方冷库", data.getColdstorageType2Text() + ""));
-        } else if (companyType.equals("3")||companyType.equals("4")) {
-            mlist.add(new DetailBean("经营者名称", data.getOperatorName() + ""));
-            mlist.add(new DetailBean("社会信用代码", data.getSocialCreditCode() + ""));
-            mlist.add(new DetailBean("许可证编号", data.getLicenseNumber() + ""));
-            mlist.add(new DetailBean("法定代表人", data.getLegalRepresentative() + ""));
-            mlist.add(new DetailBean("住所", data.getAddress() + ""));
-            mlist.add(new DetailBean("联系人", data.getContact() + ""));
-            mlist.add(new DetailBean("联系方式", data.getContactInformation() + ""));
-            ll_user.setVisibility(View.GONE);
-            mlist.add(new DetailBean("经营场所", data.getBusinessPlace() + ""));
-            mlist.add(new DetailBean("企业类型", data.getCompanyTypeText() + ""));
-            mlist.add(new DetailBean("具体类型", data.getSpecificTypeText() + ""));
-            mlist.add(new DetailBean("有效期至", data.getValidDate() + ""));
-            mlist.add(new DetailBean("签发时间", data.getFieldTime() + ""));
-        } else {
-            mlist.add(new DetailBean("社会信用代码", data.getSocialCreditCode() + ""));
-            mlist.add(new DetailBean("许可证编号", data.getLicenseNumber() + ""));
-            mlist.add(new DetailBean("法定代表人", data.getLegalRepresentative() + ""));
-            mlist.add(new DetailBean("住所", data.getAddress() + ""));
-            mlist.add(new DetailBean("联系人", data.getContact() + ""));
-            mlist.add(new DetailBean("联系方式", data.getContactInformation() + ""));
-            ll_user.setVisibility(View.GONE);
-            mlist.add(new DetailBean("经营场所", data.getBusinessPlace() + ""));
-            mlist.add(new DetailBean("企业类型", data.getCompanyTypeText() + ""));
-            mlist.add(new DetailBean("主体业态", data.getBusinessTypeText() + ""));
-            mlist.add(new DetailBean("经营项目", data.getBusinessProjectText() + ""));
-            mlist.add(new DetailBean("有效期至", data.getValidDate() + ""));
-            mlist.add(new DetailBean("签发时间", data.getFieldTime() + ""));
+        etOperatorName.setText(data.getDeviceName() + "");
+        mlist.add(new DetailBean("设备代码", data.getDeviceCode() + ""));
+        mlist.add(new DetailBean("设备型号", data.getDeviceModel() + ""));
+        mlist.add(new DetailBean("设备类型", data.getDeviceType1Text() + "" + data.getDeviceType2Text() + data.getDeviceType3Text()));
+        mlist.add(new DetailBean("注册状态", data.getRegistStatusText() + ""));
+        mlist.add(new DetailBean("注册登记机构", data.getRegistOrganizationName() + ""));
+        mlist.add(new DetailBean("注册时间", data.getRegistTime() + ""));
+        mlist.add(new DetailBean("注册登记人员", data.getRegistRecorder() + ""));
+        mlist.add(new DetailBean("注册登记证编号", data.getRegistNumber() + ""));
+        mlist.add(new DetailBean("注册代码", data.getRegistCode() + ""));
+        mlist.add(new DetailBean("使用状态", data.getUsageStatusText() + ""));
+        mlist.add(new DetailBean("使用状态变更日期", data.getUsageUpdateDate() + ""));
+        mlist.add(new DetailBean("制造单位", data.getManufacturerName() + ""));
+        mlist.add(new DetailBean("产品编号", data.getProjectNumber() + ""));
+        mlist.add(new DetailBean("制造日期", data.getManufacturerDate() + ""));
+        mlist.add(new DetailBean("安装单位", data.getInstallationCompany() + ""));
+        mlist.add(new DetailBean("竣工日期", data.getCompletionDate() + ""));
+
+        if (data.getDeviceType1().equals("3")) {
+            mlist.add(new DetailBean("管道总长", data.getTotalLength() + ""));
+
+        }
+        if (data.getDeviceType1().equals("8")) {
+            mlist.add(new DetailBean("车牌号码", data.getLicensePlate() + ""));
+
         }
 
-
-        businessType = data.getBusinessType();
-        validDate = data.getValidDate();
-        fieldTime = data.getFieldTime();
         getImage(data.getId());
 
         infoAdapter.notifyDataSetChanged();
     }
 
     void getData(String id) {
-            String url = "companyInfo";
-            if (companyType.equals("2")) {
-                url = "coldstorage";
-            }else if (companyType.equals("3")) {
-                url = "ypCompanyInfo";
-            }else if (companyType.equals("4")) {
-                url = "ylqxCompanyInfo";
+        RxNetUtils.request(getApi(ApiService.class).getEquipmentInfo(id), new RequestObserver<JsonT<EquipmentBean>>(this) {
+            @Override
+            protected void onSuccess(JsonT<EquipmentBean> jsonT) {
+                equipmentBean = jsonT.getData();
+                showCompanyInfo(jsonT.getData());
             }
-            RxNetUtils.request(getApi(ApiService.class).getCompanyInfo(url,id), new RequestObserver<JsonT<CompanyBean>>(this) {
-                @Override
-                protected void onSuccess(JsonT<CompanyBean> jsonT) {
-                    companyBean = jsonT.getData();
-                    showCompanyInfo(jsonT.getData());
-                }
 
-                @Override
-                protected void onFail2(JsonT<CompanyBean> stringJsonT) {
-                    super.onFail2(stringJsonT);
-                }
-            }, LoadingUtils.build(this));
+            @Override
+            protected void onFail2(JsonT<EquipmentBean> stringJsonT) {
+                super.onFail2(stringJsonT);
+            }
+        }, LoadingUtils.build(this));
     }
 
     @Override
@@ -216,57 +180,49 @@ public class EquipmentInfoActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok,  R.id.bt_password, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record})
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
-                startActivityForResult(new Intent(this, AddCompanyActivity.class).putExtra("id", companyBean.getId())
-                                .putExtra("companyType", companyBean.getCompanyType()+"")
-                                .putExtra("companyTypeText", companyBean.getCompanyTypeText())
+                startActivityForResult(new Intent(this, AddEquipmentActivity.class).putExtra("id", equipmentBean.getId())
+                                .putExtra("companyId", equipmentBean.getCompanyId())
                         , 1001);
                 break;
-            case R.id.bt_password:
-                startActivityForResult(new Intent(this, PasswordActivity.class).putExtra("id", companyBean.getId()).putExtra("page", "company"), 1001);
-                break;
             case R.id.bt_ok:
-                if (companyBean == null) return;
-                startActivity(new Intent(this, XCHZFActivity.class).putExtra("company", companyBean));
+                if (equipmentBean == null) return;
+                startActivity(new Intent(this, InspectActivity.class).putExtra("company", equipmentBean));
                 break;
             case R.id.et_record:
-                if (companyBean == null) return;
-                if (companyType.equals("2")) {
-                    startActivity(new Intent(this, ColdCheckListActivity.class).putExtra("id", companyBean.getId()));
-                } else if (companyType.equals("3")||companyType.equals("4")) {
-                    startActivity(new Intent(this, YaoCheckListActivity.class).putExtra("id", companyBean.getId()));
-                } else {
-                    startActivity(new Intent(this, CheckListActivity.class).putExtra("id", companyBean.getId()));
-                }
+                if (equipmentBean == null) return;
+
+                startActivity(new Intent(this, CheckListActivity.class).putExtra("id", equipmentBean.getId()));
+
 
                 break;
             case R.id.et_location:
-                if (companyBean == null) return;
-                if (companyBean.getLongitude() == 0.0) return;
-                startActivity(new Intent(this, ShowLocationActivity.class).putExtra("location_lat", companyBean.getLatitude()).putExtra("location_lng", companyBean.getLongitude()));
+                if (equipmentBean == null) return;
+                if (equipmentBean.getLongitude() == 0.0) return;
+                startActivity(new Intent(this, ShowLocationActivity.class).putExtra("location_lat", equipmentBean.getLatitude()).putExtra("location_lng", equipmentBean.getLongitude()));
                 break;
             case R.id.et_nav:
-                if (companyBean == null) return;
-                if (companyBean.getLongitude() == 0.0) return;
+                if (equipmentBean == null) return;
+                if (equipmentBean.getLongitude() == 0.0) return;
                 if (!NavUtils.isInstalled()) {
                     com.zz.lib.core.http.utils.ToastUtils.showToast("未安装百度地图");
                     return;
                 } else {
-                    if (companyBean.getLatitude() > 0.0 && companyBean.getLongitude() > 0.0) {
-                        NavUtils.invokeNavi(this, null, "中智.智慧监督", companyBean.getLatitude() + "," + companyBean.getLongitude());
+                    if (equipmentBean.getLatitude() > 0.0 && equipmentBean.getLongitude() > 0.0) {
+                        NavUtils.invokeNavi(this, null, "中智.智慧监督", equipmentBean.getLatitude() + "," + equipmentBean.getLongitude());
                     } else {
                         com.zz.lib.core.http.utils.ToastUtils.showToast("坐标错误");
                     }
                 }
                 break;
             case R.id.bt_delete:
-                if (companyBean == null) return;
+                if (equipmentBean == null) return;
                 CustomDialog.Builder builder = new CustomDialog.Builder(this)
                         .setTitle("提示")
-                        .setMessage("确定删除该企业及相关执法记录？")
+                        .setMessage("确定删除该设备？")
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -276,7 +232,7 @@ public class EquipmentInfoActivity extends MyBaseActivity {
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                deleteDate(companyBean.getId());
+                                deleteDate(equipmentBean.getId());
                             }
                         });
                 customDialog = builder.create();
@@ -286,15 +242,7 @@ public class EquipmentInfoActivity extends MyBaseActivity {
     }
 
     public void getImage(String id) {
-        String url = "company";
-        if (companyType.equals("2")) {
-            url = "coldstorage";
-        }else if (companyType.equals("3")) {
-            url = "ypCompany";
-        }else if (companyType.equals("4")) {
-            url = "ylqxCompany";
-        }
-        RxNetUtils.request(getApi(ApiService.class).getImageBase64(url, id), new RequestObserver<JsonT<List<ImageBack>>>(this) {
+        RxNetUtils.request(getApi(ApiService.class).getImageBase64("tzsbDeviceInfo", id), new RequestObserver<JsonT<List<ImageBack>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<ImageBack>> data) {
                 if (data.isSuccess()) {
@@ -344,7 +292,6 @@ public class EquipmentInfoActivity extends MyBaseActivity {
             customDialog.dismiss();
         }
     }
-
     void deleteDate(String id) {
         RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(id), new RequestObserver<JsonT>() {
             @Override
@@ -352,7 +299,6 @@ public class EquipmentInfoActivity extends MyBaseActivity {
                 showToast("删除成功");
                 finish();
             }
-
             @Override
             protected void onFail2(JsonT stringJsonT) {
                 super.onFail2(stringJsonT);
