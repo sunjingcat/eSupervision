@@ -98,15 +98,8 @@ public class EquipmentAddPresenter extends MyBasePresenterImpl<Contract.IGetEqui
     }
 
     @Override
-    public void uploadEquipmentImgs(String type, String id, String files) {
-        String url = "companyInfo";
-        if (type.equals("3")) {
-            url = "ypCompanyInfo";
-        } else if (type.equals("4")) {
-            url = "ylqxCompanyInfo";
-        } else if (type.equals("6")) {
-            url = "tzsbCompanyInfo";
-        }
+    public void uploadEquipmentImgs( String id, String files) {
+
         RxNetUtils.request(getApi(ApiService.class).uploadCompanyImgs("tzsbDeviceInfo", id, files), new RequestObserver<JsonT>(this) {
             @Override
             protected void onSuccess(JsonT data) {

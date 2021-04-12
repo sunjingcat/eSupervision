@@ -101,7 +101,7 @@ public class EquipmentFragment extends Fragment implements OnRefreshListener, On
             public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
                 if (view.getId()==R.id.content) {
                     if (TextUtils.isEmpty(select)) {
-                        startActivity(new Intent(getActivity(), EquipmentInfoActivity.class).putExtra("id", mlist.get(position).getId()).putExtra("equipmentType", mlist.get(position).getBusinessType()+""));
+                        startActivity(new Intent(getActivity(), EquipmentInfoActivity.class).putExtra("id", mlist.get(position).getId()));
                     } else {
                         Intent intent = new Intent();
                         intent.putExtra("equipment", mlist.get(position));

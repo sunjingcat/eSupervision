@@ -12,6 +12,7 @@ import com.zz.supervision.bean.EquipmentBean;
 import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.bean.ImageBean;
 import com.zz.supervision.bean.LawEnforcerBean;
+import com.zz.supervision.bean.OrganizationBean;
 import com.zz.supervision.bean.PDFBean;
 import com.zz.supervision.bean.RecordBean;
 import com.zz.supervision.bean.RiskSuperviseBean;
@@ -141,6 +142,10 @@ public interface ApiService {
 
     @GET("/app/v1/supervise/dict/getDicts")
     Observable<JsonT<List<BusinessType>>> getDicts(@QueryMap Map<String, Object> params);
+
+
+    @GET("/app/v1/supervise/tzsbOrganization/tzsbRegistOrganizationList")
+    Observable<JsonT<List<OrganizationBean>>> tzsbRegistOrganizationList(@QueryMap Map<String, Object> params);
 
 
     @GET("/app/v1/supervise/tzsbDeviceInfo/selectTzsbCompanyTypeGroupCount/{companyId}")

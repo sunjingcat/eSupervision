@@ -21,7 +21,7 @@ public class Contract {
 
 
         void postImage(int position,String files);
-        void uploadEquipmentImgs(String type,String id,String files);
+        void uploadEquipmentImgs(String id,String files);
 
         void getImage(String type,String modelId);
     }

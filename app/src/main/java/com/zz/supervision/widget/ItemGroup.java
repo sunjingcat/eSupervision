@@ -109,6 +109,7 @@ public class ItemGroup extends FrameLayout {
         chooseTv.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (itemOnClickListener==null)return;
                 itemOnClickListener.onClick(v);
             }
         });

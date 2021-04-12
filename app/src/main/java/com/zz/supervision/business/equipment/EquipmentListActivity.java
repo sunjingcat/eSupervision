@@ -147,7 +147,7 @@ public class EquipmentListActivity extends MyBaseActivity {
                 startActivityForResult(new Intent(this, SearchCompanyActivity.class).putExtra("select", select), 1001);
                 break;
             case R.id.toolbar_subtitle:
-                startActivity(new Intent(EquipmentListActivity.this, AddEquipmentActivity.class)
+                startActivity(new Intent(EquipmentListActivity.this, AddEquipmentActivity.class).putExtra("companyId",id)
                         .putExtra("companyType", companyType)
                         );
 

@@ -3,31 +3,54 @@ package com.zz.supervision.bean;
 import java.io.Serializable;
 
 public class EquipmentBean implements Serializable {
-    String id;// 1,
-    String operatorName;// 天津特种设备有限公司,
-    String socialCreditCode;// 82009812428DF122,
-    String licenseNumber;// -,
-    String legalRepresentative;// 李思思222,
-    String address;// null,
-    String businessPlace;// 齐齐哈尔,
-    String companyType;// 6,
-    String companyTypeText;// null,
-    String businessType;// null,
-    String businessTypeText;// null,
-    String specificType;// null,
-    String businessProject;// null,
-    String validDate;// null,
-    String contact;// zs,
-    String contactInformation;// 18222442222,
-    String fieldTime;// null,
-    String longitude;// null,
-    String latitude;// null,
-    String businessProjectText;// null,
-    String recordCount;// 0,
-    String riskLevel;// null
+    String  deviceCode;// 锅0001,
+    String  id;// 锅0001,
+    String  deviceModel;// 锅炉001-1009,
+    String    companyId;// 1,
+    String    operatorName;// 天津特种设备有限公司,
+    String   socialCreditCode;// 82009812428DF122,
+    String    deviceType1;// 1,
+    String   deviceType2;// 1.3,
+    String    deviceType3;// 1.3.1,
+    String   deviceName;// 锅炉一号,
+    int   registStatus;// 1,
+    String   registOrganizationId;// 1,
+    String     registOrganizationName;// 注册机构,
+    String registTime;// 2020-11-11,
+    String   registRecorder;// zs,
+    String   registNumber;// 22222,
+    String   registCode;// 37020002,
+    int usageStatus;// 1,
+    String   usageUpdateDate;// 2020-11-11,
+    String  manufacturerName;// 特种设备制造有限公司,
+    String  manufacturerDate;// 2015-06-03,
+    String   projectNumber;// 00004000210,
+    String  installationCompany;// 特种设备安装有限公司,
+    String   completionDate;// 2020-12-10,
+    String  totalLength;// null,
+    String   maintenanceCompany;// null,
+    String  licensePlate;// null,
+    String   mapAddress;// null,
+    String   longitude;// 117.2106064812852,
+    String   latitude;// 39.09113112858562,
+    String    alarmStatus;// null,
+    String   alarmStatusText;// null,
+    String   nextCheckDate;// null
+
+    public String getDeviceCode() {
+        return deviceCode;
+    }
 
     public String getId() {
         return id;
+    }
+
+    public String getDeviceModel() {
+        return deviceModel;
+    }
+
+    public String getCompanyId() {
+        return companyId;
     }
 
     public String getOperatorName() {
@@ -38,60 +61,92 @@ public class EquipmentBean implements Serializable {
         return socialCreditCode;
     }
 
-    public String getLicenseNumber() {
-        return licenseNumber;
+    public String getDeviceType1() {
+        return deviceType1;
     }
 
-    public String getLegalRepresentative() {
-        return legalRepresentative;
+    public String getDeviceType2() {
+        return deviceType2;
     }
 
-    public String getAddress() {
-        return address;
+    public String getDeviceType3() {
+        return deviceType3;
     }
 
-    public String getBusinessPlace() {
-        return businessPlace;
+    public String getDeviceName() {
+        return deviceName;
     }
 
-    public String getCompanyType() {
-        return companyType;
+    public int getRegistStatus() {
+        return registStatus;
     }
 
-    public String getCompanyTypeText() {
-        return companyTypeText;
+    public String getRegistOrganizationId() {
+        return registOrganizationId;
     }
 
-    public String getBusinessType() {
-        return businessType;
+    public String getRegistOrganizationName() {
+        return registOrganizationName;
     }
 
-    public String getBusinessTypeText() {
-        return businessTypeText;
+    public String getRegistTime() {
+        return registTime;
     }
 
-    public String getSpecificType() {
-        return specificType;
+    public String getRegistRecorder() {
+        return registRecorder;
     }
 
-    public String getBusinessProject() {
-        return businessProject;
+    public String getRegistNumber() {
+        return registNumber;
     }
 
-    public String getValidDate() {
-        return validDate;
+    public String getRegistCode() {
+        return registCode;
     }
 
-    public String getContact() {
-        return contact;
+    public int getUsageStatus() {
+        return usageStatus;
     }
 
-    public String getContactInformation() {
-        return contactInformation;
+    public String getUsageUpdateDate() {
+        return usageUpdateDate;
     }
 
-    public String getFieldTime() {
-        return fieldTime;
+    public String getManufacturerName() {
+        return manufacturerName;
+    }
+
+    public String getManufacturerDate() {
+        return manufacturerDate;
+    }
+
+    public String getProjectNumber() {
+        return projectNumber;
+    }
+
+    public String getInstallationCompany() {
+        return installationCompany;
+    }
+
+    public String getCompletionDate() {
+        return completionDate;
+    }
+
+    public String getTotalLength() {
+        return totalLength;
+    }
+
+    public String getMaintenanceCompany() {
+        return maintenanceCompany;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public String getMapAddress() {
+        return mapAddress;
     }
 
     public String getLongitude() {
@@ -102,15 +157,15 @@ public class EquipmentBean implements Serializable {
         return latitude;
     }
 
-    public String getBusinessProjectText() {
-        return businessProjectText;
+    public String getAlarmStatus() {
+        return alarmStatus;
     }
 
-    public String getRecordCount() {
-        return recordCount;
+    public String getAlarmStatusText() {
+        return alarmStatusText;
     }
 
-    public String getRiskLevel() {
-        return riskLevel;
+    public String getNextCheckDate() {
+        return nextCheckDate;
     }
 }
