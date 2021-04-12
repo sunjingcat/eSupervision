@@ -174,7 +174,7 @@ public class CheckAddPresenter extends MyBasePresenterImpl<Contract.IGetCheckAdd
 
 
         } else {
-            RxNetUtils.request(getApi(ApiService.class).postTzsbDeviceInfo(map), new RequestObserver<JsonT<String>>(this) {
+            RxNetUtils.request(getApi(ApiService.class).submitTzsbDeviceCheck(map), new RequestObserver<JsonT<String>>(this) {
                 @Override
                 protected void onSuccess(JsonT<String> jsonT) {
                     view.showSubmitResult((String) jsonT.getData());

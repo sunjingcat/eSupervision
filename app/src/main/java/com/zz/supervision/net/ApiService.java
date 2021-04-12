@@ -5,6 +5,7 @@ import com.zz.supervision.CompanyBean;
 import com.zz.supervision.bean.BeforeAddDeviceCheck;
 import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.CompanyType;
+import com.zz.supervision.bean.DeviceCheck;
 import com.zz.supervision.bean.DeviceType;
 import com.zz.supervision.bean.DictBean;
 import com.zz.supervision.bean.EquipmentBean;
@@ -184,6 +185,10 @@ public interface ApiService {
     @Headers("Content-Type: application/json")
     @POST("/app/v1/supervise/{url}/confirm/{id}")
     Observable<JsonT<SuperviseBean.ResposeConfirmBean>> submitSpxsRiskRecordConfirm(@Path("url") String url, @Path("id") String id, @Body RiskSuperviseBean.PostBean requestBody);
+
+    @Headers("Content-Type: application/json")
+    @POST("/app/v1/supervise/tzsbDeviceCheck")
+    Observable<JsonT> submitTzsbDeviceCheck( @Body DeviceCheck requestBody);
 
 
     @Headers("Content-Type: application/json")

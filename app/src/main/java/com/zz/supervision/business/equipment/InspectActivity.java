@@ -2,6 +2,7 @@ package com.zz.supervision.business.equipment;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -10,6 +11,10 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.codbking.widget.DatePickDialog;
+import com.codbking.widget.OnChangeLisener;
+import com.codbking.widget.OnSureLisener;
+import com.codbking.widget.bean.DateType;
 import com.codbking.widget.utils.UIAdjuster;
 import com.donkingliang.imageselector.utils.ImageSelector;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
@@ -31,6 +36,7 @@ import com.zz.supervision.business.equipment.mvp.Contract;
 import com.zz.supervision.business.equipment.mvp.presenter.CheckAddPresenter;
 import com.zz.supervision.utils.BASE64;
 import com.zz.supervision.utils.LogUtils;
+import com.zz.supervision.utils.TimeUtils;
 import com.zz.supervision.widget.ItemGroup;
 
 import androidx.appcompat.widget.Toolbar;
@@ -40,6 +46,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -64,9 +71,14 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
     ItemGroup ig_inspectionOrganizationId;
     @BindView(R.id.ig_organizationalUnit)
     ItemGroup ig_organizationalUnit;
+    @BindView(R.id.ig_checkNature)
+    ItemGroup ig_checkNature;
+    @BindView(R.id.ig_firstCheckDate)
+    ItemGroup ig_firstCheckDate;
     List<BeforeAddDeviceCheck> beforeAddDeviceChecks = new ArrayList<>();
     List<BusinessStatus> businessStatuses = new ArrayList<>();
     List<BusinessType> list_check_status = new ArrayList<>();
+    List<BusinessType> list_check_nature = new ArrayList<>();
     ArrayList<ImageBack> images = new ArrayList<>();
     ArrayList<String> localPath = new ArrayList<>();
     ImageDeleteItemAdapter adapter;
@@ -89,6 +101,7 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
         String deviceId = getIntent().getStringExtra("deviceId");
         mPresenter.beforeAddDeviceCheck(deviceId);
         mPresenter.getDicts("tzsb_check_status");
+        mPresenter.getDicts("tzsb_check_nature");
         mPresenter.getOrganizationalUnit();
         initClick();
         itemRvImages.setLayoutManager(new GridLayoutManager(this, 3));
@@ -132,10 +145,7 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
     }
 
     void postData() {
-        for (int i = 0; i < businessStatuses.size(); i++) {
-            BusinessStatus businessStatus = businessStatuses.get(i);
-            beforeAddDeviceChecks.get(i).setCheckReduction(businessStatus.getCheckReduction());
-        }
+
     }
 
     @Override
@@ -164,6 +174,9 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
         if (type.equals("tzsb_check_status")) {
             list_check_status.clear();
             list_check_status.addAll(list);
+        } else if (type.equals("tzsb_check_nature")) {
+            list_check_nature.clear();
+            list_check_nature.addAll(list);
         }
     }
 
@@ -286,10 +299,22 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
                 postData();
             }
         });
+        ig_firstCheckDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectTime(ig_firstCheckDate);
+            }
+        });
         ig_inspectionOrganization.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(InspectActivity.this, OrganizationListActivity.class).putExtra("url","tzsbCheckOrganizationList"), 2001);
+            }
+        });
+        ig_checkNature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSelectPopWindow1(ig_checkNature,list_check_nature);
             }
         });
         ig_organizationalUnit.setOnClickListener(new View.OnClickListener() {
@@ -350,5 +375,36 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
                 selectPopupWindows.dismiss();
             }
         });
+    }
+    private void selectTime(ItemGroup itemGroup) {
+
+        DatePickDialog dialog = new DatePickDialog(InspectActivity.this);
+        //设置上下年分限制
+        //设置上下年分限制
+        dialog.setYearLimt(20);
+        //设置标题
+        dialog.setTitle("选择时间");
+        //设置类型
+        dialog.setType(DateType.TYPE_YMD);
+        //设置消息体的显示格式，日期格式
+        dialog.setMessageFormat("yyyy-MM-dd");
+        //设置选择回调
+        dialog.setOnChangeLisener(new OnChangeLisener() {
+            @Override
+            public void onChanged(Date date) {
+                Log.v("+++", date.toString());
+            }
+        });
+        //设置点击确定按钮回调
+        dialog.setOnSureLisener(new OnSureLisener() {
+            @Override
+            public void onSure(Date date) {
+                String time = TimeUtils.getTime(date.getTime(), TimeUtils.DATE_FORMAT_DATE);
+
+                itemGroup.setChooseContent(time);
+
+            }
+        });
+        dialog.show();
     }
 }
