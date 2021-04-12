@@ -3,6 +3,8 @@ package com.zz.supervision.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class OrganizationBean implements Parcelable {
     String id;// 1,
     String operatorName;// 注册机构,
@@ -11,7 +13,7 @@ public class OrganizationBean implements Parcelable {
     String contact;// null,
     String contactInformation;// null
     boolean isSelect;// null
-
+    private ArrayList<OrganizationBean> clist;//string
 
     protected OrganizationBean(Parcel in) {
         id = in.readString();

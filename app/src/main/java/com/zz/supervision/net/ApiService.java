@@ -1,9 +1,8 @@
 package com.zz.supervision.net;
 
 
-
-
 import com.zz.supervision.CompanyBean;
+import com.zz.supervision.bean.BeforeAddDeviceCheck;
 import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.CompanyType;
 import com.zz.supervision.bean.DeviceType;
@@ -49,7 +48,7 @@ import retrofit2.http.QueryMap;
 public interface ApiService {
 
 
-    @POST( "/app/v1/login")
+    @POST("/app/v1/login")
     Observable<JsonT<UserInfo>> login(@QueryMap Map<String, Object> params);
 
     @POST("/app/light/gtClientId")
@@ -62,19 +61,20 @@ public interface ApiService {
     @POST("/app/v1/logout")
     Observable<JsonT> logout();
 
-    @POST( "/app/v1/resetPwd")
+    @POST("/app/v1/resetPwd")
     Observable<JsonT> resetPwd(@QueryMap Map<String, Object> params);
 
-    @POST( "/app/v1/supervise/coldstorage/resetPwd/{id}")
-    Observable<JsonT> resetPwd(@Path("id")String id,@QueryMap Map<String, Object> params);
+    @POST("/app/v1/supervise/coldstorage/resetPwd/{id}")
+    Observable<JsonT> resetPwd(@Path("id") String id, @QueryMap Map<String, Object> params);
 
     @GET("/app/v1/supervise/version/latest")
     Observable<JsonT<Version>> getVersion();
-   @GET("/app/v1/supervise/version/versionCode/{versionCode}")
+
+    @GET("/app/v1/supervise/version/versionCode/{versionCode}")
     Observable<JsonT<Version>> getVersionInfo(@Path("versionCode") String terminalId);
 
     @Multipart
-    @POST( "/app/v1/supervise/enclosure/upload")
+    @POST("/app/v1/supervise/enclosure/upload")
     Observable<JsonT<ImageBean>> upload(@Part List<MultipartBody.Part> imgs);
 
     @GET("/app/v1/supervise/companyInfo/list")
@@ -90,17 +90,17 @@ public interface ApiService {
     Observable<JsonT<List<RecordBean>>> getColdRecordList(@QueryMap Map<String, Object> params);
 
     @GET("/app/v1/supervise/{url}/list")
-    Observable<JsonT<List<RecordBean>>> getYaoRecordList(@Path("url") String url,@QueryMap Map<String, Object> params);
+    Observable<JsonT<List<RecordBean>>> getYaoRecordList(@Path("url") String url, @QueryMap Map<String, Object> params);
 
     @DELETE("/app/v1/supervise/companyInfo/removeCompanyInfo/{id}")
-    Observable<JsonT> removeCompanyInfo(@Path("id")String id);
+    Observable<JsonT> removeCompanyInfo(@Path("id") String id);
 
 
     @DELETE("/app/v1/supervise/{url}/{id}")
-    Observable<JsonT> removeSuperviseInfo(@Path("url")String url,@Path("id")String id);
+    Observable<JsonT> removeSuperviseInfo(@Path("url") String url, @Path("id") String id);
 
     @GET("/app/v1/supervise/{url}/{id}")
-    Observable<JsonT<CompanyBean>> getCompanyInfo(@Path("url")String url,@Path("id") String id);
+    Observable<JsonT<CompanyBean>> getCompanyInfo(@Path("url") String url, @Path("id") String id);
 
     @GET("/app/v1/supervise/tzsbDeviceInfo/{id}")
     Observable<JsonT<EquipmentBean>> getEquipmentInfo(@Path("id") String id);
@@ -112,7 +112,7 @@ public interface ApiService {
     Observable<JsonT<String>> editCompanyInfo(@QueryMap Map<String, Object> params);
 
     @PUT("/app/v1/supervise/{url}")
-    Observable<JsonT<String>> editYaoCompanyInfo(@Path("url")String url,@QueryMap Map<String, Object> params);
+    Observable<JsonT<String>> editYaoCompanyInfo(@Path("url") String url, @QueryMap Map<String, Object> params);
 
     @POST("/app/v1/supervise/companyInfo/addCompanyInfo")
     Observable<JsonT<String>> postCompanyInfo(@QueryMap Map<String, Object> params);
@@ -126,15 +126,15 @@ public interface ApiService {
 
 
     @POST("/app/v1/supervise/{url}")
-    Observable<JsonT<String>> postYaoCompanyInfo(@Path("url")String url,@QueryMap Map<String, Object> params);
+    Observable<JsonT<String>> postYaoCompanyInfo(@Path("url") String url, @QueryMap Map<String, Object> params);
 
     @POST("/app/v1/supervise/{url}/uploadImgs/{id}")
     @FormUrlEncoded
-    Observable<JsonT> uploadCompanyImgs(@Path("url")String url,@Path("id")String id,@Field("enclosureIds") String handleFile);
+    Observable<JsonT> uploadCompanyImgs(@Path("url") String url, @Path("id") String id, @Field("enclosureIds") String handleFile);
 
     @POST("/app/v1/supervise/enclosure/uploadSingle")
     @FormUrlEncoded
-    Observable<JsonT<String>> uploadImg( @Field("base64") String handleFile);
+    Observable<JsonT<String>> uploadImg(@Field("base64") String handleFile);
 
 
     @GET("/app/v1/supervise/companyInfo/getLawEnforcerList")
@@ -143,51 +143,57 @@ public interface ApiService {
     @GET("/app/v1/supervise/dict/getDicts")
     Observable<JsonT<List<BusinessType>>> getDicts(@QueryMap Map<String, Object> params);
 
+    @GET("/app/v1/supervise/tzsbDeviceCheck/beforeAddDeviceCheck/{deviceId}")
+    Observable<JsonT<List<BeforeAddDeviceCheck>>> beforeAddDeviceCheck(@Path("deviceId") String deviceId);
 
-    @GET("/app/v1/supervise/tzsbOrganization/tzsbRegistOrganizationList")
-    Observable<JsonT<List<OrganizationBean>>> tzsbRegistOrganizationList(@QueryMap Map<String, Object> params);
+
+    @GET("/app/v1/supervise/tzsbOrganization/{type}")
+    Observable<JsonT<List<OrganizationBean>>> tzsbRegistOrganizationList(@Path("type") String type,@QueryMap Map<String, Object> params);
 
 
     @GET("/app/v1/supervise/tzsbDeviceInfo/selectTzsbCompanyTypeGroupCount/{companyId}")
-    Observable<JsonT<List<DeviceType>>> selectTzsbCompanyTypeGroupCount(@Path("companyId")String companyId);
+    Observable<JsonT<List<DeviceType>>> selectTzsbCompanyTypeGroupCount(@Path("companyId") String companyId);
 
     @GET("/app/v1/supervise/tzsbDeviceInfo/selectTzsbDeviceType")
     Observable<JsonT<List<DictBean>>> selectTzsbDeviceType();
+
+    @GET("/app/v1/supervise/tzsbOrganization/selectorganizationalUnit")
+    Observable<JsonT<List<DictBean>>> selectorganizationalUnit();
 
     @GET("/app/v1/supervise/universal/getInspectionTypeByCompanyType")
     Observable<JsonT<List<BusinessType>>> getInspectionTypeByCompanyType(@QueryMap Map<String, Object> params);
 
     @GET("/app/v1/supervise/{url}/getItems/{id}")
-    Observable<JsonT<List<SuperviseBean>>> getSuperviseList(@Path("id")String id,@Path("url")String url);
+    Observable<JsonT<List<SuperviseBean>>> getSuperviseList(@Path("id") String id, @Path("url") String url);
 
 
     @GET("/app/v1/supervise/{url}/getItems")
-    Observable<JsonT<RiskSuperviseBean>> getRiskSuperviseList(@Path("url")String url);
+    Observable<JsonT<RiskSuperviseBean>> getRiskSuperviseList(@Path("url") String url);
 
     @GET("/app/v1/supervise/{url}/recordWithItems/{id}")
-    Observable<JsonT<SuperviseInfoBean>> getSuperviseInfo(@Path("url")String url, @Path("id")String id);
+    Observable<JsonT<SuperviseInfoBean>> getSuperviseInfo(@Path("url") String url, @Path("id") String id);
 
 
     @GET("/app/v1/supervise/{url}/recordWithItems/{id}")
-    Observable<JsonT<RiskSuperviseBean>> getRiskSuperviseInfo(@Path("url")String url,@Path("id")String id);
+    Observable<JsonT<RiskSuperviseBean>> getRiskSuperviseInfo(@Path("url") String url, @Path("id") String id);
 
     @Headers("Content-Type: application/json")
     @POST("/app/v1/supervise/{url}/confirm/{id}")
-    Observable<JsonT<SuperviseBean.ResposeConfirmBean>> submitSuperviseConfirm(@Path("url")String url,@Path("id")String id, @Body ArrayList<SuperviseBean.PostBean> requestBody);
+    Observable<JsonT<SuperviseBean.ResposeConfirmBean>> submitSuperviseConfirm(@Path("url") String url, @Path("id") String id, @Body ArrayList<SuperviseBean.PostBean> requestBody);
 
-   @Headers("Content-Type: application/json")
+    @Headers("Content-Type: application/json")
     @POST("/app/v1/supervise/{url}/confirm/{id}")
-    Observable<JsonT<SuperviseBean.ResposeConfirmBean>> submitSpxsRiskRecordConfirm(@Path("url")String url,@Path("id")String id, @Body RiskSuperviseBean.PostBean requestBody);
+    Observable<JsonT<SuperviseBean.ResposeConfirmBean>> submitSpxsRiskRecordConfirm(@Path("url") String url, @Path("id") String id, @Body RiskSuperviseBean.PostBean requestBody);
 
 
     @Headers("Content-Type: application/json")
     @POST("/app/v1/supervise/{url}/submitScoreItems/{id}")
-    Observable<JsonT<SuperviseBean.ResposeBean>> submitSupervise(@Path("url")String url,@Path("id")String id,@Body ArrayList<SuperviseBean.PostBean> requestBody);
+    Observable<JsonT<SuperviseBean.ResposeBean>> submitSupervise(@Path("url") String url, @Path("id") String id, @Body ArrayList<SuperviseBean.PostBean> requestBody);
 
 
     @Headers("Content-Type: application/json")
     @POST("/app/v1/supervise/{url}/submitScoreItems/{id}")
-    Observable<JsonT<Integer>> submitSpxsRiskRecord(@Path("url")String url,@Path("id")String id,@Body RiskSuperviseBean.PostBean requestBody);
+    Observable<JsonT<Integer>> submitSpxsRiskRecord(@Path("url") String url, @Path("id") String id, @Body RiskSuperviseBean.PostBean requestBody);
 
     @POST("/app/v1/supervise/universal/createRecord")
     Observable<JsonT<Integer>> createRecord(@QueryMap Map<String, Object> params);
@@ -197,17 +203,17 @@ public interface ApiService {
 
     @FormUrlEncoded
     @PUT("/app/v1/supervise/{url}/submitSign/{id}")
-    Observable<JsonT> submitSign(@Path("url")String url,@Path("id")String id,@Field("companySign") String companySign, @Field("officerSign") String officerSign,@Field("reformTime") String  reformTime);
+    Observable<JsonT> submitSign(@Path("url") String url, @Path("id") String id, @Field("companySign") String companySign, @Field("officerSign") String officerSign, @Field("reformTime") String reformTime);
 
     @FormUrlEncoded
     @PUT("/app/v1/supervise/{url}/submitSign/{id}")
-    Observable<JsonT> submitSignRisk(@Path("url")String url,@Path("id")String id,@Field("fillerSign") String fillerSign, @Field("ownerSign") String  ownerSign,@Field("reviewerSign") String  reviewerSign);
+    Observable<JsonT> submitSignRisk(@Path("url") String url, @Path("id") String id, @Field("fillerSign") String fillerSign, @Field("ownerSign") String ownerSign, @Field("reviewerSign") String reviewerSign);
 
     @GET("/app/v1/supervise/{url}/{id}")
     Observable<JsonT<SuperviseBean.ResposeBean>> getSuperviseDetail(@Path("url") String url, @Path("id") String id);
 
     @GET("/app/v1/supervise/pdfPrint/getPdfDownPath/{id}")
-    Observable<JsonT<String>> getDocInfo( @Path("id") String id,@QueryMap Map<String, Object> params);
+    Observable<JsonT<String>> getDocInfo(@Path("id") String id, @QueryMap Map<String, Object> params);
 
 
 }

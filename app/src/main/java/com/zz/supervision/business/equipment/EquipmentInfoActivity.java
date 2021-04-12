@@ -69,8 +69,6 @@ public class EquipmentInfoActivity extends MyBaseActivity {
     @BindView(R.id.toolbar_subtitle)
     TextView toolbar_subtitle;
 
-    @BindView(R.id.ll_user)
-    LinearLayout ll_user;
     ArrayList<String> images = new ArrayList<>();
     ArrayList<DetailBean> mlist = new ArrayList<>();
     ImageItemAdapter adapter;
@@ -190,7 +188,7 @@ public class EquipmentInfoActivity extends MyBaseActivity {
                 break;
             case R.id.bt_ok:
                 if (equipmentBean == null) return;
-                startActivity(new Intent(this, InspectActivity.class).putExtra("company", equipmentBean));
+                startActivity(new Intent(this, InspectActivity.class).putExtra("deviceId", equipmentBean.getId()));
                 break;
             case R.id.et_record:
                 if (equipmentBean == null) return;

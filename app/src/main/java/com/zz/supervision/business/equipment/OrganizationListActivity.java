@@ -60,6 +60,7 @@ public class OrganizationListActivity extends MyBaseActivity implements OnRefres
     List<OrganizationBean> mlist = new ArrayList<>();
     ArrayList<OrganizationBean> select = new ArrayList<>();
     OrganizationAdapter adapter;
+    String type;
     @Override
     protected int getContentView() {
         return R.layout.activity_organization;
@@ -91,6 +92,7 @@ public class OrganizationListActivity extends MyBaseActivity implements OnRefres
 
             }
         });
+        type =getIntent().getStringExtra("url");
         getDate();
     }
 
@@ -102,7 +104,7 @@ public class OrganizationListActivity extends MyBaseActivity implements OnRefres
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", pagenum);
         map.put("pageSize", pagesize);
-        RxNetUtils.request(getApi(ApiService.class).tzsbRegistOrganizationList(map), new RequestObserver<JsonT<List<OrganizationBean>>>(this) {
+        RxNetUtils.request(getApi(ApiService.class).tzsbRegistOrganizationList(type,map), new RequestObserver<JsonT<List<OrganizationBean>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<OrganizationBean>> jsonT) {
                 if (pagenum == 1) {

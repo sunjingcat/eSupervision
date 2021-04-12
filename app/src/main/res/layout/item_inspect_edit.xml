@@ -11,56 +11,63 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp"
-        android:text="ss "
+        tools:text="ss "
         android:textSize="15sp" />
 
     <com.zz.supervision.widget.ItemGroup
-        android:id="@+id/department"
+        android:id="@+id/ig_organizationalUnit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="检验部门" />
 
     <com.zz.supervision.widget.ItemGroup
-        android:id="@+id/persion"
+        android:id="@+id/ig_checker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="检验员" />
 
     <com.zz.supervision.widget.ItemGroup
-        android:id="@+id/number"
+        android:id="@+id/ig_reportId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="报告书/编号" />
 
     <com.zz.supervision.widget.ItemGroup
-
+        android:id="@+id/ig_lastCheckDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:isSelect="true"
         app:title="上次检验日期" />
 
     <com.zz.supervision.widget.ItemGroup
-
+        android:id="@+id/ig_checkDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:isSelect="true"
         app:title="检验日期" />
 
     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_nextCheckDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:isSelect="true"
         app:title="下次检验日期" />
 
     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_checkReduction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="检验结论"
         app:isSelect="true"/>
 
     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_deviceProblem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="设备问题" />
 
     <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_manageProblem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="管理问题" />

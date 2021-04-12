@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/bg">
 
     <View
         android:layout_width="match_parent"
@@ -34,7 +35,7 @@
             android:layout_marginRight="10dp"
             android:padding="8dp"
             android:singleLine="true"
-            android:text=""
+            android:text="提交"
             android:textColor="@color/white"
             android:textSize="16dp" />
     </androidx.appcompat.widget.Toolbar>
@@ -44,6 +45,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/ll_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -57,38 +59,45 @@
                 android:textSize="15sp" />
 
             <com.zz.supervision.widget.ItemGroup
-                android:id="@+id/name"
+                android:id="@+id/ig_inspectionOrganization"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:isSelect="true"
                 app:title="检验责任主体机构名称" />
 
             <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_inspectionOrganizationId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="组织机构代码" />
 
             <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_organizationalUnit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:isSelect="true"
                 app:title="检验责任主体组织单元" />
 
             <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_checkNature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:isSelect="true"
                 app:title="检验性质" />
 
             <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_firstCheckDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:isSelect="true"
                 app:title="首次检验日期" />
-
-            <com.zz.supervision.business.equipment.BusinessStatus
-                android:id="@+id/text"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/item_rv_images"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

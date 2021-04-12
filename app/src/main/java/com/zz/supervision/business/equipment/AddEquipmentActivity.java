@@ -424,7 +424,7 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
         ig_registOrganizationId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(AddEquipmentActivity.this, OrganizationListActivity.class), 2001);
+                startActivityForResult(new Intent(AddEquipmentActivity.this, OrganizationListActivity.class).putExtra("url","tzsbRegistOrganizationList"), 2001);
             }
         });
         ig_location.setOnClickListener(new View.OnClickListener() {
