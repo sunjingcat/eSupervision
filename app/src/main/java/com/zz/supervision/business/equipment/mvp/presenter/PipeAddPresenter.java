@@ -29,7 +29,7 @@ public class PipeAddPresenter extends MyBasePresenterImpl<Contract.IGetPipeAddVi
 
     @Override
     public void getData( String id) {
-        RxNetUtils.request(getApi(ApiService.class).getByPartId(id), new RequestObserver<JsonT<PipePartBean>>(this) {
+        RxNetUtils.request(getApi(ApiService.class).getPressurepipePartInfo(id), new RequestObserver<JsonT<PipePartBean>>(this) {
             @Override
             protected void onSuccess(JsonT<PipePartBean> jsonT) {
                 view.showPipeInfo(jsonT.getData());
@@ -46,7 +46,7 @@ public class PipeAddPresenter extends MyBasePresenterImpl<Contract.IGetPipeAddVi
     @Override
     public void submitData(Map<String,Object> map) {
 
-        if (map.containsKey("id")){
+        if (!map.containsKey("id")){
             RxNetUtils.request(getApi(ApiService.class).addPressurepipePart(map), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
@@ -65,7 +65,7 @@ public class PipeAddPresenter extends MyBasePresenterImpl<Contract.IGetPipeAddVi
             RxNetUtils.request(getApi(ApiService.class).editPressurepipePart(map), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
-                    view.showSubmitResult((String) jsonT.getData());
+                    view.showSubmitResult(jsonT.getData().toString());
 //                    view.showToast(jsonT.getMessage());
                 }
 

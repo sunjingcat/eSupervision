@@ -104,7 +104,7 @@ public class CheckAddPresenter extends MyBasePresenterImpl<Contract.IGetCheckAdd
             RxNetUtils.request(getApi(ApiService.class).addPressurepipePartCheck(map), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
-                    view.showSubmitResult((String) jsonT.getData());
+                    view.showSubmitResult(jsonT.getData().toString());
 //                    view.showToast(jsonT.getMessage());
                 }
 
@@ -120,7 +120,7 @@ public class CheckAddPresenter extends MyBasePresenterImpl<Contract.IGetCheckAdd
             RxNetUtils.request(getApi(ApiService.class).putTzsbDeviceCheck(map), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
-                    view.showSubmitResult((String) jsonT.getData());
+                    view.showSubmitResult( jsonT.getData().toString());
 //                    view.showToast(jsonT.getMessage());
                 }
 

@@ -159,7 +159,7 @@ public class EquipmentAddPresenter extends MyBasePresenterImpl<Contract.IGetEqui
             RxNetUtils.request(getApi(ApiService.class).postTzsbDeviceInfo(map), new RequestObserver<JsonT<String>>(this) {
                 @Override
                 protected void onSuccess(JsonT<String> jsonT) {
-                    view.showSubmitResult((String) jsonT.getData());
+                    view.showSubmitResult(jsonT.getData().toString());
 //                    view.showToast(jsonT.getMessage());
                 }
 

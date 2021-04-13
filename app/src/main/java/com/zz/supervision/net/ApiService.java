@@ -117,8 +117,6 @@ public interface ApiService {
 
     @GET("/app/v1/supervise/tzsbDeviceCheck/{url}/{id}")
     Observable<JsonT<DeviceCheck>> getCheckInfo(@Path("url") String url,@Path("id") String id);
-    @GET("/app/v1/supervise/tzsbDeviceCheck/getByPartId/{partId}")
-    Observable<JsonT<PipePartBean>> getByPartId(@Path("partId") String partId);
 
     @GET("/app/v1/supervise/companyInfo/selectCompanyGroupCount")
     Observable<JsonT<List<CompanyType>>> selectCompanyGroupCount(@QueryMap Map<String, Object> params);
