@@ -79,16 +79,34 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
     ItemGroup ig_checkNature;
     @BindView(R.id.ig_firstCheckDate)
     ItemGroup ig_firstCheckDate;
+
+    @BindView(R.id.ig_guoluCheckStatus)
+    ItemGroup ig_guoluCheckStatus;
+    @BindView(R.id.ig_anquanfaCheckStatus)
+    ItemGroup ig_anquanfaCheckStatus;
+    @BindView(R.id.ig_xiansuqiCheckStatus)
+    ItemGroup ig_xiansuqiCheckStatus;
+
+    @BindView(R.id.ig_checkCategory)
+    ItemGroup ig_checkCategory;
+    @BindView(R.id.ig_processStatus)
+    ItemGroup ig_processStatus;
+    @BindView(R.id.ig_processDate)
+    ItemGroup ig_processDate;
+
     List<BeforeAddDeviceCheck> beforeAddDeviceChecks = new ArrayList<>();
     List<BusinessStatus> businessStatuses = new ArrayList<>();
     List<BusinessType> list_check_status = new ArrayList<>();
     List<BusinessType> list_check_nature = new ArrayList<>();
+    List<BusinessType> list_check_category = new ArrayList<>();
+    List<BusinessType> list_process_status = new ArrayList<>();
     ArrayList<ImageBack> images = new ArrayList<>();
     ArrayList<String> localPath = new ArrayList<>();
     ImageDeleteItemAdapter adapter;
     @BindView(R.id.item_rv_images)
     RecyclerView itemRvImages;
     String deviceId;
+    String deviceType;
 
     @Override
     protected int getContentView() {
@@ -105,12 +123,30 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
     protected void initView() {
         ButterKnife.bind(this);
         deviceId = getIntent().getStringExtra("deviceId");
+        deviceType = getIntent().getStringExtra("deviceType");
         if (!TextUtils.isEmpty(deviceId)) {
             mPresenter.getData(deviceId);
         }
         mPresenter.getDicts("tzsb_check_status");
         mPresenter.getDicts("tzsb_check_nature");
+        mPresenter.getDicts("tzsb_check_category");
+        mPresenter.getDicts("tzsb_process_status");
         mPresenter.getOrganizationalUnit();
+        mPresenter.getImage(deviceId);
+        if (deviceType.equals("1")) {
+            ig_anquanfaCheckStatus.setVisibility(View.VISIBLE);
+            ig_guoluCheckStatus.setVisibility(View.VISIBLE);
+        } else if (deviceType.equals("2")) {
+            ig_anquanfaCheckStatus.setVisibility(View.VISIBLE);
+        }else if (deviceType.equals("3")) {
+            ig_anquanfaCheckStatus.setVisibility(View.VISIBLE);
+        }else if (deviceType.equals("4")) {
+            ig_xiansuqiCheckStatus.setVisibility(View.VISIBLE);
+        }else if (deviceType.equals("5")) {
+            ig_xiansuqiCheckStatus.setVisibility(View.VISIBLE);
+        }else if (deviceType.equals("6")) {
+            ig_xiansuqiCheckStatus.setVisibility(View.VISIBLE);
+        }
         initClick();
         itemRvImages.setLayoutManager(new GridLayoutManager(this, 3));
         adapter = new ImageDeleteItemAdapter(this, images);
@@ -173,15 +209,22 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
             beforeAddDeviceCheck.setManageProblem(businessStatus.getManageProblem() + "");
         }
         deviceCheck.setTzsbDeviceCheckDetailList(beforeAddDeviceChecks);
+
+        deviceCheck.setAnquanfaCheckStatus(ig_anquanfaCheckStatus.getSelectValue() );
+        deviceCheck.setGuoluCheckStatus(ig_guoluCheckStatus.getSelectValue() );
+        deviceCheck.setXiansuqiCheckStatus(ig_xiansuqiCheckStatus.getSelectValue() );
+
+        deviceCheck.setCheckModelType(ig_checkCategory.getSelectValue() );
+        deviceCheck.setProcessStatus(ig_processStatus.getSelectValue() );
+        deviceCheck.setProcessDate(ig_processStatus.getValue() );
+
         mPresenter.submitData(deviceCheck);
     }
 
     @Override
     public void showCheckInfo(DeviceCheck data) {
         if (data == null) {
-
             mPresenter.beforeAddDeviceCheck(deviceId);
-
         } else {
             ig_inspectionOrganization.setChooseContent(data.getInspectionOrganizationName());
             ig_inspectionOrganization.setSelectValue(data.getInspectionOrganizationId());
@@ -220,6 +263,16 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
                 businessStatuses.add(businessStatus);
                 ll_content.addView(businessStatus);
             }
+
+            ig_anquanfaCheckStatus.setChooseContent(data.getAnquanfaCheckStatusText(),data.getAnquanfaCheckStatus());
+            ig_guoluCheckStatus.setChooseContent(data.getGuoluCheckStatusText(),data.getGuoluCheckStatus());
+            ig_xiansuqiCheckStatus.setChooseContent(data.getXiansuqiCheckStatusText(),data.getXiansuqiCheckStatus());
+
+            ig_checkCategory.setChooseContent(data.getGuoluCheckStatusText(),data.getGuoluCheckStatus());
+            ig_processStatus.setChooseContent(data.getProcessStatusText(),data.getProcessStatus());
+            ig_processDate.setChooseContent(data.getProcessDate());
+
+
             beforeAddDeviceChecks.addAll(data.getTzsbDeviceCheckDetailList());
         }
     }
@@ -257,6 +310,12 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
         } else if (type.equals("tzsb_check_nature")) {
             list_check_nature.clear();
             list_check_nature.addAll(list);
+        } else if (type.equals("tzsb_check_category")) {
+            list_check_category.clear();
+            list_check_category.addAll(list);
+        } else if (type.equals("tzsb_process_status")) {
+            list_process_status.clear();
+            list_process_status.addAll(list);
         }
     }
 
@@ -409,6 +468,12 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
                 selectTime(ig_firstCheckDate);
             }
         });
+        ig_processDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectTime(ig_processDate);
+            }
+        });
         ig_inspectionOrganization.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -419,6 +484,36 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
             @Override
             public void onClick(View v) {
                 showSelectPopWindow1(ig_checkNature, list_check_nature);
+            }
+        });
+        ig_anquanfaCheckStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSelectPopWindow1(ig_anquanfaCheckStatus, list_check_status);
+            }
+        });
+        ig_guoluCheckStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSelectPopWindow1(ig_guoluCheckStatus, list_check_status);
+            }
+        });
+        ig_checkCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSelectPopWindow1(ig_checkCategory, list_check_category);
+            }
+        });
+        ig_processStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSelectPopWindow1(ig_processStatus, list_process_status);
+            }
+        });
+        ig_xiansuqiCheckStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSelectPopWindow1(ig_xiansuqiCheckStatus, list_check_status);
             }
         });
         ig_organizationalUnit.setOnClickListener(new View.OnClickListener() {

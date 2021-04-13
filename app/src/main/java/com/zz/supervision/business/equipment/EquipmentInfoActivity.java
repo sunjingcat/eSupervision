@@ -146,6 +146,7 @@ public class EquipmentInfoActivity extends MyBaseActivity {
 
         if (data.getDeviceType1().equals("3")) {
             mlist.add(new DetailBean("管道总长", data.getTotalLength() + ""));
+            btOk.setText("压力管道单元");
 
         }
         if (data.getDeviceType1().equals("8")) {
@@ -188,7 +189,11 @@ public class EquipmentInfoActivity extends MyBaseActivity {
                 break;
             case R.id.bt_ok:
                 if (equipmentBean == null) return;
-                startActivity(new Intent(this, InspectActivity.class).putExtra("deviceId", equipmentBean.getId()));
+                if (equipmentBean.getDeviceType1().equals("3")) {
+                    startActivity(new Intent(this, PressurePipePartListActivity.class).putExtra("deviceId", equipmentBean.getId()));
+                }else {
+                    startActivity(new Intent(this, InspectActivity.class).putExtra("deviceId", equipmentBean.getId()).putExtra("deviceType", equipmentBean.getDeviceType1()));
+                }
                 break;
             case R.id.et_record:
                 if (equipmentBean == null) return;
@@ -290,6 +295,7 @@ public class EquipmentInfoActivity extends MyBaseActivity {
             customDialog.dismiss();
         }
     }
+
     void deleteDate(String id) {
         RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(id), new RequestObserver<JsonT>() {
             @Override
@@ -297,6 +303,7 @@ public class EquipmentInfoActivity extends MyBaseActivity {
                 showToast("删除成功");
                 finish();
             }
+
             @Override
             protected void onFail2(JsonT stringJsonT) {
                 super.onFail2(stringJsonT);

@@ -2,14 +2,13 @@ package com.zz.supervision.business.equipment.mvp;
 
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.ui.mvp.BaseView;
-import com.zz.supervision.CompanyBean;
 import com.zz.supervision.bean.BeforeAddDeviceCheck;
 import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.DeviceCheck;
 import com.zz.supervision.bean.DictBean;
 import com.zz.supervision.bean.EquipmentBean;
 import com.zz.supervision.bean.ImageBack;
-import com.zz.supervision.bean.OrganizationBean;
+import com.zz.supervision.bean.PressurePipePart;
 
 import java.util.List;
 import java.util.Map;
@@ -58,6 +57,34 @@ public class Contract {
 
     public interface IGetCheckAddView extends BaseView {
         void showCheckInfo(DeviceCheck data);
+
+        void showSubmitResult(String id);
+
+        void showResult();
+        void showPostImage(int position,String id);
+
+        void showDicts(String type,List<BusinessType> list);
+        void showOrganizationalUnit(List<DictBean> list);
+        void showImage(List<ImageBack> list);
+        void showBeforeAddDeviceCheck(List<BeforeAddDeviceCheck> list);
+
+    }
+
+    public interface IsetPipeAddPresenter extends BasePresenter {
+        void submitData(PressurePipePart map);
+        void getData(String id);
+
+        void getDicts(String type);
+        void getOrganizationalUnit();
+        void beforeAddDeviceCheck(String deviceId);
+        void postImage(int position,String files);
+        void uploadCheckImgs(String id,String files);
+
+        void getImage(String modelId);
+    }
+
+    public interface IGetPipeAddView extends BaseView {
+        void showPipeInfo(PressurePipePart data);
 
         void showSubmitResult(String id);
 

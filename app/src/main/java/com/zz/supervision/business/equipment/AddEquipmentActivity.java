@@ -209,6 +209,10 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
     private void postData() {
         Map<String, Object> params = new HashMap<>();
         params.put("companyId", companyId + "");
+        if (!TextUtils.isEmpty(id)){
+            params.put("id", id);
+        }
+
         params.put("deviceCode", getText(ig_deviceCode));
         params.put("deviceModel", getText(ig_deviceModel));
         params.put("deviceType1", deviceType1 + "");
@@ -324,8 +328,11 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
         ig_completionDate.setChooseContent(data.getCompletionDate() + "");
         ig_projectNumber.setChooseContent(data.getProjectNumber() + "");
         ig_installationCompany.setChooseContent(data.getInstallationCompany() + "");
-        ig_totalLength.setChooseContent(data.getTotalLength() + "");
-        ig_licensePlate.setChooseContent(data.getLicensePlate() + "");
+
+        ig_totalLength.setVisibility(deviceType1.equals("3") ? View.VISIBLE : View.GONE);
+        ig_licensePlate.setVisibility(deviceType1.equals("8") ? View.VISIBLE : View.GONE);
+        ig_totalLength.setChooseContent(deviceType1.equals("3") ?data.getTotalLength()+"" :"");
+        ig_licensePlate.setChooseContent(deviceType1.equals("8") ?data.getLicensePlate()+ "": "");
 //        ig_location.setChooseContent();
         lon = data.getLongitude();
         lat = data.getLatitude();

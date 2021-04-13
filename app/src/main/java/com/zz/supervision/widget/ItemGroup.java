@@ -122,6 +122,16 @@ public class ItemGroup extends FrameLayout {
     public void setChooseContent(String choose) {
         if (this.chooseTv.getVisibility()==View.VISIBLE) {
             this.chooseTv.setText(choose + "");
+
+        }else {
+            this.contentEdt.setText(choose+"");
+        }
+    }
+
+    public void setChooseContent(String choose,String selectValue) {
+        if (this.chooseTv.getVisibility()==View.VISIBLE) {
+            this.chooseTv.setText(choose + "");
+            this.selectValue =selectValue;
         }else {
             this.contentEdt.setText(choose+"");
         }
@@ -134,7 +144,7 @@ public class ItemGroup extends FrameLayout {
             return contentEdt.getText().toString();
         }
     }
-    private String selectValue;
+    private String selectValue="";
     public String getSelectValue() {
         return selectValue;
     }

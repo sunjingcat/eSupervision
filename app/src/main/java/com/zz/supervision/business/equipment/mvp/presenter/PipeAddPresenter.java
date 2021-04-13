@@ -7,9 +7,8 @@ import com.zz.supervision.bean.BeforeAddDeviceCheck;
 import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.DeviceCheck;
 import com.zz.supervision.bean.DictBean;
-import com.zz.supervision.bean.EquipmentBean;
 import com.zz.supervision.bean.ImageBack;
-import com.zz.supervision.bean.OrganizationBean;
+import com.zz.supervision.bean.PressurePipePart;
 import com.zz.supervision.business.equipment.mvp.Contract;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
@@ -25,24 +24,24 @@ import java.util.Map;
  * Created by 77 on 2018/8/8.
  */
 
-public class CheckAddPresenter extends MyBasePresenterImpl<Contract.IGetCheckAddView> implements Contract.IsetCheckAddPresenter {
+public class PipeAddPresenter extends MyBasePresenterImpl<Contract.IGetPipeAddView> implements Contract.IsetPipeAddPresenter {
 
-    public CheckAddPresenter(Contract.IGetCheckAddView view) {
+    public PipeAddPresenter(Contract.IGetPipeAddView view) {
         super(view);
     }
 
     @Override
     public void getData( String id) {
-        RxNetUtils.request(getApi(ApiService.class).getCheckInfo(id), new RequestObserver<JsonT<DeviceCheck>>(this) {
+        RxNetUtils.request(getApi(ApiService.class).getByPartId(id), new RequestObserver<JsonT<PressurePipePart>>(this) {
             @Override
-            protected void onSuccess(JsonT<DeviceCheck> jsonT) {
-                view.showCheckInfo(jsonT.getData());
+            protected void onSuccess(JsonT<PressurePipePart> jsonT) {
+                view.showPipeInfo(jsonT.getData());
             }
 
             @Override
-            protected void onFail2(JsonT<DeviceCheck> stringJsonT) {
+            protected void onFail2(JsonT<PressurePipePart> stringJsonT) {
                 super.onFail2(stringJsonT);
-                view.showCheckInfo(null);
+                view.showPipeInfo(null);
             }
         }, mDialog);
     }
@@ -160,9 +159,9 @@ public class CheckAddPresenter extends MyBasePresenterImpl<Contract.IGetCheckAdd
     }
 
     @Override
-    public void submitData(DeviceCheck map) {
-//        if (!TextUtils.isEmpty(map.getId())) {
-            RxNetUtils.request(getApi(ApiService.class).putTzsbDeviceCheck(map), new RequestObserver<JsonT>(this) {
+    public void submitData(PressurePipePart map) {
+
+            RxNetUtils.request(getApi(ApiService.class).addPressurepipePartCheck(map), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
                     view.showSubmitResult((String) jsonT.getData());
@@ -177,21 +176,7 @@ public class CheckAddPresenter extends MyBasePresenterImpl<Contract.IGetCheckAdd
             }, mDialog);
 
 
-//        } else {
-//            RxNetUtils.request(getApi(ApiService.class).submitTzsbDeviceCheck(map), new RequestObserver<JsonT>(this) {
-//                @Override
-//                protected void onSuccess(JsonT jsonT) {
-//                    view.showSubmitResult((String) jsonT.getData());
-////                    view.showToast(jsonT.getMessage());
-//                }
-//
-//                @Override
-//                protected void onFail2(JsonT stringJsonT) {
-//                    super.onFail2(stringJsonT);
-//                    view.showToast(stringJsonT.getMessage());
-//                }
-//            }, mDialog);
-//        }
+
 
     }
 

@@ -13,6 +13,8 @@ public class DeviceCheck {
     String checkNature;// null,
     String checkNatureText;// ,
     String firstCheckDate;// ,
+    String checkModelType;// ,
+    String checkModelTypeText;// ,
     String anquanfaCheckStatus;// null,
     String anquanfaCheckStatusText;// ,
     String guoluCheckStatus;// null,
@@ -25,6 +27,22 @@ public class DeviceCheck {
     String processStatusText;// ,
     String processDate;// ,
     List<BeforeAddDeviceCheck> tzsbDeviceCheckDetailList;// ,
+
+    public void setCheckModelType(String checkModelType) {
+        this.checkModelType = checkModelType;
+    }
+
+    public void setCheckModelTypeText(String checkModelTypeText) {
+        this.checkModelTypeText = checkModelTypeText;
+    }
+
+    public String getCheckModelType() {
+        return checkModelType;
+    }
+
+    public String getCheckModelTypeText() {
+        return checkModelTypeText;
+    }
 
     public void setId(String id) {
         this.id = id;

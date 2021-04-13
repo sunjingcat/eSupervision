@@ -13,7 +13,7 @@ import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.bean.ImageBean;
 import com.zz.supervision.bean.LawEnforcerBean;
 import com.zz.supervision.bean.OrganizationBean;
-import com.zz.supervision.bean.PDFBean;
+import com.zz.supervision.bean.PressurePipePart;
 import com.zz.supervision.bean.RecordBean;
 import com.zz.supervision.bean.RiskSuperviseBean;
 import com.zz.supervision.bean.SuperviseBean;
@@ -109,6 +109,9 @@ public interface ApiService {
     @GET("/app/v1/supervise/tzsbDeviceCheck/getByDeviceId/{id}")
     Observable<JsonT<DeviceCheck>> getCheckInfo(@Path("id") String id);
 
+  @GET("/app/v1/supervise/tzsbDeviceCheck/getByPartId/{partId}")
+    Observable<JsonT<PressurePipePart>> getByPartId(@Path("partId") String partId);
+
     @GET("/app/v1/supervise/companyInfo/selectCompanyGroupCount")
     Observable<JsonT<List<CompanyType>>> selectCompanyGroupCount(@QueryMap Map<String, Object> params);
 
@@ -155,6 +158,10 @@ public interface ApiService {
     Observable<JsonT<List<OrganizationBean>>> tzsbRegistOrganizationList(@Path("type") String type,@QueryMap Map<String, Object> params);
 
 
+    @GET("/app/v1/supervise/tzsbDeviceInfo/tzsbPressurepipePartList/{deviceId}")
+    Observable<JsonT<List<PressurePipePart>>> tzsbPressurepipePartList(@Path("deviceId") String deviceId);
+
+
     @GET("/app/v1/supervise/tzsbDeviceInfo/selectTzsbCompanyTypeGroupCount/{companyId}")
     Observable<JsonT<List<DeviceType>>> selectTzsbCompanyTypeGroupCount(@Path("companyId") String companyId);
 
@@ -190,8 +197,9 @@ public interface ApiService {
     Observable<JsonT<SuperviseBean.ResposeConfirmBean>> submitSpxsRiskRecordConfirm(@Path("url") String url, @Path("id") String id, @Body RiskSuperviseBean.PostBean requestBody);
 
     @Headers("Content-Type: application/json")
-    @PUT("/app/v1/supervise/tzsbDeviceCheck")
-    Observable<JsonT> submitTzsbDeviceCheck( @Body DeviceCheck requestBody);
+    @PUT("/app/v1/supervise/tzsbDeviceCheck/addPressurepipePartCheck")
+    Observable<JsonT> addPressurepipePartCheck( @Body PressurePipePart requestBody);
+
 
     @Headers("Content-Type: application/json")
     @PUT("/app/v1/supervise/tzsbDeviceCheck")

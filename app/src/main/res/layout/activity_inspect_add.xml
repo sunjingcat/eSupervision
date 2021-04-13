@@ -92,12 +92,70 @@
                 android:layout_height="wrap_content"
                 app:isSelect="true"
                 app:title="首次检验日期" />
-
             <LinearLayout
                 android:id="@+id/ll_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:text="其他检验"
+                android:textSize="15sp" />
+
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_anquanfaCheckStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSelect="true"
+                app:title="安全阀校验情况"
+                android:visibility="gone"/>
+
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_guoluCheckStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSelect="true"
+                app:title="锅炉水质检验情况"
+                android:visibility="gone"/>
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_xiansuqiCheckStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSelect="true"
+                app:title="限速器检验情况"
+                android:visibility="gone"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:text="最新检验业务"
+                android:textSize="15sp" />
+
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_checkCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSelect="true"
+                app:title="检验类别" />
+
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_processStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSelect="true"
+                app:title="办理状态" />
+
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_processDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSelect="true"
+                app:title="办理日期" />
+
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/item_rv_images"
