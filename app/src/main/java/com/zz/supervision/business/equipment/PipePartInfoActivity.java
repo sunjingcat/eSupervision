@@ -53,24 +53,19 @@ import static com.zz.supervision.net.RxNetUtils.getApi;
 /**
  * 管道单元详情
  */
-public class PipeInfoPartActivity extends MyBaseActivity {
+public class PipePartInfoActivity extends MyBaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.et_operatorName)
     TextView etOperatorName;
 
-
-    @BindView(R.id.et_location)
-    TextView etLocation;
     @BindView(R.id.toolbar_subtitle)
     TextView toolbar_subtitle;
 
-    ArrayList<String> images = new ArrayList<>();
     ArrayList<DetailBean> mlist = new ArrayList<>();
-    ImageItemAdapter adapter;
+
     ComInfoAdapter infoAdapter;
-    @BindView(R.id.item_rv_images)
-    RecyclerView itemRvImages;
+
     @BindView(R.id.rv)
     RecyclerView rv;
     String id;
@@ -93,10 +88,9 @@ public class PipeInfoPartActivity extends MyBaseActivity {
         ButterKnife.bind(this);
         ZoomMediaLoader.getInstance().init(new ImageLoader());
         rv.setLayoutManager(new LinearLayoutManager(this));
-        itemRvImages.setLayoutManager(new GridLayoutManager(this, 3));
-        adapter = new ImageItemAdapter(R.layout.item_image, images);
+
         infoAdapter = new ComInfoAdapter(R.layout.item_com_info, mlist);
-        itemRvImages.setAdapter(adapter);
+
         rv.setAdapter(infoAdapter);
         id = getIntent().getStringExtra("id");
         if (!TextUtils.isEmpty(id)) {
@@ -129,9 +123,6 @@ public class PipeInfoPartActivity extends MyBaseActivity {
         mlist.add(new DetailBean("安装单位", data.getInstallationCompany() + ""));
         mlist.add(new DetailBean("竣工日期", data.getCompletionDate() + ""));
         mlist.add(new DetailBean("管道长度", data.getTotalLength() + ""));
-
-        getImage(data.getId());
-
         infoAdapter.notifyDataSetChanged();
     }
 
@@ -155,7 +146,7 @@ public class PipeInfoPartActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.bt_delete, R.id.et_nav, R.id.et_record})
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.bt_delete, R.id.et_record})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
@@ -164,7 +155,7 @@ public class PipeInfoPartActivity extends MyBaseActivity {
                         , 1001);
                 break;
             case R.id.bt_ok:
-                startActivity(new Intent(this, InspectActivity.class).putExtra("id", pipePartBean.getId()).putExtra("deviceId", pipePartBean.getDeviceId()));
+                startActivity(new Intent(this, InspectActivity.class).putExtra("deviceType", "3").putExtra("deviceId", pipePartBean.getDeviceId()));
                 break;
             case R.id.et_record:
                 if (pipePartBean == null) return;
@@ -195,49 +186,6 @@ public class PipeInfoPartActivity extends MyBaseActivity {
         }
     }
 
-    public void getImage(String id) {
-        RxNetUtils.request(getApi(ApiService.class).getImageBase64("tzsbDeviceInfo", id), new RequestObserver<JsonT<List<ImageBack>>>(this) {
-            @Override
-            protected void onSuccess(JsonT<List<ImageBack>> data) {
-                if (data.isSuccess()) {
-                    showImage(data.getData());
-                } else {
-
-                }
-            }
-
-            @Override
-            protected void onFail2(JsonT<List<ImageBack>> userInfoJsonT) {
-                super.onFail2(userInfoJsonT);
-                showToast(userInfoJsonT.getMessage());
-            }
-        }, LoadingUtils.build(this));
-    }
-
-    List<ImageBack> imageBacks = new ArrayList<>();
-
-    public void showImage(List<ImageBack> list) {
-        if (list == null) return;
-
-        List<String> showList = new ArrayList<>();
-        for (ImageBack imageBack : list) {
-            String bitmapName = "company_" + imageBack.getId() + ".png";
-            String path = getCacheDir() + "/zhongzhi/" + bitmapName;
-            File file = new File(path);
-            if (file.exists()) {
-                showList.add(path);
-            } else {
-                Bitmap s1 = GlideUtils.base64ToBitmap(imageBack.getBase64());
-                String s = BASE64.saveBitmap(this, imageBack.getId(), s1);
-                showList.add(s);
-            }
-
-        }
-        images.clear();
-        images.addAll(showList);
-
-        adapter.notifyDataSetChanged();
-    }
 
     @Override
     protected void onDestroy() {

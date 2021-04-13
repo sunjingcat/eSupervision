@@ -121,7 +121,7 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
         deviceId = getIntent().getStringExtra("deviceId");
         deviceType = getIntent().getStringExtra("deviceType");
         if (!TextUtils.isEmpty(deviceId)) {
-            mPresenter.getData(deviceId);
+            mPresenter.getData(deviceType ,deviceId);
         }
         mPresenter.getDicts("tzsb_check_status");
         mPresenter.getDicts("tzsb_check_nature");
@@ -153,6 +153,7 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
     void postData() {
         DeviceCheck deviceCheck = new DeviceCheck();
         deviceCheck.setDeviceId(deviceId);
+        deviceCheck.setDeviceType(deviceType);
         deviceCheck.setInspectionOrganizationId(ig_inspectionOrganization.getSelectValue());
         deviceCheck.setOrganizationalUnitId(ig_organizationalUnit.getSelectValue());
         deviceCheck.setCheckNature(ig_checkNature.getSelectValue());
@@ -186,7 +187,7 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
     @Override
     public void showCheckInfo(DeviceCheck data) {
         if (data == null) {
-            mPresenter.beforeAddDeviceCheck(deviceId);
+            mPresenter.beforeAddDeviceCheck(deviceType,deviceId);
         } else {
             ig_inspectionOrganization.setChooseContent(data.getInspectionOrganizationName());
             ig_inspectionOrganization.setSelectValue(data.getInspectionOrganizationId());
@@ -246,12 +247,6 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
         showToast("提交成功");
     }
 
-    @Override
-    public void showResult() {
-        finish();
-
-        showToast("提交成功");
-    }
 
 
     @Override

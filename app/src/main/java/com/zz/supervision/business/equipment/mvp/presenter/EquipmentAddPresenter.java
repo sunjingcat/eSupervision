@@ -1,7 +1,5 @@
 package com.zz.supervision.business.equipment.mvp.presenter;
 
-
-import com.zz.supervision.CompanyBean;
 import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.DictBean;
 import com.zz.supervision.bean.EquipmentBean;

@@ -115,9 +115,8 @@ public interface ApiService {
     @GET("/app/v1/supervise/tzsbDeviceInfo/tzsbPressurepipePart/{id}")
     Observable<JsonT<PipePartBean>> getPressurepipePartInfo(@Path("id") String id);
 
-    @GET("/app/v1/supervise/tzsbDeviceCheck/getByDeviceId/{id}")
-    Observable<JsonT<DeviceCheck>> getCheckInfo(@Path("id") String id);
-
+    @GET("/app/v1/supervise/tzsbDeviceCheck/{url}/{id}")
+    Observable<JsonT<DeviceCheck>> getCheckInfo(@Path("url") String url,@Path("id") String id);
     @GET("/app/v1/supervise/tzsbDeviceCheck/getByPartId/{partId}")
     Observable<JsonT<PipePartBean>> getByPartId(@Path("partId") String partId);
 
@@ -159,9 +158,8 @@ public interface ApiService {
     @GET("/app/v1/supervise/dict/getDicts")
     Observable<JsonT<List<BusinessType>>> getDicts(@QueryMap Map<String, Object> params);
 
-    @GET("/app/v1/supervise/tzsbDeviceCheck/beforeAddDeviceCheck/{deviceId}")
-    Observable<JsonT<List<BeforeAddDeviceCheck>>> beforeAddDeviceCheck(@Path("deviceId") String deviceId);
-
+    @GET("/app/v1/supervise/tzsbDeviceCheck/{url}/{deviceId}")
+    Observable<JsonT<List<BeforeAddDeviceCheck>>> beforeAddDeviceCheck(@Path("url") String url,@Path("deviceId") String deviceId);
     @GET("/app/v1/supervise/tzsbOrganization/{type}")
     Observable<JsonT<List<OrganizationBean>>> tzsbRegistOrganizationList(@Path("type") String type, @QueryMap Map<String, Object> params);
 
@@ -212,6 +210,11 @@ public interface ApiService {
     @Headers("Content-Type: application/json")
     @PUT("/app/v1/supervise/tzsbDeviceCheck")
     Observable<JsonT> putTzsbDeviceCheck(@Body DeviceCheck requestBody);
+
+
+    @Headers("Content-Type: application/json")
+    @PUT("/app/v1/supervise/tzsbDeviceCheck/addPressurepipePartCheck")
+    Observable<JsonT> addPressurepipePartCheck(@Body DeviceCheck requestBody);
 
 
     @Headers("Content-Type: application/json")

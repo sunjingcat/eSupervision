@@ -44,17 +44,17 @@ public class Contract {
     }
     public interface IsetCheckAddPresenter extends BasePresenter {
         void submitData(DeviceCheck map);
-        void getData(String id);
+        void getData(String deviceType,String id);
         void getDicts(String type);
         void getOrganizationalUnit();
-        void beforeAddDeviceCheck(String deviceId);
+        void beforeAddDeviceCheck(String deviceType,String deviceId);
 
     }
 
     public interface IGetCheckAddView extends BaseView {
         void showCheckInfo(DeviceCheck data);
         void showSubmitResult(String id);
-        void showResult();
+
         void showDicts(String type,List<BusinessType> list);
         void showOrganizationalUnit(List<DictBean> list);
         void showBeforeAddDeviceCheck(List<BeforeAddDeviceCheck> list);
@@ -69,7 +69,7 @@ public class Contract {
     public interface IGetPipeAddView extends BaseView {
         void showPipeInfo(PipePartBean data);
         void showSubmitResult(String id);
-        void showResult();
+
 
     }
 

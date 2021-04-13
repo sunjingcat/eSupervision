@@ -5,6 +5,7 @@ import java.util.List;
 public class DeviceCheck {
     String id;// 4,
     String deviceId;// 1,
+    String deviceType;// 1,
     String partId;// 22,
     String inspectionOrganizationId;// 1,
     String inspectionOrganizationName;// 特种设备检测机构主体001,
@@ -27,6 +28,14 @@ public class DeviceCheck {
     String processStatusText;// ,
     String processDate;// ,
     List<BeforeAddDeviceCheck> tzsbDeviceCheckDetailList;// ,
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
 
     public void setCheckModelType(String checkModelType) {
         this.checkModelType = checkModelType;

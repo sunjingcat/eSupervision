@@ -32,8 +32,9 @@ public class CheckAddPresenter extends MyBasePresenterImpl<Contract.IGetCheckAdd
     }
 
     @Override
-    public void getData( String id) {
-        RxNetUtils.request(getApi(ApiService.class).getCheckInfo(id), new RequestObserver<JsonT<DeviceCheck>>(this) {
+    public void getData(String deviceType, String id) {
+        String url = deviceType.equals("3")?"getByPartId":"getByDeviceId";
+        RxNetUtils.request(getApi(ApiService.class).getCheckInfo(url,id), new RequestObserver<JsonT<DeviceCheck>>(this) {
             @Override
             protected void onSuccess(JsonT<DeviceCheck> jsonT) {
                 view.showCheckInfo(jsonT.getData());
@@ -81,8 +82,9 @@ public class CheckAddPresenter extends MyBasePresenterImpl<Contract.IGetCheckAdd
     }
 
     @Override
-    public void beforeAddDeviceCheck(String deviceId) {
-        RxNetUtils.request(getApi(ApiService.class).beforeAddDeviceCheck(deviceId), new RequestObserver<JsonT<List<BeforeAddDeviceCheck>>>(this) {
+    public void beforeAddDeviceCheck(String deviceType,String deviceId) {
+        String url = deviceType.equals("3")?"beforeAddPartCheck":"beforeAddDeviceCheck";
+        RxNetUtils.request(getApi(ApiService.class).beforeAddDeviceCheck(url,deviceId), new RequestObserver<JsonT<List<BeforeAddDeviceCheck>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<BeforeAddDeviceCheck>> jsonT) {
                 view.showBeforeAddDeviceCheck( jsonT.getData());
@@ -98,8 +100,8 @@ public class CheckAddPresenter extends MyBasePresenterImpl<Contract.IGetCheckAdd
 
     @Override
     public void submitData(DeviceCheck map) {
-//        if (!TextUtils.isEmpty(map.getId())) {
-            RxNetUtils.request(getApi(ApiService.class).putTzsbDeviceCheck(map), new RequestObserver<JsonT>(this) {
+        if (map.getDeviceType().equals("3")) {
+            RxNetUtils.request(getApi(ApiService.class).addPressurepipePartCheck(map), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
                     view.showSubmitResult((String) jsonT.getData());
@@ -114,21 +116,21 @@ public class CheckAddPresenter extends MyBasePresenterImpl<Contract.IGetCheckAdd
             }, mDialog);
 
 
-//        } else {
-//            RxNetUtils.request(getApi(ApiService.class).submitTzsbDeviceCheck(map), new RequestObserver<JsonT>(this) {
-//                @Override
-//                protected void onSuccess(JsonT jsonT) {
-//                    view.showSubmitResult((String) jsonT.getData());
-////                    view.showToast(jsonT.getMessage());
-//                }
-//
-//                @Override
-//                protected void onFail2(JsonT stringJsonT) {
-//                    super.onFail2(stringJsonT);
-//                    view.showToast(stringJsonT.getMessage());
-//                }
-//            }, mDialog);
-//        }
+        } else {
+            RxNetUtils.request(getApi(ApiService.class).putTzsbDeviceCheck(map), new RequestObserver<JsonT>(this) {
+                @Override
+                protected void onSuccess(JsonT jsonT) {
+                    view.showSubmitResult((String) jsonT.getData());
+//                    view.showToast(jsonT.getMessage());
+                }
+
+                @Override
+                protected void onFail2(JsonT stringJsonT) {
+                    super.onFail2(stringJsonT);
+                    view.showToast(stringJsonT.getMessage());
+                }
+            }, mDialog);
+        }
 
     }
 

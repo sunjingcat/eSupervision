@@ -66,15 +66,14 @@ public class PipePartListActivity extends MyBaseActivity {
     protected void initView() {
         ButterKnife.bind(this);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        adapter = new PipeAdapter(R.layout.item_law_enforcer, mlist);
+        adapter = new PipeAdapter(R.layout.item_pipe_part, mlist);
         rv.setAdapter(adapter);
         refreshLayout.setEnableRefresh(false);
         refreshLayout.setEnableLoadMore(false);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                startActivity(new Intent(PipePartListActivity.this,PipeInfoPartActivity.class).putExtra("id",mlist.get(position).getId()));
+                startActivity(new Intent(PipePartListActivity.this, PipePartInfoActivity.class).putExtra("id",mlist.get(position).getId()));
 
             }
         });

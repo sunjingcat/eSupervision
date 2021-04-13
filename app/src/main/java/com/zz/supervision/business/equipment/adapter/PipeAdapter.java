@@ -19,5 +19,7 @@ public class PipeAdapter extends BaseQuickAdapter<PipePartBean, BaseViewHolder> 
     protected void convert(@NotNull BaseViewHolder baseViewHolder, PipePartBean item) {
 
         baseViewHolder.setText(R.id.item_title, item.getPipeName() + "");
+        baseViewHolder.setText(R.id.item_number, "管道编号："+item.getPipeNumber() + "");
+        baseViewHolder.setText(R.id.item_status, "管道长度："+item.getTotalLength() + "");
     }
 }

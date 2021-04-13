@@ -1,4 +1,5 @@
 package com.zz.supervision.business.equipment;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
@@ -6,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnChangeLisener;
 import com.codbking.widget.OnSureLisener;
@@ -61,13 +63,13 @@ public class AddPipePartActivity extends MyBaseActivity<Contract.IsetPipeAddPres
     @BindView(R.id.ig_totalLength)
     ItemGroup ig_totalLength;
     String deviceId;
+    String id;
 
     @Override
     protected int getContentView() {
         return R.layout.activity_pipe_part_add;
 
     }
-
     @Override
     public Contract.IsetPipeAddPresenter initPresenter() {
         return new PipeAddPresenter(this);
@@ -77,22 +79,26 @@ public class AddPipePartActivity extends MyBaseActivity<Contract.IsetPipeAddPres
     protected void initView() {
         ButterKnife.bind(this);
         deviceId = getIntent().getStringExtra("deviceId");
-        if (!TextUtils.isEmpty(deviceId)) {
-            mPresenter.getData(deviceId);
+        id = getIntent().getStringExtra("id");
+        if (!TextUtils.isEmpty(id)) {
+            mPresenter.getData(id);
         }
         initClick();
     }
 
     void postData() {
-        Map<String,Object> map =new HashMap<>();
-        map.put("deviceId",deviceId);
-        map.put("manufacturerName",getText(ig_manufacturer));
-        map.put("pipeNumber",getText(ig_pipeNumber));
-        map.put("pipeName",getText(ig_pipeName));
-        map.put("manufacturerDate",ig_manufacturerDate.getValue());
-        map.put("completionDate",ig_completionDate.getValue());
-        map.put("installationCompany",getText(ig_installationCompany));
-        map.put("totalLength",getText(ig_totalLength));
+        Map<String, Object> map = new HashMap<>();
+        if (!TextUtils.isEmpty(id)){
+            map.put("id", id);
+        }
+        map.put("deviceId", deviceId);
+        map.put("manufacturerName", getText(ig_manufacturer));
+        map.put("pipeNumber", getText(ig_pipeNumber));
+        map.put("pipeName", getText(ig_pipeName));
+        map.put("manufacturerDate", ig_manufacturerDate.getValue());
+        map.put("completionDate", ig_completionDate.getValue());
+        map.put("installationCompany", getText(ig_installationCompany));
+        map.put("totalLength", getText(ig_totalLength));
         mPresenter.submitData(map);
     }
 
@@ -159,14 +165,15 @@ public class AddPipePartActivity extends MyBaseActivity<Contract.IsetPipeAddPres
     @Override
     public void showPipeInfo(PipePartBean data) {
 
-        ig_manufacturer.setChooseContent(data.getManufacturerName()+"");
-        ig_pipeNumber.setChooseContent(data.getPipeNumber()+"");
-        ig_pipeName.setChooseContent(data.getPipeName()+"");
-        ig_manufacturerDate.setChooseContent(data.getManufacturerDate()+"");
-        ig_completionDate.setChooseContent(data.getCompletionDate()+"");
-        ig_installationCompany.setChooseContent(data.getInstallationCompany()+"");
-        ig_totalLength.setChooseContent(data.getTotalLength()+"");
+        ig_manufacturer.setChooseContent(data.getManufacturerName() + "");
+        ig_pipeNumber.setChooseContent(data.getPipeNumber() + "");
+        ig_pipeName.setChooseContent(data.getPipeName() + "");
+        ig_manufacturerDate.setChooseContent(data.getManufacturerDate() + "");
+        ig_completionDate.setChooseContent(data.getCompletionDate() + "");
+        ig_installationCompany.setChooseContent(data.getInstallationCompany() + "");
+        ig_totalLength.setChooseContent(data.getTotalLength() + "");
     }
+
     @Override
     public void showSubmitResult(String id) {
         finish();
@@ -174,11 +181,5 @@ public class AddPipePartActivity extends MyBaseActivity<Contract.IsetPipeAddPres
         showToast("提交成功");
     }
 
-    @Override
-    public void showResult() {
-        finish();
-
-        showToast("提交成功");
-    }
 
 }

@@ -10,7 +10,7 @@ public class PipePartBean {
     String      installationCompany;// 安装单位,
     String     completionDate;// 2020-01-01,
     String     totalLength;// 10.0,
-    String     tzsbDeviceCheck;// null
+    DeviceCheck     tzsbDeviceCheck;// null
 
     public String getId() {
         return id;
@@ -48,7 +48,7 @@ public class PipePartBean {
         return totalLength;
     }
 
-    public String getTzsbDeviceCheck() {
+    public DeviceCheck getTzsbDeviceCheck() {
         return tzsbDeviceCheck;
     }
 }
