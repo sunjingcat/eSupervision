@@ -95,69 +95,6 @@ public class CheckAddPresenter extends MyBasePresenterImpl<Contract.IGetCheckAdd
         }, mDialog);
     }
 
-    @Override
-    public void postImage(int position, String file) {
-
-        RxNetUtils.request(getApi(ApiService.class).uploadImg(file), new RequestObserver<JsonT<String>>(this) {
-            @Override
-            protected void onSuccess(JsonT<String> data) {
-                if (data.isSuccess()) {
-                    view.showPostImage(position, data.getData());
-                } else {
-
-                }
-            }
-
-            @Override
-            protected void onFail2(JsonT<String> userInfoJsonT) {
-                super.onFail2(userInfoJsonT);
-                view.showToast(userInfoJsonT.getMessage());
-            }
-        }, mDialog);
-
-    }
-
-    @Override
-    public void uploadCheckImgs( String id, String files) {
-
-        RxNetUtils.request(getApi(ApiService.class).uploadCompanyImgs("tzsbDeviceCheck", id, files), new RequestObserver<JsonT>(this) {
-            @Override
-            protected void onSuccess(JsonT data) {
-                if (data.isSuccess()) {
-                    view.showResult();
-                } else {
-
-                }
-            }
-
-            @Override
-            protected void onFail2(JsonT userInfoJsonT) {
-                super.onFail2(userInfoJsonT);
-                view.showToast(userInfoJsonT.getMessage());
-            }
-        }, mDialog);
-
-    }
-
-    @Override
-    public void getImage( String modelId) {
-        RxNetUtils.request(getApi(ApiService.class).getImageBase64("tzsbDeviceCheck", modelId), new RequestObserver<JsonT<List<ImageBack>>>(this) {
-            @Override
-            protected void onSuccess(JsonT<List<ImageBack>> data) {
-                if (data.isSuccess()) {
-                    view.showImage(data.getData());
-                } else {
-
-                }
-            }
-
-            @Override
-            protected void onFail2(JsonT<List<ImageBack>> userInfoJsonT) {
-                super.onFail2(userInfoJsonT);
-                view.showToast(userInfoJsonT.getMessage());
-            }
-        }, mDialog);
-    }
 
     @Override
     public void submitData(DeviceCheck map) {

@@ -100,11 +100,7 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
     List<BusinessType> list_check_nature = new ArrayList<>();
     List<BusinessType> list_check_category = new ArrayList<>();
     List<BusinessType> list_process_status = new ArrayList<>();
-    ArrayList<ImageBack> images = new ArrayList<>();
-    ArrayList<String> localPath = new ArrayList<>();
-    ImageDeleteItemAdapter adapter;
-    @BindView(R.id.item_rv_images)
-    RecyclerView itemRvImages;
+
     String deviceId;
     String deviceType;
 
@@ -132,7 +128,6 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
         mPresenter.getDicts("tzsb_check_category");
         mPresenter.getDicts("tzsb_process_status");
         mPresenter.getOrganizationalUnit();
-        mPresenter.getImage(deviceId);
         if (deviceType.equals("1")) {
             ig_anquanfaCheckStatus.setVisibility(View.VISIBLE);
             ig_guoluCheckStatus.setVisibility(View.VISIBLE);
@@ -148,39 +143,6 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
             ig_xiansuqiCheckStatus.setVisibility(View.VISIBLE);
         }
         initClick();
-        itemRvImages.setLayoutManager(new GridLayoutManager(this, 3));
-        adapter = new ImageDeleteItemAdapter(this, images);
-        itemRvImages.setAdapter(adapter);
-        adapter.setOnclick(new ImageDeleteItemAdapter.Onclick() {
-            @Override
-            public void onclickAdd(View v, int option) {
-                localPath.clear();
-                int sever = 0;
-                for (int i = 0; i < images.size(); i++) {
-                    if (!TextUtils.isEmpty(images.get(i).getPath())) {
-                        if (!images.get(i).getPath().contains("zhongzhi")) {
-                            localPath.add(images.get(i).getPath());
-                        } else {
-                            sever++;
-                        }
-                    }
-
-                }
-                ImageSelector.builder()
-                        .useCamera(true) // 设置是否使用拍照
-                        .setSingle(false)  //设置是否单选
-                        .setMaxSelectCount(9 - sever) // 图片的最大选择数量，小于等于0时，不限数量。
-                        .setSelected(localPath) // 把已选的图片传入默认选中。
-                        .setViewImage(true) //是否点击放大图片查看,，默认为true
-                        .start(InspectActivity.this, 1101); // 打开相册
-            }
-
-            @Override
-            public void onclickDelete(View v, int option) {
-                images.remove(option);
-                adapter.notifyDataSetChanged();
-            }
-        });
     }
 
     @Override
@@ -279,11 +241,9 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
 
     @Override
     public void showSubmitResult(String id) {
-        ArrayList<String> ids = new ArrayList<>();
-        for (int i = 0; i < images.size(); i++) {
-            ids.add(images.get(i).getId());
-        }
-        mPresenter.uploadCheckImgs(id, new Gson().toJson(ids));
+        finish();
+
+        showToast("提交成功");
     }
 
     @Override
@@ -293,13 +253,6 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
         showToast("提交成功");
     }
 
-    @Override
-    public void showPostImage(int position, String id) {
-        if (!TextUtils.isEmpty(id)) {
-            images.get(position).setId(id);
-        }
-        adapter.notifyDataSetChanged();
-    }
 
     @Override
     public void showDicts(String type, List<BusinessType> list) {
@@ -350,27 +303,6 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
         LogUtils.v(list.toString());
     }
 
-    @Override
-    public void showImage(List<ImageBack> list) {
-        if (list == null) return;
-        showLoading("");
-        for (ImageBack imageBack : list) {
-            String bitmapName = "company_" + imageBack.getId() + ".png";
-            String path = getCacheDir() + "/zhongzhi/" + bitmapName;
-            File file = new File(path);
-            if (file.exists()) {
-                imageBack.setPath(path);
-            } else {
-                Bitmap s1 = GlideUtils.base64ToBitmap(imageBack.getBase64());
-                String s = BASE64.saveBitmap(this, imageBack.getId(), s1);
-                imageBack.setPath(s);
-            }
-        }
-        images.clear();
-        images.addAll(list);
-        adapter.notifyDataSetChanged();
-        dismissLoading();
-    }
 
     @Override
     public void showBeforeAddDeviceCheck(List<BeforeAddDeviceCheck> list) {
@@ -404,41 +336,7 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
         if (resultCode == RESULT_OK) {
             if (data == null) return;
             /*结果回调*/
-            if (requestCode == 1101) {
-                //获取选择器返回的数据
-                ArrayList<String> selectImages = data.getStringArrayListExtra(
-                        ImageSelectorUtils.SELECT_RESULT);
-                for (String path : selectImages) {
-                    if (localPath.contains(path)) {
-                        continue;
-                    }
-                    Luban.with(this)
-                            .load(path)
-                            .ignoreBy(100)
-                            .setCompressListener(new OnCompressListener() {
-                                @Override
-                                public void onStart() {
-                                    // TODO 压缩开始前调用，可以在方法内启动 loading UI
-                                }
-
-                                @Override
-                                public void onSuccess(File file) {
-                                    String base = "data:image/jpg;base64," + BASE64.imageToBase64(file.getPath());
-                                    ImageBack imageBack = new ImageBack();
-                                    imageBack.setPath(path);
-                                    imageBack.setBase64(base);
-                                    images.add(imageBack);
-                                    mPresenter.postImage(images.size() - 1, base);
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-                                    // TODO 当压缩过程出现问题时调用
-                                }
-                            }).launch();
-
-                }
-            } else if (requestCode == 2001) {
+             if (requestCode == 2001) {
                 OrganizationBean select = data.getParcelableExtra("select");
                 ig_inspectionOrganization.setChooseContent(select.getOperatorName() + "");
                 ig_inspectionOrganization.setSelectValue(select.getId() + "");

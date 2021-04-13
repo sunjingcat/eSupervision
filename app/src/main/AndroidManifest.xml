@@ -182,7 +182,8 @@
         <activity android:name=".business.equipment.InspectActivity" />
         <activity android:name=".business.equipment.OrganizationListActivity" />
         <activity android:name=".business.equipment.AddPipePartActivity" />
-        <activity android:name=".business.equipment.PressurePipePartListActivity" />
+        <activity android:name=".business.equipment.PipePartListActivity" />
+        <activity android:name=".business.equipment.PipeInfoPartActivity" />
     </application>
 
 </manifest>

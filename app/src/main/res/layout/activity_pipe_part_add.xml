@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:background="@color/colorPrimary" />
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -33,74 +36,74 @@
             android:textColor="@color/white"
             android:textSize="16dp" />
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <LinearLayout
+    </androidx.appcompat.widget.Toolbar>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_manufacturer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                app:title="制造单位" />
 
-                <com.zz.supervision.widget.ItemGroup
-                    android:id="@+id/ig_manufacturer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="制造单位"
-                    app:isSelect="true"/>
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_pipeNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="管道编号" />
 
-                <com.zz.supervision.widget.ItemGroup
-                    android:id="@+id/ig_pipeNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="管道编号" />
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_pipeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="管道名称" />
 
-                <com.zz.supervision.widget.ItemGroup
-                    android:id="@+id/ig_pipeName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="管道名称" />
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_manufacturerDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="制造日期"
+                app:isSelect="true"/>
 
-                <com.zz.supervision.widget.ItemGroup
-                    android:id="@+id/ig_manufacturerDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="制造日期"
-                    app:isSelect="true"/>
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_installationCompany"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="安装单位" />
 
-                <com.zz.supervision.widget.ItemGroup
-                    android:id="@+id/ig_installationCompany"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="安装单位" />
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_completionDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="竣工日期"
+                app:isSelect="true"/>
 
-                <com.zz.supervision.widget.ItemGroup
-                    android:id="@+id/ig_completionDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="竣工日期"
-                    app:isSelect="true"/>
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_totalLength"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="管道长度" />
 
-                <com.zz.supervision.widget.ItemGroup
-                    android:id="@+id/ig_totalLength"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="管道长度" />
+            <LinearLayout
+                android:id="@+id/ll_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
 
-                <LinearLayout
-                    android:id="@+id/ll_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/item_rv_images"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white" />
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
-    </androidx.appcompat.widget.Toolbar>
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/item_rv_images"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
