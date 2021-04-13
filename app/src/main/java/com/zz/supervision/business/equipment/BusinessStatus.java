@@ -38,7 +38,7 @@ public class BusinessStatus extends FrameLayout {
     private ItemGroup ig_deviceProblem; //
     private ItemGroup ig_manageProblem; //
     private TextView titleTv; //标题
-    private OnClickListener onClickListener;
+    private OnItemClickListener onClickListener;
 
     public BusinessStatus(@NonNull Context context) {
         super(context);
@@ -51,8 +51,8 @@ public class BusinessStatus extends FrameLayout {
         initAttrs(context, attrs);
     }
 
-    @Override
-    public void setOnClickListener(OnClickListener onClickListener) {
+
+    public void setOnClickListener(OnItemClickListener onClickListener) {
         this.onClickListener = onClickListener;
     }
 
@@ -100,6 +100,12 @@ public class BusinessStatus extends FrameLayout {
                 onClickListener.onClick(ig_checkReduction);
             }
         });
+        ig_organizationalUnit.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickListener.onOptionPicker(ig_organizationalUnit);
+            }
+        });
         addView(view); //把自定义的这个组合控件的布局加入到当前FramLayout
     }
 
@@ -120,7 +126,7 @@ public class BusinessStatus extends FrameLayout {
     }
 
     public String getOrganizationalUnit() {
-        return ig_organizationalUnit.getValue();
+        return ig_organizationalUnit.getSelectValue();
     }
 
     public String getChecker() {
@@ -136,7 +142,10 @@ public class BusinessStatus extends FrameLayout {
     }
 
     public void setOrganizationalUnit(String organizationalUnit) {
-        this.ig_organizationalUnit.setTitle(organizationalUnit + "");
+        this.ig_organizationalUnit.setChooseContent(organizationalUnit + "");
+    }
+   public void setSelectOrganizationalUnit(String organizationalUnitId) {
+        this.ig_organizationalUnit.setSelectValue(organizationalUnitId + "");
     }
 
     public String getLastCheckDate() {
@@ -147,11 +156,11 @@ public class BusinessStatus extends FrameLayout {
         this.ig_lastCheckDate.setChooseContent(lastCheckDate);
     }
 
-    public String getIg_checkDate() {
+    public String getCheckDate() {
         return ig_checkDate.getValue();
     }
 
-    public void setICheckDate(String checkDate) {
+    public void setCheckDate(String checkDate) {
         this.ig_checkDate.setChooseContent(checkDate);
         ;
     }
@@ -165,7 +174,7 @@ public class BusinessStatus extends FrameLayout {
     }
 
     public String getCheckReduction() {
-        return ig_checkReduction.getValue();
+        return ig_checkReduction.getSelectValue();
     }
 
     public void setCheckReduction(String checkReduction) {
@@ -189,15 +198,21 @@ public class BusinessStatus extends FrameLayout {
     }
 
     public void setChecker(String checker) {
-        this.ig_checker.setTitle(checker + "");
+        this.ig_checker.setChooseContent(checker + "");
     }
 
     public void setReportId(String reportId) {
-        this.ig_reportId.setTitle(reportId + "");
+        this.ig_reportId.setChooseContent(reportId + "");
     }
 
     public void setTitleTv(String titleTv) {
         this.titleTv.setText(titleTv + "");
+    }
+
+    interface OnItemClickListener{
+        void onOptionPicker(ItemGroup itemGroup);
+        void onClick(ItemGroup itemGroup);
+
     }
 
     private void selectTime(ItemGroup itemGroup) {

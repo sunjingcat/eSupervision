@@ -18,6 +18,7 @@
         android:id="@+id/ig_organizationalUnit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:isSelect="true"
         app:title="检验部门" />
 
     <com.zz.supervision.widget.ItemGroup

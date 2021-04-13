@@ -102,7 +102,7 @@ public class ItemGroup extends FrameLayout {
         contentEdt.setTextColor(contentColor);
         contentEdt.setHint(TextUtils.isEmpty(hintContent)?isSelect?"请选择":"请填写":hintContent);
         contentEdt.setHintTextColor(hintColor);
-        contentEdt.setFocusableInTouchMode(isEditable); //设置输入框是否可以编辑
+        contentEdt.setFocusable(isEditable); //设置输入框是否可以编辑
         contentEdt.setLongClickable(false); //输入框不允许长按
         chooseTv.setVisibility(isSelect ? View.VISIBLE : View.GONE);  //设置向右的箭头图标是否可见
         contentEdt.setVisibility(!isSelect ? View.VISIBLE : View.GONE);  //设置向右的箭头图标是否可见
@@ -128,7 +128,11 @@ public class ItemGroup extends FrameLayout {
     }
 
     public String getValue() {
-        return contentEdt.getText().toString();
+        if (this.chooseTv.getVisibility()==View.VISIBLE) {
+            return chooseTv.getText().toString();
+        }else {
+            return contentEdt.getText().toString();
+        }
     }
     private String selectValue;
     public String getSelectValue() {

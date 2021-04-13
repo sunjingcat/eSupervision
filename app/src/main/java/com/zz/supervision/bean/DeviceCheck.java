@@ -24,7 +24,7 @@ public class DeviceCheck {
     String processStatus;// null,
     String processStatusText;// ,
     String processDate;// ,
-    List<CheckDetail> tzsbDeviceCheckDetailList;// ,
+    List<BeforeAddDeviceCheck> tzsbDeviceCheckDetailList;// ,
 
     public void setId(String id) {
         this.id = id;
@@ -110,11 +110,11 @@ public class DeviceCheck {
         this.processDate = processDate;
     }
 
-    public void setTzsbDeviceCheckDetailList(List<CheckDetail> tzsbDeviceCheckDetailList) {
+    public void setTzsbDeviceCheckDetailList(List<BeforeAddDeviceCheck> tzsbDeviceCheckDetailList) {
         this.tzsbDeviceCheckDetailList = tzsbDeviceCheckDetailList;
     }
 
-    public List<CheckDetail> getTzsbDeviceCheckDetailList() {
+    public List<BeforeAddDeviceCheck> getTzsbDeviceCheckDetailList() {
         return tzsbDeviceCheckDetailList;
     }
 
@@ -202,81 +202,5 @@ public class DeviceCheck {
         return processDate;
     }
 
-   public class CheckDetail {
-        String id;// 9,
-        String checkId;// 4,
-        String checkModelType;// String ndjyString ,
-        String checkModelTypeText;// String ndjyString ,
-        String organizationalUnitId;// 1,
-        String organizationalUnitName;// String 黑河市市场监督管理局爱辉分局String ,
-        String reportId;// String String ,
-        String checker;// String String ,
-        String lastCheckDate;// String String ,
-        String checkDate;// String 2020-12-11String ,
-        String nextCheckDate;// String 2021-03-04String ,
-        String checkReduction;// null,
-        String checkReductionText;// String String ,
-        String deviceProblem;// String String ,
-        String manageProblem;// String String
 
-       public String getId() {
-           return id;
-       }
-
-       public String getCheckId() {
-           return checkId;
-       }
-
-       public String getCheckModelType() {
-           return checkModelType;
-       }
-
-       public String getCheckModelTypeText() {
-           return checkModelTypeText;
-       }
-
-       public String getOrganizationalUnitId() {
-           return organizationalUnitId;
-       }
-
-       public String getOrganizationalUnitName() {
-           return organizationalUnitName;
-       }
-
-       public String getReportId() {
-           return reportId;
-       }
-
-       public String getChecker() {
-           return checker;
-       }
-
-       public String getLastCheckDate() {
-           return lastCheckDate;
-       }
-
-       public String getCheckDate() {
-           return checkDate;
-       }
-
-       public String getNextCheckDate() {
-           return nextCheckDate;
-       }
-
-       public String getCheckReduction() {
-           return checkReduction;
-       }
-
-       public String getCheckReductionText() {
-           return checkReductionText;
-       }
-
-       public String getDeviceProblem() {
-           return deviceProblem;
-       }
-
-       public String getManageProblem() {
-           return manageProblem;
-       }
-   }
 }

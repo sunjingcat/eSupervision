@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/bg">
+    android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
@@ -45,7 +45,6 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/ll_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -63,12 +62,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:isSelect="true"
+
                 app:title="检验责任主体机构名称" />
 
             <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_inspectionOrganizationId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:isEditable="false"
                 app:title="组织机构代码" />
 
             <com.zz.supervision.widget.ItemGroup
@@ -91,6 +92,13 @@
                 android:layout_height="wrap_content"
                 app:isSelect="true"
                 app:title="首次检验日期" />
+
+            <LinearLayout
+                android:id="@+id/ll_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/item_rv_images"
                 android:layout_width="match_parent"

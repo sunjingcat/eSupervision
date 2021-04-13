@@ -106,6 +106,9 @@ public interface ApiService {
     @GET("/app/v1/supervise/tzsbDeviceInfo/{id}")
     Observable<JsonT<EquipmentBean>> getEquipmentInfo(@Path("id") String id);
 
+    @GET("/app/v1/supervise/tzsbDeviceCheck/getByDeviceId/{id}")
+    Observable<JsonT<DeviceCheck>> getCheckInfo(@Path("id") String id);
+
     @GET("/app/v1/supervise/companyInfo/selectCompanyGroupCount")
     Observable<JsonT<List<CompanyType>>> selectCompanyGroupCount(@QueryMap Map<String, Object> params);
 
@@ -187,8 +190,12 @@ public interface ApiService {
     Observable<JsonT<SuperviseBean.ResposeConfirmBean>> submitSpxsRiskRecordConfirm(@Path("url") String url, @Path("id") String id, @Body RiskSuperviseBean.PostBean requestBody);
 
     @Headers("Content-Type: application/json")
-    @POST("/app/v1/supervise/tzsbDeviceCheck")
+    @PUT("/app/v1/supervise/tzsbDeviceCheck")
     Observable<JsonT> submitTzsbDeviceCheck( @Body DeviceCheck requestBody);
+
+    @Headers("Content-Type: application/json")
+    @PUT("/app/v1/supervise/tzsbDeviceCheck")
+    Observable<JsonT> putTzsbDeviceCheck( @Body DeviceCheck requestBody);
 
 
     @Headers("Content-Type: application/json")

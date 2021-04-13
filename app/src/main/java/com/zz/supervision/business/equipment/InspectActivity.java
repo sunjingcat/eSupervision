@@ -1,6 +1,7 @@
 package com.zz.supervision.business.equipment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,6 +19,7 @@ import com.codbking.widget.bean.DateType;
 import com.codbking.widget.utils.UIAdjuster;
 import com.donkingliang.imageselector.utils.ImageSelector;
 import com.donkingliang.imageselector.utils.ImageSelectorUtils;
+import com.google.gson.Gson;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.commonlib.widget.SelectPopupWindows;
 import com.zz.lib.core.ui.mvp.BasePresenter;
@@ -25,6 +27,7 @@ import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.BeforeAddDeviceCheck;
 import com.zz.supervision.bean.BusinessType;
+import com.zz.supervision.bean.DeviceCheck;
 import com.zz.supervision.bean.DictBean;
 import com.zz.supervision.bean.EquipmentBean;
 import com.zz.supervision.bean.ImageBack;
@@ -35,6 +38,7 @@ import com.zz.supervision.business.company.adapter.ImageDeleteItemAdapter;
 import com.zz.supervision.business.equipment.mvp.Contract;
 import com.zz.supervision.business.equipment.mvp.presenter.CheckAddPresenter;
 import com.zz.supervision.utils.BASE64;
+import com.zz.supervision.utils.GlideUtils;
 import com.zz.supervision.utils.LogUtils;
 import com.zz.supervision.utils.TimeUtils;
 import com.zz.supervision.widget.ItemGroup;
@@ -84,6 +88,8 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
     ImageDeleteItemAdapter adapter;
     @BindView(R.id.item_rv_images)
     RecyclerView itemRvImages;
+    String deviceId;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_inspect_add;
@@ -98,8 +104,10 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        String deviceId = getIntent().getStringExtra("deviceId");
-        mPresenter.beforeAddDeviceCheck(deviceId);
+        deviceId = getIntent().getStringExtra("deviceId");
+        if (!TextUtils.isEmpty(deviceId)) {
+            mPresenter.getData(deviceId);
+        }
         mPresenter.getDicts("tzsb_check_status");
         mPresenter.getDicts("tzsb_check_nature");
         mPresenter.getOrganizationalUnit();
@@ -145,27 +153,99 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
     }
 
     void postData() {
-
+        DeviceCheck deviceCheck = new DeviceCheck();
+        deviceCheck.setDeviceId(deviceId);
+        deviceCheck.setInspectionOrganizationId(ig_inspectionOrganization.getSelectValue());
+        deviceCheck.setOrganizationalUnitId(ig_organizationalUnit.getSelectValue());
+        deviceCheck.setCheckNature(ig_checkNature.getSelectValue());
+        deviceCheck.setFirstCheckDate(ig_firstCheckDate.getValue());
+        for (int i = 0; i < businessStatuses.size(); i++) {
+            BeforeAddDeviceCheck beforeAddDeviceCheck = beforeAddDeviceChecks.get(i);
+            BusinessStatus businessStatus = businessStatuses.get(i);
+            beforeAddDeviceCheck.setOrganizationalUnitId(businessStatus.getOrganizationalUnit() + "");
+            beforeAddDeviceCheck.setChecker(businessStatus.getChecker() + "");
+            beforeAddDeviceCheck.setReportId(businessStatus.getReportId() + "");
+            beforeAddDeviceCheck.setLastCheckDate(businessStatus.getLastCheckDate() + "");
+            beforeAddDeviceCheck.setCheckDate(businessStatus.getCheckDate() + "");
+            beforeAddDeviceCheck.setLastCheckDate(businessStatus.getLastCheckDate() + "");
+            beforeAddDeviceCheck.setCheckReduction(businessStatus.getCheckReduction() + "");
+            beforeAddDeviceCheck.setDeviceProblem(businessStatus.getDeviceProblem() + "");
+            beforeAddDeviceCheck.setManageProblem(businessStatus.getManageProblem() + "");
+        }
+        deviceCheck.setTzsbDeviceCheckDetailList(beforeAddDeviceChecks);
+        mPresenter.submitData(deviceCheck);
     }
 
     @Override
-    public void showCheckInfo(EquipmentBean data) {
+    public void showCheckInfo(DeviceCheck data) {
+        if (data == null) {
 
+            mPresenter.beforeAddDeviceCheck(deviceId);
+
+        } else {
+            ig_inspectionOrganization.setChooseContent(data.getInspectionOrganizationName());
+            ig_inspectionOrganization.setSelectValue(data.getInspectionOrganizationId());
+            ig_inspectionOrganizationId.setChooseContent(data.getInspectionOrganizationId());
+            ig_organizationalUnit.setChooseContent(data.getOrganizationalUnitName());
+            ig_organizationalUnit.setSelectValue(data.getOrganizationalUnitId());
+            ig_checkNature.setChooseContent(data.getCheckNatureText());
+            ig_checkNature.setSelectValue(data.getCheckNature());
+            ig_firstCheckDate.setChooseContent(data.getFirstCheckDate());
+
+            beforeAddDeviceChecks.clear();
+            businessStatuses.clear();
+            for (BeforeAddDeviceCheck item : data.getTzsbDeviceCheckDetailList()) {
+                BusinessStatus businessStatus = new BusinessStatus(this);
+                businessStatus.setTitleTv(item.getCheckModelTypeText());
+                businessStatus.setOrganizationalUnit(item.getOrganizationalUnitName() + "");
+                businessStatus.setSelectOrganizationalUnit(item.getOrganizationalUnitId() + "");
+                businessStatus.setChecker(item.getChecker() + "");
+                businessStatus.setReportId(item.getReportId() + "");
+                businessStatus.setLastCheckDate(item.getLastCheckDate() + "");
+                businessStatus.setCheckDate(item.getCheckDate() + "");
+                businessStatus.setNextCheckDate(item.getNextCheckDate() + "");
+                businessStatus.setDeviceProblem(item.getDeviceProblem() + "");
+                businessStatus.setManageProblem(item.getManageProblem() + "");
+                businessStatus.setOnClickListener(new BusinessStatus.OnItemClickListener() {
+                    @Override
+                    public void onOptionPicker(ItemGroup itemGroup) {
+                        showOptionsPicker(itemGroup);
+                    }
+
+                    @Override
+                    public void onClick(ItemGroup itemGroup) {
+                        showSelectPopWindow1(itemGroup, list_check_status);
+                    }
+                });
+                businessStatuses.add(businessStatus);
+                ll_content.addView(businessStatus);
+            }
+            beforeAddDeviceChecks.addAll(data.getTzsbDeviceCheckDetailList());
+        }
     }
 
     @Override
     public void showSubmitResult(String id) {
-
+        ArrayList<String> ids = new ArrayList<>();
+        for (int i = 0; i < images.size(); i++) {
+            ids.add(images.get(i).getId());
+        }
+        mPresenter.uploadCheckImgs(id, new Gson().toJson(ids));
     }
 
     @Override
     public void showResult() {
+        finish();
 
+        showToast("提交成功");
     }
 
     @Override
     public void showPostImage(int position, String id) {
-
+        if (!TextUtils.isEmpty(id)) {
+            images.get(position).setId(id);
+        }
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -213,8 +293,24 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
 
     @Override
     public void showImage(List<ImageBack> list) {
-
-
+        if (list == null) return;
+        showLoading("");
+        for (ImageBack imageBack : list) {
+            String bitmapName = "company_" + imageBack.getId() + ".png";
+            String path = getCacheDir() + "/zhongzhi/" + bitmapName;
+            File file = new File(path);
+            if (file.exists()) {
+                imageBack.setPath(path);
+            } else {
+                Bitmap s1 = GlideUtils.base64ToBitmap(imageBack.getBase64());
+                String s = BASE64.saveBitmap(this, imageBack.getId(), s1);
+                imageBack.setPath(s);
+            }
+        }
+        images.clear();
+        images.addAll(list);
+        adapter.notifyDataSetChanged();
+        dismissLoading();
     }
 
     @Override
@@ -225,10 +321,15 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
             BusinessStatus businessStatus = new BusinessStatus(this);
             businessStatus.setTitleTv(item.getCheckModelTypeText());
             businessStatus.setTag(item.getCheckModelType());
-            businessStatus.setOnClickListener(new View.OnClickListener() {
+            businessStatus.setOnClickListener(new BusinessStatus.OnItemClickListener() {
                 @Override
-                public void onClick(View v) {
-                    showSelectPopWindow1((ItemGroup) v, list_check_status);
+                public void onOptionPicker(ItemGroup itemGroup) {
+                    showOptionsPicker(itemGroup);
+                }
+
+                @Override
+                public void onClick(ItemGroup itemGroup) {
+                    showSelectPopWindow1(itemGroup, list_check_status);
                 }
             });
             businessStatuses.add(businessStatus);
@@ -237,6 +338,7 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
         beforeAddDeviceChecks.addAll(list);
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -286,12 +388,14 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
 
         }
     }
+
     List<DictBean> options1Items = new ArrayList<>();
     List<List<DictBean>> options2Items = new ArrayList<>();
     List<List<List<DictBean>>> options3Items = new ArrayList<>();
-    String deviceType1;
-    String deviceType2;
-    String deviceType3;
+    String type1;
+    String type2;
+    String type3;
+
     void initClick() {
         toolbar_subtitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -308,44 +412,57 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
         ig_inspectionOrganization.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(InspectActivity.this, OrganizationListActivity.class).putExtra("url","tzsbCheckOrganizationList"), 2001);
+                startActivityForResult(new Intent(InspectActivity.this, OrganizationListActivity.class).putExtra("url", "tzsbCheckOrganizationList"), 2001);
             }
         });
         ig_checkNature.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSelectPopWindow1(ig_checkNature,list_check_nature);
+                showSelectPopWindow1(ig_checkNature, list_check_nature);
             }
         });
         ig_organizationalUnit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIAdjuster.closeKeyBoard(InspectActivity.this);
-                OptionsPickerView pvOptions = new OptionsPickerBuilder(InspectActivity.this, new OnOptionsSelectListener() {
-                    @Override
-                    public void onOptionsSelect(int options1, int option2, int options3, View v) {
-                        //返回的分别是三个级别的选中位置
-
-                        String tx = options1Items.get(options1).getPickerViewText()
-                                + options2Items.get(options1).get(option2).getPickerViewText();
-                        if (options3Items.get(options1) != null && options3Items.get(options1).size() > 0
-                                && options3Items.get(options1).get(option2) != null && options3Items.get(options1).get(option2).size() > 0
-                                && options3Items.get(options1).get(option2).get(options3) != null) {
-                            tx = tx + options3Items.get(options1).get(option2).get(options3).getPickerViewText();
-                            deviceType3 = options3Items.get(options1).get(option2).get(options3).getDictValue();
-                        } else {
-                            deviceType3 = "";
-                        }
-                        ig_organizationalUnit.setChooseContent(tx);
-                        deviceType1 = options1Items.get(options1).getDictValue();
-                        deviceType2 = options2Items.get(options1).get(option2).getDictValue();
-
-                    }
-                }).build();
-                pvOptions.setPicker(options1Items, options2Items, options3Items);
-                pvOptions.show();
+                showOptionsPicker(ig_organizationalUnit);
             }
         });
+    }
+
+    void showOptionsPicker(ItemGroup itemGroup) {
+        UIAdjuster.closeKeyBoard(InspectActivity.this);
+        OptionsPickerView pvOptions = new OptionsPickerBuilder(InspectActivity.this, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                //返回的分别是三个级别的选中位置
+
+                String tx = options1Items.get(options1).getPickerViewText()
+                        + options2Items.get(options1).get(option2).getPickerViewText();
+                if (options3Items.get(options1) != null && options3Items.get(options1).size() > 0
+                        && options3Items.get(options1).get(option2) != null && options3Items.get(options1).get(option2).size() > 0
+                        && options3Items.get(options1).get(option2).get(options3) != null) {
+                    tx = tx + options3Items.get(options1).get(option2).get(options3).getPickerViewText();
+                    type3 = options3Items.get(options1).get(option2).get(options3).getDictValue();
+                } else {
+                    type3 = "";
+                }
+                type1 = options1Items.get(options1).getDictValue();
+                type2 = options2Items.get(options1).get(option2).getDictValue();
+                itemGroup.setChooseContent(tx);
+                String type = type1;
+                if (!TextUtils.isEmpty(type2)) {
+                    type = type + "," + type2;
+                }
+                if (!TextUtils.isEmpty(type3)) {
+                    type = type + "," + type3;
+                }
+                itemGroup.setSelectValue(type);
+
+
+            }
+        }).build();
+        pvOptions.setPicker(options1Items, options2Items, options3Items);
+        pvOptions.show();
     }
 
     SelectPopupWindows selectPopupWindows;
@@ -376,6 +493,7 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
             }
         });
     }
+
     private void selectTime(ItemGroup itemGroup) {
 
         DatePickDialog dialog = new DatePickDialog(InspectActivity.this);
