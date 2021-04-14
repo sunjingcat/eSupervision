@@ -152,7 +152,7 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
 
     void postData() {
         DeviceCheck deviceCheck = new DeviceCheck();
-        deviceCheck.setDeviceId(deviceId);
+        deviceCheck.setPartId(deviceId);
         deviceCheck.setDeviceType(deviceType);
         deviceCheck.setInspectionOrganizationId(ig_inspectionOrganization.getSelectValue());
         deviceCheck.setOrganizationalUnitId(ig_organizationalUnit.getSelectValue());
@@ -173,9 +173,20 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
         }
         deviceCheck.setTzsbDeviceCheckDetailList(beforeAddDeviceChecks);
 
-        deviceCheck.setAnquanfaCheckStatus(ig_anquanfaCheckStatus.getSelectValue() );
-        deviceCheck.setGuoluCheckStatus(ig_guoluCheckStatus.getSelectValue() );
-        deviceCheck.setXiansuqiCheckStatus(ig_xiansuqiCheckStatus.getSelectValue() );
+        if (deviceType.equals("1")) {
+            deviceCheck.setAnquanfaCheckStatus(ig_anquanfaCheckStatus.getSelectValue() );
+            deviceCheck.setGuoluCheckStatus(ig_guoluCheckStatus.getSelectValue() );
+        } else if (deviceType.equals("2")) {
+            deviceCheck.setAnquanfaCheckStatus(ig_anquanfaCheckStatus.getSelectValue() );
+        }else if (deviceType.equals("3")) {
+            deviceCheck.setAnquanfaCheckStatus(ig_anquanfaCheckStatus.getSelectValue() );
+        }else if (deviceType.equals("4")) {
+            deviceCheck.setXiansuqiCheckStatus(ig_xiansuqiCheckStatus.getSelectValue() );
+        }else if (deviceType.equals("5")) {
+            deviceCheck.setXiansuqiCheckStatus(ig_xiansuqiCheckStatus.getSelectValue() );
+        }else if (deviceType.equals("6")) {
+            deviceCheck.setXiansuqiCheckStatus(ig_xiansuqiCheckStatus.getSelectValue() );
+        }
 
         deviceCheck.setCheckModelType(ig_checkCategory.getSelectValue() );
         deviceCheck.setProcessStatus(ig_processStatus.getSelectValue() );
@@ -189,8 +200,7 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
         if (data == null) {
             mPresenter.beforeAddDeviceCheck(deviceType,deviceId);
         } else {
-            ig_inspectionOrganization.setChooseContent(data.getInspectionOrganizationName());
-            ig_inspectionOrganization.setSelectValue(data.getInspectionOrganizationId());
+            ig_inspectionOrganization.setChooseContent(data.getInspectionOrganizationName(),data.getInspectionOrganizationId());
             ig_inspectionOrganizationId.setChooseContent(data.getInspectionOrganizationId());
             ig_organizationalUnit.setChooseContent(data.getOrganizationalUnitName());
             ig_organizationalUnit.setSelectValue(data.getOrganizationalUnitId());

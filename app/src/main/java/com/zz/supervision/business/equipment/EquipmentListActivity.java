@@ -144,7 +144,7 @@ public class EquipmentListActivity extends MyBaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_search:
-                startActivityForResult(new Intent(this, SearchCompanyActivity.class).putExtra("select", select), 1001);
+                startActivityForResult(new Intent(this, SearchEquipmentActivity.class).putExtra("companyId",id).putExtra("select", select), 1001);
                 break;
             case R.id.toolbar_subtitle:
                 startActivity(new Intent(EquipmentListActivity.this, AddEquipmentActivity.class).putExtra("companyId",id)

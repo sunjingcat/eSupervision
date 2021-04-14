@@ -155,7 +155,7 @@ public class PipePartInfoActivity extends MyBaseActivity {
                         , 1001);
                 break;
             case R.id.bt_ok:
-                startActivity(new Intent(this, InspectActivity.class).putExtra("deviceType", "3").putExtra("deviceId", pipePartBean.getDeviceId()));
+                startActivity(new Intent(this, InspectActivity.class).putExtra("deviceType", "3").putExtra("deviceId", pipePartBean.getId()));
                 break;
             case R.id.et_record:
                 if (pipePartBean == null) return;

@@ -184,6 +184,7 @@
         <activity android:name=".business.equipment.AddPipePartActivity" />
         <activity android:name=".business.equipment.PipePartListActivity" />
         <activity android:name=".business.equipment.PipePartInfoActivity" />
+        <activity android:name=".business.equipment.SearchEquipmentActivity" />
     </application>
 
 </manifest>

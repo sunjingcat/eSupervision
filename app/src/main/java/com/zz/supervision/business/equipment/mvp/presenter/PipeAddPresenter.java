@@ -50,7 +50,7 @@ public class PipeAddPresenter extends MyBasePresenterImpl<Contract.IGetPipeAddVi
             RxNetUtils.request(getApi(ApiService.class).addPressurepipePart(map), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
-                    view.showSubmitResult((String) jsonT.getData());
+                    view.showSubmitResult( jsonT.getData().toString());
 //                    view.showToast(jsonT.getMessage());
                 }
 

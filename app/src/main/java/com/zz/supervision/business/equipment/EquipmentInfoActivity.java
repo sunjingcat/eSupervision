@@ -240,7 +240,7 @@ public class EquipmentInfoActivity extends MyBaseActivity {
     }
 
     public void getImage(String id) {
-        RxNetUtils.request(getApi(ApiService.class).getImageBase64("tzsbDeviceInfo", id), new RequestObserver<JsonT<List<ImageBack>>>(this) {
+        RxNetUtils.request(getApi(ApiService.class).getImageBase64("tzsbDevice", id), new RequestObserver<JsonT<List<ImageBack>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<ImageBack>> data) {
                 if (data.isSuccess()) {

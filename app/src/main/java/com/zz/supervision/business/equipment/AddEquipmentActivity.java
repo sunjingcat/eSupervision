@@ -192,18 +192,14 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
     List<DictBean> options1Items = new ArrayList<>();
     List<List<DictBean>> options2Items = new ArrayList<>();
     List<List<List<DictBean>>> options3Items = new ArrayList<>();
-
     @Override
     public void onClick(View view) {
         super.onClick(view);
         switch (view.getId()) {
             case R.id.bt_ok:
                 postData();
-
                 break;
-
         }
-
     }
 
     private void postData() {

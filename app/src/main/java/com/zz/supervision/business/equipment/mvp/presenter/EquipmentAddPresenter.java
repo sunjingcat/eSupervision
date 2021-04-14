@@ -98,7 +98,7 @@ public class EquipmentAddPresenter extends MyBasePresenterImpl<Contract.IGetEqui
     @Override
     public void uploadEquipmentImgs( String id, String files) {
 
-        RxNetUtils.request(getApi(ApiService.class).uploadCompanyImgs("tzsbDevice", id, files), new RequestObserver<JsonT>(this) {
+        RxNetUtils.request(getApi(ApiService.class).uploadCompanyImgs("tzsbDeviceInfo", id, files), new RequestObserver<JsonT>(this) {
             @Override
             protected void onSuccess(JsonT data) {
                 if (data.isSuccess()) {

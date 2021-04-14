@@ -83,18 +83,31 @@ public class CheckAddPresenter extends MyBasePresenterImpl<Contract.IGetCheckAdd
 
     @Override
     public void beforeAddDeviceCheck(String deviceType,String deviceId) {
-        String url = deviceType.equals("3")?"beforeAddPartCheck":"beforeAddDeviceCheck";
-        RxNetUtils.request(getApi(ApiService.class).beforeAddDeviceCheck(url,deviceId), new RequestObserver<JsonT<List<BeforeAddDeviceCheck>>>(this) {
-            @Override
-            protected void onSuccess(JsonT<List<BeforeAddDeviceCheck>> jsonT) {
-                view.showBeforeAddDeviceCheck( jsonT.getData());
-            }
+        if (deviceType.equals("3")) {
+            RxNetUtils.request(getApi(ApiService.class).beforeAddDeviceCheck(deviceId), new RequestObserver<JsonT<List<BeforeAddDeviceCheck>>>(this) {
+                @Override
+                protected void onSuccess(JsonT<List<BeforeAddDeviceCheck>> jsonT) {
+                    view.showBeforeAddDeviceCheck(jsonT.getData());
+                }
 
-            @Override
-            protected void onFail2(JsonT<List<BeforeAddDeviceCheck>> stringJsonT) {
-                super.onFail2(stringJsonT);
-            }
-        }, mDialog);
+                @Override
+                protected void onFail2(JsonT<List<BeforeAddDeviceCheck>> stringJsonT) {
+                    super.onFail2(stringJsonT);
+                }
+            }, mDialog);
+        }else {
+            RxNetUtils.request(getApi(ApiService.class).beforeAddDeviceCheck(deviceId), new RequestObserver<JsonT<List<BeforeAddDeviceCheck>>>(this) {
+                @Override
+                protected void onSuccess(JsonT<List<BeforeAddDeviceCheck>> jsonT) {
+                    view.showBeforeAddDeviceCheck(jsonT.getData());
+                }
+
+                @Override
+                protected void onFail2(JsonT<List<BeforeAddDeviceCheck>> stringJsonT) {
+                    super.onFail2(stringJsonT);
+                }
+            }, mDialog);
+        }
     }
 
 
