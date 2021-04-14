@@ -108,6 +108,8 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
     ItemGroup ig_totalLength;
     @BindView(R.id.ig_licensePlate)
     ItemGroup ig_licensePlate;
+    @BindView(R.id.ig_maintenanceCompany)
+    ItemGroup ig_maintenanceCompany;
 
     @BindView(R.id.ig_location)
     ItemGroup ig_location;
@@ -230,6 +232,7 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
         params.put("installationCompany", getText(ig_installationCompany) + "");
         params.put("licensePlate", getText(ig_licensePlate) + "");
         params.put("totalLength", getText(ig_totalLength) + "");
+        params.put("maintenanceCompany", getText(ig_maintenanceCompany) + "");
         if (lon != 0.0 && lat != 0.0) {
             params.put("longitude", lon);
             params.put("latitude", lat);
@@ -329,6 +332,9 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
         ig_licensePlate.setVisibility(deviceType1.equals("8") ? View.VISIBLE : View.GONE);
         ig_totalLength.setChooseContent(deviceType1.equals("3") ?data.getTotalLength()+"" :"");
         ig_licensePlate.setChooseContent(deviceType1.equals("8") ?data.getLicensePlate()+ "": "");
+
+        ig_maintenanceCompany.setChooseContent(deviceType1.equals("4") ?data.getMaintenanceCompany()+ "": "");
+        ig_maintenanceCompany.setVisibility(deviceType1.equals("4") ? View.VISIBLE : View.GONE);
 //        ig_location.setChooseContent();
         lon = data.getLongitude();
         lat = data.getLatitude();
@@ -497,7 +503,7 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
                         deviceType2 = options2Items.get(options1).get(option2).getDictValue();
                         ig_totalLength.setVisibility(deviceType1.equals("3") ? View.VISIBLE : View.GONE);
                         ig_licensePlate.setVisibility(deviceType1.equals("8") ? View.VISIBLE : View.GONE);
-
+                        ig_maintenanceCompany.setVisibility(deviceType1.equals("4") ? View.VISIBLE : View.GONE);
                     }
                 }).build();
                 pvOptions.setPicker(options1Items, options2Items, options3Items);

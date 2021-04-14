@@ -148,6 +148,10 @@ public class EquipmentInfoActivity extends MyBaseActivity {
             mlist.add(new DetailBean("车牌号码", data.getLicensePlate() + ""));
 
         }
+        if (data.getDeviceType1().equals("4")) {
+            mlist.add(new DetailBean("维保单位", data.getMaintenanceCompany() + ""));
+
+        }
 
         getImage(data.getId());
 

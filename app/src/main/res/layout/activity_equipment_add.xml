@@ -173,6 +173,12 @@
                 app:title="车牌号码"
                 android:visibility="gone"/>
             <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_maintenanceCompany"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="维保单位"
+                android:visibility="gone"/>
+            <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
