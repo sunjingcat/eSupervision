@@ -160,8 +160,26 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         private String searchValue;// ,
         private String updateBy;// ,
         private String updateTime;//
+        private int childType;//
+        private boolean check;//
         private int isLastNotSatisfy;//
         private ArrayList<Children> childrenList;
+
+        public ArrayList<Children> getChildrenList() {
+            return childrenList;
+        }
+
+        public int getChildType() {
+            return childType;
+        }
+
+        public boolean isCheck() {
+            return check;
+        }
+
+        public void setCheck(boolean check) {
+            this.check = check;
+        }
 
         public int getIsLastNotSatisfy() {
             return isLastNotSatisfy;

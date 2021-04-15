@@ -19,35 +19,35 @@ import com.zz.supervision.widget.CenterAlignImageSpan;
 
 import org.jetbrains.annotations.NotNull;
 
-public class RootNodeProvider extends BaseNodeProvider {
+public class ThrirdNodeProvider extends BaseNodeProvider {
     OnProviderOnClick onProviderOnClick;
     int enable;
 
-    public RootNodeProvider(OnProviderOnClick onProviderOnClick, int enable) {
+    public ThrirdNodeProvider(OnProviderOnClick onProviderOnClick, int enable) {
         this.onProviderOnClick = onProviderOnClick;
         this.enable = enable;
     }
 
     @Override
     public int getItemViewType() {
-        return 0;
+        return 3;
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.item_root;
+        return R.layout.item_third;
     }
 
     @Override
     public void convert(@NotNull BaseViewHolder baseViewHolder, BaseNode data) {
         // 数据类型需要自己强转
-        SuperviseBean entity = (SuperviseBean) data;
+        SuperviseBean.Children entity = (SuperviseBean.Children) data;
 
-        baseViewHolder.setText(R.id.itemContent, entity.getItemRemark());
+//        baseViewHolder.setText(R.id.itemContent, entity.g());
         baseViewHolder.getView(R.id.item_check).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((SuperviseBean) data).setCheck(!((SuperviseBean) data).isCheck());
+                entity.setCheck(!((SuperviseBean.Children) data).isCheck());
                 onProviderOnClick.onItemOnclick(data, 0);
             }
         });

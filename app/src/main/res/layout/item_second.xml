@@ -56,6 +56,15 @@
             android:textColor="#4A4A4A"
             android:drawablePadding="10dp"
             android:text="否" />
+        <TextView
+            android:id="@+id/item_check_ignore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:drawableLeft="@drawable/check_item"
+            android:textColor="#4A4A4A"
+            android:drawablePadding="10dp"
+            android:text="不涉及此项" />
     </LinearLayout>
 
 </LinearLayout>

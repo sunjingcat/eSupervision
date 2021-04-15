@@ -17,10 +17,10 @@ import com.zz.supervision.utils.TabUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class SecondNodeProvider extends BaseNodeProvider {
-    SuperviseAdapter.OnProviderOnClick onProviderOnClick;
+    OnProviderOnClick onProviderOnClick;
     int enable;
 
-    public SecondNodeProvider(SuperviseAdapter.OnProviderOnClick onProviderOnClick, int enable) {
+    public SecondNodeProvider(OnProviderOnClick onProviderOnClick, int enable) {
         this.onProviderOnClick = onProviderOnClick;
         this.enable = enable;
     }
@@ -44,31 +44,37 @@ public class SecondNodeProvider extends BaseNodeProvider {
         baseViewHolder.setTextColor(R.id.itemName,((SuperviseBean.Children) data).getIsLastNotSatisfy()==1? Color.parseColor("#FFC12A2A"):Color.parseColor("#4A4A4A"));
 
         if (((SuperviseBean.Children) data).getIsSatisfy() == 1) {
-
             TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_check_circle);
-
         } else {
             TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_uncheck_circle);
         }
-
         if (((SuperviseBean.Children) data).getIsSatisfy() == 2) {
             TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_check_circle);
         } else {
             TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_uncheck_circle);
         }
+        if (((SuperviseBean.Children) data).getIsSatisfy() == 3) {
+            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_ignore), R.drawable.image_check_circle);
+        } else {
+            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_ignore), R.drawable.image_uncheck_circle);
+        }
         if (enable == 1) {
             if (((SuperviseBean.Children) data).getIsSatisfy() == 0) {
                 TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_check_enable_circle);
                 baseViewHolder.getView(R.id.item_check_yes).setVisibility(View.GONE);
+                baseViewHolder.getView(R.id.item_check_ignore).setVisibility(View.GONE);
                 baseViewHolder.getView(R.id.item_check_no).setVisibility(View.VISIBLE);
-            } else {
-                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_check_enable_circle);
+            }else if (((SuperviseBean.Children) data).getIsSatisfy() == 1) {
+                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_check_enable_circle);
                 baseViewHolder.getView(R.id.item_check_yes).setVisibility(View.VISIBLE);
+                baseViewHolder.getView(R.id.item_check_ignore).setVisibility(View.GONE);
+                baseViewHolder.getView(R.id.item_check_no).setVisibility(View.GONE);
+            } else {
+                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_ignore), R.drawable.image_check_enable_circle);
+                baseViewHolder.getView(R.id.item_check_yes).setVisibility(View.GONE);
+                baseViewHolder.getView(R.id.item_check_ignore).setVisibility(View.VISIBLE);
                 baseViewHolder.getView(R.id.item_check_no).setVisibility(View.GONE);
             }
-
-        }
-        if (enable == 1) {
 
         }
         baseViewHolder.getView(R.id.item_check_yes).setOnClickListener(new View.OnClickListener() {
@@ -81,6 +87,12 @@ public class SecondNodeProvider extends BaseNodeProvider {
             @Override
             public void onClick(View v) {
                 onProviderOnClick.onItemOnclick(data, 2);
+            }
+        });
+        baseViewHolder.getView(R.id.item_check_ignore).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onProviderOnClick.onItemOnclick(data, 3);
             }
         });
     }

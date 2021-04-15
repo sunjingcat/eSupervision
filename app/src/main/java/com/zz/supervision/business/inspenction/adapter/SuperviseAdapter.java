@@ -15,6 +15,7 @@ public class SuperviseAdapter extends BaseNodeAdapter {
         super();
         addNodeProvider(new RootNodeProvider(onProviderOnClick,enable));
         addNodeProvider(new SecondNodeProvider(onProviderOnClick,enable));
+        addNodeProvider(new ThrirdNodeProvider(onProviderOnClick,enable));
         addFooterNodeProvider(new FooterNodeProvider(onProviderOnClick));
     }
 
@@ -24,13 +25,14 @@ public class SuperviseAdapter extends BaseNodeAdapter {
         if (node instanceof SuperviseBean) {
             return 0;
         } else if (node instanceof SuperviseBean.Children) {
-            return 1;
+            if (((SuperviseBean.Children) node).getChildType()==0) {
+                return 1;
+            }else {
+                return 3;
+            }
         }else if (node instanceof SuperviseBean.RootFooterNode) {
             return 2;
         }
         return -1;
-    }
-    public interface OnProviderOnClick{
-        void onItemOnclick(BaseNode node,int type);
     }
 }

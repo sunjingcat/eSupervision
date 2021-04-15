@@ -11,9 +11,9 @@ import com.zz.supervision.bean.SuperviseBean;
 import org.jetbrains.annotations.NotNull;
 
 public class FooterNodeProvider extends BaseNodeProvider {
-    SuperviseAdapter.OnProviderOnClick onProviderOnClick;
+    OnProviderOnClick onProviderOnClick;
 
-    public FooterNodeProvider(SuperviseAdapter.OnProviderOnClick onProviderOnClick) {
+    public FooterNodeProvider(OnProviderOnClick onProviderOnClick) {
         this.onProviderOnClick = onProviderOnClick;
     }
 

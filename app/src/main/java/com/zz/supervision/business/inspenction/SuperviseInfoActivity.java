@@ -14,6 +14,7 @@ import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.bean.SuperviseInfoBean;
+import com.zz.supervision.business.inspenction.adapter.OnProviderOnClick;
 import com.zz.supervision.business.inspenction.adapter.SuperviseAdapter;
 import com.zz.supervision.business.record.ShowDocActivity;
 import com.zz.supervision.net.ApiService;
@@ -76,7 +77,7 @@ public class SuperviseInfoActivity extends MyBaseActivity {
     protected void initView() {
         ButterKnife.bind(this);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new SuperviseAdapter(new SuperviseAdapter.OnProviderOnClick() {
+        adapter = new SuperviseAdapter(new OnProviderOnClick() {
             @Override
             public void onItemOnclick(BaseNode node, int type) {
                 if (type == 10) {
