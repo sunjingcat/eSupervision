@@ -1,5 +1,6 @@
 package com.zz.supervision.business.inspenction;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,9 +23,11 @@ import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.BusinessType;
+import com.zz.supervision.bean.EquipmentBean;
 import com.zz.supervision.bean.LawEnforcerBean;
 import com.zz.supervision.business.company.CompanyListActivity;
 import com.zz.supervision.business.company.PeopleActivity;
+import com.zz.supervision.business.equipment.EquipmentListActivity;
 import com.zz.supervision.business.risk.RiskSuperviseActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
@@ -32,6 +35,7 @@ import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.utils.TimeUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -58,18 +62,34 @@ public class XCHZFActivity extends MyBaseActivity {
     TextView etCompany;
     @BindView(R.id.et_type)
     TextView etType;
-    @BindView(R.id.et_InspectionType)
-    TextView et_InspectionType;
     @BindView(R.id.et_people)
     TextView etPeople;
     @BindView(R.id.et_startTime)
     TextView etStartTime;
+    @BindView(R.id.et_device)
+    TextView et_device;
+    @BindView(R.id.et_endTime)
+    TextView et_endTime;
+    @BindView(R.id.ll_device)
+    LinearLayout ll_device;
+    @BindView(R.id.ll_endTime)
+    LinearLayout ll_endTime;
     @BindView(R.id.ed_cause)
     EditText edCause;
     @BindView(R.id.bt_ok)
     TextView btOk;
     @BindView(R.id.ll_company)
     LinearLayout llCompany;
+    @BindView(R.id.v_endTime)
+    View v_endTime;
+    @BindView(R.id.view_device)
+    View view_device;
+    @BindView(R.id.view_InspectionCheckType)
+    View view_InspectionCheckType;
+    @BindView(R.id.et_InspectionCheckType)
+    TextView et_InspectionCheckType;
+    @BindView(R.id.ll_InspectionCheckType)
+    LinearLayout ll_InspectionCheckType;
     @BindView(R.id.et_socialCreditCode)
     TextView etSocialCreditCode;
     @BindView(R.id.et_legalRepresentative)
@@ -83,12 +103,12 @@ public class XCHZFActivity extends MyBaseActivity {
     @BindView(R.id.ll_company_info)
     LinearLayout llCompanyInfo;
     CompanyBean companyBean;
+    EquipmentBean equipment;
     int type = 0;
     int inspectionType = 0;
-    String inspectionTime = "";
     String names = "";
     List<BusinessType> businessTypeList = new ArrayList<>();
-    List<BusinessType> inspectionList = new ArrayList<>();
+    List<BusinessType> inspectionCheckTypeList = new ArrayList<>();
     ArrayList<LawEnforcerBean> lawEnforcerBeanArrayList = new ArrayList<>();
     SelectPopupWindows selectPopupWindows;
 
@@ -111,9 +131,7 @@ public class XCHZFActivity extends MyBaseActivity {
             getLawEnforcerType();
             etType.setText("");
             type = 0;
-            if (company.getCompanyType() == 6) {
-                getInspectionType();
-            }
+
         }
     }
 
@@ -122,7 +140,7 @@ public class XCHZFActivity extends MyBaseActivity {
         ToolBarUtils.getInstance().setNavigation(toolbar, 1);
     }
 
-    @OnClick({R.id.ll_company, R.id.ll_company_info, R.id.et_type, R.id.et_InspectionType, R.id.et_people, R.id.et_startTime, R.id.bt_ok})
+    @OnClick({R.id.ll_company, R.id.ll_company_info, R.id.et_type, R.id.et_people, R.id.et_startTime, R.id.bt_ok, R.id.et_device, R.id.et_endTime, R.id.ll_InspectionCheckType})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_company:
@@ -131,101 +149,41 @@ public class XCHZFActivity extends MyBaseActivity {
             case R.id.ll_company_info:
                 startActivityForResult(new Intent(this, CompanyListActivity.class).putExtra("select", "xczf"), 1001);
                 break;
+            case R.id.et_device:
+                startActivityForResult(new Intent(this, EquipmentListActivity.class).putExtra("select", "xczf").putExtra("id", companyBean.getId()).putExtra("companyType", companyBean.getCompanyType() + ""), 1002);
+                break;
             case R.id.et_type:
                 if (businessTypeList.size() == 0) {
                     showToast("请先选择企业");
                     return;
                 }
-                UIAdjuster.closeKeyBoard(this);
-                List<String> list = new ArrayList<>();
-                List<String> list1 = new ArrayList<>();
-                for (int i = 0; i < businessTypeList.size(); i++) {
-                    list.add(businessTypeList.get(i).getDictLabel());
-                    list1.add(businessTypeList.get(i).getDictValue());
-                }
-                String[] array = (String[]) list.toArray(new String[list.size()]);
-                String[] values = (String[]) list1.toArray(new String[list1.size()]);
-                selectPopupWindows = new SelectPopupWindows(this, array);
-                selectPopupWindows.showAtLocation(findViewById(R.id.bg),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                selectPopupWindows.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
-                    @Override
-                    public void onSelected(int index, String msg) {
-                        etType.setText(msg);
-                        type = Integer.parseInt(values[index]);
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        selectPopupWindows.dismiss();
-                    }
-                });
+                showSelect("type", businessTypeList);
                 break;
-            case R.id.et_InspectionType:
-                if (inspectionList.size() == 0) {
+            case R.id.ll_InspectionCheckType:
+                if (inspectionCheckTypeList.size() == 0) {
                     showToast("请先选择企业");
                     return;
                 }
-                UIAdjuster.closeKeyBoard(this);
-                List<String> list2 = new ArrayList<>();
-                List<String> list3 = new ArrayList<>();
-                for (int i = 0; i < inspectionList.size(); i++) {
-                    list2.add(inspectionList.get(i).getDictLabel());
-                    list3.add(inspectionList.get(i).getDictValue());
-                }
-                String[] array1 = (String[]) list2.toArray(new String[list2.size()]);
-                String[] values1 = (String[]) list3.toArray(new String[list3.size()]);
-                selectPopupWindows = new SelectPopupWindows(this, array1);
-                selectPopupWindows.showAtLocation(findViewById(R.id.bg),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                selectPopupWindows.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
-                    @Override
-                    public void onSelected(int index, String msg) {
-                        et_InspectionType.setText(msg);
-                        type = Integer.parseInt(values1[index]);
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        selectPopupWindows.dismiss();
-                    }
-                });
+                showSelect("tzsb_inspection_category", inspectionCheckTypeList);
                 break;
+
             case R.id.et_people:
                 startActivityForResult(new Intent(this, PeopleActivity.class), 2001);
                 break;
             case R.id.et_startTime:
-                if (businessTypeList.size() == 0) {
+                if (companyBean == null) {
                     showToast("请先选择企业");
                     return;
                 }
-                DatePickDialog dialog = new DatePickDialog(XCHZFActivity.this);
-                //设置上下年分限制
-                //设置上下年分限制
-                dialog.setYearLimt(20);
-                //设置标题
-                dialog.setTitle("选择时间");
-                //设置类型
-                dialog.setType(companyBean.getCompanyType() == 3 || companyBean.getCompanyType() == 4 ? DateType.TYPE_YMDHM : DateType.TYPE_YMD);
-                //设置消息体的显示格式，日期格式
-                dialog.setMessageFormat(companyBean.getCompanyType() == 3 || companyBean.getCompanyType() == 4 ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd");
-                //设置选择回调
-                dialog.setOnChangeLisener(new OnChangeLisener() {
-                    @Override
-                    public void onChanged(Date date) {
-                        Log.v("+++", date.toString());
-                    }
-                });
-                //设置点击确定按钮回调
-                dialog.setOnSureLisener(new OnSureLisener() {
-                    @Override
-                    public void onSure(Date date) {
-                        String time = TimeUtils.getTime(date.getTime(), companyBean.getCompanyType() == 3 || companyBean.getCompanyType() == 4 ? TimeUtils.DEFAULT_DATE_FORMAT1 : TimeUtils.DATE_FORMAT_DATE);
-                        inspectionTime = time;
-                        etStartTime.setText(time);
-                    }
-                });
-                dialog.show();
+
+                selectTime(etStartTime);
+                break;
+            case R.id.et_endTime:
+                if (companyBean == null) {
+                    showToast("请先选择企业");
+                    return;
+                }
+                selectTime(et_endTime);
                 break;
 
             case R.id.bt_ok:
@@ -246,6 +204,13 @@ public class XCHZFActivity extends MyBaseActivity {
                     getLawEnforcerType();
                     etType.setText("");
                     type = 0;
+
+                }
+            } else if (requestCode == 1002) {
+                equipment = (EquipmentBean) data.getSerializableExtra("equipment");
+                if (equipment != null) {
+                    et_device.setText(equipment.getDeviceName() + "");
+
                 }
             } else if (requestCode == 2001) {
                 ArrayList<LawEnforcerBean> arrayList = data.getParcelableArrayListExtra("select");
@@ -277,6 +242,15 @@ public class XCHZFActivity extends MyBaseActivity {
         etBusinessPlace.setText(company.getBusinessPlace() + "");
         etContact.setText(company.getContact() + "");
         etContactInformation.setText(company.getContactInformation() + "");
+        ll_endTime.setVisibility(company.getCompanyType() == 6 ? View.VISIBLE : View.GONE);
+        ll_device.setVisibility(company.getCompanyType() == 6 ? View.VISIBLE : View.GONE);
+        v_endTime.setVisibility(company.getCompanyType() == 6 ? View.VISIBLE : View.GONE);
+        view_device.setVisibility(company.getCompanyType() == 6 ? View.VISIBLE : View.GONE);
+        ll_InspectionCheckType.setVisibility(company.getCompanyType() == 6 ? View.VISIBLE : View.GONE);
+        view_InspectionCheckType.setVisibility(company.getCompanyType() == 6 ? View.VISIBLE : View.GONE);
+        if (company.getCompanyType() == 6) {
+            getInspectionCheckType();
+        }
     }
 
     void postDate() {
@@ -293,6 +267,7 @@ public class XCHZFActivity extends MyBaseActivity {
             showToast("请选择执法类型");
             return;
         }
+        String inspectionTime = getText(etStartTime);
         if (TextUtils.isEmpty(inspectionTime)) {
             showToast("请选择执法时间");
             return;
@@ -300,6 +275,25 @@ public class XCHZFActivity extends MyBaseActivity {
         String reason = edCause.getText().toString();
         if (!TextUtils.isEmpty(reason)) {
             map.put("reason", reason);
+        }
+        if (companyBean.getCompanyType() == 6) {
+            String endTime = getText(et_endTime);
+            if (TextUtils.isEmpty(endTime)) {
+                showToast("请选择执法结束时间");
+                return;
+            }
+            map.put("inspectionTimeEnd", endTime);
+            map.put("inspectionTimeStart", inspectionTime);
+            if (TextUtils.isEmpty(equipment.getId())) {
+                showToast("请选择执法设备");
+                return;
+            }
+            map.put("deviceCodes", equipment.getDeviceCode());
+            if (inspectionType==0) {
+                showToast("请选择检查类型");
+                return;
+            }
+            map.put("inspectionCheckType", inspectionType);
         }
 
         map.put("companyId", companyBean.getId());
@@ -312,7 +306,11 @@ public class XCHZFActivity extends MyBaseActivity {
             @Override
             protected void onSuccess(JsonT<Integer> jsonT) {
                 String reason = edCause.getText().toString();
-                if (type == 1 || type == 2 || type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
+                if (type == 1 || type == 2
+                        || type == 5
+                        || type == 6 || type == 7
+                        || type == 8 || type == 9 || type == 10
+                        || type == 11|| type == 12 || type == 13 || type == 14 || type == 15 || type == 16 || type == 17|| type == 18) {
                     startActivity(new Intent(XCHZFActivity.this, SuperviseActivity.class)
                             .putExtra("company", companyBean.getOperatorName())
                             .putExtra("id", jsonT.getData() + "")
@@ -338,8 +336,82 @@ public class XCHZFActivity extends MyBaseActivity {
             @Override
             protected void onFail2(JsonT stringJsonT) {
                 super.onFail2(stringJsonT);
+                showToast(stringJsonT.getMessage());
             }
         }, LoadingUtils.build(this));
+    }
+
+    private void selectTime(TextView textView) {
+        DateType dateType = DateType.TYPE_YMD;
+        String format = "yyyy-MM-dd";
+        switch (companyBean.getCompanyType()) {
+            case 3:
+            case 4:
+            case 6:
+                dateType = DateType.TYPE_YMDHM;
+                format = "yyyy-MM-dd HH:mm";
+                break;
+
+        }
+        DatePickDialog dialog = new DatePickDialog(XCHZFActivity.this);
+        //设置上下年分限制
+        //设置上下年分限制
+        dialog.setYearLimt(20);
+        //设置标题
+        dialog.setTitle("选择时间");
+        //设置类型
+        dialog.setType(dateType);
+        //设置消息体的显示格式，日期格式
+        dialog.setMessageFormat(format);
+        //设置选择回调
+        dialog.setOnChangeLisener(new OnChangeLisener() {
+            @Override
+            public void onChanged(Date date) {
+                Log.v("+++", date.toString());
+            }
+        });
+        //设置点击确定按钮回调
+        String finalFormat = format;
+        dialog.setOnSureLisener(new OnSureLisener() {
+            @Override
+            public void onSure(Date date) {
+                String time = TimeUtils.getTime(date.getTime(), new SimpleDateFormat(finalFormat));
+                textView.setText(time);
+            }
+        });
+        dialog.show();
+    }
+
+    private void showSelect(String selectType, List<BusinessType> businessTypeList) {
+        UIAdjuster.closeKeyBoard(this);
+        List<String> list = new ArrayList<>();
+        List<String> list1 = new ArrayList<>();
+        for (int i = 0; i < businessTypeList.size(); i++) {
+            list.add(businessTypeList.get(i).getDictLabel());
+            list1.add(businessTypeList.get(i).getDictValue());
+        }
+        String[] array = (String[]) list.toArray(new String[list.size()]);
+        String[] values = (String[]) list1.toArray(new String[list1.size()]);
+        selectPopupWindows = new SelectPopupWindows(this, array);
+        selectPopupWindows.showAtLocation(findViewById(R.id.bg),
+                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        selectPopupWindows.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
+            @Override
+            public void onSelected(int index, String msg) {
+                if (selectType.equals("tzsb_inspection_category")) {
+                    et_InspectionCheckType.setText(msg);
+                    inspectionType = Integer.parseInt(values[index]);
+                } else {
+                    etType.setText(msg);
+                    type = Integer.parseInt(values[index]);
+                }
+            }
+
+            @Override
+            public void onCancel() {
+                selectPopupWindows.dismiss();
+            }
+        });
     }
 
     public void getLawEnforcerType() {
@@ -360,20 +432,20 @@ public class XCHZFActivity extends MyBaseActivity {
         }, LoadingUtils.build(this));
     }
 
-    public void getInspectionType() {
+    public void getInspectionCheckType() {
         Map<String, Object> map = new HashMap<>();
-        map.put("dictType", "tzsb_check_type");
+        map.put("dictType", "tzsb_inspection_category");
         RxNetUtils.request(getApi(ApiService.class).getDicts(map), new RequestObserver<JsonT<List<BusinessType>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
-                inspectionList.clear();
-                inspectionList.addAll(jsonT.getData());
+                inspectionCheckTypeList.clear();
+                inspectionCheckTypeList.addAll(jsonT.getData());
             }
 
             @Override
             protected void onFail2(JsonT<List<BusinessType>> stringJsonT) {
                 super.onFail2(stringJsonT);
-                inspectionList.clear();
+                inspectionCheckTypeList.clear();
             }
         }, LoadingUtils.build(this));
     }

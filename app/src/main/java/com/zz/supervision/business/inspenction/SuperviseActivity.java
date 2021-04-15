@@ -129,6 +129,8 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
             url = "ypInspectionRecord";
         }else if (type == 8||type == 9||type == 10) {
             url = "ylqxInspectionRecord";
+        }else if (type == 11||type == 12||type == 13||type == 14||type == 15||type == 16||type == 17||type == 18) {
+            url = "tzsbInspectionRecord";
         }
 
         toolbaSubtitle.setVisibility(View.VISIBLE);
@@ -147,7 +149,8 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         String type = getIntent().getStringExtra("typeText");
         String time = getIntent().getStringExtra("inspectionTime");
         String reason = getIntent().getStringExtra("reason");
-        id = getIntent().getStringExtra("id");
+//        id = getIntent().getStringExtra("id");
+        id = "1027";
         tvCompany.setText(company + "");
         tvInspector.setText("检查员：" + lawEnforcerText);
         tvType.setText("检查类型：" + type + "");

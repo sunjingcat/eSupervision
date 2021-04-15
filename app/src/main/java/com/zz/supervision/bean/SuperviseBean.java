@@ -161,6 +161,7 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         private String updateBy;// ,
         private String updateTime;//
         private int isLastNotSatisfy;//
+        private ArrayList<Children> childrenList;
 
         public int getIsLastNotSatisfy() {
             return isLastNotSatisfy;
@@ -229,7 +230,12 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         @Nullable
         @Override
         public List<BaseNode> getChildNode() {
-            return null;
+            if (childrenList == null) return null;
+            List<BaseNode> childs = new ArrayList<>();
+            for (BaseNode node : childrenList) {
+                childs.add(node);
+            }
+            return childs;
         }
     }
 

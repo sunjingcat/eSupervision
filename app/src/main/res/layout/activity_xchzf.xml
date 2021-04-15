@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorbg"
-    android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:id="@+id/bg"
+    android:orientation="vertical"
     tools:context=".business.inspenction.XCHZFActivity">
-
 
 
     <androidx.appcompat.widget.Toolbar
@@ -243,9 +243,46 @@
                 android:padding="10dp">
 
                 <LinearLayout
+                    android:id="@+id/ll_device"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
+                        android:text="执法设备" />
+
+                    <TextView
+                        android:id="@+id/et_device"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:drawableRight="@drawable/image_arrow"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="请选择"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
+
+                    </TextView>
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view_device"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorbg" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@color/white"
                     android:orientation="horizontal">
@@ -271,14 +308,21 @@
 
                     </TextView>
                 </LinearLayout>
+
+                <View
+                    android:id="@+id/view_InspectionCheckType"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorbg" />
+
                 <LinearLayout
+                    android:id="@+id/ll_InspectionCheckType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@color/white"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:orientation="horizontal">
 
                     <TextView
                         style="@style/textLeftStyle"
@@ -286,7 +330,7 @@
                         android:text="检查类型" />
 
                     <TextView
-                        android:id="@+id/et_InspectionType"
+                        android:id="@+id/et_InspectionCheckType"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/white"
@@ -346,6 +390,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@color/white"
                     android:orientation="horizontal">
 
@@ -356,6 +401,44 @@
 
                     <TextView
                         android:id="@+id/et_startTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:drawableRight="@drawable/image_arrow"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="请选择"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#333"
+                        android:textSize="14dp">
+
+                    </TextView>
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/v_endTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorbg"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/ll_endTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
+                        android:text="结束时间" />
+
+                    <TextView
+                        android:id="@+id/et_endTime"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/white"
@@ -386,8 +469,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/white"
-                    android:hint="请输入检查事由"
                     android:gravity="top"
+                    android:hint="请输入检查事由"
                     android:textColor="@color/colorTextBlack99" />
             </LinearLayout>
 
@@ -395,13 +478,13 @@
                 android:id="@+id/bt_ok"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:background="@drawable/border_radius_3_blue"
-                android:text="开始执法"
-                android:gravity="center"
                 android:layout_margin="10dp"
+                android:background="@drawable/border_radius_3_blue"
+                android:gravity="center"
                 android:padding="12dp"
-                android:textSize="16sp"/>
+                android:text="开始执法"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

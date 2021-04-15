@@ -90,6 +90,9 @@ public interface ApiService {
     @GET("/app/v1/supervise/llglInspectionRecord/list")
     Observable<JsonT<List<RecordBean>>> getColdRecordList(@QueryMap Map<String, Object> params);
 
+    @GET("/app/v1/supervise/tzsbInspectionRecord/list")
+    Observable<JsonT<List<RecordBean>>> getTzsbInspectionRecordList(@QueryMap Map<String, Object> params);
+
     @GET("/app/v1/supervise/{url}/list")
     Observable<JsonT<List<RecordBean>>> getYaoRecordList(@Path("url") String url, @QueryMap Map<String, Object> params);
 
