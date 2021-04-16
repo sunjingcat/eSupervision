@@ -137,7 +137,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     private void reverseCheck(SuperviseBean node, int type) {
 
         if (node.getChildType() == 0) {
-            for (BaseNode superviseBean : adapter.getData()) {
+            for (BaseNode superviseBean : mlist) {
                 if (((SuperviseBean) superviseBean).getId()==(((SuperviseBean) node).getItemPid())) {
                     if (type == 1) {
                         boolean isAllYes = true;
@@ -191,7 +191,9 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
 
     @Override
     public void showFoodSuperviseList(List<SuperviseBean> data) {
-        adapter.setList(data);
+        mlist.clear();
+        mlist.addAll(data);
+        adapter.setList(mlist);
         adapter.notifyDataSetChanged();
 
     }
@@ -255,7 +257,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                 customDialog.show();
                 break;
             case R.id.bt_ok:
-                mlist = adapter.getData();
+//                mlist = mlist;
                 postBeans = new ArrayList<>();
                 for (BaseNode node : mlist) {
                     getPostBeans((SuperviseBean) node);
