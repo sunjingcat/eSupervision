@@ -137,7 +137,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     private void reverseCheck(SuperviseBean node, int type) {
 
         if (node.getChildType() == 0) {
-            for (BaseNode superviseBean : mlist) {
+            for (BaseNode superviseBean : adapter.getData()) {
                 if (((SuperviseBean) superviseBean).getId()==(((SuperviseBean) node).getItemPid())) {
                     if (type == 1) {
                         boolean isAllYes = true;
