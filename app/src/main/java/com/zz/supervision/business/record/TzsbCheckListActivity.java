@@ -425,7 +425,7 @@ public class TzsbCheckListActivity extends MyBaseActivity implements OnRefreshLi
             map.put("endTime", endTime);
         }
         if (!TextUtils.isEmpty(inspectionResult)) {
-            map.put("inspectionResult", inspectionResult);
+            map.put("type", inspectionResult);
         }
         if (status != 0) {
             map.put("status", status);

@@ -84,7 +84,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         } else if (type == 11 || type == 12 || type == 13 || type == 14 || type == 15 || type == 16 || type == 17 || type == 18) {
             url = "tzsbInspectionRecord";
         }
-
+        final int[] num = {0};
         adapter = new SuperviseAdapter(new OnProviderOnClick() {
             @Override
             public void onItemOnclick(BaseNode node, int type) {
@@ -113,6 +113,8 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         }, 0,url.equals("tzsbInspectionRecord") ?1:0);
 
         rv.setAdapter(adapter);
+
+
 
         toolbaSubtitle.setVisibility(View.VISIBLE);
         initData();
@@ -191,6 +193,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     public void showFoodSuperviseList(List<SuperviseBean> data) {
         adapter.setList(data);
         adapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -262,7 +265,8 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         }
     }
 
-    public ArrayList<SuperviseBean.PostBean> getPostBeans(SuperviseBean children) {
+    public void getPostBeans(SuperviseBean children) {
+        LogUtils.v("---------",children.getItemDegree()+"-----"+children.getItemDegree()+"-----"+children.getId());
         if (children.getChildType() == 0) {
             if (children.getIsSatisfy() != 0) {
                 postBeans.add(new SuperviseBean.PostBean(children.getId()+"", getSatisfyValue(children.getIsSatisfy())));
@@ -272,7 +276,6 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                 getPostBeans(grand);
             }
         }
-        return postBeans;
     }
 
     int getSatisfyValue(int num) {

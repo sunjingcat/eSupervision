@@ -244,7 +244,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             mlist.add(new DetailBean("问题数", resposeBean.getProblemCount() + ""));
             if (resposeBean.getProblemCount() > 0) {
                 ll_reformTime.setVisibility(View.VISIBLE);
-                ll_result_reduction.setVisibility(View.VISIBLE);
+
                 getDicts("reformTime");
             }
         } else if (type >= 11 && type <= 18) {
@@ -253,13 +253,31 @@ public class SuperviseSignActivity extends MyBaseActivity {
             getDicts("tzsb_inspection_opinion");
             if (resposeBean.getProblemCount() > 0) {
                 ll_reformTime.setVisibility(View.VISIBLE);
-                getDicts("tzsb_result_reduction");
-                getDicts("reformTime");
+                ll_result_reduction.setVisibility(View.VISIBLE);
+                if (resposeBean.getStatus() != 3) {
+                    getDicts("tzsb_result_reduction");
+                    getDicts("reformTime");
+                }
             }
+
             etViolation.setText(resposeBean.getViolation() + "");
             tvViolation.setVisibility(View.GONE);
             etViolation.setVisibility(View.VISIBLE);
             ll_violation.setVisibility(View.VISIBLE);
+            if (resposeBean.getStatus() == 3) {
+                inspectionOpinion = resposeBean.getInspectionOpinion();
+                resultReduction = resposeBean.getResultReduction();
+                et_inspection_opinion.setText(resposeBean.getInspectionOpinionText());
+                et_result_reduction.setText(resposeBean.getResultReductionText());
+                et_inspection_opinion.setEnabled(false);
+                et_result_reduction.setEnabled(false);
+                et_result_reduction.setCompoundDrawables(null, null, null, null);
+                et_inspection_opinion.setCompoundDrawables(null, null, null, null);
+                tvViolation.setText(resposeBean.getViolation() + "");
+                tvViolation.setVisibility(View.VISIBLE);
+                etViolation.setVisibility(View.GONE);
+                ll_violation.setVisibility(TextUtils.isEmpty(resposeBean.getViolation()) ? View.GONE : View.VISIBLE);
+            }
         } else {
             mlist.add(new DetailBean("静态评分项分数", resposeBean.getStaticScore() + "", true));
             mlist.add(new DetailBean("动态评分项分数", resposeBean.getDynamicScore() + ""));
@@ -449,34 +467,36 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
     void postData() {
         if (TextUtils.isEmpty(lawEnforcer_sign)) {
-            if (type == 1 || type == 2 || type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
-                if (type >= 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
-                    showToast("法人签字");
-                } else {
-                    showToast("执法人签字");
-                }
+            if (type == 1 || type == 2) {
+                showToast("执法人签字");
+            } else if (type >= 11 || type <= 18) {
+                showToast("企业负责人签字");
+            } else if (type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
+                showToast("法人签字");
             } else {
                 showToast("填表人签字");
             }
             return;
         }
         if (TextUtils.isEmpty(legalRepresentative_sign)) {
-            if (type == 1 || type == 2 || type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
-                if (type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
-                    showToast("执法人签字");
-                } else {
-                    showToast("企业负责人签字");
-                }
-
+            if (type == 1 || type == 2) {
+                showToast("企业负责人签字");
+            } else if (type >= 11 || type <= 18) {
+                showToast("检查人员签字");
+            } else if (type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
+                showToast("执法人签字");
             } else {
                 showToast("企业法定代表人签字");
             }
             return;
         }
-        if (type == 3 || type == 4) {
-            if (TextUtils.isEmpty(reviewerSign_sign)) {
-                showToast("审批人签字");
 
+        if (TextUtils.isEmpty(reviewerSign_sign)) {
+            if (type == 3 || type == 4) {
+                showToast("审批人签字");
+                return;
+            }else if (type >= 11 || type <= 18) {
+                showToast("记录员签字");
                 return;
             }
         }

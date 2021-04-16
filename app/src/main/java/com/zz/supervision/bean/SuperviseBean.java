@@ -305,6 +305,8 @@ public class SuperviseBean extends BaseExpandNode  {
         private String yearCount;// 0,
         private String reason;// null,
         private String inspectionTime;// 2020年09月28日,
+        private String inspectionOpinion;// 2020年09月28日,
+        private String inspectionOpinionText;// 2020年09月28日,
         private String sumCount;// 5,
         private int problemCount;// 5,
         private String importantCount;// 1,
@@ -339,6 +341,14 @@ public class SuperviseBean extends BaseExpandNode  {
         private String totalScore;
         private String level;
         private String typeText;
+
+        public String getInspectionOpinionText() {
+            return inspectionOpinionText;
+        }
+
+        public String getInspectionOpinion() {
+            return inspectionOpinion;
+        }
 
         public String getReformTimeText() {
             return reformTimeText;

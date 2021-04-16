@@ -365,8 +365,8 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="违规项"
-                    android:textColor="#4A4A4A"
-                    android:textSize="17dp" />
+                    android:textColor="@color/colorTextBlack33"
+                    android:textSize="15sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -388,12 +388,14 @@
                     android:id="@+id/et_violation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:minHeight="100dp"
                     android:layout_marginTop="8dp"
                     android:padding="5dp"
                     android:visibility="gone"
                     android:textColor="#272727"
                     android:textSize="15dp"
-                    tools:text="违规项" />
+                    tools:text="违规项"
+                    android:background="@color/white"/>
 
             </LinearLayout>
 

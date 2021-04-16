@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.zz.supervision.R;
 import com.zz.supervision.bean.ScoreBean;
 import com.zz.supervision.bean.SuperviseBean;
+import com.zz.supervision.utils.LogUtils;
 import com.zz.supervision.utils.TabUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +21,6 @@ public class SecondNodeProvider extends BaseNodeProvider {
     OnProviderOnClick onProviderOnClick;
     int enable;
     int type;
-
     public SecondNodeProvider(OnProviderOnClick onProviderOnClick, int enable, int type) {
         this.onProviderOnClick = onProviderOnClick;
         this.enable = enable;
