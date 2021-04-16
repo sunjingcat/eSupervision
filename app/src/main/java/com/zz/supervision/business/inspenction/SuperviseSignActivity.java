@@ -94,9 +94,11 @@ public class SuperviseSignActivity extends MyBaseActivity {
     String lawEnforcer_sign;
     String legalRepresentative_sign;
     String reviewerSign_sign;
-    String url="";
-    String id="";
-    String reformTime="" ;
+    String url = "";
+    String id = "";
+    String reformTime = "";
+    String resultReduction = "";
+    String inspectionOpinion = "";
     @BindView(R.id.ll_lawEnforcer_sign)
     LinearLayout llLawEnforcerSign;
     @BindView(R.id.ll_legalRepresentative_sign)
@@ -105,14 +107,24 @@ public class SuperviseSignActivity extends MyBaseActivity {
     LinearLayout ll_violation;
     @BindView(R.id.ll_reformTime)
     LinearLayout ll_reformTime;
+    @BindView(R.id.ll_result_reduction)
+    LinearLayout ll_result_reduction;
+    @BindView(R.id.ll_inspection_opinion)
+    LinearLayout ll_inspection_opinion;
     @BindView(R.id.ll_sumCount)
     LinearLayout llSumCount;
     @BindView(R.id.tv_sign_1)
     TextView tvSign1;
     @BindView(R.id.et_reformTime)
     TextView et_reformTime;
+    @BindView(R.id.et_result_reduction)
+    TextView et_result_reduction;
+    @BindView(R.id.et_inspection_opinion)
+    TextView et_inspection_opinion;
     @BindView(R.id.tv_sign_2)
     TextView tvSign2;
+    @BindView(R.id.tv_sign_3)
+    TextView tvSign3;
     @BindView(R.id.tv_reviewerSign_sign)
     ImageView tvReviewerSignSign;
     @BindView(R.id.ll_reviewerSign_sign)
@@ -125,11 +137,14 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
     @BindView(R.id.tv_reason)
     TextView tv_reason;
-   @BindView(R.id.rv_info)
-   RecyclerView rv_info;
+    @BindView(R.id.rv_info)
+    RecyclerView rv_info;
     SignInfoAdapter adapter;
     ArrayList<DetailBean> mlist = new ArrayList<>();
     List<BusinessType> reformTimeList = new ArrayList<>();
+    List<BusinessType> inspection_opinionList = new ArrayList<>();
+    List<BusinessType> result_reductionList = new ArrayList<>();
+
     @Override
     protected int getContentView() {
         return R.layout.activity_supervise_sign;
@@ -139,7 +154,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
     protected void initView() {
         ButterKnife.bind(this);
         rv_info.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new SignInfoAdapter(R.layout.item_sign_info,mlist);
+        adapter = new SignInfoAdapter(R.layout.item_sign_info, mlist);
         rv_info.setAdapter(adapter);
 
         type = getIntent().getIntExtra("type", 0);
@@ -149,7 +164,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         } else if (type == 2) {
             url = "cyfwInspectionRecord";
             llReviewerSignSign.setVisibility(View.GONE);
-        }  else if (type == 3) {
+        } else if (type == 3) {
             url = "spxsRiskRecord";
             llReviewerSignSign.setVisibility(View.VISIBLE);
             tvSign1.setText("填表人签字");
@@ -159,21 +174,29 @@ public class SuperviseSignActivity extends MyBaseActivity {
             llReviewerSignSign.setVisibility(View.VISIBLE);
             tvSign1.setText("填表人签字");
             tvSign2.setText("企业法定代表人签字");
-        }else if (type == 5) {
+        } else if (type == 5) {
             url = "llglInspectionRecord";
             llReviewerSignSign.setVisibility(View.GONE);
             tvSign1.setText("法人签字");
             tvSign2.setText("执法人签字");
-        }else if (type == 6||type == 7) {
+        } else if (type == 6 || type == 7) {
             url = "ypInspectionRecord";
             llReviewerSignSign.setVisibility(View.GONE);
             tvSign1.setText("法人签字");
             tvSign2.setText("执法人签字");
-        }else if (type == 8||type == 9||type == 10) {
+        } else if (type == 8 || type == 9 || type == 10) {
             url = "ylqxInspectionRecord";
             llReviewerSignSign.setVisibility(View.GONE);
             tvSign1.setText("法人签字");
             tvSign2.setText("执法人签字");
+        } else if (type >= 11 && type <= 18) {
+            url = "tzsbInspectionRecord";
+            llReviewerSignSign.setVisibility(View.VISIBLE);
+            ll_inspection_opinion.setVisibility(View.VISIBLE);
+
+            tvSign1.setText("企业负责人签字");
+            tvSign2.setText("检查人员签字");
+            tvSign3.setText("记录员签字");
         }
         resposeBean = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
         if (resposeBean != null) {
@@ -202,27 +225,39 @@ public class SuperviseSignActivity extends MyBaseActivity {
         tvTime.setText(resposeBean.getInspectionTime() + "");
         tv_reason.setText(resposeBean.getReason() + "");
         if (type == 1 || type == 2) {
-            mlist.add(new DetailBean("重点项目", resposeBean.getImportantCount() + "",true));
+            mlist.add(new DetailBean("重点项目", resposeBean.getImportantCount() + "", true));
             mlist.add(new DetailBean("重点项问题数", resposeBean.getImportantProblemCount() + ""));
-            mlist.add(new DetailBean("一般项数", resposeBean.getGeneralCount() + "",true));
+            mlist.add(new DetailBean("一般项数", resposeBean.getGeneralCount() + "", true));
             mlist.add(new DetailBean("一般项问题数", resposeBean.getGeneralProblemCount() + ""));
-            mlist.add(new DetailBean("检查结果", resposeBean.getInspectionResultText() + "",true));
-            mlist.add(new DetailBean("处理结果", resposeBean.getResultReductionText() + "",true));
-            tvViolation.setText(resposeBean.getViolation()+"");
+            mlist.add(new DetailBean("检查结果", resposeBean.getInspectionResultText() + "", true));
+            mlist.add(new DetailBean("处理结果", resposeBean.getResultReductionText() + "", true));
+            tvViolation.setText(resposeBean.getViolation() + "");
             ll_violation.setVisibility(TextUtils.isEmpty(resposeBean.getViolation()) ? View.GONE : View.VISIBLE);
         } else if (type == 5) {
-            mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + "",true));
+            mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + "", true));
             mlist.add(new DetailBean("问题数", resposeBean.getProblemCount() + ""));
-            mlist.add(new DetailBean("检查结果", resposeBean.getInspectionResultText() + "",true));
-        }  else if (type == 6||type == 7||type == 8||type == 9||type == 10) {
-            mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + "",true));
+            mlist.add(new DetailBean("检查结果", resposeBean.getInspectionResultText() + "", true));
+        } else if (type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
+            mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + "", true));
             mlist.add(new DetailBean("问题数", resposeBean.getProblemCount() + ""));
-            if (resposeBean.getProblemCount()>0){
+            if (resposeBean.getProblemCount() > 0) {
                 ll_reformTime.setVisibility(View.VISIBLE);
-                getDicts();
+                ll_result_reduction.setVisibility(View.VISIBLE);
+                getDicts("reformTime");
             }
+        } else if (type >= 11 && type <= 18) {
+            mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + "", true));
+            mlist.add(new DetailBean("不符合规范项数", resposeBean.getProblemCount() + ""));
+            getDicts("tzsb_inspection_opinion");
+            if (resposeBean.getProblemCount() > 0) {
+                ll_reformTime.setVisibility(View.VISIBLE);
+                getDicts("tzsb_result_reduction");
+                getDicts("reformTime");
+            }
+            tvViolation.setText(resposeBean.getViolation() + "");
+            ll_violation.setVisibility(TextUtils.isEmpty(resposeBean.getViolation()) ? View.GONE : View.VISIBLE);
         } else {
-            mlist.add(new DetailBean("静态评分项分数", resposeBean.getStaticScore() + "",true));
+            mlist.add(new DetailBean("静态评分项分数", resposeBean.getStaticScore() + "", true));
             mlist.add(new DetailBean("动态评分项分数", resposeBean.getDynamicScore() + ""));
             mlist.add(new DetailBean("总分数", resposeBean.getTotalScore() + ""));
             mlist.add(new DetailBean("风险等级", resposeBean.getLevel() + ""));
@@ -235,16 +270,17 @@ public class SuperviseSignActivity extends MyBaseActivity {
             et_reformTime.setEnabled(false);
             et_reformTime.setText(resposeBean.getReformTimeText());
             et_reformTime.setHint("");
-            et_reformTime.setCompoundDrawables(null,null,null,null);
+            et_reformTime.setCompoundDrawables(null, null, null, null);
         }
         bt_delete.setVisibility(View.VISIBLE);
         tvType.setText(resposeBean.getTypeText() + "");
 
-        if (type == 5|| type == 6|| type == 7||type == 8||type == 9||type == 10) {
+        if (type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLawEnforcerSign);
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLegalRepresentativeSign);
 
-        }if (type == 1||type == 2  ) {
+        }
+        if (type == 1 || type == 2) {
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLegalRepresentativeSign);
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLawEnforcerSign);
 
@@ -263,7 +299,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.ll_lawEnforcer_sign, R.id.ll_legalRepresentative_sign, R.id.et_reformTime,R.id.bt_ok, R.id.bt_delete, R.id.ll_reviewerSign_sign, R.id.toolbar_subtitle})
+    @OnClick({R.id.ll_lawEnforcer_sign, R.id.ll_legalRepresentative_sign, R.id.et_reformTime, R.id.bt_ok, R.id.bt_delete, R.id.ll_reviewerSign_sign, R.id.toolbar_subtitle, R.id.et_inspection_opinion, R.id.et_result_reduction})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_lawEnforcer_sign:
@@ -325,7 +361,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 break;
             case R.id.toolbar_subtitle:
                 if (resposeBean == null) return;
-                if (type == 1 || type == 2 || type == 5|| type == 6 || type == 7||type == 8||type == 9||type == 10) {
+                if (type == 1 || type == 2 || type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
                     startActivity(new Intent(this, SuperviseInfoActivity.class)
                             .putExtra("company", resposeBean.getCompanyInfo().getOperatorName())
                             .putExtra("id", resposeBean.getId() + "")
@@ -365,8 +401,16 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 customDialog = builder.create();
                 customDialog.show();
                 break;
-                case R.id.et_reformTime:
-                    showSelectPopWindow1();
+            case R.id.et_reformTime:
+                showSelectPopWindow1(reformTimeList, "reformTime");
+                break;
+            case R.id.et_inspection_opinion:
+
+                showSelectPopWindow1(inspection_opinionList, "tzsb_inspection_opinion");
+                break;
+            case R.id.et_result_reduction:
+
+                showSelectPopWindow1(result_reductionList, "tzsb_result_reduction");
                 break;
         }
     }
@@ -401,10 +445,10 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
     void postData() {
         if (TextUtils.isEmpty(lawEnforcer_sign)) {
-            if (type == 1 || type == 2||type == 5||type == 6||type == 7||type == 8||type == 9||type == 10) {
-                if (type == 5||type == 6||type == 7||type == 8||type == 9||type == 10) {
+            if (type == 1 || type == 2 || type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
+                if (type >= 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
                     showToast("法人签字");
-                }else {
+                } else {
                     showToast("执法人签字");
                 }
             } else {
@@ -413,10 +457,10 @@ public class SuperviseSignActivity extends MyBaseActivity {
             return;
         }
         if (TextUtils.isEmpty(legalRepresentative_sign)) {
-            if (type == 1 || type == 2 || type == 5|| type == 6 || type == 7||type == 8||type == 9||type == 10) {
-                if (type == 5||type == 6||type == 7||type == 8||type == 9||type == 10) {
+            if (type == 1 || type == 2 || type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
+                if (type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
                     showToast("执法人签字");
-                }else {
+                } else {
                     showToast("企业负责人签字");
                 }
 
@@ -437,8 +481,24 @@ public class SuperviseSignActivity extends MyBaseActivity {
         String officerSign = BASE64.imageToBase64(legalRepresentative_sign);
         String reviewerSign = BASE64.imageToBase64(reviewerSign_sign);
 
-        if (type == 1 || type == 2 || type == 5||type == 6||type == 7||type == 8||type == 9||type == 10) {
-            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign,reformTime), new RequestObserver<JsonT>(this) {
+        if (type == 1 || type == 2 || type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
+            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign, reformTime), new RequestObserver<JsonT>(this) {
+                @Override
+                protected void onSuccess(JsonT jsonT) {
+                    if (jsonT.isSuccess()) {
+                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));
+                        finish();
+                    }
+                }
+
+                @Override
+                protected void onFail2(JsonT userInfoJsonT) {
+                    super.onFail2(userInfoJsonT);
+                    showToast(userInfoJsonT.getMessage());
+                }
+            }, LoadingUtils.build(this));
+        } else if (type >= 11 && type <= 18) {
+            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign, reviewerSign, reformTime, resultReduction, inspectionOpinion), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
                     if (jsonT.isSuccess()) {
@@ -506,31 +566,43 @@ public class SuperviseSignActivity extends MyBaseActivity {
             }
         }, LoadingUtils.build(this));
     }
-    public void getDicts() {
+
+    public void getDicts(String type) {
         Map<String, Object> params = new HashMap<>();
-        params.put("dictType", "reformTime");
+        params.put("dictType", type);
         RxNetUtils.request(getApi(ApiService.class).getDicts(params), new RequestObserver<JsonT<List<BusinessType>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
-                reformTimeList.clear();
-                reformTimeList.addAll(jsonT.getData());
+
+                if (type.equals("tzsb_inspection_opinion")) {
+                    inspection_opinionList.clear();
+                    inspection_opinionList.addAll(jsonT.getData());
+                } else if (type.equals("tzsb_result_reduction")) {
+                    result_reductionList.clear();
+                    result_reductionList.addAll(jsonT.getData());
+                } else if (type.equals("reformTime")) {
+                    reformTimeList.clear();
+                    reformTimeList.addAll(jsonT.getData());
+                }
+
             }
 
             @Override
             protected void onFail2(JsonT<List<BusinessType>> stringJsonT) {
                 super.onFail2(stringJsonT);
             }
-        },  LoadingUtils.build(this));
+        }, LoadingUtils.build(this));
     }
 
     SelectPopupWindows selectPopupWindows;
-    void showSelectPopWindow1() {
+
+    void showSelectPopWindow1(List<BusinessType> businessTypes, String type) {
         UIAdjuster.closeKeyBoard(this);
         List<String> list = new ArrayList<>();
         List<String> list1 = new ArrayList<>();
-        for (int i = 0; i < reformTimeList.size(); i++) {
-            list.add(reformTimeList.get(i).getDictLabel());
-            list1.add(reformTimeList.get(i).getDictValue());
+        for (int i = 0; i < businessTypes.size(); i++) {
+            list.add(businessTypes.get(i).getDictLabel());
+            list1.add(businessTypes.get(i).getDictValue());
         }
         String[] array = (String[]) list.toArray(new String[list.size()]);
         String[] values = (String[]) list1.toArray(new String[list1.size()]);
@@ -540,9 +612,17 @@ public class SuperviseSignActivity extends MyBaseActivity {
         selectPopupWindows.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
             @Override
             public void onSelected(int index, String msg) {
-                et_reformTime.setText(msg);
-                reformTime = values[index];
 
+                if (type.equals("tzsb_inspection_opinion")) {
+                    et_inspection_opinion.setText(msg);
+                    inspectionOpinion = values[index];
+                } else if (type.equals("tzsb_result_reduction")) {
+                    et_result_reduction.setText(msg);
+                    resultReduction = values[index];
+                } else if (type.equals("reformTime")) {
+                    et_reformTime.setText(msg);
+                    reformTime = values[index];
+                }
             }
 
             @Override

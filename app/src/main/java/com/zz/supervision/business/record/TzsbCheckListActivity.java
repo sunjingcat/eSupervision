@@ -59,7 +59,7 @@ import butterknife.OnClick;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
-public class ComCheckListActivity extends MyBaseActivity implements OnRefreshListener, OnLoadMoreListener {
+public class TzsbCheckListActivity extends MyBaseActivity implements OnRefreshListener, OnLoadMoreListener {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.toolbar_subtitle)
@@ -81,6 +81,8 @@ public class ComCheckListActivity extends MyBaseActivity implements OnRefreshLis
     public FmPagerAdapter pagerAdapter;
     @BindView(R.id.et_beginTime)
     TextView etBeginTime;
+    @BindView(R.id.tv_inspectionResult)
+    TextView tv_inspectionResult;
     @BindView(R.id.et_endTime)
     TextView etEndTime;
     @BindView(R.id.ll_inspectionResult)
@@ -141,7 +143,7 @@ public class ComCheckListActivity extends MyBaseActivity implements OnRefreshLis
                 RecordBean recordBean = mlist.get(position);
                 if (recordBean.getStatus() == 1) {
 
-                    startActivity(new Intent(ComCheckListActivity.this, SuperviseActivity.class)
+                    startActivity(new Intent(TzsbCheckListActivity.this, SuperviseActivity.class)
                             .putExtra("company", recordBean.getOperatorName())
                             .putExtra("id", recordBean.getId() + "")
                             .putExtra("type", recordBean.getType())
@@ -151,13 +153,15 @@ public class ComCheckListActivity extends MyBaseActivity implements OnRefreshLis
                             .putExtra("inspectionTime", recordBean.getInspectionTime()));
 
                 } else {
-                    startActivity(new Intent(ComCheckListActivity.this, SuperviseSignActivity.class)
+                    startActivity(new Intent(TzsbCheckListActivity.this, SuperviseSignActivity.class)
                             .putExtra("id", mlist.get(position).getId() + "")
                             .putExtra("type", recordBean.getType()));
 
                 }
             }
         });
+        tv_inspectionResult.setText("执法类型");
+        getType();
 
     }
 
@@ -194,16 +198,24 @@ public class ComCheckListActivity extends MyBaseActivity implements OnRefreshLis
 
                 break;
             case R.id.et_inspectionResult:
+                if (businessTypeList.size() == 0) return;
                 UIAdjuster.closeKeyBoard(this);
-                String[] PLANETS = new String[]{"合格", "不合格"};
-                selectPopupWindows = new SelectPopupWindows(this, PLANETS);
+                List<String> list = new ArrayList<>();
+                List<String> list1 = new ArrayList<>();
+                for (int i = 0; i < businessTypeList.size(); i++) {
+                    list.add(businessTypeList.get(i).getDictLabel());
+                    list1.add(businessTypeList.get(i).getDictValue());
+                }
+                String[] array = (String[]) list.toArray(new String[list.size()]);
+                String[] values = (String[]) list1.toArray(new String[list1.size()]);
+                selectPopupWindows = new SelectPopupWindows(this, array);
                 selectPopupWindows.showAtLocation(findViewById(R.id.drawer),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 selectPopupWindows.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
                     @Override
                     public void onSelected(int index, String msg) {
                         etInspectionResult.setText(msg);
-                        inspectionResult =(index+1)+"";
+                        inspectionResult = values[index];
                     }
 
                     @Override
@@ -251,7 +263,7 @@ public class ComCheckListActivity extends MyBaseActivity implements OnRefreshLis
                 });
                 break;
             case R.id.et_beginTime:
-                DatePickDialog dialog = new DatePickDialog(ComCheckListActivity.this);
+                DatePickDialog dialog = new DatePickDialog(TzsbCheckListActivity.this);
                 //设置上下年分限制
                 //设置上下年分限制
                 dialog.setYearLimt(20);
@@ -281,7 +293,7 @@ public class ComCheckListActivity extends MyBaseActivity implements OnRefreshLis
                 dialog.show();
                 break;
             case R.id.et_endTime:
-                DatePickDialog dialog2 = new DatePickDialog(ComCheckListActivity.this);
+                DatePickDialog dialog2 = new DatePickDialog(TzsbCheckListActivity.this);
                 //设置上下年分限制
                 //设置上下年分限制
                 dialog2.setYearLimt(20);
@@ -340,7 +352,7 @@ public class ComCheckListActivity extends MyBaseActivity implements OnRefreshLis
 
     void getType() {
         Map<String, Object> params = new HashMap<>();
-        params.put("dictType", "inspection_result");
+        params.put("dictType", "tzsb_inspection_type");
         RxNetUtils.request(getApi(ApiService.class).getDicts(params), new RequestObserver<JsonT<List<BusinessType>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<BusinessType>> jsonT) {

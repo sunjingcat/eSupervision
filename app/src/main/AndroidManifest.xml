@@ -185,7 +185,7 @@
         <activity android:name=".business.equipment.PipePartListActivity" />
         <activity android:name=".business.equipment.PipePartInfoActivity" />
         <activity android:name=".business.equipment.SearchEquipmentActivity" />
-        <activity android:name=".business.record.ComCheckListActivity" />
+        <activity android:name=".business.record.TzsbCheckListActivity" />
         <activity android:name=".business.inspenction.TzsbSuperviseActivity" />
     </application>
 

@@ -253,6 +253,8 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
             tinspectType = 7;
         }else if(tinspectType==8||tinspectType==9||tinspectType==10){
             tinspectType = 6;
+        }else if(tinspectType>=11&&tinspectType<=18){
+            tinspectType = 8;
         }
         int tinspectSheetType = getIntent().getIntExtra("tinspectSheetType", 0);
         map.put("tinspectSheetType", tinspectSheetType);

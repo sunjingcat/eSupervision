@@ -7,6 +7,7 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
@@ -52,7 +53,7 @@ public class RootNodeProvider extends BaseNodeProvider {
             }
         });
 
-        String showText =entity.getItemName();
+        String showText = entity.getItemName();
 //注意此处showText后+ " "主要是为了占位
         SpannableString ss = new SpannableString(showText + "  ");
         int len = ss.length();
@@ -63,6 +64,21 @@ public class RootNodeProvider extends BaseNodeProvider {
         CenterAlignImageSpan imageSpan = new CenterAlignImageSpan(d);
         ss.setSpan(imageSpan, len - 1, len, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         baseViewHolder.setText(R.id.itemName, ss);
+        TextView itemName = baseViewHolder.getView(R.id.itemName);
+        switch (entity.getItemDegree()) {
+            case 2:
+                itemName.setTextSize(16);
+                break;
+            case 3:
+                itemName.setTextSize(15);
+                break;
+            case 4:
+                itemName.setTextSize(14);
+                break;
+            default:
+                itemName.setTextSize(17);
+                break;
+        }
 
         baseViewHolder.getView(R.id.ll_itemName).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +86,7 @@ public class RootNodeProvider extends BaseNodeProvider {
                 onProviderOnClick.onItemOnclick(data, 10);
             }
         });
-        baseViewHolder.setTextColor(R.id.itemName,entity.getIsLastNotSatisfy()==1? Color.parseColor("#FFC12A2A"):Color.parseColor("#4A4A4A"));
+        baseViewHolder.setTextColor(R.id.itemName, entity.getIsLastNotSatisfy() == 1 ? Color.parseColor("#FFC12A2A") : Color.parseColor("#4A4A4A"));
 
 //         baseViewHolder.getView(R.id.item_check).setEnabled(((SuperviseBean) data).isExpanded());
 

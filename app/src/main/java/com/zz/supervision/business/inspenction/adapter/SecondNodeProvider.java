@@ -19,10 +19,12 @@ import org.jetbrains.annotations.NotNull;
 public class SecondNodeProvider extends BaseNodeProvider {
     OnProviderOnClick onProviderOnClick;
     int enable;
+    int type;
 
-    public SecondNodeProvider(OnProviderOnClick onProviderOnClick, int enable) {
+    public SecondNodeProvider(OnProviderOnClick onProviderOnClick, int enable, int type) {
         this.onProviderOnClick = onProviderOnClick;
         this.enable = enable;
+        this.type = type;
     }
 
     @Override
@@ -38,33 +40,36 @@ public class SecondNodeProvider extends BaseNodeProvider {
     @Override
     public void convert(@NotNull BaseViewHolder baseViewHolder, BaseNode data) {
         // 数据类型需要自己强转
-        SuperviseBean.Children entity = (SuperviseBean.Children) data;
+        SuperviseBean entity = (SuperviseBean) data;
         baseViewHolder.setText(R.id.itemName, entity.getItemName());
         baseViewHolder.getView(R.id.item_isImportant).setVisibility(entity.getIsImportant() == 0 ? View.INVISIBLE : View.VISIBLE);
-        baseViewHolder.setTextColor(R.id.itemName,((SuperviseBean.Children) data).getIsLastNotSatisfy()==1? Color.parseColor("#FFC12A2A"):Color.parseColor("#4A4A4A"));
+        baseViewHolder.setTextColor(R.id.itemName, entity.getIsLastNotSatisfy() == 1 ? Color.parseColor("#FFC12A2A") : Color.parseColor("#4A4A4A"));
 
-        if (((SuperviseBean.Children) data).getIsSatisfy() == 1) {
+        if (entity.getIsSatisfy() == 1) {
             TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_check_circle);
         } else {
             TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_uncheck_circle);
         }
-        if (((SuperviseBean.Children) data).getIsSatisfy() == 2) {
+        if (entity.getIsSatisfy() == 2) {
             TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_check_circle);
         } else {
             TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_uncheck_circle);
         }
-        if (((SuperviseBean.Children) data).getIsSatisfy() == 3) {
+
+        baseViewHolder.setVisible(R.id.item_check_ignore, type == 1);
+
+        if (entity.getIsSatisfy() == 3) {
             TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_ignore), R.drawable.image_check_circle);
         } else {
             TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_ignore), R.drawable.image_uncheck_circle);
         }
         if (enable == 1) {
-            if (((SuperviseBean.Children) data).getIsSatisfy() == 0) {
+            if (entity.getIsSatisfy() == 0) {
                 TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_check_enable_circle);
                 baseViewHolder.getView(R.id.item_check_yes).setVisibility(View.GONE);
                 baseViewHolder.getView(R.id.item_check_ignore).setVisibility(View.GONE);
                 baseViewHolder.getView(R.id.item_check_no).setVisibility(View.VISIBLE);
-            }else if (((SuperviseBean.Children) data).getIsSatisfy() == 1) {
+            } else if (entity.getIsSatisfy() == 1) {
                 TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_check_enable_circle);
                 baseViewHolder.getView(R.id.item_check_yes).setVisibility(View.VISIBLE);
                 baseViewHolder.getView(R.id.item_check_ignore).setVisibility(View.GONE);

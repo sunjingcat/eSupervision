@@ -5,12 +5,8 @@ import android.view.View;
 
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
-import com.zz.supervision.MainActivity;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
-import com.zz.supervision.business.company.CompanyListActivity;
-import com.zz.supervision.business.inspenction.XCHZFActivity;
-import com.zz.supervision.business.mine.MineActivity;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -99,7 +95,7 @@ public class RecordMainActivity extends MyBaseActivity {
                 break;
             case R.id.ll_tzh:
                 Intent intent2 = new Intent();
-                intent2.setClass(RecordMainActivity.this, ComCheckListActivity.class);
+                intent2.setClass(RecordMainActivity.this, TzsbCheckListActivity.class);
                 startActivity(intent2);
                 break;
             case R.id.ll_zhd:

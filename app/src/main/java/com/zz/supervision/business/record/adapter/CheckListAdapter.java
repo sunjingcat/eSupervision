@@ -20,13 +20,17 @@ public class CheckListAdapter extends BaseQuickAdapter<RecordBean, BaseViewHolde
     @Override
     protected void convert(BaseViewHolder helper, RecordBean item) {
         helper.setText(R.id.tv_company, item.getOperatorName() + "");
-        helper.setText(R.id.tv_licenseNumber, "许可证号：" + item.getLicenseNumber());
+        if (item.getType()>=11&&item.getType()<=18){
+            helper.setText(R.id.tv_licenseNumber, "社会信用代码：" + item.getSocialCreditCode());
+        }else {
+            helper.setText(R.id.tv_licenseNumber, "许可证号：" + item.getLicenseNumber());
+        }
         if (item.getType() == 3 || item.getType() == 4) {
             helper.getView(R.id.ll_yearCount).setVisibility(View.GONE);
             helper.setText(R.id.tv_inspectionResult, "" + item.getLevel());
             helper.setText(R.id.tv_inspectionResult_tv, "风险等级");
         } else {
-            if (item.getType() == 6 || item.getType() == 7||item.getType() == 8 || item.getType() == 9||item.getType() == 10) {
+            if (item.getType() >= 6 &&item.getType() <= 18) {
                 helper.getView(R.id.ll_yearCount).setVisibility(View.VISIBLE);
                 helper.setText(R.id.tv_inspectionResult, "" + item.getProblemCount());
                 helper.setText(R.id.tv_inspectionResult_tv, "问题项数");

@@ -70,82 +70,6 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         ButterKnife.bind(this);
         rv.setLayoutManager(new LinearLayoutManager(this));
 //        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        adapter = new SuperviseAdapter(new OnProviderOnClick() {
-            @Override
-            public void onItemOnclick(BaseNode node, int type) {
-                if (node instanceof SuperviseBean) {
-                    if (type == 10) {
-                        for (int i = 0; i < adapter.getData().size(); i++) {
-                            BaseNode children = adapter.getData().get(i);
-                            if (children instanceof SuperviseBean && ((SuperviseBean) children).getId().equals(((SuperviseBean) node).getId())) {
-                                adapter.expandOrCollapse(i);
-                                break;
-                            }
-                        }
-                    } else {
-                        for (SuperviseBean.Children children : ((SuperviseBean) node).getChildrenList()) {
-                            if (children.getChildType() == 1) {
-                                children.setIsSatisfy(((SuperviseBean) node).isCheck() ? 1 : 0);
-                                children.setCheck(((SuperviseBean) node).isCheck());
-                                for (SuperviseBean.Children grand : children.getChildrenList()) {
-                                    grand.setIsSatisfy(((SuperviseBean) node).isCheck() ? 1 : 0);
-                                }
-                            } else {
-                                children.setIsSatisfy(((SuperviseBean) node).isCheck() ? 1 : 0);
-                            }
-                        }
-                    }
-                } else if (node instanceof SuperviseBean.Children) {
-                    if (((SuperviseBean.Children) node).getChildType() == 1) {
-                        if (type == 10) {
-                            for (int i = 0; i < adapter.getData().size(); i++) {
-                                BaseNode children = adapter.getData().get(i);
-                                if (children instanceof SuperviseBean.Children && ((SuperviseBean.Children) children).getId().equals(((SuperviseBean.Children) node).getId())) {
-                                    adapter.expandOrCollapse(i);
-                                    break;
-                                }
-                            }
-                        } else {
-                            for (SuperviseBean.Children children : ((SuperviseBean.Children) node).getChildrenList()) {
-                                if (((SuperviseBean.Children) node).isCheck()) {
-                                    children.setIsSatisfy(1);
-                                } else {
-                                    children.setIsSatisfy(0);
-                                }
-                            }
-                        }
-                    } else if (((SuperviseBean.Children) node).getChildType() == 0) {
-                        if (type == ((SuperviseBean.Children) node).getIsSatisfy()) {
-                            ((SuperviseBean.Children) node).setIsSatisfy(0);
-                        } else {
-                            ((SuperviseBean.Children) node).setIsSatisfy(type);
-                        }
-
-                        for (BaseNode superviseBean : adapter.getData()) {
-                            if (superviseBean instanceof SuperviseBean && ((SuperviseBean) superviseBean).getId().equals(((SuperviseBean.Children) node).getItemPid())) {
-                                if (type == 1) {
-                                    boolean isAllYes = true;
-                                    for (SuperviseBean.Children children : ((SuperviseBean) superviseBean).getChildrenList()) {
-                                        if (children.getIsSatisfy() != 1) {
-                                            isAllYes = false;
-                                        }
-                                    }
-                                    ((SuperviseBean) superviseBean).setCheck(isAllYes);
-                                } else if (type == 2) {
-                                    ((SuperviseBean) superviseBean).setCheck(false);
-                                }
-                                break;
-                            }
-                        }
-
-                    }
-
-                }
-                adapter.notifyDataSetChanged();
-            }
-        }, 0);
-
-        rv.setAdapter(adapter);
         type = getIntent().getIntExtra("type", 0);
         if (type == 1) {
             url = "spxsInspectionRecord";
@@ -161,10 +85,79 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
             url = "tzsbInspectionRecord";
         }
 
+        adapter = new SuperviseAdapter(new OnProviderOnClick() {
+            @Override
+            public void onItemOnclick(BaseNode node, int type) {
+                if (type == 10) { //展开
+                    for (int i = 0; i < adapter.getData().size(); i++) {
+                        BaseNode children = adapter.getData().get(i);
+                        if (children instanceof SuperviseBean && ((SuperviseBean) children).getId()==(((SuperviseBean) node).getId())) {
+                            adapter.expandOrCollapse(i);
+                            break;
+                        }
+                    }
+                } else {
+                    if (((SuperviseBean) node).getChildType() == 0) {
+                        if (type == ((SuperviseBean) node).getIsSatisfy()) {
+                            ((SuperviseBean) node).setIsSatisfy(0);
+                        } else {
+                            ((SuperviseBean) node).setIsSatisfy(type);
+                        }
+                    } else {
+                        setSelect((SuperviseBean) node, ((SuperviseBean) node).isCheck());
+                    }
+                    reverseCheck((SuperviseBean) node,type);
+                }
+                adapter.notifyDataSetChanged();
+            }
+        }, 0,url.equals("tzsbInspectionRecord") ?1:0);
+
+        rv.setAdapter(adapter);
+
         toolbaSubtitle.setVisibility(View.VISIBLE);
         initData();
         mPresenter.getData(id, url);
     }
+
+    private void setSelect(SuperviseBean children, boolean check) {
+        if (children.getChildType() == 1) {
+            children.setCheck(check);
+            children.setIsSatisfy(check ? 1 : 0);
+            for (SuperviseBean grand : children.getChildrenList()) {
+                setSelect(grand, check);
+            }
+        } else {
+            children.setIsSatisfy(check ? 1 : 0);
+        }
+    }
+
+
+    private void reverseCheck(SuperviseBean node, int type) {
+
+        if (node.getChildType() == 0) {
+            for (BaseNode superviseBean : adapter.getData()) {
+                if (((SuperviseBean) superviseBean).getId()==(((SuperviseBean) node).getItemPid())) {
+                    if (type == 1) {
+                        boolean isAllYes = true;
+                        for (SuperviseBean children : ((SuperviseBean) superviseBean).getChildrenList()) {
+                            if (children.getIsSatisfy() != 1) {
+                                isAllYes = false;
+                            }
+                        }
+                        ((SuperviseBean) superviseBean).setCheck(isAllYes);
+                    } else {
+                        ((SuperviseBean) superviseBean).setCheck(false);
+                    }
+                    reverseCheck((SuperviseBean) superviseBean,type);
+                    break;
+                }
+
+            }
+        }
+
+
+    }
+
 
     @Override
     protected void initToolBar() {
@@ -177,8 +170,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         String type = getIntent().getStringExtra("typeText");
         String time = getIntent().getStringExtra("inspectionTime");
         String reason = getIntent().getStringExtra("reason");
-//        id = getIntent().getStringExtra("id");
-        id = "1027";
+        id = getIntent().getStringExtra("id");
         tvCompany.setText(company + "");
         tvInspector.setText("检查员：" + lawEnforcerText);
         tvType.setText("检查类型：" + type + "");
@@ -263,26 +255,24 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                 mlist = adapter.getData();
                 postBeans = new ArrayList<>();
                 for (BaseNode node : mlist) {
-                    if (node instanceof SuperviseBean) {
-                        for (SuperviseBean.Children children : ((SuperviseBean) node).getChildrenList()) {
-                            if (children.getChildType()==1){
-                                for (SuperviseBean.Children grand : children.getChildrenList()) {
-                                    if (grand.getIsSatisfy() != 0) {
-                                        postBeans.add(new SuperviseBean.PostBean(grand.getId(), getSatisfyValue(grand.getIsSatisfy()) ));
-                                    }
-                                }
-                            }else {
-                                if (children.getIsSatisfy() != 0) {
-                                    postBeans.add(new SuperviseBean.PostBean(children.getId(), getSatisfyValue(children.getIsSatisfy()) ));
-                                }
-                            }
-
-                        }
-                    }
+                    getPostBeans((SuperviseBean) node);
                 }
                 mPresenter.submitReData(url, id, postBeans);
                 break;
         }
+    }
+
+    public ArrayList<SuperviseBean.PostBean> getPostBeans(SuperviseBean children) {
+        if (children.getChildType() == 0) {
+            if (children.getIsSatisfy() != 0) {
+                postBeans.add(new SuperviseBean.PostBean(children.getId()+"", getSatisfyValue(children.getIsSatisfy())));
+            }
+        } else {
+            for (SuperviseBean grand : children.getChildrenList()) {
+                getPostBeans(grand);
+            }
+        }
+        return postBeans;
     }
 
     int getSatisfyValue(int num) {

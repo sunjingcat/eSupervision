@@ -11,11 +11,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
+public class SuperviseBean extends BaseExpandNode  {
     private String createBy;// ,
     private String createTime;// ,
     private String deptId;// 0,
-    private String id;// 0,
+    private int id;// 0,
     private String itemName;// ,
     private String itemNum;// ,
     private String itemRemark;// ,
@@ -25,8 +25,43 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
     private String updateBy;// ,
     private String updateTime;//
     private int isLastNotSatisfy;//
+    private int isImportant;// 0,
+    private int isSatisfy;// 0,
+
+    public void setIsSatisfy(int isSatisfy) {
+        this.isSatisfy = isSatisfy;
+    }
+
+    private int itemPid;// 0,
+    private String itemType;// ,
+    private int childType;//
+    private int itemDegree;//
     private boolean check;//
-    private ArrayList<Children> childrenList;
+    private ArrayList<SuperviseBean> childrenList;
+
+    public int getItemDegree() {
+        return itemDegree;
+    }
+
+    public int getIsImportant() {
+        return isImportant;
+    }
+
+    public int getIsSatisfy() {
+        return isSatisfy;
+    }
+
+    public int getItemPid() {
+        return itemPid;
+    }
+
+    public String getItemType() {
+        return itemType;
+    }
+
+    public int getChildType() {
+        return childType;
+    }
 
     public SuperviseBean() {
         setExpanded(false);
@@ -44,7 +79,7 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         this.check = check;
     }
 
-    public ArrayList<Children> getChildrenList() {
+    public ArrayList<SuperviseBean> getChildrenList() {
         return childrenList;
     }
 
@@ -60,7 +95,7 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         return deptId;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -107,11 +142,7 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         return childs;
     }
 
-    @Nullable
-    @Override
-    public BaseNode getFooterNode() {
-        return new RootFooterNode(isExpanded(), id);
-    }
+
 
     public class RootFooterNode extends BaseNode {
         private boolean isExpanded;
@@ -142,118 +173,6 @@ public class SuperviseBean extends BaseExpandNode implements NodeFooterImp {
         @Override
         public List<BaseNode> getChildNode() {
             return null;
-        }
-    }
-
-    public class Children extends BaseExpandNode {
-        private String createBy;// ,
-        private String createTime;// ,
-        private String id;// 0,
-        private int isImportant;// 0,
-        private int isSatisfy ;// 0,
-        private String itemName;// ,
-        private String itemNum;// ,
-        private String itemPid;// 0,
-        private String itemType;// ,
-        private Object params;// {},
-        private String remark;// ,
-        private String searchValue;// ,
-        private String updateBy;// ,
-        private String updateTime;//
-        private int childType;//
-        private boolean check;//
-        private int isLastNotSatisfy;//
-        private ArrayList<Children> childrenList;
-
-        public ArrayList<Children> getChildrenList() {
-            return childrenList;
-        }
-
-        public int getChildType() {
-            return childType;
-        }
-
-        public boolean isCheck() {
-            return check;
-        }
-
-        public void setCheck(boolean check) {
-            this.check = check;
-        }
-
-        public int getIsLastNotSatisfy() {
-            return isLastNotSatisfy;
-        }
-
-        public String getCreateBy() {
-            return createBy;
-        }
-
-        public String getCreateTime() {
-            return createTime;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setIsSatisfy(int isSatisfy) {
-            this.isSatisfy = isSatisfy;
-        }
-
-        public int getIsImportant() {
-            return isImportant;
-        }
-
-        public int getIsSatisfy() {
-            return isSatisfy;
-        }
-
-        public String getItemName() {
-            return itemName;
-        }
-
-        public String getItemNum() {
-            return itemNum;
-        }
-
-        public String getItemPid() {
-            return itemPid;
-        }
-
-        public String getItemType() {
-            return itemType;
-        }
-
-        public Object getParams() {
-            return params;
-        }
-
-        public String getRemark() {
-            return remark;
-        }
-
-        public String getSearchValue() {
-            return searchValue;
-        }
-
-        public String getUpdateBy() {
-            return updateBy;
-        }
-
-        public String getUpdateTime() {
-            return updateTime;
-        }
-
-        @Nullable
-        @Override
-        public List<BaseNode> getChildNode() {
-            if (childrenList == null) return null;
-            List<BaseNode> childs = new ArrayList<>();
-            for (BaseNode node : childrenList) {
-                childs.add(node);
-            }
-            return childs;
         }
     }
 

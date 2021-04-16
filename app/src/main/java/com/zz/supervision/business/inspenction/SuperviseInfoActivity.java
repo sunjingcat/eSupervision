@@ -76,28 +76,9 @@ public class SuperviseInfoActivity extends MyBaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
+
         rv.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new SuperviseAdapter(new OnProviderOnClick() {
-            @Override
-            public void onItemOnclick(BaseNode node, int type) {
-                if (type == 10) {
-                    for (int i = 0; i < adapter.getData().size(); i++) {
-                        BaseNode children = adapter.getData().get(i);
-                        if (children instanceof SuperviseBean && ((SuperviseBean) children).getId().equals(((SuperviseBean) node).getId())) {
-                            adapter.expandOrCollapse(i);
-//                            ((SuperviseBean) node).setExpanded(((SuperviseBean) children).isExpanded());
-                            break;
-                        }
-                    }
-                }
-                adapter.notifyDataSetChanged();
-            }
-        }, 1);
-        rv.setAdapter(adapter);
         type = getIntent().getIntExtra("type", 0);
-        status = getIntent().getIntExtra("status", 0);
-        btOk.setText("打印");
-        btOk.setVisibility(status == 3 ? View.VISIBLE : View.GONE);
         if (type == 1) {
             url = "spxsInspectionRecord";
         } else if (type == 2) {
@@ -109,7 +90,30 @@ public class SuperviseInfoActivity extends MyBaseActivity {
             url = "ypInspectionRecord";
         }else if (type == 8||type == 9||type == 10) {
             url = "ylqxInspectionRecord";
+        }else if (type == 11 || type == 12 || type == 13 || type == 14 || type == 15 || type == 16 || type == 17 || type == 18) {
+            url = "tzsbInspectionRecord";
         }
+        adapter = new SuperviseAdapter(new OnProviderOnClick() {
+            @Override
+            public void onItemOnclick(BaseNode node, int type) {
+                if (type == 10) {
+                    for (int i = 0; i < adapter.getData().size(); i++) {
+                        BaseNode children = adapter.getData().get(i);
+                        if (children instanceof SuperviseBean && ((SuperviseBean) children).getId()==(((SuperviseBean) node).getId())) {
+                            adapter.expandOrCollapse(i);
+//                            ((SuperviseBean) node).setExpanded(((SuperviseBean) children).isExpanded());
+                            break;
+                        }
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+        }, 1,url.equals("tzsbInspectionRecord") ?1:0);
+        rv.setAdapter(adapter);
+        status = getIntent().getIntExtra("status", 0);
+        btOk.setText("打印");
+        btOk.setVisibility(status == 3 ? View.VISIBLE : View.GONE);
+
         initData();
 
 

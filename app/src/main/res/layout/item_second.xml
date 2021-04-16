@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="经营者持有的食品经营许可证是否合法有效。"
             android:textColor="#4A4A4A"
-            android:textSize="15dp" />
+            android:textSize="14dp" />
 
 
     </LinearLayout>
@@ -44,6 +44,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/check_item"
             android:textColor="#4A4A4A"
+            android:textSize="14dp"
             android:drawablePadding="10dp"
             android:text="是" />
 
@@ -54,6 +55,7 @@
             android:layout_marginLeft="15dp"
             android:drawableLeft="@drawable/check_item"
             android:textColor="#4A4A4A"
+            android:textSize="14dp"
             android:drawablePadding="10dp"
             android:text="否" />
         <TextView
@@ -63,6 +65,7 @@
             android:layout_marginLeft="15dp"
             android:drawableLeft="@drawable/check_item"
             android:textColor="#4A4A4A"
+            android:textSize="14dp"
             android:drawablePadding="10dp"
             android:text="不涉及此项" />
     </LinearLayout>
