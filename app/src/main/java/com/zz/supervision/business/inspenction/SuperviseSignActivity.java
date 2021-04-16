@@ -83,6 +83,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
     @BindView(R.id.tv_violation)
     TextView tvViolation;
+    @BindView(R.id.et_violation)
+    TextView etViolation;
     @BindView(R.id.tv_lawEnforcer_sign)
     ImageView tvLawEnforcerSign;
     @BindView(R.id.bt_ok)
@@ -254,8 +256,10 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 getDicts("tzsb_result_reduction");
                 getDicts("reformTime");
             }
-            tvViolation.setText(resposeBean.getViolation() + "");
-            ll_violation.setVisibility(TextUtils.isEmpty(resposeBean.getViolation()) ? View.GONE : View.VISIBLE);
+            etViolation.setText(resposeBean.getViolation() + "");
+            tvViolation.setVisibility(View.GONE);
+            etViolation.setVisibility(View.VISIBLE);
+            ll_violation.setVisibility(View.VISIBLE);
         } else {
             mlist.add(new DetailBean("静态评分项分数", resposeBean.getStaticScore() + "", true));
             mlist.add(new DetailBean("动态评分项分数", resposeBean.getDynamicScore() + ""));
@@ -498,7 +502,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 }
             }, LoadingUtils.build(this));
         } else if (type >= 11 && type <= 18) {
-            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign, reviewerSign, reformTime, resultReduction, inspectionOpinion), new RequestObserver<JsonT>(this) {
+
+            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign, reviewerSign, reformTime, resultReduction, inspectionOpinion, getText(etViolation)), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
                     if (jsonT.isSuccess()) {

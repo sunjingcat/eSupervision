@@ -384,6 +384,16 @@
                     android:textColor="#272727"
                     android:textSize="15dp"
                     tools:text="违规项" />
+                <EditText
+                    android:id="@+id/et_violation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:padding="5dp"
+                    android:visibility="gone"
+                    android:textColor="#272727"
+                    android:textSize="15dp"
+                    tools:text="违规项" />
 
             </LinearLayout>
 

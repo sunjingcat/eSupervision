@@ -243,7 +243,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @PUT("/app/v1/supervise/{url}/submitSign/{id}")
-    Observable<JsonT> submitSign(@Path("url") String url, @Path("id") String id, @Field("companySign") String companySign, @Field("officerSign") String officerSign, @Field("recordSign") String recordSign, @Field("reformTime") String reformTime,@Field("resultReduction") String resultReduction,@Field("inspectionOpinion") String inspectionOpinion);
+    Observable<JsonT> submitSign(@Path("url") String url, @Path("id") String id, @Field("companySign") String companySign, @Field("officerSign") String officerSign, @Field("recordSign") String recordSign, @Field("reformTime") String reformTime,@Field("resultReduction") String resultReduction,@Field("inspectionOpinion") String inspectionOpinion,@Field("violation") String violation);
 
     @FormUrlEncoded
     @PUT("/app/v1/supervise/{url}/submitSign/{id}")
