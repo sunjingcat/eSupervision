@@ -582,7 +582,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
     private void showResult(JsonT jsonT) {
         if (jsonT.isSuccess()) {
             if (!resultReduction.equals("") && !resultReduction.equals("4")) {
-                startActivity(new Intent(SuperviseSignActivity.this, MonitorActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));
+                startActivity(new Intent(SuperviseSignActivity.this, MonitorActivity.class).putExtra("recordId", id).putExtra("type", type));
 
             } else {
                 startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));

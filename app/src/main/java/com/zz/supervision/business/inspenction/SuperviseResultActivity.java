@@ -91,7 +91,7 @@ public class SuperviseResultActivity extends MyBaseActivity {
             list.add(new DetailBean("检查项数目", lightDevice.getSumCount() + ""));
             list.add(new DetailBean("问题数", lightDevice.getProblemCount() + ""));
         }
-        else if (type >=11&&type <= 10) {
+        else if (type >=11&&type <= 18) {
             list.add(new DetailBean("检查项数目", lightDevice.getSumCount() + ""));
             list.add(new DetailBean("不符合规范项数", lightDevice.getProblemCount() + ""));
         }else {

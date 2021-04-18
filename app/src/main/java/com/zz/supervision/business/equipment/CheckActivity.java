@@ -135,6 +135,7 @@ public class CheckActivity extends MyBaseActivity<Contract.IsetCheckAddPresenter
     void postData() {
         DeviceCheck deviceCheck = new DeviceCheck();
         deviceCheck.setPartId(deviceId);
+        deviceCheck.setDeviceId(deviceId);
         deviceCheck.setDeviceType(deviceType);
         deviceCheck.setInspectionOrganizationId(ig_inspectionOrganization.getSelectValue());
         deviceCheck.setOrganizationalUnitId(ig_organizationalUnit.getSelectValue());

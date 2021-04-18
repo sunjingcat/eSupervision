@@ -65,18 +65,22 @@ public class RootNodeProvider extends BaseNodeProvider {
         ss.setSpan(imageSpan, len - 1, len, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         baseViewHolder.setText(R.id.itemName, ss);
         TextView itemName = baseViewHolder.getView(R.id.itemName);
+        TextView itemContent = baseViewHolder.getView(R.id.itemContent);
         switch (entity.getItemDegree()) {
             case 2:
                 itemName.setTextSize(16);
                 itemName.setPadding(8,0,0,0);
+                itemContent.setPadding(8,0,0,0);
                 break;
             case 3:
                 itemName.setTextSize(15);
                 itemName.setPadding(16,0,0,0);
+                itemContent.setPadding(16,0,0,0);
                 break;
             case 4:
                 itemName.setTextSize(14);
                 itemName.setPadding(24,0,0,0);
+                itemContent.setPadding(24,0,0,0);
                 break;
             default:
                 itemName.setTextSize(17);
