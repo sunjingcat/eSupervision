@@ -170,7 +170,7 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
                     customDialog.show();
                 } else if (view.getId() == R.id.content) {
                     if (TextUtils.isEmpty(select)) {
-                        startActivity(new Intent(SearchCompanyActivity.this, CompanyInfoActivity.class).putExtra("id", mlist.get(position).getId()).putExtra("companyType", mlist.get(position).getCompanyType()+""));
+                        startActivity(new Intent(SearchCompanyActivity.this, CompanyInfoActivity.class).putExtra("id", mlist.get(position).getId()).putExtra("companyType", mlist.get(position).getCompanyType() + ""));
                     } else {
                         Intent intent = new Intent();
                         intent.putExtra("company", mlist.get(position));

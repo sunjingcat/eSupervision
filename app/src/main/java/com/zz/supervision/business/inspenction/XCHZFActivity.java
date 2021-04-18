@@ -150,6 +150,10 @@ public class XCHZFActivity extends MyBaseActivity {
                 startActivityForResult(new Intent(this, CompanyListActivity.class).putExtra("select", "xczf"), 1001);
                 break;
             case R.id.et_device:
+                if (companyBean == null) {
+                    showToast("请先选择企业");
+                    return;
+                }
                 startActivityForResult(new Intent(this, EquipmentListActivity.class).putExtra("select", "xczf").putExtra("id", companyBean.getId()).putExtra("companyType", companyBean.getCompanyType() + ""), 1002);
                 break;
             case R.id.et_type:

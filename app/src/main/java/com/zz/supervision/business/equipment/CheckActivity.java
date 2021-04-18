@@ -1,7 +1,6 @@
 package com.zz.supervision.business.equipment;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -17,51 +16,34 @@ import com.codbking.widget.OnChangeLisener;
 import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
 import com.codbking.widget.utils.UIAdjuster;
-import com.donkingliang.imageselector.utils.ImageSelector;
-import com.donkingliang.imageselector.utils.ImageSelectorUtils;
-import com.google.gson.Gson;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.commonlib.widget.SelectPopupWindows;
-import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.BeforeAddDeviceCheck;
 import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.DeviceCheck;
 import com.zz.supervision.bean.DictBean;
-import com.zz.supervision.bean.EquipmentBean;
-import com.zz.supervision.bean.ImageBack;
-import com.zz.supervision.bean.InspectEdit;
 import com.zz.supervision.bean.OrganizationBean;
-import com.zz.supervision.bean.PLocation;
-import com.zz.supervision.business.company.adapter.ImageDeleteItemAdapter;
 import com.zz.supervision.business.equipment.mvp.Contract;
 import com.zz.supervision.business.equipment.mvp.presenter.CheckAddPresenter;
-import com.zz.supervision.utils.BASE64;
-import com.zz.supervision.utils.GlideUtils;
 import com.zz.supervision.utils.LogUtils;
 import com.zz.supervision.utils.TimeUtils;
 import com.zz.supervision.widget.ItemGroup;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import top.zibin.luban.Luban;
-import top.zibin.luban.OnCompressListener;
 
 /**
  * 检验
  */
-public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresenter> implements Contract.IGetCheckAddView, View.OnClickListener {
+public class CheckActivity extends MyBaseActivity<Contract.IsetCheckAddPresenter> implements Contract.IGetCheckAddView, View.OnClickListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -380,7 +362,7 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
         ig_inspectionOrganization.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(InspectActivity.this, OrganizationListActivity.class).putExtra("url", "tzsbCheckOrganizationList"), 2001);
+                startActivityForResult(new Intent(CheckActivity.this, OrganizationListActivity.class).putExtra("url", "tzsbCheckOrganizationList"), 2001);
             }
         });
         ig_checkNature.setOnClickListener(new View.OnClickListener() {
@@ -428,8 +410,8 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
     }
 
     void showOptionsPicker(ItemGroup itemGroup) {
-        UIAdjuster.closeKeyBoard(InspectActivity.this);
-        OptionsPickerView pvOptions = new OptionsPickerBuilder(InspectActivity.this, new OnOptionsSelectListener() {
+        UIAdjuster.closeKeyBoard(CheckActivity.this);
+        OptionsPickerView pvOptions = new OptionsPickerBuilder(CheckActivity.this, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
@@ -494,7 +476,7 @@ public class InspectActivity extends MyBaseActivity<Contract.IsetCheckAddPresent
 
     private void selectTime(ItemGroup itemGroup) {
 
-        DatePickDialog dialog = new DatePickDialog(InspectActivity.this);
+        DatePickDialog dialog = new DatePickDialog(CheckActivity.this);
         //设置上下年分限制
         //设置上下年分限制
         dialog.setYearLimt(20);

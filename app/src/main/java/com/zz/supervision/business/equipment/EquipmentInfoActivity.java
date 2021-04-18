@@ -191,7 +191,7 @@ public class EquipmentInfoActivity extends MyBaseActivity {
                 if (equipmentBean.getDeviceType1().equals("3")) {
                     startActivity(new Intent(this, PipePartListActivity.class).putExtra("deviceId", equipmentBean.getId()));
                 }else {
-                    startActivity(new Intent(this, InspectActivity.class).putExtra("deviceId", equipmentBean.getId()).putExtra("deviceType", equipmentBean.getDeviceType1()));
+                    startActivity(new Intent(this, CheckActivity.class).putExtra("deviceId", equipmentBean.getId()).putExtra("deviceType", equipmentBean.getDeviceType1()));
                 }
                 break;
             case R.id.et_record:

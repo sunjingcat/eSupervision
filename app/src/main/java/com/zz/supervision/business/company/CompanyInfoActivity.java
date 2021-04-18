@@ -23,6 +23,7 @@ import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.business.company.adapter.ComInfoAdapter;
 import com.zz.supervision.business.company.adapter.ImageItemAdapter;
 import com.zz.supervision.business.equipment.AddEquipmentActivity;
+import com.zz.supervision.business.equipment.EquipmentListActivity;
 import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.business.mine.PasswordActivity;
 import com.zz.supervision.business.record.CheckListActivity;
@@ -46,7 +47,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -89,6 +89,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
     Button bt_delete;
     @BindView(R.id.bg)
     LinearLayout bg;
+    @BindView(R.id.ll_device)
+    LinearLayout ll_device;
     private CustomDialog customDialog;
 
     @Override
@@ -117,6 +119,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
         }
         if (companyType.equals("6")) {
             bt_add_device.setVisibility(View.VISIBLE);
+            ll_device.setVisibility(View.VISIBLE);
         }
 
     }
@@ -237,7 +240,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.bt_password, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record, R.id.bt_add_device})
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.bt_password, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record, R.id.bt_add_device, R.id.et_device, R.id.et_device})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
@@ -256,6 +259,9 @@ public class CompanyInfoActivity extends MyBaseActivity {
             case R.id.bt_add_device:
                 if (companyBean == null) return;
                 startActivity(new Intent(this, AddEquipmentActivity.class).putExtra("company", companyBean));
+                break;
+            case R.id.et_device:
+                startActivity(new Intent(this, EquipmentListActivity.class).putExtra("id", companyBean.getId()).putExtra("companyType", companyBean.getCompanyType() + ""));
                 break;
             case R.id.et_record:
                 if (companyBean == null) return;

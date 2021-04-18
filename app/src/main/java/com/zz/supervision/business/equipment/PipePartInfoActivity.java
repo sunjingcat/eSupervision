@@ -2,7 +2,6 @@ package com.zz.supervision.business.equipment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,25 +22,16 @@ import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.DetailBean;
-import com.zz.supervision.bean.EquipmentBean;
-import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.bean.PipePartBean;
-import com.zz.supervision.business.company.ShowLocationActivity;
 import com.zz.supervision.business.company.adapter.ComInfoAdapter;
-import com.zz.supervision.business.company.adapter.ImageItemAdapter;
 import com.zz.supervision.business.record.CheckListActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
-import com.zz.supervision.utils.BASE64;
-import com.zz.supervision.utils.GlideUtils;
 import com.zz.supervision.utils.ImageLoader;
-import com.zz.supervision.utils.NavUtils;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -155,7 +144,7 @@ public class PipePartInfoActivity extends MyBaseActivity {
                         , 1001);
                 break;
             case R.id.bt_ok:
-                startActivity(new Intent(this, InspectActivity.class).putExtra("deviceType", "3").putExtra("deviceId", pipePartBean.getId()));
+                startActivity(new Intent(this, CheckActivity.class).putExtra("deviceType", "3").putExtra("deviceId", pipePartBean.getId()));
                 break;
             case R.id.et_record:
                 if (pipePartBean == null) return;
