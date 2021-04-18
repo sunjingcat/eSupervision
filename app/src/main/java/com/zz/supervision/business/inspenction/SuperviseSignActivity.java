@@ -509,10 +509,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign, reformTime), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
-                    if (jsonT.isSuccess()) {
-                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));
-                        finish();
-                    }
+                    showResult(jsonT);
                 }
 
                 @Override
@@ -526,10 +523,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign, reviewerSign, reformTime, resultReduction, inspectionOpinion, getText(etViolation)), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
-                    if (jsonT.isSuccess()) {
-                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));
-                        finish();
-                    }
+                    showResult(jsonT);
                 }
 
                 @Override
@@ -542,10 +536,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             RxNetUtils.request(getApi(ApiService.class).submitSignRisk(url, id, companySign, officerSign, reviewerSign), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
-                    if (jsonT.isSuccess()) {
-                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));
-                        finish();
-                    }
+                    showResult(jsonT);
                 }
 
                 @Override
@@ -557,6 +548,17 @@ public class SuperviseSignActivity extends MyBaseActivity {
         }
 
 
+    }
+    private void showResult(JsonT jsonT){
+        if (jsonT.isSuccess()) {
+            if (!resultReduction.equals("")&&!resultReduction.equals("4")){
+                startActivity(new Intent(SuperviseSignActivity.this, MonitorActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));
+
+            }else {
+                startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));
+                finish();
+            }
+        }
     }
 
     void getData() {
