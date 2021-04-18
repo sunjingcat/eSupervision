@@ -28,6 +28,7 @@ import com.zz.supervision.bean.LawEnforcerBean;
 import com.zz.supervision.business.company.CompanyListActivity;
 import com.zz.supervision.business.company.PeopleActivity;
 import com.zz.supervision.business.equipment.EquipmentListActivity;
+import com.zz.supervision.business.equipment.SelectEquipmentActivity;
 import com.zz.supervision.business.risk.RiskSuperviseActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
@@ -154,7 +155,11 @@ public class XCHZFActivity extends MyBaseActivity {
                     showToast("请先选择企业");
                     return;
                 }
-                startActivityForResult(new Intent(this, EquipmentListActivity.class).putExtra("select", "xczf").putExtra("id", companyBean.getId()).putExtra("companyType", companyBean.getCompanyType() + ""), 1002);
+                if (type == 0) {
+                    showToast("请先选择执法类型");
+                    return;
+                }
+                startActivityForResult(new Intent(this, SelectEquipmentActivity.class).putExtra("type",type ).putExtra("id", companyBean.getId()).putExtra("companyType", companyBean.getCompanyType() + ""), 1002);
                 break;
             case R.id.et_type:
                 if (businessTypeList.size() == 0) {

@@ -1,21 +1,33 @@
 package com.zz.supervision.business.inspenction;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
+import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
+import com.zz.supervision.bean.MonitorBean;
 import com.zz.supervision.business.record.ShowDocActivity;
+import com.zz.supervision.net.ApiService;
+import com.zz.supervision.net.JsonT;
+import com.zz.supervision.net.RequestObserver;
+import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.widget.ItemGroup;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.zz.supervision.net.RxNetUtils.getApi;
 
 public class MonitorActivity extends MyBaseActivity {
 
@@ -35,7 +47,10 @@ public class MonitorActivity extends MyBaseActivity {
     ItemGroup igReformMeasure;
     @BindView(R.id.bg)
     LinearLayout bg;
-String id;
+    String recordId;
+    @BindView(R.id.bt_ok)
+    Button btOk;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_monitor;
@@ -49,17 +64,65 @@ String id;
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        id = getIntent().getStringExtra("id");
+        recordId = getIntent().getStringExtra("recordId");
+        getData();
     }
 
     @Override
     protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar,1);
+        ToolBarUtils.getInstance().setNavigation(toolbar, 1);
     }
 
-    @OnClick(R.id.toolbar_subtitle)
-    public void onViewClicked() {
-        startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", id).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 8));
+    void getData() {
+        RxNetUtils.request(getApi(ApiService.class).getDeviceByCheck(recordId), new RequestObserver<JsonT<MonitorBean>>(this) {
+            @Override
+            protected void onSuccess(JsonT<MonitorBean> jsonT) {
+                if (jsonT.isSuccess()) {
+                    MonitorBean data = jsonT.getData();
+                    igIllegalActivity.setChooseContent(data.getIllegalActivity());
+                    igLawContent.setChooseContent(data.getLawContent());
+                    igAccordContent.setChooseContent(data.getAccordContent());
+                    igReformMeasure.setChooseContent(data.getReformMeasure());
+                }
+            }
 
+            @Override
+            protected void onFail2(JsonT<MonitorBean> userInfoJsonT) {
+                super.onFail2(userInfoJsonT);
+                showToast(userInfoJsonT.getMessage());
+            }
+        }, LoadingUtils.build(this));
+    }
+
+    void postData() {
+        Map<String,Object> map = new HashMap<>();
+
+        RxNetUtils.request(getApi(ApiService.class).postDeviceByCheck(recordId,map), new RequestObserver<JsonT<MonitorBean>>(this) {
+            @Override
+            protected void onSuccess(JsonT<MonitorBean> jsonT) {
+                if (jsonT.isSuccess()) {
+                    startActivity(new Intent(MonitorActivity.this, ShowDocActivity.class).putExtra("id", recordId).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 8));
+                }
+            }
+
+            @Override
+            protected void onFail2(JsonT<MonitorBean> userInfoJsonT) {
+                super.onFail2(userInfoJsonT);
+                showToast(userInfoJsonT.getMessage());
+            }
+        }, LoadingUtils.build(this));
+    }
+
+
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.toolbar_subtitle:
+                finish();
+                break;
+            case R.id.bt_ok:
+                postData();
+               break;
+        }
     }
 }

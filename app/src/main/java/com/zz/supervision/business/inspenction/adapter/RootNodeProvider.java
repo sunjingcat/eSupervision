@@ -68,12 +68,15 @@ public class RootNodeProvider extends BaseNodeProvider {
         switch (entity.getItemDegree()) {
             case 2:
                 itemName.setTextSize(16);
+                itemName.setPadding(5,0,0,0);
                 break;
             case 3:
                 itemName.setTextSize(15);
+                itemName.setPadding(10,0,0,0);
                 break;
             case 4:
                 itemName.setTextSize(14);
+                itemName.setPadding(15,0,0,0);
                 break;
             default:
                 itemName.setTextSize(17);

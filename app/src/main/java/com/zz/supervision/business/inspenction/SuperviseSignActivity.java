@@ -3,7 +3,6 @@ package com.zz.supervision.business.inspenction;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -12,11 +11,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnChangeLisener;
@@ -34,18 +28,15 @@ import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.DetailBean;
 import com.zz.supervision.bean.SuperviseBean;
-import com.zz.supervision.business.company.AddCompanyActivity;
-import com.zz.supervision.business.inspenction.adapter.DetailAdapter;
+import com.zz.supervision.business.equipment.AddEquipmentActivity;
 import com.zz.supervision.business.inspenction.adapter.SignInfoAdapter;
 import com.zz.supervision.business.record.ShowDocActivity;
-import com.zz.supervision.business.risk.RiskSuperviseActivity;
 import com.zz.supervision.business.risk.RiskSuperviseInfoActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.utils.BASE64;
-import com.zz.supervision.utils.FileUtils;
 import com.zz.supervision.utils.GlideUtils;
 import com.zz.supervision.utils.TimeUtils;
 
@@ -55,6 +46,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -424,7 +419,41 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 customDialog.show();
                 break;
             case R.id.et_reformTime:
-                showSelectPopWindow1(reformTimeList, "reformTime");
+
+                if (type >= 11 && type <= 18) {
+                    DatePickDialog dialog = new DatePickDialog(SuperviseSignActivity.this);
+                    //设置上下年分限制
+                    //设置上下年分限制
+                    dialog.setYearLimt(20);
+                    //设置标题
+                    dialog.setTitle("选择时间");
+                    //设置类型
+                    dialog.setType(DateType.TYPE_YMD);
+                    //设置消息体的显示格式，日期格式
+                    dialog.setMessageFormat("yyyy-MM-dd");
+                    //设置选择回调
+                    dialog.setOnChangeLisener(new OnChangeLisener() {
+                        @Override
+                        public void onChanged(Date date) {
+                            Log.v("+++", date.toString());
+                        }
+                    });
+                    //设置点击确定按钮回调
+                    dialog.setOnSureLisener(new OnSureLisener() {
+                        @Override
+                        public void onSure(Date date) {
+                            String time = TimeUtils.getTime(date.getTime(), TimeUtils.DATE_FORMAT_DATE);
+
+                            et_reformTime.setText(time);
+                            reformTime = time;
+
+                        }
+                    });
+                    dialog.show();
+
+                } else {
+                    showSelectPopWindow1(reformTimeList, "reformTime");
+                }
                 break;
             case R.id.et_inspection_opinion:
 
@@ -495,7 +524,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             if (type == 3 || type == 4) {
                 showToast("审批人签字");
                 return;
-            }else if (type >= 11 || type <= 18) {
+            } else if (type >= 11 || type <= 18) {
                 showToast("记录员签字");
                 return;
             }
@@ -549,12 +578,13 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
 
     }
-    private void showResult(JsonT jsonT){
+
+    private void showResult(JsonT jsonT) {
         if (jsonT.isSuccess()) {
-            if (!resultReduction.equals("")&&!resultReduction.equals("4")){
+            if (!resultReduction.equals("") && !resultReduction.equals("4")) {
                 startActivity(new Intent(SuperviseSignActivity.this, MonitorActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));
 
-            }else {
+            } else {
                 startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));
                 finish();
             }

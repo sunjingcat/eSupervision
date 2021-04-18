@@ -12,6 +12,7 @@ import com.zz.supervision.bean.EquipmentBean;
 import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.bean.ImageBean;
 import com.zz.supervision.bean.LawEnforcerBean;
+import com.zz.supervision.bean.MonitorBean;
 import com.zz.supervision.bean.OrganizationBean;
 import com.zz.supervision.bean.PipePartBean;
 import com.zz.supervision.bean.RecordBean;
@@ -83,6 +84,9 @@ public interface ApiService {
 
     @GET("/app/v1/supervise/tzsbDeviceInfo/list")
     Observable<JsonT<List<EquipmentBean>>> getEquipmentInfoList(@QueryMap Map<String, Object> params);
+
+    @GET("/app/v1/supervise/tzsbInspectionRecord/deviceListByCompanyAndType")
+    Observable<JsonT<List<EquipmentBean>>> deviceListByCompanyAndType(@QueryMap Map<String, Object> params);
 
     @GET("/app/v1/supervise/universal/getRecordList")
     Observable<JsonT<List<RecordBean>>> getRecordList(@QueryMap Map<String, Object> params);
@@ -255,6 +259,10 @@ public interface ApiService {
     @GET("/app/v1/supervise/pdfPrint/getPdfDownPath/{id}")
     Observable<JsonT<String>> getDocInfo(@Path("id") String id, @QueryMap Map<String, Object> params);
 
+    @GET("/app/v1/supervise/tzsbInspectionRecord/order/{recordId}")
+    Observable<JsonT<MonitorBean>> getDeviceByCheck(@Path("recordId") String recordId);
 
+    @PUT("/app/v1/supervise/tzsbInspectionRecord/editOrder/{id}")
+    Observable<JsonT<MonitorBean>> postDeviceByCheck(@Path("id") String id, @QueryMap Map<String, Object> params);
 }
 

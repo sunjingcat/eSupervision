@@ -240,7 +240,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.bt_password, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record, R.id.bt_add_device, R.id.et_device, R.id.et_device})
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.bt_password, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record, R.id.bt_add_device, R.id.et_device})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
