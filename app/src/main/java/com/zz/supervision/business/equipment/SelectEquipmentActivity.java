@@ -1,15 +1,11 @@
 package com.zz.supervision.business.equipment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -17,14 +13,13 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.troila.customealert.CustomDialog;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
-import com.zz.lib.commonlib.widget.ClearEditText;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.EquipmentBean;
+import com.zz.supervision.bean.LawEnforcerBean;
 import com.zz.supervision.business.equipment.adapter.EquipmentAdapter;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
@@ -35,8 +30,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -44,6 +37,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
@@ -55,8 +49,7 @@ import static com.zz.supervision.net.RxNetUtils.getApi;
 public class SelectEquipmentActivity extends MyBaseActivity implements OnRefreshListener, OnLoadMoreListener {
     @BindView(R.id.ll_null)
     LinearLayout llNull;
-    @BindView(R.id.et_search)
-    ClearEditText et_search;
+
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.refreshLayout)
@@ -69,13 +62,12 @@ public class SelectEquipmentActivity extends MyBaseActivity implements OnRefresh
     private int pagesize = 20;
     private String searchStr = "";
     private String companyId = "";
-    private String type = "";
-    private CustomDialog customDialog;
+    private int type = 0;
     boolean first = true;
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_search_company_list;
+        return R.layout.activity_select_company_list;
     }
 
     @Override
@@ -96,17 +88,14 @@ public class SelectEquipmentActivity extends MyBaseActivity implements OnRefresh
         } else {
             llNull.setVisibility(View.GONE);
         }
-        if (first) {
-            showSoftInputFromWindow(et_search);
-            first = false;
-        }
+
     }
 
     void getDate() {
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", pagenum);
         map.put("pageSize", pagesize);
-        map.put("type", 0);
+        map.put("type", type);
         map.put("companyId", companyId);
         if (!TextUtils.isEmpty(searchStr)) {
             map.put("searchValue", searchStr);
@@ -145,27 +134,14 @@ public class SelectEquipmentActivity extends MyBaseActivity implements OnRefresh
         rv.setAdapter(adapter);
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setOnLoadMoreListener(this);
-        type = getIntent().getStringExtra("type");
-        companyId = getIntent().getStringExtra("companyId");
+        type = getIntent().getIntExtra("type", 0);
+        companyId = getIntent().getStringExtra("id");
         getDate();
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                Intent intent = new Intent();
-                intent.putExtra("equipment", mlist.get(position));
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-        });
-        et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                pagenum = 1;
-                getDate();//搜索方法
-                //隐藏软键盘
-                @SuppressLint("WrongConstant") InputMethodManager imm = (InputMethodManager) context.getSystemService("input_method");
-                imm.toggleSoftInput(0, 2);
-                return true;
+                mlist.get(position).setSelect(!mlist.get(position).isSelect());
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -174,9 +150,6 @@ public class SelectEquipmentActivity extends MyBaseActivity implements OnRefresh
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (customDialog != null && customDialog.isShowing()) {
-            customDialog.dismiss();
-        }
     }
 
     @Override
@@ -184,26 +157,22 @@ public class SelectEquipmentActivity extends MyBaseActivity implements OnRefresh
         ToolBarUtils.getInstance().setNavigation(toolbar, 1);
     }
 
-    public void showSoftInputFromWindow(EditText editText) {
-        editText.setFocusable(true);
-        editText.setFocusableInTouchMode(true);
-        editText.requestFocus();
-        Timer timer = new Timer();
-
-        timer.schedule(new TimerTask() {
-
-            @Override
-
-            public void run() {
-
-                InputMethodManager imm = (InputMethodManager) context
-
-                        .getSystemService(Context.INPUT_METHOD_SERVICE);
-
-                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
-
+    ArrayList<EquipmentBean> select = new ArrayList<>();
+    @OnClick(R.id.toolbar_subtitle)
+    public void onViewClicked() {
+        Intent intent = new Intent();
+        select.clear();
+        for (int i=0;i<mlist.size();i++){
+            if (mlist.get(i).isSelect()){
+                select.add(mlist.get(i));
             }
-
-        }, 200);
+        }
+        if (select.size()<1){
+            showToast("请选择执法设备");
+            return;
+        }
+        intent.putExtra("equipment", select);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

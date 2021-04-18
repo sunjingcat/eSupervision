@@ -1,10 +1,12 @@
 package com.zz.supervision.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.TextUtils;
 
 import java.io.Serializable;
 
-public class EquipmentBean implements Serializable {
+public class EquipmentBean implements Parcelable {
     String  deviceCode;// 锅0001,
     String  id;// 锅0001,
     String  deviceModel;// 锅炉001-1009,
@@ -43,6 +45,69 @@ public class EquipmentBean implements Serializable {
     String    alarmStatus;// null,
     String   alarmStatusText;// null,
     String   nextCheckDate;// null
+    boolean   select;// null
+
+    protected EquipmentBean(Parcel in) {
+        deviceCode = in.readString();
+        id = in.readString();
+        deviceModel = in.readString();
+        companyId = in.readString();
+        operatorName = in.readString();
+        socialCreditCode = in.readString();
+        deviceType1 = in.readString();
+        deviceType2 = in.readString();
+        deviceType3 = in.readString();
+        deviceType1Text = in.readString();
+        deviceType2Text = in.readString();
+        deviceType3Text = in.readString();
+        deviceName = in.readString();
+        registStatus = in.readInt();
+        registStatusText = in.readString();
+        registOrganizationId = in.readString();
+        registOrganizationName = in.readString();
+        registTime = in.readString();
+        registRecorder = in.readString();
+        registNumber = in.readString();
+        registCode = in.readString();
+        usageStatus = in.readInt();
+        usageStatusText = in.readString();
+        usageUpdateDate = in.readString();
+        manufacturerName = in.readString();
+        manufacturerDate = in.readString();
+        projectNumber = in.readString();
+        installationCompany = in.readString();
+        completionDate = in.readString();
+        totalLength = in.readString();
+        maintenanceCompany = in.readString();
+        licensePlate = in.readString();
+        mapAddress = in.readString();
+        longitude = in.readString();
+        latitude = in.readString();
+        alarmStatus = in.readString();
+        alarmStatusText = in.readString();
+        nextCheckDate = in.readString();
+        select = in.readByte() != 0;
+    }
+
+    public static final Creator<EquipmentBean> CREATOR = new Creator<EquipmentBean>() {
+        @Override
+        public EquipmentBean createFromParcel(Parcel in) {
+            return new EquipmentBean(in);
+        }
+
+        @Override
+        public EquipmentBean[] newArray(int size) {
+            return new EquipmentBean[size];
+        }
+    };
+
+    public void setSelect(boolean select) {
+        this.select = select;
+    }
+
+    public boolean isSelect() {
+        return select;
+    }
 
     public String getDeviceType1Text() {
         return deviceType1Text;
@@ -202,5 +267,53 @@ public class EquipmentBean implements Serializable {
 
     public String getNextCheckDate() {
         return nextCheckDate;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(deviceCode);
+        dest.writeString(id);
+        dest.writeString(deviceModel);
+        dest.writeString(companyId);
+        dest.writeString(operatorName);
+        dest.writeString(socialCreditCode);
+        dest.writeString(deviceType1);
+        dest.writeString(deviceType2);
+        dest.writeString(deviceType3);
+        dest.writeString(deviceType1Text);
+        dest.writeString(deviceType2Text);
+        dest.writeString(deviceType3Text);
+        dest.writeString(deviceName);
+        dest.writeInt(registStatus);
+        dest.writeString(registStatusText);
+        dest.writeString(registOrganizationId);
+        dest.writeString(registOrganizationName);
+        dest.writeString(registTime);
+        dest.writeString(registRecorder);
+        dest.writeString(registNumber);
+        dest.writeString(registCode);
+        dest.writeInt(usageStatus);
+        dest.writeString(usageStatusText);
+        dest.writeString(usageUpdateDate);
+        dest.writeString(manufacturerName);
+        dest.writeString(manufacturerDate);
+        dest.writeString(projectNumber);
+        dest.writeString(installationCompany);
+        dest.writeString(completionDate);
+        dest.writeString(totalLength);
+        dest.writeString(maintenanceCompany);
+        dest.writeString(licensePlate);
+        dest.writeString(mapAddress);
+        dest.writeString(longitude);
+        dest.writeString(latitude);
+        dest.writeString(alarmStatus);
+        dest.writeString(alarmStatusText);
+        dest.writeString(nextCheckDate);
+        dest.writeByte((byte) (select ? 1 : 0));
     }
 }

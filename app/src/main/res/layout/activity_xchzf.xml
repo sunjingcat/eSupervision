@@ -275,13 +275,15 @@
                     android:id="@+id/view_device"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/colorbg" />
+                    android:background="@color/colorbg"
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:id="@+id/ll_device"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@color/white"
                     android:orientation="horizontal">
@@ -315,7 +317,8 @@
                     android:id="@+id/view_InspectionCheckType"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/colorbg" />
+                    android:background="@color/colorbg"
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:id="@+id/ll_InspectionCheckType"
@@ -324,6 +327,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@color/white"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView

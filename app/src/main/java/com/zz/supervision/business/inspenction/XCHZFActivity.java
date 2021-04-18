@@ -104,10 +104,11 @@ public class XCHZFActivity extends MyBaseActivity {
     @BindView(R.id.ll_company_info)
     LinearLayout llCompanyInfo;
     CompanyBean companyBean;
-    EquipmentBean equipment;
+    List<EquipmentBean> equipment = new ArrayList<>();
     int type = 0;
     int inspectionType = 0;
     String names = "";
+    String ids = "";
     List<BusinessType> businessTypeList = new ArrayList<>();
     List<BusinessType> inspectionCheckTypeList = new ArrayList<>();
     ArrayList<LawEnforcerBean> lawEnforcerBeanArrayList = new ArrayList<>();
@@ -216,9 +217,21 @@ public class XCHZFActivity extends MyBaseActivity {
 
                 }
             } else if (requestCode == 1002) {
-                equipment = (EquipmentBean) data.getSerializableExtra("equipment");
+                equipment = data.getParcelableArrayListExtra("equipment");
                 if (equipment != null) {
-                    et_device.setText(equipment.getDeviceName() + "");
+                 String   names = "";
+                 ids = "";
+
+                    for (int i = 0; i < equipment.size(); i++) {
+                        if (i == equipment.size() - 1) {
+                            names = names + equipment.get(i).getDeviceName();
+                            ids = ids + equipment.get(i).getDeviceCode();
+                        } else {
+                            names = names + equipment.get(i).getDeviceName() + ",";
+                            ids = ids + equipment.get(i).getDeviceCode() + ",";
+                        }
+                    }
+                    et_device.setText(names + "");
 
                 }
             } else if (requestCode == 2001) {
@@ -293,11 +306,11 @@ public class XCHZFActivity extends MyBaseActivity {
             }
             map.put("inspectionTimeEnd", endTime);
             map.put("inspectionTimeStart", inspectionTime);
-            if (TextUtils.isEmpty(equipment.getId())) {
+            if (equipment .size()==0) {
                 showToast("请选择执法设备");
                 return;
             }
-            map.put("deviceCodes", equipment.getDeviceCode());
+            map.put("deviceCodes", ids);
             if (inspectionType==0) {
                 showToast("请选择检查类型");
                 return;
