@@ -49,7 +49,7 @@ public class RootNodeProvider extends BaseNodeProvider {
             @Override
             public void onClick(View v) {
                 ((SuperviseBean) data).setCheck(!((SuperviseBean) data).isCheck());
-                onProviderOnClick.onItemOnclick(data, 0);
+                onProviderOnClick.onItemOnclick(data, ((SuperviseBean) data).isCheck()?1:0);
             }
         });
 

@@ -67,7 +67,8 @@
             android:textColor="#4A4A4A"
             android:textSize="14dp"
             android:drawablePadding="10dp"
-            android:text="不涉及此项" />
+            android:text="不涉及此项"
+            android:visibility="gone"/>
     </LinearLayout>
 
 </LinearLayout>

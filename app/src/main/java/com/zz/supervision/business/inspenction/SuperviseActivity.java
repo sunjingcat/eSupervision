@@ -91,7 +91,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                 if (type == 10) { //展开
                     for (int i = 0; i < adapter.getData().size(); i++) {
                         BaseNode children = adapter.getData().get(i);
-                        if (children instanceof SuperviseBean && ((SuperviseBean) children).getId()==(((SuperviseBean) node).getId())) {
+                        if (children instanceof SuperviseBean && ((SuperviseBean) children).getId() == (((SuperviseBean) node).getId())) {
                             adapter.expandOrCollapse(i);
                             break;
                         }
@@ -106,14 +106,13 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
                     } else {
                         setSelect((SuperviseBean) node, ((SuperviseBean) node).isCheck());
                     }
-                    reverseCheck((SuperviseBean) node,type);
+                    reverseCheck((SuperviseBean) node, type);
                 }
                 adapter.notifyDataSetChanged();
             }
-        }, 0,url.equals("tzsbInspectionRecord") ?1:0);
+        }, 0, url.equals("tzsbInspectionRecord") ? 1 : 0);
 
         rv.setAdapter(adapter);
-
 
 
         toolbaSubtitle.setVisibility(View.VISIBLE);
@@ -135,28 +134,27 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
 
 
     private void reverseCheck(SuperviseBean node, int type) {
-
-        if (node.getChildType() == 0) {
-            for (BaseNode superviseBean : adapter.getData()) {
-                if (((SuperviseBean) superviseBean).getId()==(((SuperviseBean) node).getItemPid())) {
-                    if (type == 1) {
-                        boolean isAllYes = true;
-                        for (SuperviseBean children : ((SuperviseBean) superviseBean).getChildrenList()) {
-                            if (children.getIsSatisfy() != 1) {
-                                isAllYes = false;
-                            }
+        for (BaseNode superviseBean : adapter.getData()) {
+            if (((SuperviseBean) superviseBean).getId() == (node.getItemPid())) {
+                if (type == 1) {
+                    boolean isAllYes = true;
+                    for (SuperviseBean children : ((SuperviseBean) superviseBean).getChildrenList()) {
+                        if (children.getIsSatisfy() != 1) {
+                            isAllYes = false;
                         }
-                        ((SuperviseBean) superviseBean).setCheck(isAllYes);
-                    } else {
-                        ((SuperviseBean) superviseBean).setCheck(false);
                     }
-                    reverseCheck((SuperviseBean) superviseBean,type);
-                    break;
+                    ((SuperviseBean) superviseBean).setCheck(isAllYes);
+                    ((SuperviseBean) superviseBean).setIsSatisfy(isAllYes?1:0);
+                    reverseCheck((SuperviseBean) superviseBean, isAllYes?1:0);
+                } else {
+                    ((SuperviseBean) superviseBean).setCheck(false);
+                    ((SuperviseBean) superviseBean).setIsSatisfy(0);
+                    reverseCheck((SuperviseBean) superviseBean, 0);
                 }
 
             }
-        }
 
+        }
 
     }
 
@@ -268,10 +266,10 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     }
 
     public void getPostBeans(SuperviseBean children) {
-        LogUtils.v("---------",children.getItemDegree()+"-----"+children.getItemDegree()+"-----"+children.getId());
+        LogUtils.v("---------", children.getItemDegree() + "-----" + children.getItemDegree() + "-----" + children.getId());
         if (children.getChildType() == 0) {
             if (children.getIsSatisfy() != 0) {
-                postBeans.add(new SuperviseBean.PostBean(children.getId()+"", getSatisfyValue(children.getIsSatisfy())));
+                postBeans.add(new SuperviseBean.PostBean(children.getId() + "", getSatisfyValue(children.getIsSatisfy())));
             }
         } else {
             for (SuperviseBean grand : children.getChildrenList()) {

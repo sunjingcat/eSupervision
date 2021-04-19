@@ -56,7 +56,7 @@ public class SecondNodeProvider extends BaseNodeProvider {
             TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_uncheck_circle);
         }
 
-        baseViewHolder.setVisible(R.id.item_check_ignore, type == 1);
+        baseViewHolder.getView(R.id.item_check_ignore).setVisibility(type == 1?View.VISIBLE:View.GONE);
 
         if (entity.getIsSatisfy() == 3) {
             TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_ignore), R.drawable.image_check_circle);
