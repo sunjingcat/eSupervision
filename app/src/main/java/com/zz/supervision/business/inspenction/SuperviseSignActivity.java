@@ -50,6 +50,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -378,8 +379,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 break;
             case R.id.toolbar_subtitle:
                 if (resposeBean == null) return;
-                if (type == 1 || type == 2 || type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
-                    startActivity(new Intent(this, SuperviseInfoActivity.class)
+                if (type == 3 || type == 4) {
+                    startActivity(new Intent(this, RiskSuperviseInfoActivity.class)
                             .putExtra("company", resposeBean.getCompanyInfo().getOperatorName())
                             .putExtra("id", resposeBean.getId() + "")
                             .putExtra("type", type)
@@ -387,8 +388,9 @@ public class SuperviseSignActivity extends MyBaseActivity {
                             .putExtra("typeText", resposeBean.getTypeText() + "")
                             .putExtra("lawEnforcer", resposeBean.getLawEnforcer1Name() + "," + resposeBean.getLawEnforcer2Name())
                             .putExtra("inspectionTime", resposeBean.getInspectionTime()));
+
                 } else {
-                    startActivity(new Intent(this, RiskSuperviseInfoActivity.class)
+                    startActivity(new Intent(this, SuperviseInfoActivity.class)
                             .putExtra("company", resposeBean.getCompanyInfo().getOperatorName())
                             .putExtra("id", resposeBean.getId() + "")
                             .putExtra("type", type)

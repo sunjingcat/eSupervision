@@ -30,6 +30,7 @@ import com.zz.supervision.business.company.ShowLocationActivity;
 import com.zz.supervision.business.company.adapter.ComInfoAdapter;
 import com.zz.supervision.business.company.adapter.ImageItemAdapter;
 import com.zz.supervision.business.record.CheckListActivity;
+import com.zz.supervision.business.record.TzsbCheckListActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -197,7 +198,7 @@ public class EquipmentInfoActivity extends MyBaseActivity {
             case R.id.et_record:
                 if (equipmentBean == null) return;
 
-                startActivity(new Intent(this, CheckListActivity.class).putExtra("id", equipmentBean.getId()));
+                startActivity(new Intent(this, TzsbCheckListActivity.class).putExtra("id", equipmentBean.getId()));
 
 
                 break;

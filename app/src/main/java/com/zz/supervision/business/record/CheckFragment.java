@@ -37,6 +37,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -120,24 +121,27 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
                 RecordBean recordBean = mlist.get(position);
                 if (recordBean.getStatus() == 1) {
-                    if (recordBean.getType() == 1 ||recordBean.getType() == 2||recordBean.getType() == 6||recordBean.getType() == 7||recordBean.getType() == 8||recordBean.getType() == 9||recordBean.getType() == 10) {
-                        startActivity(new Intent(getActivity(), SuperviseActivity.class)
-                                .putExtra("company", recordBean.getOperatorName())
-                                .putExtra("id", recordBean.getId() + "")
-                                .putExtra("type", recordBean.getType())
-                                .putExtra("typeText", recordBean.getTypeText()+"")
-                                .putExtra("reason", recordBean.getReason()+"")
-                                .putExtra("lawEnforcer", recordBean.getLawEnforcer1Name()+","+recordBean.getLawEnforcer2Name())
-                                .putExtra("inspectionTime", recordBean.getInspectionTime()));
-                    } else {
+                    if (recordBean.getType() == 3 || recordBean.getType() == 4 || recordBean.getType() == 6 || recordBean.getType() == 7 || recordBean.getType() == 8 || recordBean.getType() == 9 || recordBean.getType() == 10) {
                         startActivity(new Intent(getActivity(), RiskSuperviseActivity.class)
                                 .putExtra("company", recordBean.getOperatorName())
                                 .putExtra("id", recordBean.getId() + "")
                                 .putExtra("type", recordBean.getType())
-                                .putExtra("typeText", recordBean.getTypeText()+"")
-                                .putExtra("reason", recordBean.getReason()+"")
-                                .putExtra("lawEnforcer", recordBean.getLawEnforcer1Name()+","+recordBean.getLawEnforcer2Name())
-                                .putExtra("inspectionTime", recordBean.getInspectionTime())); }
+                                .putExtra("typeText", recordBean.getTypeText() + "")
+                                .putExtra("reason", recordBean.getReason() + "")
+                                .putExtra("lawEnforcer", recordBean.getLawEnforcer1Name() + "," + recordBean.getLawEnforcer2Name())
+                                .putExtra("inspectionTime", recordBean.getInspectionTime()));
+
+
+                    } else {
+                        startActivity(new Intent(getActivity(), SuperviseActivity.class)
+                                .putExtra("company", recordBean.getOperatorName())
+                                .putExtra("id", recordBean.getId() + "")
+                                .putExtra("type", recordBean.getType())
+                                .putExtra("typeText", recordBean.getTypeText() + "")
+                                .putExtra("reason", recordBean.getReason() + "")
+                                .putExtra("lawEnforcer", recordBean.getLawEnforcer1Name() + "," + recordBean.getLawEnforcer2Name())
+                                .putExtra("inspectionTime", recordBean.getInspectionTime()));
+                    }
 
                 } else {
                     startActivity(new Intent(getActivity(), SuperviseSignActivity.class).putExtra("id", mlist.get(position).getId() + "").putExtra("type", mlist.get(position).getType()));
@@ -204,7 +208,7 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
         if (status != 0) {
             map.put("status", status);
         }
-        if ("1".equals(type)||"2".equals(type)){
+        if ("1".equals(type) || "2".equals(type)) {
             RxNetUtils.request(getApi(ApiService.class).getRecordList(map), new RequestObserver<JsonT<List<RecordBean>>>() {
                 @Override
                 protected void onSuccess(JsonT<List<RecordBean>> jsonT) {
@@ -216,8 +220,8 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
                     super.onFail2(stringJsonT);
                 }
             }, LoadingUtils.build(getActivity()));
-        }else {
-            RxNetUtils.request(getApi(ApiService.class).getYaoRecordList("3".equals(type)?"ypInspectionRecord":"ylqxInspectionRecord", map), new RequestObserver<JsonT<List<RecordBean>>>() {
+        } else {
+            RxNetUtils.request(getApi(ApiService.class).getYaoRecordList("3".equals(type) ? "ypInspectionRecord" : "ylqxInspectionRecord", map), new RequestObserver<JsonT<List<RecordBean>>>() {
                 @Override
                 protected void onSuccess(JsonT<List<RecordBean>> jsonT) {
                     showResult(jsonT.getData());

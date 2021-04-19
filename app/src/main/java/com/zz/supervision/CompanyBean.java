@@ -127,6 +127,8 @@ public class CompanyBean implements Serializable {
     private String updateTime;// ,
     private String validDate;//
     private String loginName;//
+    private String alarmStatusColor;//
+
     private String  longitude;//123.63550307225523,
     private String       latitude;// 47.21882160905167,
     private String       coldstorageType1Text;// 47.21882160905167,
@@ -134,6 +136,10 @@ public class CompanyBean implements Serializable {
 
     public int getAlarmStatus() {
         return alarmStatus;
+    }
+
+    public String getAlarmStatusColor() {
+        return alarmStatusColor;
     }
 
     public String getAlarmStatusText() {

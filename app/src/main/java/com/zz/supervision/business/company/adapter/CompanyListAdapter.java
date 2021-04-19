@@ -1,5 +1,8 @@
 package com.zz.supervision.business.company.adapter;
 
+import android.graphics.Color;
+import android.text.TextUtils;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.zz.supervision.CompanyBean;
@@ -23,5 +26,9 @@ public class CompanyListAdapter extends BaseQuickAdapter<CompanyBean, BaseViewHo
         helper.setText(R.id.item_businessType, "检查次数：" + item.getRecordCount());
         helper.setVisible(R.id.tv_alarmStatus,item.getCompanyType()==6);
         helper.setText(R.id.tv_alarmStatus, item.getAlarmStatusText()+"");
+        if (!TextUtils.isEmpty(item.getAlarmStatusColor())){
+            helper.setTextColor(R.id.tv_alarmStatus, Color.parseColor(item.getAlarmStatusColor()+""));
+        }
+
     }
 }

@@ -32,7 +32,6 @@ import com.zz.supervision.bean.PLocation;
 import com.zz.supervision.business.company.adapter.ImageDeleteItemAdapter;
 import com.zz.supervision.business.company.mvp.Contract;
 import com.zz.supervision.business.company.mvp.presenter.CompanyAddPresenter;
-import com.zz.supervision.business.equipment.AddEquipmentActivity;
 import com.zz.supervision.utils.BASE64;
 import com.zz.supervision.utils.GlideUtils;
 import com.zz.supervision.utils.ImageLoader;

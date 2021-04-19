@@ -125,6 +125,7 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
     ImageDeleteItemAdapter adapter;
     @BindView(R.id.item_rv_images)
     RecyclerView itemRvImages;
+    CompanyBean company;
     String companyId;
     String id;
 

@@ -173,7 +173,7 @@ public class CheckActivity extends MyBaseActivity<Contract.IsetCheckAddPresenter
 
         deviceCheck.setCheckModelType(ig_checkCategory.getSelectValue() );
         deviceCheck.setProcessStatus(ig_processStatus.getSelectValue() );
-        deviceCheck.setProcessDate(ig_processStatus.getValue() );
+        deviceCheck.setProcessDate(ig_firstCheckDate.getValue() );
 
         mPresenter.submitData(deviceCheck);
     }

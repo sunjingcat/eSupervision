@@ -28,6 +28,7 @@ import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.business.mine.PasswordActivity;
 import com.zz.supervision.business.record.CheckListActivity;
 import com.zz.supervision.business.record.ColdCheckListActivity;
+import com.zz.supervision.business.record.TzsbCheckListActivity;
 import com.zz.supervision.business.record.YaoCheckListActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
@@ -258,7 +259,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 break;
             case R.id.bt_add_device:
                 if (companyBean == null) return;
-                startActivity(new Intent(this, AddEquipmentActivity.class).putExtra("company", companyBean));
+                startActivity(new Intent(this, AddEquipmentActivity.class).putExtra("id", companyBean.getId()));
                 break;
             case R.id.et_device:
                 startActivity(new Intent(this, EquipmentListActivity.class).putExtra("id", companyBean.getId()).putExtra("companyType", companyBean.getCompanyType() + ""));
@@ -269,6 +270,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
                     startActivity(new Intent(this, ColdCheckListActivity.class).putExtra("id", companyBean.getId()));
                 } else if (companyType.equals("3") || companyType.equals("4")) {
                     startActivity(new Intent(this, YaoCheckListActivity.class).putExtra("id", companyBean.getId()));
+                } else if (companyType.equals("6") ) {
+                    startActivity(new Intent(this, TzsbCheckListActivity.class).putExtra("id", companyBean.getId()));
                 } else {
                     startActivity(new Intent(this, CheckListActivity.class).putExtra("id", companyBean.getId()));
                 }

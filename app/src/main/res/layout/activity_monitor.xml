@@ -39,38 +39,49 @@
             android:textSize="16dp" />
     </androidx.appcompat.widget.Toolbar>
 
-    <com.zz.supervision.widget.ItemGroup
-        android:id="@+id/ig_illegalActivity"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="违法行为" />
+        android:layout_height="wrap_content">
 
-    <com.zz.supervision.widget.ItemGroup
-        android:id="@+id/ig_lawContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="依据条款" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <com.zz.supervision.widget.ItemGroup
-        android:id="@+id/ig_accordContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="违法行为" />
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_illegalActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="违法行为" />
 
-    <com.zz.supervision.widget.ItemGroup
-        android:id="@+id/ig_reformMeasure"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="整改措施" />
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_lawContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="依据条款" />
+
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_accordContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="违法行为" />
+
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_reformMeasure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="整改措施" />
 
 
-    <Button
-        android:id="@+id/bt_ok"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_radius_3_blue"
-        android:text="确定"
-        android:textColor="@color/white"
-        android:textSize="17sp"
-        android:layout_margin="8dp"/>
+            <Button
+                android:id="@+id/bt_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/border_radius_3_blue"
+                android:text="确定"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

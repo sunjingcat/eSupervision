@@ -44,8 +44,13 @@ public class EquipmentBean implements Parcelable {
     String   latitude;// 39.09113112858562,
     String    alarmStatus;// null,
     String   alarmStatusText;// null,
+    String   alarmStatusColor;// null,
     String   nextCheckDate;// null
     boolean   select;// null
+
+    public String getAlarmStatusColor() {
+        return alarmStatusColor;
+    }
 
     protected EquipmentBean(Parcel in) {
         deviceCode = in.readString();
@@ -264,7 +269,6 @@ public class EquipmentBean implements Parcelable {
     public String getAlarmStatusText() {
         return alarmStatusText;
     }
-
     public String getNextCheckDate() {
         return nextCheckDate;
     }

@@ -25,6 +25,7 @@ import com.zz.supervision.bean.DetailBean;
 import com.zz.supervision.bean.PipePartBean;
 import com.zz.supervision.business.company.adapter.ComInfoAdapter;
 import com.zz.supervision.business.record.CheckListActivity;
+import com.zz.supervision.business.record.TzsbCheckListActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -148,7 +149,7 @@ public class PipePartInfoActivity extends MyBaseActivity {
                 break;
             case R.id.et_record:
                 if (pipePartBean == null) return;
-                startActivity(new Intent(this, CheckListActivity.class).putExtra("id", pipePartBean.getId()));
+                startActivity(new Intent(this, TzsbCheckListActivity.class).putExtra("id", pipePartBean.getId()));
                 break;
 
 

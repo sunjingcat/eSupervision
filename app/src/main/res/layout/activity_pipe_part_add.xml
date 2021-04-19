@@ -85,11 +85,6 @@
                 app:title="竣工日期"
                 app:isSelect="true"/>
 
-            <com.zz.supervision.widget.ItemGroup
-                android:id="@+id/ig_totalLength"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:title="管道长度" />
 
             <LinearLayout
                 android:id="@+id/ll_content"
