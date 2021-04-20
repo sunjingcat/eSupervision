@@ -259,7 +259,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 break;
             case R.id.bt_add_device:
                 if (companyBean == null) return;
-                startActivity(new Intent(this, AddEquipmentActivity.class).putExtra("id", companyBean.getId()));
+                startActivity(new Intent(this, AddEquipmentActivity.class).putExtra("companyId", companyBean.getId()));
                 break;
             case R.id.et_device:
                 startActivity(new Intent(this, EquipmentListActivity.class).putExtra("id", companyBean.getId()).putExtra("companyType", companyBean.getCompanyType() + ""));

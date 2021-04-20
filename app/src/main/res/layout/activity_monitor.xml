@@ -58,13 +58,13 @@
                 android:id="@+id/ig_lawContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="依据条款" />
+                app:title="违法行为" />
 
             <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_accordContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="违法行为" />
+                app:title="依据条款" />
 
             <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_reformMeasure"
