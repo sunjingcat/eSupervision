@@ -58,7 +58,7 @@
                 android:id="@+id/ig_lawContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="违法行为" />
+                app:title="违反条款" />
 
             <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_accordContent"

@@ -97,7 +97,7 @@ public class MonitorActivity extends MyBaseActivity {
     void postData() {
         Map<String,Object> map = new HashMap<>();
         map.put("illegalActivity",getText(igIllegalActivity));
-        map.put("ig_lawContent",getText(igLawContent));
+        map.put("lawContent",getText(igLawContent));
         map.put("accordContent",getText(igAccordContent));
         map.put("reformMeasure",getText(igReformMeasure));
         RxNetUtils.request(getApi(ApiService.class).postDeviceByCheck(recordId,map), new RequestObserver<JsonT<MonitorBean>>(this) {
