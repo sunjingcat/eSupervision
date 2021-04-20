@@ -104,7 +104,7 @@ public class MonitorActivity extends MyBaseActivity {
             @Override
             protected void onSuccess(JsonT<MonitorBean> jsonT) {
                 if (jsonT.isSuccess()) {
-                    startActivity(new Intent(MonitorActivity.this, ShowDocActivity.class).putExtra("id", recordId).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 8));
+                    startActivity(new Intent(MonitorActivity.this, ShowDocActivity.class).putExtra("id", recordId).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 100));
                 }
             }
 

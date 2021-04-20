@@ -35,7 +35,7 @@
             android:layout_marginRight="10dp"
             android:padding="8dp"
             android:singleLine="true"
-            android:text="打印"
+            android:text="确定"
             android:textColor="@color/white"
             android:textSize="16dp"
             />

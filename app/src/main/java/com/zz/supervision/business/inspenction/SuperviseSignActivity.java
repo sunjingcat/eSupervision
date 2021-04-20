@@ -54,6 +54,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.http.Field;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
@@ -85,6 +86,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
     ImageView tvLawEnforcerSign;
     @BindView(R.id.bt_ok)
     Button bt_ok;
+    @BindView(R.id.bt_print)
+    Button bt_print;
     @BindView(R.id.bt_delete)
     Button bt_delete;
     @BindView(R.id.tv_legalRepresentative_sign)
@@ -281,7 +284,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
             mlist.add(new DetailBean("风险等级", resposeBean.getLevel() + ""));
         }
         adapter.notifyDataSetChanged();
-        bt_ok.setText(resposeBean.getStatus() == 3 ? "打印" : "确定");
+        bt_ok.setText(resposeBean.getStatus() == 3 ? "打印记录表" : "预览");
+
         if (resposeBean.getStatus() == 3) {
             llLawEnforcerSign.setEnabled(false);
             llLegalRepresentativeSign.setEnabled(false);
@@ -289,6 +293,10 @@ public class SuperviseSignActivity extends MyBaseActivity {
             et_reformTime.setText(resposeBean.getReformTimeText());
             et_reformTime.setHint("");
             et_reformTime.setCompoundDrawables(null, null, null, null);
+            if (!resultReduction.equals("") && !resultReduction.equals("4")) {
+                bt_print.setVisibility(View.VISIBLE);
+                bt_ok.setText("打印记录表");
+            }
         }
         bt_delete.setVisibility(View.VISIBLE);
         tvType.setText(resposeBean.getTypeText() + "");
@@ -297,17 +305,35 @@ public class SuperviseSignActivity extends MyBaseActivity {
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLawEnforcerSign);
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLegalRepresentativeSign);
 
-        }
-        if (type == 1 || type == 2) {
+//            legalRepresentative_sign = resposeBean.getOfficerSign();
+//            lawEnforcer_sign = resposeBean.getCompanySign();
+
+        } else if (type == 1 || type == 2) {
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLegalRepresentativeSign);
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLawEnforcerSign);
+//            legalRepresentative_sign = resposeBean.getCompanySign();
+//            lawEnforcer_sign = resposeBean.getOfficerSign();
 
-        } else {
+        } else if (type >= 11 && type <= 18){
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLawEnforcerSign);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLegalRepresentativeSign);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getRecordSign(), tvReviewerSignSign);
+
+//            legalRepresentative_sign = resposeBean.getOfficerSign();
+//            lawEnforcer_sign = resposeBean.getCompanySign();
+//            reviewerSign_sign=resposeBean.getRecordSign();
+
+        }else{
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getFillerSign(), tvLawEnforcerSign);
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOwnerSign(), tvLegalRepresentativeSign);
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getReviewerSign(), tvReviewerSignSign);
 
+//            legalRepresentative_sign = resposeBean.getOwnerSign();
+//            lawEnforcer_sign = resposeBean.getFillerSign();
+//            reviewerSign_sign=resposeBean.getReviewerSign();
+
         }
+
     }
 
     private CustomDialog customDialog;
@@ -317,7 +343,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.ll_lawEnforcer_sign, R.id.ll_legalRepresentative_sign, R.id.et_reformTime, R.id.bt_ok, R.id.bt_delete, R.id.ll_reviewerSign_sign, R.id.toolbar_subtitle, R.id.et_inspection_opinion, R.id.et_result_reduction})
+    @OnClick({R.id.ll_lawEnforcer_sign, R.id.ll_legalRepresentative_sign, R.id.et_reformTime, R.id.bt_ok, R.id.bt_print, R.id.bt_delete, R.id.ll_reviewerSign_sign, R.id.toolbar_subtitle, R.id.et_inspection_opinion, R.id.et_result_reduction})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_lawEnforcer_sign:
@@ -376,6 +402,13 @@ public class SuperviseSignActivity extends MyBaseActivity {
                     postData();
                 }
 
+                break;
+            case R.id.bt_print:
+                if (resposeBean != null && resposeBean.getStatus() == 3) {
+                    if (TextUtils.isEmpty(id)) return;
+                    startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", id).putExtra("tinspectSheetType", 1).putExtra("tinspectType", 100));
+//
+                }
                 break;
             case R.id.toolbar_subtitle:
                 if (resposeBean == null) return;
@@ -500,7 +533,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         if (TextUtils.isEmpty(lawEnforcer_sign)) {
             if (type == 1 || type == 2) {
                 showToast("执法人签字");
-            } else if (type >= 11 || type <= 18) {
+            } else if (type >= 11 && type <= 18) {
                 showToast("企业负责人签字");
             } else if (type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
                 showToast("法人签字");
@@ -512,7 +545,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         if (TextUtils.isEmpty(legalRepresentative_sign)) {
             if (type == 1 || type == 2) {
                 showToast("企业负责人签字");
-            } else if (type >= 11 || type <= 18) {
+            } else if (type >= 11 && type <= 18) {
                 showToast("检查人员签字");
             } else if (type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
                 showToast("执法人签字");
@@ -526,7 +559,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             if (type == 3 || type == 4) {
                 showToast("审批人签字");
                 return;
-            } else if (type >= 11 || type <= 18) {
+            } else if (type >= 11 && type <= 18) {
                 showToast("记录员签字");
                 return;
             }
@@ -583,13 +616,13 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
     private void showResult(JsonT jsonT) {
         if (jsonT.isSuccess()) {
-            if (!resultReduction.equals("") && !resultReduction.equals("4")) {
-                startActivity(new Intent(SuperviseSignActivity.this, MonitorActivity.class).putExtra("recordId", id).putExtra("type", type));
-
-            } else {
-                startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));
-                finish();
-            }
+//            if (!resultReduction.equals("") && !resultReduction.equals("4")) {
+//                startActivity(new Intent(SuperviseSignActivity.this, MonitorActivity.class).putExtra("recordId", id).putExtra("type", type));
+//
+//            } else {
+            startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));
+            finish();
+//            }
         }
     }
 

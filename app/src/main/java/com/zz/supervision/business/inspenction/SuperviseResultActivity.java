@@ -2,6 +2,7 @@ package com.zz.supervision.business.inspenction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -42,7 +43,7 @@ public class SuperviseResultActivity extends MyBaseActivity {
     @BindView(R.id.btn_pingfen)
     Button btn_pingfen;
     int type;
-
+    String  resultReduction;
     @Override
     protected int getContentView() {
         return R.layout.activity_supervise_result;
@@ -61,7 +62,10 @@ public class SuperviseResultActivity extends MyBaseActivity {
             showIntent(deviceInfo, type);
         }
         if (type>=5&&type <= 18){
-            btn_pingfen.setVisibility(View.GONE);
+            resultReduction= deviceInfo.getResultReduction();
+            if (!TextUtils.isEmpty(resultReduction) && !resultReduction.equals("4")) {
+                btn_pingfen.setText("打印指令书");
+            }
         }
     }
 
@@ -123,7 +127,12 @@ public class SuperviseResultActivity extends MyBaseActivity {
 
                 break;
             case R.id.btn_pingfen:
-                startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", deviceInfo.getId()).putExtra("tinspectSheetType", 2).putExtra("tinspectType", type));
+                if (!TextUtils.isEmpty(resultReduction)  && !resultReduction.equals("4")) {
+                    startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", deviceInfo.getId()).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 100));
+                }else {
+                    startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", deviceInfo.getId()).putExtra("tinspectSheetType", 2).putExtra("tinspectType", type));
+
+                }
                 break;
         }
     }

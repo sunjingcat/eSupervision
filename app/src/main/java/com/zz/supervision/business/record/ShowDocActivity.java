@@ -193,14 +193,14 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
         mDownloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (FileUtils.isLocalExist(context,mFileName)) {
-                    ll.setVisibility(View.GONE);
-                    displayFile();
-
-                } else {
+//                if (FileUtils.isLocalExist(context,mFileName)) {
+//                    ll.setVisibility(View.GONE);
+//                    displayFile();
+//
+//                } else {
                     startDownload();
 
-                }
+//                }
             }
         });
         tv_print.setOnClickListener(new View.OnClickListener() {
@@ -255,6 +255,8 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
             tinspectType = 6;
         }else if(tinspectType>=11&&tinspectType<=18){
             tinspectType = 8;
+        }else if(tinspectType==100){
+            tinspectType = 8;
         }
         int tinspectSheetType = getIntent().getIntExtra("tinspectSheetType", 0);
         map.put("tinspectSheetType", tinspectSheetType);
@@ -266,12 +268,12 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
                 mFileUrl = jsonT.getData();
                 mFileName = FileUtils.parseName(mFileUrl);
                 tv.setText(mFileName);
-                if (FileUtils.isLocalExist(context,mFileName)) {
-                    ll.setVisibility(View.GONE);
-                    displayFile();
-                } else {
+//                if (FileUtils.isLocalExist(context,mFileName)) {
+//                    ll.setVisibility(View.GONE);
+//                    displayFile();
+//                } else {
                     ll.setVisibility(View.VISIBLE);
-                }
+//                }
             }
 
             @Override

@@ -530,6 +530,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:orientation="vertical"
         android:padding="8dp">
 
         <Button
@@ -540,5 +541,16 @@
             android:text="确定"
             android:textColor="@color/white"
             android:textSize="17sp" />
+        <Button
+            android:id="@+id/bt_print"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border_radius_3_gray"
+            android:text="打印指令书"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:visibility="gone"
+            />
     </LinearLayout>
 </LinearLayout>

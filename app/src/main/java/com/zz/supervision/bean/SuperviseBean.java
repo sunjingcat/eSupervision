@@ -11,6 +11,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.http.Field;
+
 public class SuperviseBean extends BaseExpandNode  {
     private String createBy;// ,
     private String createTime;// ,
@@ -335,12 +337,18 @@ public class SuperviseBean extends BaseExpandNode  {
         private String fillerSign;// 待签字
         private String ownerSign;// 待签字
         private String reviewerSign;// 待签字
+        private String recordSign;// 待签字
+
 
         private String staticScore;
         private String dynamicScore;
         private String totalScore;
         private String level;
         private String typeText;
+
+        public String getRecordSign() {
+            return recordSign;
+        }
 
         public String getInspectionOpinionText() {
             return inspectionOpinionText;
