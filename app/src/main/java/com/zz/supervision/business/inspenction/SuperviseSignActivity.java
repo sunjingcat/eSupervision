@@ -284,7 +284,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             mlist.add(new DetailBean("风险等级", resposeBean.getLevel() + ""));
         }
         adapter.notifyDataSetChanged();
-        bt_ok.setText(resposeBean.getStatus() == 3 ? "打印记录表" : "预览");
+        bt_ok.setText(resposeBean.getStatus() == 3 ? "打印评分表" : "确定");
 
         if (resposeBean.getStatus() == 3) {
             llLawEnforcerSign.setEnabled(false);
@@ -406,7 +406,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             case R.id.bt_print:
                 if (resposeBean != null && resposeBean.getStatus() == 3) {
                     if (TextUtils.isEmpty(id)) return;
-                    startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", id).putExtra("tinspectSheetType", 1).putExtra("tinspectType", 100));
+                    startActivity(new Intent(this, MonitorActivity.class).putExtra("recordId", id).putExtra("type", type));
 //
                 }
                 break;

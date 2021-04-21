@@ -12,6 +12,7 @@ import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.MonitorBean;
+import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.business.record.ShowDocActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
@@ -23,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import androidx.appcompat.widget.Toolbar;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -50,6 +52,7 @@ public class MonitorActivity extends MyBaseActivity {
     String recordId;
     @BindView(R.id.bt_ok)
     Button btOk;
+    int type;
 
     @Override
     protected int getContentView() {
@@ -65,6 +68,7 @@ public class MonitorActivity extends MyBaseActivity {
     protected void initView() {
         ButterKnife.bind(this);
         recordId = getIntent().getStringExtra("recordId");
+        type = getIntent().getIntExtra("type",11);
         getData();
     }
 
@@ -95,16 +99,16 @@ public class MonitorActivity extends MyBaseActivity {
     }
 
     void postData() {
-        Map<String,Object> map = new HashMap<>();
-        map.put("illegalActivity",getText(igIllegalActivity));
-        map.put("lawContent",getText(igLawContent));
-        map.put("accordContent",getText(igAccordContent));
-        map.put("reformMeasure",getText(igReformMeasure));
-        RxNetUtils.request(getApi(ApiService.class).postDeviceByCheck(recordId,map), new RequestObserver<JsonT<MonitorBean>>(this) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("illegalActivity", getText(igIllegalActivity));
+        map.put("lawContent", getText(igLawContent));
+        map.put("accordContent", getText(igAccordContent));
+        map.put("reformMeasure", getText(igReformMeasure));
+        RxNetUtils.request(getApi(ApiService.class).postDeviceByCheck(recordId, map), new RequestObserver<JsonT<MonitorBean>>(this) {
             @Override
             protected void onSuccess(JsonT<MonitorBean> jsonT) {
                 if (jsonT.isSuccess()) {
-                    startActivity(new Intent(MonitorActivity.this, ShowDocActivity.class).putExtra("id", recordId).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 100));
+                    completeData();
                 }
             }
 
@@ -116,8 +120,26 @@ public class MonitorActivity extends MyBaseActivity {
         }, LoadingUtils.build(this));
     }
 
+    void completeData() {
+        RxNetUtils.request(getApi(ApiService.class).completeTzsbInspectionRecord(recordId), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
+            @Override
+            protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
+                if (jsonT.isSuccess()) {
+                    startActivity(new Intent(MonitorActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", jsonT.getData()).putExtra("type", type));
+                    finish();
+                }
+            }
 
-    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok})
+            @Override
+            protected void onFail2(JsonT<SuperviseBean.ResposeBean> userInfoJsonT) {
+                super.onFail2(userInfoJsonT);
+                showToast(userInfoJsonT.getMessage());
+            }
+        }, LoadingUtils.build(this));
+    }
+
+
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.bt_print})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
@@ -125,7 +147,11 @@ public class MonitorActivity extends MyBaseActivity {
                 break;
             case R.id.bt_ok:
                 postData();
-               break;
+                break;
+            case R.id.bt_print:
+                startActivity(new Intent(MonitorActivity.this, ShowDocActivity.class).putExtra("id", recordId).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 100));
+
+                break;
         }
     }
 }

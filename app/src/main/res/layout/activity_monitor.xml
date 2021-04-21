@@ -69,7 +69,16 @@
                 android:layout_height="wrap_content"
                 app:title="整改措施" />
 
-
+            <Button
+                android:id="@+id/bt_print"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_radius_3_gray"
+                android:text="预览"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                />
             <Button
                 android:id="@+id/bt_ok"
                 android:layout_width="match_parent"

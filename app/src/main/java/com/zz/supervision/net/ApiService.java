@@ -264,5 +264,8 @@ public interface ApiService {
 
     @PUT("/app/v1/supervise/tzsbInspectionRecord/editOrder/{id}")
     Observable<JsonT<MonitorBean>> postDeviceByCheck(@Path("id") String id, @QueryMap Map<String, Object> params);
+
+    @PUT("/app/v1/supervise/tzsbInspectionRecord/complete/{recordId}")
+    Observable<JsonT<SuperviseBean.ResposeBean>> completeTzsbInspectionRecord(@Path("recordId") String recordId);
 }
 
