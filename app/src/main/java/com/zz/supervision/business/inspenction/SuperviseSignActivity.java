@@ -406,7 +406,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             case R.id.bt_print:
                 if (resposeBean != null && resposeBean.getStatus() == 3) {
                     if (TextUtils.isEmpty(id)) return;
-                    startActivity(new Intent(this, MonitorActivity.class).putExtra("recordId", id).putExtra("type", type).putExtra("read", 1));
+                    startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", id).putExtra("tinspectSheetType", 1).putExtra("tinspectType", 100));
 //
                 }
                 break;

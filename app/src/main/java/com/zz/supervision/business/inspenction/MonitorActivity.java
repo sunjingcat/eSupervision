@@ -98,7 +98,7 @@ public class MonitorActivity extends MyBaseActivity {
         }, LoadingUtils.build(this));
     }
 
-    void postData() {
+    void  postData(){
         Map<String, Object> map = new HashMap<>();
         map.put("illegalActivity", getText(igIllegalActivity));
         map.put("lawContent", getText(igLawContent));
@@ -108,7 +108,7 @@ public class MonitorActivity extends MyBaseActivity {
             @Override
             protected void onSuccess(JsonT<MonitorBean> jsonT) {
                 if (jsonT.isSuccess()) {
-                    completeData();
+                    startActivity(new Intent(MonitorActivity.this, ShowDocActivity.class).putExtra("id", recordId).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 100).putExtra("read", 1));
                 }
             }
 
@@ -146,10 +146,10 @@ public class MonitorActivity extends MyBaseActivity {
                 finish();
                 break;
             case R.id.bt_ok:
-                postData();
+                completeData();
                 break;
             case R.id.bt_print:
-                startActivity(new Intent(MonitorActivity.this, ShowDocActivity.class).putExtra("id", recordId).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 100).putExtra("read", 1));
+                postData();
 
                 break;
         }
