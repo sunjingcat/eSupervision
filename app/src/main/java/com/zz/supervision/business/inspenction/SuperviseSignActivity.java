@@ -62,8 +62,6 @@ import static com.zz.supervision.net.RxNetUtils.getApi;
  * 测评结果-监督签字页面
  */
 public class SuperviseSignActivity extends MyBaseActivity {
-
-
     SuperviseBean.ResposeBean resposeBean;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
