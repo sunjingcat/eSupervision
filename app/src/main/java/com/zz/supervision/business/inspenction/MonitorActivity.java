@@ -83,10 +83,10 @@ public class MonitorActivity extends MyBaseActivity {
             protected void onSuccess(JsonT<MonitorBean> jsonT) {
                 if (jsonT.isSuccess()) {
                     MonitorBean data = jsonT.getData();
-                    igIllegalActivity.setChooseContent(data.getIllegalActivity());
-                    igLawContent.setChooseContent(data.getLawContent());
-                    igAccordContent.setChooseContent(data.getAccordContent());
-                    igReformMeasure.setChooseContent(data.getReformMeasure());
+                    igIllegalActivity.setChooseContent(data.getIllegalActivity()+"");
+                    igLawContent.setChooseContent(data.getLawContent()+"");
+                    igAccordContent.setChooseContent(data.getAccordContent()+"");
+                    igReformMeasure.setChooseContent(data.getReformMeasure()+"");
                 }
             }
 
@@ -149,7 +149,7 @@ public class MonitorActivity extends MyBaseActivity {
                 postData();
                 break;
             case R.id.bt_print:
-                startActivity(new Intent(MonitorActivity.this, ShowDocActivity.class).putExtra("id", recordId).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 100));
+                startActivity(new Intent(MonitorActivity.this, ShowDocActivity.class).putExtra("id", recordId).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 100).putExtra("read", 1));
 
                 break;
         }

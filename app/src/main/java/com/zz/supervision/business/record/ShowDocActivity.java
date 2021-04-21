@@ -66,6 +66,7 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
     private TextView doc_title;
     private TextView tv_print;
     private DeviceDTO deviceDTO;
+    int isRead = 0;
 
     @Override
     protected int getContentView() {
@@ -76,7 +77,7 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
 
     private void displayFile() {
         Bundle bundle = new Bundle();
-        bundle.putString("filePath", FileUtils.getLocalFile(context,mFileName).getPath());
+        bundle.putString("filePath", FileUtils.getLocalFile(context, mFileName).getPath());
         bundle.putString("tempPath", Environment.getExternalStorageDirectory().getPath());
         boolean result = mTbsReaderView.preOpen(FileUtils.parseFormat(mFileName), false);
         if (result) {
@@ -92,7 +93,7 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
 
         mDownloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(mFileUrl));
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,mFileName);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, mFileName);
         request.allowScanningByMediaScanner();
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
         try {
@@ -174,6 +175,7 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
         });
 
         mFileUrl = getIntent().getStringExtra("url");
+        isRead = getIntent().getIntExtra("read", 0);
 
         mTbsReaderView = new TbsReaderView(this, this);
         mDownloadBtn = (Button) findViewById(R.id.btn_download);
@@ -193,34 +195,44 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
         mDownloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (FileUtils.isLocalExist(context,mFileName)) {
-//                    ll.setVisibility(View.GONE);
-//                    displayFile();
-//
-//                } else {
+                if (isRead == 1) {
                     startDownload();
+                } else {
+                    if (FileUtils.isLocalExist(context, mFileName)) {
+                        ll.setVisibility(View.GONE);
+                        displayFile();
+                    } else {
+                        startDownload();
 
-//                }
+                    }
+                }
             }
         });
         tv_print.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(ShowDocActivity.this, SelectPrintActivity.class);
-                startActivityForResult(intent, 1001);
+
+                    Intent intent = new Intent();
+                    intent.setClass(ShowDocActivity.this, SelectPrintActivity.class);
+                    startActivityForResult(intent, 1001);
+
+
             }
         });
         btnPrinter.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                String path = FileUtils.getLocalFile(context,mFileName).getPath();
-                if (TextUtils.isEmpty(path))return;
-                try {
-                    PrintUtil.printpdf(ShowDocActivity.this,FileUtils.getLocalFile(context,mFileName).getPath());
-                } catch (IOException e) {
+                if (isRead==1){
+                    finish();
+                }else {
+                    String path = FileUtils.getLocalFile(context, mFileName).getPath();
+                    if (TextUtils.isEmpty(path)) return;
+                    try {
+                        PrintUtil.printpdf(ShowDocActivity.this, FileUtils.getLocalFile(context, mFileName).getPath());
+                    } catch (IOException e) {
 
+                    }
                 }
             }
         });
@@ -228,7 +240,7 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
 
     @Override
     protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar,1);
+        ToolBarUtils.getInstance().setNavigation(toolbar, 1);
     }
 
 
@@ -249,13 +261,13 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
 
         String id = getIntent().getStringExtra("id");
         int tinspectType = getIntent().getIntExtra("tinspectType", 0);
-        if (tinspectType==6||tinspectType==7){
+        if (tinspectType == 6 || tinspectType == 7) {
             tinspectType = 7;
-        }else if(tinspectType==8||tinspectType==9||tinspectType==10){
+        } else if (tinspectType == 8 || tinspectType == 9 || tinspectType == 10) {
             tinspectType = 6;
-        }else if(tinspectType>=11&&tinspectType<=18){
+        } else if (tinspectType >= 11 && tinspectType <= 18) {
             tinspectType = 8;
-        }else if(tinspectType==100){
+        } else if (tinspectType == 100) {
             tinspectType = 8;
         }
         int tinspectSheetType = getIntent().getIntExtra("tinspectSheetType", 0);
@@ -268,12 +280,16 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
                 mFileUrl = jsonT.getData();
                 mFileName = FileUtils.parseName(mFileUrl);
                 tv.setText(mFileName);
-//                if (FileUtils.isLocalExist(context,mFileName)) {
-//                    ll.setVisibility(View.GONE);
-//                    displayFile();
-//                } else {
+                if (isRead == 1) {
                     ll.setVisibility(View.VISIBLE);
-//                }
+                } else {
+                    if (FileUtils.isLocalExist(context, mFileName)) {
+                        ll.setVisibility(View.GONE);
+                        displayFile();
+                    } else {
+                        ll.setVisibility(View.VISIBLE);
+                    }
+                }
             }
 
             @Override
@@ -289,7 +305,7 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
         if (requestCode == 1001 && data != null) {
             DeviceDTO deviceDTO = (DeviceDTO) data.getSerializableExtra("deviceDTO");
             this.deviceDTO = deviceDTO;
-            tv_print.setText(deviceDTO.getPlayerName()+"-"+deviceDTO.getDeviceName() + "");
+            tv_print.setText(deviceDTO.getPlayerName() + "-" + deviceDTO.getDeviceName() + "");
         }
     }
 }

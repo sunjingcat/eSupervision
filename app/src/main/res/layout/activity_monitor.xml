@@ -74,6 +74,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:background="@drawable/border_radius_3_gray"
                 android:text="预览"
                 android:textColor="@color/colorPrimary"

@@ -284,7 +284,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             mlist.add(new DetailBean("风险等级", resposeBean.getLevel() + ""));
         }
         adapter.notifyDataSetChanged();
-        bt_ok.setText(resposeBean.getStatus() == 3 ? "打印评分表" : "确定");
+        bt_ok.setText(resposeBean.getStatus() == 3 ? "打印" : "确定");
 
         if (resposeBean.getStatus() == 3) {
             llLawEnforcerSign.setEnabled(false);
@@ -293,7 +293,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             et_reformTime.setText(resposeBean.getReformTimeText());
             et_reformTime.setHint("");
             et_reformTime.setCompoundDrawables(null, null, null, null);
-            if (!resultReduction.equals("") && !resultReduction.equals("4")) {
+            if (!TextUtils.isEmpty(resultReduction) && !resultReduction.equals("4")) {
                 bt_print.setVisibility(View.VISIBLE);
                 bt_ok.setText("打印记录表");
             }
@@ -314,7 +314,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
 //            legalRepresentative_sign = resposeBean.getCompanySign();
 //            lawEnforcer_sign = resposeBean.getOfficerSign();
 
-        } else if (type >= 11 && type <= 18){
+        } else if (type >= 11 && type <= 18) {
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLawEnforcerSign);
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLegalRepresentativeSign);
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getRecordSign(), tvReviewerSignSign);
@@ -323,7 +323,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
 //            lawEnforcer_sign = resposeBean.getCompanySign();
 //            reviewerSign_sign=resposeBean.getRecordSign();
 
-        }else{
+        } else {
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getFillerSign(), tvLawEnforcerSign);
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOwnerSign(), tvLegalRepresentativeSign);
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getReviewerSign(), tvReviewerSignSign);
@@ -406,7 +406,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             case R.id.bt_print:
                 if (resposeBean != null && resposeBean.getStatus() == 3) {
                     if (TextUtils.isEmpty(id)) return;
-                    startActivity(new Intent(this, MonitorActivity.class).putExtra("recordId", id).putExtra("type", type));
+                    startActivity(new Intent(this, MonitorActivity.class).putExtra("recordId", id).putExtra("type", type).putExtra("read", 1));
 //
                 }
                 break;
@@ -584,14 +584,19 @@ public class SuperviseSignActivity extends MyBaseActivity {
             }, LoadingUtils.build(this));
         } else if (type >= 11 && type <= 18) {
 
-            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign, reviewerSign, reformTime, resultReduction, inspectionOpinion, getText(etViolation)), new RequestObserver<JsonT>(this) {
+            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign, reviewerSign, reformTime, resultReduction, inspectionOpinion, getText(etViolation)), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
                 @Override
-                protected void onSuccess(JsonT jsonT) {
-                    showResult(jsonT);
+                protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
+                    if (jsonT.getData().getStatus() != 3) {
+                        startActivity(new Intent(SuperviseSignActivity.this, MonitorActivity.class).putExtra("recordId", id).putExtra("type", type));
+                    } else {
+                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));
+                        finish();
+                    }
                 }
 
                 @Override
-                protected void onFail2(JsonT userInfoJsonT) {
+                protected void onFail2(JsonT<SuperviseBean.ResposeBean> userInfoJsonT) {
                     super.onFail2(userInfoJsonT);
                     showToast(userInfoJsonT.getMessage());
                 }
@@ -616,13 +621,10 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
     private void showResult(JsonT jsonT) {
         if (jsonT.isSuccess()) {
-//            if (!resultReduction.equals("") && !resultReduction.equals("4")) {
-//                startActivity(new Intent(SuperviseSignActivity.this, MonitorActivity.class).putExtra("recordId", id).putExtra("type", type));
-//
-//            } else {
+
             startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));
             finish();
-//            }
+
         }
     }
 
