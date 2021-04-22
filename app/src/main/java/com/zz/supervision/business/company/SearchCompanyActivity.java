@@ -163,7 +163,7 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
                             .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    deleteDate(mlist.get(position).getId());
+                                    deleteDate(mlist.get(position).getCompanyType()+"",mlist.get(position).getId());
                                 }
                             });
                     customDialog = builder.create();
@@ -208,8 +208,18 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
         ToolBarUtils.getInstance().setNavigation(toolbar, 1);
     }
 
-    void deleteDate(String id) {
-        RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(id), new RequestObserver<JsonT>() {
+    void deleteDate(String companyType, String id) {
+        String url = "companyInfo/removeCompanyInfo";
+        if (companyType.equals("2")) {
+            url = "coldstorage";
+        } else if (companyType.equals("3")) {
+            url = "ypCompanyInfo";
+        } else if (companyType.equals("4")) {
+            url = "ylqxCompanyInfo";
+        } else if (companyType.equals("6")) {
+            url = "tzsbCompanyInfo";
+        }
+        RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(url,id), new RequestObserver<JsonT>() {
             @Override
             protected void onSuccess(JsonT jsonT) {
                 pagenum = 1;

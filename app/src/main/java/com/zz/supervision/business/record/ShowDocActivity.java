@@ -27,6 +27,9 @@ import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
+import com.zz.supervision.bean.SuperviseBean;
+import com.zz.supervision.business.inspenction.MonitorActivity;
+import com.zz.supervision.business.inspenction.SuperviseResultActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
@@ -190,7 +193,11 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
         doc_title.setText(TextUtils.isEmpty(title) ? "文件" : title);
         RelativeLayout rootRl = (RelativeLayout) findViewById(R.id.rl_root);
         rootRl.addView(mTbsReaderView, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
+        if (isRead == 1) {
+            btnPrinter.setText("确定");
+        } else {
+            btnPrinter.setText("打印");
+        }
 
         mDownloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,7 +231,7 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
             @Override
             public void onClick(View v) {
                 if (isRead==1){
-                    finish();
+                    completeData();
                 }else {
                     String path = FileUtils.getLocalFile(context, mFileName).getPath();
                     if (TextUtils.isEmpty(path)) return;
@@ -307,5 +314,24 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
             this.deviceDTO = deviceDTO;
             tv_print.setText(deviceDTO.getPlayerName() + "-" + deviceDTO.getDeviceName() + "");
         }
+    }
+    void completeData() {
+        String id = getIntent().getStringExtra("id");
+        int type = getIntent().getIntExtra("type",0);
+        RxNetUtils.request(getApi(ApiService.class).completeTzsbInspectionRecord(id), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
+            @Override
+            protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
+                if (jsonT.isSuccess()) {
+                    startActivity(new Intent(ShowDocActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", jsonT.getData()).putExtra("type", type));
+                    finish();
+                }
+            }
+
+            @Override
+            protected void onFail2(JsonT<SuperviseBean.ResposeBean> userInfoJsonT) {
+                super.onFail2(userInfoJsonT);
+                showToast(userInfoJsonT.getMessage());
+            }
+        }, LoadingUtils.build(this));
     }
 }

@@ -22,6 +22,7 @@ import java.util.List;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -43,7 +44,8 @@ public class SuperviseResultActivity extends MyBaseActivity {
     @BindView(R.id.btn_pingfen)
     Button btn_pingfen;
     int type;
-    String  resultReduction;
+    String resultReduction;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_supervise_result;
@@ -56,14 +58,20 @@ public class SuperviseResultActivity extends MyBaseActivity {
         adapter = new DetailAdapter(R.layout.item_detail, mlist);
         infoRv.setAdapter(adapter);
 
-         type = getIntent().getIntExtra("type", 0);
+        type = getIntent().getIntExtra("type", 0);
         deviceInfo = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
         if (deviceInfo != null) {
             showIntent(deviceInfo, type);
         }
-        if (type>=5&&type <= 18){
-            resultReduction= deviceInfo.getResultReduction();
+        if (type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
+            btn_pingfen.setVisibility(View.GONE);
+        }
+
+        if (type >= 11 && type <= 18) {
+            btn_pingfen.setVisibility(View.GONE);
+            resultReduction = deviceInfo.getResultReduction();
             if (!TextUtils.isEmpty(resultReduction) && !resultReduction.equals("4")) {
+                btn_pingfen.setVisibility(View.VISIBLE);
                 btn_pingfen.setText("打印指令书");
             }
         }
@@ -91,14 +99,13 @@ public class SuperviseResultActivity extends MyBaseActivity {
             list.add(new DetailBean("检查项数目", lightDevice.getSumCount() + ""));
             list.add(new DetailBean("问题数", lightDevice.getProblemCount() + ""));
             list.add(new DetailBean("检查结果", lightDevice.getInspectionResultText() + ""));
-        }else if (type == 6||type == 7||type == 8||type == 9||type == 10) {
+        } else if (type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
             list.add(new DetailBean("检查项数目", lightDevice.getSumCount() + ""));
             list.add(new DetailBean("问题数", lightDevice.getProblemCount() + ""));
-        }
-        else if (type >=11&&type <= 18) {
+        } else if (type >= 11 && type <= 18) {
             list.add(new DetailBean("检查项数目", lightDevice.getSumCount() + ""));
             list.add(new DetailBean("不符合规范项数", lightDevice.getProblemCount() + ""));
-        }else {
+        } else {
             list.add(new DetailBean("静态评分项分数", lightDevice.getStaticScore() + ""));
             list.add(new DetailBean("动态评分项分数", lightDevice.getDynamicScore() + ""));
             list.add(new DetailBean("总分数", lightDevice.getTotalScore() + ""));
@@ -127,9 +134,9 @@ public class SuperviseResultActivity extends MyBaseActivity {
 
                 break;
             case R.id.btn_pingfen:
-                if (!TextUtils.isEmpty(resultReduction)  && !resultReduction.equals("4")) {
+                if (!TextUtils.isEmpty(resultReduction) && !resultReduction.equals("4")) {
                     startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", deviceInfo.getId()).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 100));
-                }else {
+                } else {
                     startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", deviceInfo.getId()).putExtra("tinspectSheetType", 2).putExtra("tinspectType", type));
 
                 }

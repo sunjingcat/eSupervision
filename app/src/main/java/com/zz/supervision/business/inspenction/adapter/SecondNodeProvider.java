@@ -44,25 +44,8 @@ public class SecondNodeProvider extends BaseNodeProvider {
         baseViewHolder.setText(R.id.itemName, entity.getItemName());
         baseViewHolder.getView(R.id.item_isImportant).setVisibility(entity.getIsImportant() == 0 ? View.INVISIBLE : View.VISIBLE);
         baseViewHolder.setTextColor(R.id.itemName, entity.getIsLastNotSatisfy() == 1 ? Color.parseColor("#FFC12A2A") : Color.parseColor("#4A4A4A"));
-
-        if (entity.getIsSatisfy() == 1) {
-            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_check_circle);
-        } else {
-            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_uncheck_circle);
-        }
-        if (entity.getIsSatisfy() == 2) {
-            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_check_circle);
-        } else {
-            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_uncheck_circle);
-        }
-
         baseViewHolder.getView(R.id.item_check_ignore).setVisibility(type == 1?View.VISIBLE:View.GONE);
 
-        if (entity.getIsSatisfy() == 3) {
-            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_ignore), R.drawable.image_check_circle);
-        } else {
-            TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_ignore), R.drawable.image_uncheck_circle);
-        }
         if (enable == 1) {
             if (entity.getIsSatisfy() == 0) {
                 TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_check_enable_circle);
@@ -70,7 +53,7 @@ public class SecondNodeProvider extends BaseNodeProvider {
                 baseViewHolder.getView(R.id.item_check_ignore).setVisibility(View.GONE);
                 baseViewHolder.getView(R.id.item_check_no).setVisibility(View.VISIBLE);
             } else if (entity.getIsSatisfy() == 1) {
-                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_check_enable_circle);
+                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_check_enable_circle);
                 baseViewHolder.getView(R.id.item_check_yes).setVisibility(View.VISIBLE);
                 baseViewHolder.getView(R.id.item_check_ignore).setVisibility(View.GONE);
                 baseViewHolder.getView(R.id.item_check_no).setVisibility(View.GONE);
@@ -80,7 +63,22 @@ public class SecondNodeProvider extends BaseNodeProvider {
                 baseViewHolder.getView(R.id.item_check_ignore).setVisibility(View.VISIBLE);
                 baseViewHolder.getView(R.id.item_check_no).setVisibility(View.GONE);
             }
-
+        }else {
+            if (entity.getIsSatisfy() == 1) {
+                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_check_circle);
+            } else {
+                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_yes), R.drawable.image_uncheck_circle);
+            }
+            if (entity.getIsSatisfy() == 2) {
+                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_check_circle);
+            } else {
+                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_no), R.drawable.image_uncheck_circle);
+            }
+            if (entity.getIsSatisfy() == 3) {
+                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_ignore), R.drawable.image_check_circle);
+            } else {
+                TabUtils.setDrawableLeft(getContext(), (TextView) baseViewHolder.getView(R.id.item_check_ignore), R.drawable.image_uncheck_circle);
+            }
         }
         baseViewHolder.getView(R.id.item_check_yes).setOnClickListener(new View.OnClickListener() {
             @Override

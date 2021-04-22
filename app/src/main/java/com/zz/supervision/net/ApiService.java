@@ -100,8 +100,8 @@ public interface ApiService {
     @GET("/app/v1/supervise/{url}/list")
     Observable<JsonT<List<RecordBean>>> getYaoRecordList(@Path("url") String url, @QueryMap Map<String, Object> params);
 
-    @DELETE("/app/v1/supervise/companyInfo/removeCompanyInfo/{id}")
-    Observable<JsonT> removeCompanyInfo(@Path("id") String id);
+    @DELETE("/app/v1/supervise/{url}/{id}")
+    Observable<JsonT> removeCompanyInfo(@Path(value = "url", encoded = true) String url,@Path("id") String id);
 
     @DELETE("/app/v1/supervise/tzsbDeviceInfo/{id}")
     Observable<JsonT> removeDeviceInfo(@Path("id") String id);
@@ -263,7 +263,7 @@ public interface ApiService {
     Observable<JsonT<MonitorBean>> getDeviceByCheck(@Path("recordId") String recordId);
 
     @PUT("/app/v1/supervise/tzsbInspectionRecord/editOrder/{id}")
-    Observable<JsonT<MonitorBean>> postDeviceByCheck(@Path("id") String id, @QueryMap Map<String, Object> params);
+    Observable<JsonT> postDeviceByCheck(@Path("id") String id, @QueryMap Map<String, Object> params);
 
     @PUT("/app/v1/supervise/tzsbInspectionRecord/complete/{recordId}")
     Observable<JsonT<SuperviseBean.ResposeBean>> completeTzsbInspectionRecord(@Path("recordId") String recordId);

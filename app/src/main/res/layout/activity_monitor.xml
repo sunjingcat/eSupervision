@@ -89,7 +89,8 @@
                 android:background="@drawable/border_radius_3_blue"
                 android:text="确定"
                 android:textColor="@color/white"
-                android:textSize="17sp" />
+                android:textSize="17sp"
+                android:visibility="gone"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

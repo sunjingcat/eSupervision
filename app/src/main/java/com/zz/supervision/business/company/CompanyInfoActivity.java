@@ -382,7 +382,17 @@ public class CompanyInfoActivity extends MyBaseActivity {
     }
 
     void deleteDate(String id) {
-        RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(id), new RequestObserver<JsonT>() {
+        String url = "companyInfo/removeCompanyInfo";
+        if (companyType.equals("2")) {
+            url = "coldstorage";
+        } else if (companyType.equals("3")) {
+            url = "ypCompanyInfo";
+        } else if (companyType.equals("4")) {
+            url = "ylqxCompanyInfo";
+        } else if (companyType.equals("6")) {
+            url = "tzsbCompanyInfo";
+        }
+        RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(url,id), new RequestObserver<JsonT>() {
             @Override
             protected void onSuccess(JsonT jsonT) {
                 showToast("删除成功");
