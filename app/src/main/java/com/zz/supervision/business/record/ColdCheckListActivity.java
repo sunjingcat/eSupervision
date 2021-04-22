@@ -328,6 +328,7 @@ public class ColdCheckListActivity extends MyBaseActivity implements OnRefreshLi
                 beginTime = "";
                 etEndTime.setText("");
                 endTime = "";
+                pagenum =1;
                 getDate();
                 drawer.closeDrawers();
                 break;

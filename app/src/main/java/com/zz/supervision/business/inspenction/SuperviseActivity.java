@@ -19,6 +19,7 @@ import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.SuperviseBean;
+import com.zz.supervision.business.inspenction.adapter.FooterNodeProvider;
 import com.zz.supervision.business.inspenction.adapter.OnProviderOnClick;
 import com.zz.supervision.business.inspenction.adapter.SuperviseAdapter;
 import com.zz.supervision.business.inspenction.presenter.SupervisePresenter;
@@ -135,17 +136,19 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
 
     private void reverseCheck(SuperviseBean node, int type) {
         for (BaseNode superviseBean : adapter.getData()) {
+            if (superviseBean instanceof SuperviseBean.RootFooterNode) continue;
             if (((SuperviseBean) superviseBean).getId() == (node.getItemPid())) {
                 if (type == 1) {
                     boolean isAllYes = true;
                     for (SuperviseBean children : ((SuperviseBean) superviseBean).getChildrenList()) {
+                        if (superviseBean instanceof SuperviseBean.RootFooterNode) continue;
                         if (children.getIsSatisfy() != 1) {
                             isAllYes = false;
                         }
                     }
                     ((SuperviseBean) superviseBean).setCheck(isAllYes);
-                    ((SuperviseBean) superviseBean).setIsSatisfy(isAllYes?1:0);
-                    reverseCheck((SuperviseBean) superviseBean, isAllYes?1:0);
+                    ((SuperviseBean) superviseBean).setIsSatisfy(isAllYes ? 1 : 0);
+                    reverseCheck((SuperviseBean) superviseBean, isAllYes ? 1 : 0);
                 } else {
                     ((SuperviseBean) superviseBean).setCheck(false);
                     ((SuperviseBean) superviseBean).setIsSatisfy(0);
@@ -190,7 +193,11 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
     @Override
     public void showFoodSuperviseList(List<SuperviseBean> data) {
         mlist.clear();
-        mlist.addAll(data);
+        for (SuperviseBean superviseBean : data) {
+            mlist.add(superviseBean);
+            mlist.add(new SuperviseBean.RootFooterNode());
+        }
+
         adapter.setList(mlist);
         adapter.notifyDataSetChanged();
 
@@ -258,6 +265,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
 //                mlist = mlist;
                 postBeans = new ArrayList<>();
                 for (BaseNode node : mlist) {
+                    if (node instanceof SuperviseBean.RootFooterNode) continue;
                     getPostBeans((SuperviseBean) node);
                 }
                 mPresenter.submitReData(url, id, postBeans);

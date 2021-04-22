@@ -17,7 +17,7 @@ public class SuperviseAdapter extends BaseNodeAdapter {
         addNodeProvider(new RootNodeProvider(onProviderOnClick, enable));
         addNodeProvider(new SecondNodeProvider(onProviderOnClick, enable,type));
 //        addNodeProvider(new ThrirdNodeProvider(onProviderOnClick,enable));
-//        addFooterNodeProvider(new FooterNodeProvider(onProviderOnClick));
+        addFooterNodeProvider(new FooterNodeProvider(onProviderOnClick));
     }
 
     @Override
@@ -30,9 +30,9 @@ public class SuperviseAdapter extends BaseNodeAdapter {
                 return 0;
             }
         }
-//        else if (node instanceof SuperviseBean.RootFooterNode) {
-//            return 2;
-//        }
+        else if (node instanceof SuperviseBean.RootFooterNode) {
+            return 2;
+        }
         return -1;
     }
 }

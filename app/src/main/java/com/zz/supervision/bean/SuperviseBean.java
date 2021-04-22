@@ -1,9 +1,13 @@
 package com.zz.supervision.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.chad.library.adapter.base.entity.node.BaseExpandNode;
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.chad.library.adapter.base.entity.node.NodeFooterImp;
 import com.zz.supervision.CompanyBean;
+import com.zz.supervision.business.inspenction.adapter.FooterNodeProvider;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -146,7 +150,8 @@ public class SuperviseBean extends BaseExpandNode  {
 
 
 
-    public class RootFooterNode extends BaseNode {
+
+    public static class RootFooterNode extends BaseNode {
         private boolean isExpanded;
         private String id;
 
@@ -158,9 +163,7 @@ public class SuperviseBean extends BaseExpandNode  {
             this.id = id;
         }
 
-        public RootFooterNode(boolean isExpanded, String id) {
-            this.isExpanded = isExpanded;
-            this.id = id;
+        public RootFooterNode() {
         }
 
         public boolean isExpanded() {
@@ -289,7 +292,7 @@ public class SuperviseBean extends BaseExpandNode  {
 
     }
 
-    public class ResposeBean implements Serializable {
+    public class ResposeBean implements Parcelable {
         private String searchValue;// null,
         private String createBy;// 张东旭,
         private String createTime;// 2020-09-28 14;//01;//46,
@@ -320,7 +323,7 @@ public class SuperviseBean extends BaseExpandNode  {
         private String generalProblemCount;// 4,
         private String generalProblemDetail;// 1.1，1.2，2.2，*3.3，3.6,
         private String inspectionResult;// 3,
-        private String resultReduction;// 3,
+        private int resultReduction;// 3,
         private String inspectionResultText;// 3,
         private String resultReductionText;// 3,
         private String violation;// 1.1 经营者持有的食品经营许可证是否合法有效。\n1.2 食品经营许可证载明的有关内容与实际经营是否相符。\n2.2 经营场所环境是否整洁，是否与污染源保持规定的距离。\n*3.3 经营的肉及肉制品是否具有检验检疫证明。\n3.6 经营的食品的标签、说明书是否清楚、明显，生产日期、保质期等事项是否显著标注，容易辨识。\n,
@@ -345,6 +348,71 @@ public class SuperviseBean extends BaseExpandNode  {
         private String totalScore;
         private String level;
         private String typeText;
+
+        protected ResposeBean(Parcel in) {
+            searchValue = in.readString();
+            createBy = in.readString();
+            createTime = in.readString();
+            updateBy = in.readString();
+            updateTime = in.readString();
+            remark = in.readString();
+            deptId = in.readString();
+            reformTime = in.readString();
+            reformTimeText = in.readString();
+            id = in.readString();
+            serialNumber = in.readString();
+            companyId = in.readString();
+            status = in.readInt();
+            yearCount = in.readString();
+            reason = in.readString();
+            inspectionTime = in.readString();
+            inspectionOpinion = in.readString();
+            inspectionOpinionText = in.readString();
+            sumCount = in.readString();
+            problemCount = in.readInt();
+            importantCount = in.readString();
+            importantDetail = in.readString();
+            importantProblemCount = in.readString();
+            importantProblemDetail = in.readString();
+            generalCount = in.readString();
+            generalDetail = in.readString();
+            generalProblemCount = in.readString();
+            generalProblemDetail = in.readString();
+            inspectionResult = in.readString();
+            resultReduction = in.readInt();
+            inspectionResultText = in.readString();
+            resultReductionText = in.readString();
+            violation = in.readString();
+            officerSign = in.readString();
+            lawEnforcer1 = in.readString();
+            lawEnforcer2 = in.readString();
+            companySign = in.readString();
+            deptName = in.readString();
+            lawEnforcer1Name = in.readString();
+            lawEnforcer2Name = in.readString();
+            statusText = in.readString();
+            fillerSign = in.readString();
+            ownerSign = in.readString();
+            reviewerSign = in.readString();
+            recordSign = in.readString();
+            staticScore = in.readString();
+            dynamicScore = in.readString();
+            totalScore = in.readString();
+            level = in.readString();
+            typeText = in.readString();
+        }
+
+        public  final Creator<ResposeBean> CREATOR = new Creator<ResposeBean>() {
+            @Override
+            public ResposeBean createFromParcel(Parcel in) {
+                return new ResposeBean(in);
+            }
+
+            @Override
+            public ResposeBean[] newArray(int size) {
+                return new ResposeBean[size];
+            }
+        };
 
         public String getRecordSign() {
             return recordSign;
@@ -514,7 +582,7 @@ public class SuperviseBean extends BaseExpandNode  {
             return resultReductionText;
         }
 
-        public String getResultReduction() {
+        public int getResultReduction() {
             return resultReduction;
         }
 
@@ -558,6 +626,65 @@ public class SuperviseBean extends BaseExpandNode  {
 
         public String getStatusText() {
             return statusText;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(searchValue);
+            dest.writeString(createBy);
+            dest.writeString(createTime);
+            dest.writeString(updateBy);
+            dest.writeString(updateTime);
+            dest.writeString(remark);
+            dest.writeString(deptId);
+            dest.writeString(reformTime);
+            dest.writeString(reformTimeText);
+            dest.writeString(id);
+            dest.writeString(serialNumber);
+            dest.writeString(companyId);
+            dest.writeInt(status);
+            dest.writeString(yearCount);
+            dest.writeString(reason);
+            dest.writeString(inspectionTime);
+            dest.writeString(inspectionOpinion);
+            dest.writeString(inspectionOpinionText);
+            dest.writeString(sumCount);
+            dest.writeInt(problemCount);
+            dest.writeString(importantCount);
+            dest.writeString(importantDetail);
+            dest.writeString(importantProblemCount);
+            dest.writeString(importantProblemDetail);
+            dest.writeString(generalCount);
+            dest.writeString(generalDetail);
+            dest.writeString(generalProblemCount);
+            dest.writeString(generalProblemDetail);
+            dest.writeString(inspectionResult);
+            dest.writeInt(resultReduction);
+            dest.writeString(inspectionResultText);
+            dest.writeString(resultReductionText);
+            dest.writeString(violation);
+            dest.writeString(officerSign);
+            dest.writeString(lawEnforcer1);
+            dest.writeString(lawEnforcer2);
+            dest.writeString(companySign);
+            dest.writeString(deptName);
+            dest.writeString(lawEnforcer1Name);
+            dest.writeString(lawEnforcer2Name);
+            dest.writeString(statusText);
+            dest.writeString(fillerSign);
+            dest.writeString(ownerSign);
+            dest.writeString(reviewerSign);
+            dest.writeString(recordSign);
+            dest.writeString(staticScore);
+            dest.writeString(dynamicScore);
+            dest.writeString(totalScore);
+            dest.writeString(level);
+            dest.writeString(typeText);
         }
     }
 

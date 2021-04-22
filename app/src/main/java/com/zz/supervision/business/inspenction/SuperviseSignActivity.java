@@ -96,7 +96,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
     String url = "";
     String id = "";
     String reformTime = "";
-    String resultReduction = "";
+    int resultReduction = 0;
     String inspectionOpinion = "";
     @BindView(R.id.ll_lawEnforcer_sign)
     LinearLayout llLawEnforcerSign;
@@ -197,7 +197,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             tvSign2.setText("检查人员签字");
             tvSign3.setText("记录员签字");
         }
-        resposeBean = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
+        resposeBean = getIntent().getParcelableExtra("resposeBean");
         if (resposeBean != null) {
             showIntent(resposeBean);
             id = resposeBean.getId();
@@ -291,7 +291,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             et_reformTime.setText(resposeBean.getReformTimeText());
             et_reformTime.setHint("");
             et_reformTime.setCompoundDrawables(null, null, null, null);
-            if (!TextUtils.isEmpty(resultReduction) && !resultReduction.equals("4")) {
+            if (resultReduction!=0&&resultReduction!=4) {
                 bt_print.setVisibility(View.VISIBLE);
                 bt_ok.setText("打印记录表");
             }
@@ -582,7 +582,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             }, LoadingUtils.build(this));
         } else if (type >= 11 && type <= 18) {
 
-            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign, reviewerSign, reformTime, resultReduction, inspectionOpinion, getText(etViolation)), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
+            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign, reviewerSign, reformTime, resultReduction+"", inspectionOpinion, getText(etViolation)), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
                 @Override
                 protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
                     if (jsonT.getData().getStatus() != 3) {
@@ -710,7 +710,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                     inspectionOpinion = values[index];
                 } else if (type.equals("tzsb_result_reduction")) {
                     et_result_reduction.setText(msg);
-                    resultReduction = values[index];
+                    resultReduction = Integer.parseInt(values[index]);
                 } else if (type.equals("reformTime")) {
                     et_reformTime.setText(msg);
                     reformTime = values[index];

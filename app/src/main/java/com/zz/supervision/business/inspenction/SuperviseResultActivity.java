@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
+import com.zz.supervision.MainActivity;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.DetailBean;
@@ -44,7 +45,7 @@ public class SuperviseResultActivity extends MyBaseActivity {
     @BindView(R.id.btn_pingfen)
     Button btn_pingfen;
     int type;
-    String resultReduction;
+    int resultReduction;
 
     @Override
     protected int getContentView() {
@@ -59,7 +60,7 @@ public class SuperviseResultActivity extends MyBaseActivity {
         infoRv.setAdapter(adapter);
 
         type = getIntent().getIntExtra("type", 0);
-        deviceInfo = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
+        deviceInfo =  getIntent().getParcelableExtra("resposeBean");
         if (deviceInfo != null) {
             showIntent(deviceInfo, type);
         }
@@ -70,16 +71,24 @@ public class SuperviseResultActivity extends MyBaseActivity {
         if (type >= 11 && type <= 18) {
             btn_pingfen.setVisibility(View.GONE);
             resultReduction = deviceInfo.getResultReduction();
-            if (!TextUtils.isEmpty(resultReduction) && !resultReduction.equals("4")) {
+            if (resultReduction!=0&&resultReduction!=4) {
                 btn_pingfen.setVisibility(View.VISIBLE);
                 btn_pingfen.setText("打印指令书");
             }
         }
+
     }
 
     @Override
     protected void initToolBar() {
         ToolBarUtils.getInstance().setNavigation(toolbar, 1);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SuperviseResultActivity.this, MainActivity.class));
+                finish();
+            }
+        });
     }
 
     public void showIntent(SuperviseBean.ResposeBean lightDevice, int type) {
@@ -134,7 +143,7 @@ public class SuperviseResultActivity extends MyBaseActivity {
 
                 break;
             case R.id.btn_pingfen:
-                if (!TextUtils.isEmpty(resultReduction) && !resultReduction.equals("4")) {
+                if (resultReduction!=0&&resultReduction!=4) {
                     startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", deviceInfo.getId()).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 100));
                 } else {
                     startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", deviceInfo.getId()).putExtra("tinspectSheetType", 2).putExtra("tinspectType", type));

@@ -23,6 +23,7 @@ import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.utils.FileUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.widget.Toolbar;
@@ -86,11 +87,11 @@ public class SuperviseInfoActivity extends MyBaseActivity {
         } else if (type == 5) {
             url = "llglInspectionRecord";
             btOk.setVisibility(View.GONE);
-        }else if (type == 6||type == 7) {
+        } else if (type == 6 || type == 7) {
             url = "ypInspectionRecord";
-        }else if (type == 8||type == 9||type == 10) {
+        } else if (type == 8 || type == 9 || type == 10) {
             url = "ylqxInspectionRecord";
-        }else if (type == 11 || type == 12 || type == 13 || type == 14 || type == 15 || type == 16 || type == 17 || type == 18) {
+        } else if (type == 11 || type == 12 || type == 13 || type == 14 || type == 15 || type == 16 || type == 17 || type == 18) {
             url = "tzsbInspectionRecord";
         }
         adapter = new SuperviseAdapter(new OnProviderOnClick() {
@@ -99,7 +100,7 @@ public class SuperviseInfoActivity extends MyBaseActivity {
                 if (type == 10) {
                     for (int i = 0; i < adapter.getData().size(); i++) {
                         BaseNode children = adapter.getData().get(i);
-                        if (children instanceof SuperviseBean && ((SuperviseBean) children).getId()==(((SuperviseBean) node).getId())) {
+                        if (children instanceof SuperviseBean && ((SuperviseBean) children).getId() == (((SuperviseBean) node).getId())) {
                             adapter.expandOrCollapse(i);
 //                            ((SuperviseBean) node).setExpanded(((SuperviseBean) children).isExpanded());
                             break;
@@ -108,7 +109,7 @@ public class SuperviseInfoActivity extends MyBaseActivity {
                 }
                 adapter.notifyDataSetChanged();
             }
-        }, 1,url.equals("tzsbInspectionRecord") ?1:0);
+        }, 1, url.equals("tzsbInspectionRecord") ? 1 : 0);
         rv.setAdapter(adapter);
         status = getIntent().getIntExtra("status", 0);
         btOk.setText("打印");
@@ -150,8 +151,14 @@ public class SuperviseInfoActivity extends MyBaseActivity {
         return null;
     }
 
+    List<BaseNode> mlist = new ArrayList<>();
+
     public void showSuperviseList(List<SuperviseBean> data) {
-        adapter.setList(data);
+        for (SuperviseBean superviseBean : data) {
+            mlist.add(superviseBean);
+            mlist.add(new SuperviseBean.RootFooterNode());
+        }
+        adapter.setList(mlist);
         adapter.notifyDataSetChanged();
 
     }
