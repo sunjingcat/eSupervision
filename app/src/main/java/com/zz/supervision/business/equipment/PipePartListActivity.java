@@ -1,10 +1,12 @@
 package com.zz.supervision.business.equipment;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -73,7 +75,7 @@ public class PipePartListActivity extends MyBaseActivity {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                startActivity(new Intent(PipePartListActivity.this, PipePartInfoActivity.class).putExtra("id",mlist.get(position).getId()));
+                startActivity(new Intent(PipePartListActivity.this, PipePartInfoActivity.class).putExtra("id", mlist.get(position).getId()));
 
             }
         });
@@ -85,7 +87,7 @@ public class PipePartListActivity extends MyBaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
-                startActivity(new Intent(PipePartListActivity.this, AddPipePartActivity.class).putExtra("deviceId",deviceId));
+                startActivityForResult(new Intent(PipePartListActivity.this, AddPipePartActivity.class).putExtra("deviceId", deviceId), 1001);
 
                 break;
         }
@@ -120,4 +122,11 @@ public class PipePartListActivity extends MyBaseActivity {
         }, LoadingUtils.build(this));
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1001) {
+            getDate();
+        }
+    }
 }

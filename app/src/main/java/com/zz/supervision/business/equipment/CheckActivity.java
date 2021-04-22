@@ -149,6 +149,7 @@ public class CheckActivity extends MyBaseActivity<Contract.IsetCheckAddPresenter
             beforeAddDeviceCheck.setReportId(businessStatus.getReportId() + "");
             beforeAddDeviceCheck.setLastCheckDate(businessStatus.getLastCheckDate() + "");
             beforeAddDeviceCheck.setCheckDate(businessStatus.getCheckDate() + "");
+            beforeAddDeviceCheck.setNextCheckDate(businessStatus.getNextCheckDate() + "");
             beforeAddDeviceCheck.setLastCheckDate(businessStatus.getLastCheckDate() + "");
             beforeAddDeviceCheck.setCheckReduction(businessStatus.getCheckReduction() + "");
             beforeAddDeviceCheck.setDeviceProblem(businessStatus.getDeviceProblem() + "");

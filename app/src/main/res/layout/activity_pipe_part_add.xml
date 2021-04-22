@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -35,6 +36,7 @@
 
 
     </androidx.appcompat.widget.Toolbar>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -63,11 +65,17 @@
                 app:title="管道名称" />
 
             <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_totalLength"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="管道长度" />
+
+            <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_manufacturerDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="制造日期"
-                app:isSelect="true"/>
+                app:isSelect="true"
+                app:title="制造日期" />
 
             <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_installationCompany"
@@ -79,8 +87,8 @@
                 android:id="@+id/ig_completionDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="竣工日期"
-                app:isSelect="true"/>
+                app:isSelect="true"
+                app:title="竣工日期" />
 
 
             <LinearLayout
@@ -95,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

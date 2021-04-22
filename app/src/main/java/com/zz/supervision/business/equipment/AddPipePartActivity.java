@@ -60,6 +60,8 @@ public class AddPipePartActivity extends MyBaseActivity<Contract.IsetPipeAddPres
     ItemGroup ig_installationCompany;
     @BindView(R.id.ig_completionDate)
     ItemGroup ig_completionDate;
+    @BindView(R.id.ig_totalLength)
+    ItemGroup ig_totalLength;
 
     String deviceId;
     String id;
@@ -97,6 +99,7 @@ public class AddPipePartActivity extends MyBaseActivity<Contract.IsetPipeAddPres
         map.put("manufacturerDate", ig_manufacturerDate.getValue());
         map.put("completionDate", ig_completionDate.getValue());
         map.put("installationCompany", getText(ig_installationCompany));
+        map.put("totalLength", getText(ig_totalLength));
 
         mPresenter.submitData(map);
     }
@@ -170,6 +173,7 @@ public class AddPipePartActivity extends MyBaseActivity<Contract.IsetPipeAddPres
         ig_manufacturerDate.setChooseContent(data.getManufacturerDate() + "");
         ig_completionDate.setChooseContent(data.getCompletionDate() + "");
         ig_installationCompany.setChooseContent(data.getInstallationCompany() + "");
+        ig_totalLength.setChooseContent(data.getTotalLength() + "");
     }
 
     @Override
