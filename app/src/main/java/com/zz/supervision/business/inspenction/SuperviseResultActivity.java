@@ -60,7 +60,7 @@ public class SuperviseResultActivity extends MyBaseActivity {
         infoRv.setAdapter(adapter);
 
         type = getIntent().getIntExtra("type", 0);
-        deviceInfo =  getIntent().getParcelableExtra("resposeBean");
+        deviceInfo = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
         if (deviceInfo != null) {
             showIntent(deviceInfo, type);
         }

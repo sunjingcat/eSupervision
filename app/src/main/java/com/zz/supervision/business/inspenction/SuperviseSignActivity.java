@@ -197,7 +197,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             tvSign2.setText("检查人员签字");
             tvSign3.setText("记录员签字");
         }
-        resposeBean = getIntent().getParcelableExtra("resposeBean");
+        resposeBean = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
         if (resposeBean != null) {
             showIntent(resposeBean);
             id = resposeBean.getId();
@@ -588,7 +588,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                     if (jsonT.getData().getStatus() != 3) {
                         startActivity(new Intent(SuperviseSignActivity.this, MonitorActivity.class).putExtra("recordId", id).putExtra("type", type));
                     } else {
-                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", resposeBean).putExtra("type", type));
+                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", jsonT.getData()).putExtra("type", type));
                         finish();
                     }
                 }
