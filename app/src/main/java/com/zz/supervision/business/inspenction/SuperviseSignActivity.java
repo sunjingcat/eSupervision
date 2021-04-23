@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import com.troila.customealert.CustomDialog;
 import com.zz.lib.commonlib.utils.PermissionUtils;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.commonlib.widget.SelectPopupWindows;
+import com.zz.lib.core.http.utils.ToastUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
@@ -408,6 +410,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 if (resposeBean != null && resposeBean.getStatus() == 3) {
                     if (TextUtils.isEmpty(id)) return;
                     startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", id).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 100));
+
 //
                 }
                 break;
@@ -726,4 +729,6 @@ public class SuperviseSignActivity extends MyBaseActivity {
             }
         });
     }
+
+
 }

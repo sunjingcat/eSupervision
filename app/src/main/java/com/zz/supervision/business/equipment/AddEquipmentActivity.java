@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
@@ -69,6 +70,8 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.toolbar_title)
+    TextView toolbar_title;
 
     @BindView(R.id.ig_deviceCode)
     ItemGroup ig_deviceCode;
@@ -151,6 +154,7 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
         if (!TextUtils.isEmpty(id)){
             mPresenter.getData(id);
             mPresenter.getImage( id);
+            toolbar_title.setText("编辑设备");
         }
         mPresenter.getDeviceType();
         mPresenter.getDicts("tzsb_regist_status");

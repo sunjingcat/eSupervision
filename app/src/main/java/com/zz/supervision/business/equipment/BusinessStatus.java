@@ -162,7 +162,6 @@ public class BusinessStatus extends FrameLayout {
 
     public void setCheckDate(String checkDate) {
         this.ig_checkDate.setChooseContent(checkDate);
-        ;
     }
 
     public String getNextCheckDate() {
@@ -177,10 +176,13 @@ public class BusinessStatus extends FrameLayout {
         return ig_checkReduction.getSelectValue();
     }
 
-    public void setCheckReduction(String checkReduction) {
-        this.ig_checkReduction.setChooseContent(checkReduction);
+    public void setCheckReductionText(String checkReductionText) {
+        this.ig_checkReduction.setChooseContent(checkReductionText);
     }
 
+    public void setCheckReduction(String checkReduction) {
+        this.ig_checkReduction.setSelectValue(checkReduction + "");
+    }
     public String getDeviceProblem() {
         return ig_deviceProblem.getValue();
     }

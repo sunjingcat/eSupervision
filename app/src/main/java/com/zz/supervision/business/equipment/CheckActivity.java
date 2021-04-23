@@ -205,6 +205,8 @@ public class CheckActivity extends MyBaseActivity<Contract.IsetCheckAddPresenter
                 businessStatus.setCheckDate(item.getCheckDate() + "");
                 businessStatus.setNextCheckDate(item.getNextCheckDate() + "");
                 businessStatus.setDeviceProblem(item.getDeviceProblem() + "");
+                businessStatus.setCheckReduction(item.getCheckReduction() + "");
+                businessStatus.setCheckReductionText(item.getCheckReductionText() + "");
                 businessStatus.setManageProblem(item.getManageProblem() + "");
                 businessStatus.setOnClickListener(new BusinessStatus.OnItemClickListener() {
                     @Override
