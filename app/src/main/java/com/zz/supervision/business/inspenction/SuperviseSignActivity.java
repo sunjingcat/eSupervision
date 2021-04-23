@@ -133,6 +133,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
     LinearLayout llYearCount;
     @BindView(R.id.tv_time)
     TextView tvTime;
+    @BindView(R.id.text_violation)
+    TextView text_violation;
 
     @BindView(R.id.tv_reason)
     TextView tv_reason;
@@ -196,6 +198,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             tvSign1.setText("企业负责人签字");
             tvSign2.setText("检查人员签字");
             tvSign3.setText("记录员签字");
+            text_violation.setText("检查中发现的其他问题");
         }
         resposeBean = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
         if (resposeBean != null) {
@@ -291,7 +294,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             et_reformTime.setText(resposeBean.getReformTimeText());
             et_reformTime.setHint("");
             et_reformTime.setCompoundDrawables(null, null, null, null);
-            if (resultReduction!=0&&resultReduction!=4) {
+            if (resultReduction != 0 && resultReduction != 4) {
                 bt_print.setVisibility(View.VISIBLE);
                 bt_ok.setText("打印记录表");
             }
@@ -582,7 +585,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             }, LoadingUtils.build(this));
         } else if (type >= 11 && type <= 18) {
 
-            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign, reviewerSign, reformTime, resultReduction+"", inspectionOpinion, getText(etViolation)), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
+            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign, reviewerSign, reformTime, resultReduction + "", inspectionOpinion, getText(etViolation)), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
                 @Override
                 protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
                     if (jsonT.getData().getStatus() != 3) {

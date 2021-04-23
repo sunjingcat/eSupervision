@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    def API_RELEASE_HOST = "\"http://101.201.149.1:5555/\""
+    def API_RELEASE_HOST = "\"http://121.89.175.40:8787/\""
     def API_DEV_HOST = "\"http://101.201.149.1:5555/\""
 
     compileSdkVersion 28
@@ -9,8 +9,8 @@ android {
         applicationId "com.zz.supervision"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 59
-        versionName "5.9"
+        versionCode 61
+        versionName "6.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         packagingOptions {
             exclude 'META-INF/proguard/androidx-annotations.pro'

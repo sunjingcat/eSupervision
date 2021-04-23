@@ -262,8 +262,9 @@ public interface ApiService {
     @GET("/app/v1/supervise/tzsbInspectionRecord/order/{recordId}")
     Observable<JsonT<MonitorBean>> getDeviceByCheck(@Path("recordId") String recordId);
 
+    @FormUrlEncoded
     @PUT("/app/v1/supervise/tzsbInspectionRecord/editOrder/{id}")
-    Observable<JsonT> postDeviceByCheck(@Path("id") String id, @QueryMap Map<String, Object> params);
+    Observable<JsonT> postDeviceByCheck(@Path("id") String id, @Field("illegalActivity") String illegalActivity, @Field("lawContent") String lawContent, @Field("accordContent") String accordContent, @Field("reformMeasure") String reformMeasure);
 
     @PUT("/app/v1/supervise/tzsbInspectionRecord/complete/{recordId}")
     Observable<JsonT<SuperviseBean.ResposeBean>> completeTzsbInspectionRecord(@Path("recordId") String recordId);

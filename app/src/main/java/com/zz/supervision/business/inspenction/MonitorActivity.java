@@ -100,12 +100,12 @@ public class MonitorActivity extends MyBaseActivity {
     }
 
     void postData() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("illegalActivity", getText(igIllegalActivity));
-        map.put("lawContent", getText(igLawContent));
-        map.put("accordContent", getText(igAccordContent));
-        map.put("reformMeasure", getText(igReformMeasure));
-        RxNetUtils.request(getApi(ApiService.class).postDeviceByCheck(recordId, map), new RequestObserver<JsonT>(this) {
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("illegalActivity", getText(igIllegalActivity));
+//        map.put("lawContent", getText(igLawContent));
+//        map.put("accordContent", getText(igAccordContent));
+//        map.put("reformMeasure", getText(igReformMeasure));
+        RxNetUtils.request(getApi(ApiService.class).postDeviceByCheck(recordId, getText(igIllegalActivity),getText(igLawContent),getText(igAccordContent),getText(igReformMeasure)), new RequestObserver<JsonT>(this) {
             @Override
             protected void onSuccess(JsonT jsonT) {
                 startActivity(new Intent(MonitorActivity.this, ShowDocActivity.class).putExtra("id", recordId).putExtra("type", type).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 100).putExtra("read", 1));
