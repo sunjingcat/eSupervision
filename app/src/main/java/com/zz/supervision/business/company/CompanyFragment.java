@@ -34,6 +34,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -137,6 +138,12 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
         } else {
             llNull.setVisibility(View.GONE);
         }
+    }
+
+    public void setSearchStr( String searchStr) {
+        this.searchStr = searchStr;
+        getDate();
+
     }
 
     void getDate() {

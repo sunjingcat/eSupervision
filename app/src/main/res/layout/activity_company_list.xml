@@ -18,8 +18,8 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
 
-        <TextView
-            android:id="@+id/bt_search"
+        <com.zz.lib.commonlib.widget.ClearEditText
+            android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_marginRight="60dp"
             android:layout_marginLeft="1dp"
@@ -27,11 +27,13 @@
             android:paddingLeft="15dp"
             android:layout_gravity="center"
             android:gravity="center_vertical"
-            android:hint="输入相关关键词"
-            android:textColor="@color/white"
+            android:hint="搜索"
+            android:textColor="@color/colorTextBlack33"
             android:textSize="15dp"
-            android:drawablePadding="5dp"
-            android:drawableLeft="@drawable/image_search"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:background="@drawable/border_radius_40_white"
             />
         <TextView

@@ -1,14 +1,18 @@
 package com.zz.supervision.business.company;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
+import com.zz.lib.commonlib.widget.ClearEditText;
 import com.zz.lib.commonlib.widget.SelectPopupWindows;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
@@ -51,7 +55,9 @@ public class CompanyListActivity extends MyBaseActivity {
     TextView toolbarSubtitle;
     private ArrayList<Fragment> fragments = new ArrayList<>();
     String select;
-
+    @BindView(R.id.et_search)
+    ClearEditText et_search;
+    CompanyFragment selectFragment;
     @Override
     protected int getContentView() {
         return R.layout.activity_company_list;
@@ -83,6 +89,35 @@ public class CompanyListActivity extends MyBaseActivity {
 
             }
         });
+        et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (selectFragment!=null) {
+                    selectFragment.setSearchStr(et_search.getText().toString() + "");
+                    //隐藏软键盘
+                    @SuppressLint("WrongConstant") InputMethodManager imm = (InputMethodManager) context.getSystemService("input_method");
+                    imm.toggleSoftInput(0, 2);
+                }
+                return true;
+            }
+        });
+        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                selectFragment = (CompanyFragment) fragments.get(position);
+                selectFragment.setSearchStr(et_search.getText().toString()+"");
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     void initFragment(List<CompanyType> list) {
@@ -92,12 +127,13 @@ public class CompanyListActivity extends MyBaseActivity {
         } else {
             fragments.clear();
             for (int i = 0; i < list.size(); i++) {
-                fragments.add(new CompanyFragment(list.get(i).getCompanyType()));
-//            tabs[i] = list.get(i).getCompanyTypeText();
+                CompanyFragment companyFragment = new CompanyFragment(list.get(i).getCompanyType());
+                fragments.add(companyFragment);
             }
             tablayout.setupWithViewPager(viewpager, false);
             pagerAdapter = new FmPagerAdapter(fragments, getSupportFragmentManager());
             viewpager.setAdapter(pagerAdapter);
+            selectFragment= (CompanyFragment) fragments.get(0);
 
         }
         for (int i = 0; i < list.size(); i++) {
@@ -147,12 +183,9 @@ public class CompanyListActivity extends MyBaseActivity {
         }, LoadingUtils.build(this));
     }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @OnClick({R.id.bt_search, R.id.toolbar_subtitle})
+    @OnClick({ R.id.toolbar_subtitle})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.bt_search:
-                startActivityForResult(new Intent(this, SearchCompanyActivity.class).putExtra("select", select), 1001);
-                break;
             case R.id.toolbar_subtitle:
                 showCompanyType();
 

@@ -16,8 +16,6 @@ import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.CompanyType;
 import com.zz.supervision.bean.DeviceType;
-import com.zz.supervision.business.company.AddCompanyActivity;
-import com.zz.supervision.business.company.SearchCompanyActivity;
 import com.zz.supervision.business.company.adapter.FmPagerAdapter;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
