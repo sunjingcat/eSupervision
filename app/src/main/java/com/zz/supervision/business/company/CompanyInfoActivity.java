@@ -48,6 +48,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -185,7 +186,9 @@ public class CompanyInfoActivity extends MyBaseActivity {
             mlist.add(new DetailBean("法定代表人", data.getLegalRepresentative() + ""));
             mlist.add(new DetailBean("安全管理联系人", data.getContact() + ""));
             mlist.add(new DetailBean("安全管理联系电话", data.getContactInformation() + ""));
-            mlist.add(new DetailBean("地址", data.getProvinceName()+""+data.getCityName()+""+data.getCountyName()));
+
+            mlist.add(new DetailBean("地址", data.getProvinceName() + "" + data.getCityName() + "" + data.getCountyName()));
+
             ll_user.setVisibility(View.GONE);
 
         } else {
@@ -272,7 +275,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
                     startActivity(new Intent(this, ColdCheckListActivity.class).putExtra("id", companyBean.getId()));
                 } else if (companyType.equals("3") || companyType.equals("4")) {
                     startActivity(new Intent(this, YaoCheckListActivity.class).putExtra("id", companyBean.getId()));
-                } else if (companyType.equals("6") ) {
+                } else if (companyType.equals("6")) {
                     startActivity(new Intent(this, TzsbCheckListActivity.class).putExtra("id", companyBean.getId()));
                 } else {
                     startActivity(new Intent(this, CheckListActivity.class).putExtra("id", companyBean.getId()));
@@ -394,7 +397,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
         } else if (companyType.equals("6")) {
             url = "tzsbCompanyInfo";
         }
-        RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(url,id), new RequestObserver<JsonT>() {
+        RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(url, id), new RequestObserver<JsonT>() {
             @Override
             protected void onSuccess(JsonT jsonT) {
                 showToast("删除成功");

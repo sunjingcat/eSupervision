@@ -155,14 +155,17 @@ public class CompanyBean implements Serializable {
     }
 
     public String getProvinceName() {
+        if (TextUtils.isEmpty(provinceName))return "";
         return provinceName;
     }
 
     public String getCityName() {
+        if (TextUtils.isEmpty(cityName))return "";
         return cityName;
     }
 
     public String getCountyName() {
+        if (TextUtils.isEmpty(countyName))return "";
         return countyName;
     }
 

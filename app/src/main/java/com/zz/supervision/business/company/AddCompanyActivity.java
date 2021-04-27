@@ -229,7 +229,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 etContact.setTitle("企业负责人");
             }
 
-        } else if (companyType.equals("6")){ //特种设备
+        } else if (companyType.equals("6")) { //特种设备
             ll_loginAccount.setVisibility(View.GONE);
             et_coldstorage.setVisibility(View.GONE);
             ll_businessType.setVisibility(View.GONE);
@@ -410,7 +410,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         type1 = data.getProvinceId();
         type2 = data.getCityId();
         type3 = data.getCountyId();
-        et_city.setChooseContent(data.getProvinceName()+""+data.getCityName()+""+data.getCountyName());
+        et_city.setChooseContent(data.getProvinceName() + "" + data.getCityName() + "" + data.getCountyName());
 
     }
 
@@ -453,7 +453,6 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             }
         }
     }
-
 
 
     @Override
@@ -559,13 +558,13 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             params.put("id", id);
         }
 
-        if (!TextUtils.isEmpty(type1)){
-            params.put("provinceId", type1+ "");
+        if (!TextUtils.isEmpty(type1)) {
+            params.put("provinceId", type1 + "");
         }
-        if (!TextUtils.isEmpty(type2)){
+        if (!TextUtils.isEmpty(type2)) {
             params.put("cityId", type2 + "");
         }
-          if (!TextUtils.isEmpty(type3)){
+        if (!TextUtils.isEmpty(type3)) {
             params.put("countyId", type3 + "");
         }
         if (companyType.equals("2")) {
@@ -789,13 +788,15 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             }
         });
     }
+
     List<CityBean> options1Items = new ArrayList<>();
     List<List<CityBean>> options2Items = new ArrayList<>();
     List<List<List<CityBean>>> options3Items = new ArrayList<>();
-    String type1="";
-    String type2="";
-    String type3="";
-    void selectCitys(){
+    String type1 = "";
+    String type2 = "";
+    String type3 = "";
+
+    void selectCitys() {
         UIAdjuster.closeKeyBoard(AddCompanyActivity.this);
         OptionsPickerView pvOptions = new OptionsPickerBuilder(AddCompanyActivity.this, new OnOptionsSelectListener() {
             @Override
@@ -820,9 +821,10 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         pvOptions.setPicker(options1Items, options2Items, options3Items);
         pvOptions.show();
     }
+
     @Override
     public void showCitys(List<CityBean> list) {
-        if (list == null||list.size()==0) return;
+        if (list == null || list.size() == 0) return;
 
         for (CityBean categoryBean : list) {
             options1Items.add(categoryBean);
