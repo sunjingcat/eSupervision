@@ -2,6 +2,7 @@ package com.zz.supervision.business.equipment.mvp;
 
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.ui.mvp.BaseView;
+import com.zz.supervision.bean.AccessoryBean;
 import com.zz.supervision.bean.BeforeAddDeviceCheck;
 import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.DeviceCheck;
@@ -70,6 +71,31 @@ public class Contract {
         void showPipeInfo(PipePartBean data);
         void showSubmitResult(String id);
 
+
+    }
+
+    public interface IsetAccessoryAddPresenter extends BasePresenter {
+        void submitData(Map<String, Object> map);
+        void getData(String url);
+
+        void getDicts(String type);
+
+        void postImage(int position,String files);
+        void uploadEquipmentImgs(String id,String files);
+
+        void getImage(String modelId);
+    }
+
+    public interface IGetAccessoryAddView extends BaseView {
+        void showAccessoryInfo(AccessoryBean data);
+
+        void showSubmitResult(String id);
+        void showResult();
+        void showPostImage(int position,String id);
+
+        void showDicts(String type,List<BusinessType> list);
+
+        void showImage(List<ImageBack> list);
 
     }
 

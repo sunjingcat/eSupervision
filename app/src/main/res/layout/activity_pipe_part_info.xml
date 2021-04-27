@@ -134,7 +134,41 @@
                 </TextView>
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_accessory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:visibility="gone"
+                >
 
+                <TextView
+                    style="@style/textLeftStyle"
+                    android:layout_width="150dp"
+                    android:text="安全附件列表" />
+
+
+                <TextView
+                    android:id="@+id/et_accessory"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:drawableRight="@drawable/image_arrow"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:hint=""
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#333"
+                    android:textSize="14dp">
+
+                </TextView>
+            </LinearLayout>
             <Button
                 android:id="@+id/bt_ok"
                 android:layout_width="match_parent"

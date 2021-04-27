@@ -46,11 +46,14 @@ public class EquipmentBean implements Parcelable {
     String   alarmStatusText;// null,
     String   alarmStatusColor;// null,
     String   nextCheckDate;// null
-    boolean   select;// null
 
-    public String getAlarmStatusColor() {
-        return alarmStatusColor;
-    }
+    String companyInternalNum;
+    String factoryNum;
+    String locationName;
+    String certifyingAuthority;
+    String authorityDate;
+    String maintenanceContact;
+    String emergencyCall;
 
     protected EquipmentBean(Parcel in) {
         deviceCode = in.readString();
@@ -90,8 +93,67 @@ public class EquipmentBean implements Parcelable {
         latitude = in.readString();
         alarmStatus = in.readString();
         alarmStatusText = in.readString();
+        alarmStatusColor = in.readString();
         nextCheckDate = in.readString();
+        companyInternalNum = in.readString();
+        factoryNum = in.readString();
+        locationName = in.readString();
+        certifyingAuthority = in.readString();
+        authorityDate = in.readString();
+        maintenanceContact = in.readString();
+        emergencyCall = in.readString();
         select = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(deviceCode);
+        dest.writeString(id);
+        dest.writeString(deviceModel);
+        dest.writeString(companyId);
+        dest.writeString(operatorName);
+        dest.writeString(socialCreditCode);
+        dest.writeString(deviceType1);
+        dest.writeString(deviceType2);
+        dest.writeString(deviceType3);
+        dest.writeString(deviceType1Text);
+        dest.writeString(deviceType2Text);
+        dest.writeString(deviceType3Text);
+        dest.writeString(deviceName);
+        dest.writeInt(registStatus);
+        dest.writeString(registStatusText);
+        dest.writeString(registOrganizationId);
+        dest.writeString(registOrganizationName);
+        dest.writeString(registTime);
+        dest.writeString(registRecorder);
+        dest.writeString(registNumber);
+        dest.writeString(registCode);
+        dest.writeInt(usageStatus);
+        dest.writeString(usageStatusText);
+        dest.writeString(usageUpdateDate);
+        dest.writeString(manufacturerName);
+        dest.writeString(manufacturerDate);
+        dest.writeString(projectNumber);
+        dest.writeString(installationCompany);
+        dest.writeString(completionDate);
+        dest.writeString(totalLength);
+        dest.writeString(maintenanceCompany);
+        dest.writeString(licensePlate);
+        dest.writeString(mapAddress);
+        dest.writeString(longitude);
+        dest.writeString(latitude);
+        dest.writeString(alarmStatus);
+        dest.writeString(alarmStatusText);
+        dest.writeString(alarmStatusColor);
+        dest.writeString(nextCheckDate);
+        dest.writeString(companyInternalNum);
+        dest.writeString(factoryNum);
+        dest.writeString(locationName);
+        dest.writeString(certifyingAuthority);
+        dest.writeString(authorityDate);
+        dest.writeString(maintenanceContact);
+        dest.writeString(emergencyCall);
+        dest.writeByte((byte) (select ? 1 : 0));
     }
 
     public static final Creator<EquipmentBean> CREATOR = new Creator<EquipmentBean>() {
@@ -105,6 +167,45 @@ public class EquipmentBean implements Parcelable {
             return new EquipmentBean[size];
         }
     };
+
+    public String getMaintenanceContact() {
+        return maintenanceContact;
+    }
+
+    public String getEmergencyCall() {
+        return emergencyCall;
+    }
+
+    public String getCompanyInternalNum() {
+        return companyInternalNum;
+    }
+
+    public String getFactoryNum() {
+        return factoryNum;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public String getCertifyingAuthority() {
+        return certifyingAuthority;
+    }
+
+    public String getAuthorityDate() {
+        return authorityDate;
+    }
+
+
+
+    boolean   select;// null
+
+    public String getAlarmStatusColor() {
+        return alarmStatusColor;
+    }
+
+
+
 
     public void setSelect(boolean select) {
         this.select = select;
@@ -278,46 +379,5 @@ public class EquipmentBean implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(deviceCode);
-        dest.writeString(id);
-        dest.writeString(deviceModel);
-        dest.writeString(companyId);
-        dest.writeString(operatorName);
-        dest.writeString(socialCreditCode);
-        dest.writeString(deviceType1);
-        dest.writeString(deviceType2);
-        dest.writeString(deviceType3);
-        dest.writeString(deviceType1Text);
-        dest.writeString(deviceType2Text);
-        dest.writeString(deviceType3Text);
-        dest.writeString(deviceName);
-        dest.writeInt(registStatus);
-        dest.writeString(registStatusText);
-        dest.writeString(registOrganizationId);
-        dest.writeString(registOrganizationName);
-        dest.writeString(registTime);
-        dest.writeString(registRecorder);
-        dest.writeString(registNumber);
-        dest.writeString(registCode);
-        dest.writeInt(usageStatus);
-        dest.writeString(usageStatusText);
-        dest.writeString(usageUpdateDate);
-        dest.writeString(manufacturerName);
-        dest.writeString(manufacturerDate);
-        dest.writeString(projectNumber);
-        dest.writeString(installationCompany);
-        dest.writeString(completionDate);
-        dest.writeString(totalLength);
-        dest.writeString(maintenanceCompany);
-        dest.writeString(licensePlate);
-        dest.writeString(mapAddress);
-        dest.writeString(longitude);
-        dest.writeString(latitude);
-        dest.writeString(alarmStatus);
-        dest.writeString(alarmStatusText);
-        dest.writeString(nextCheckDate);
-        dest.writeByte((byte) (select ? 1 : 0));
-    }
+
 }

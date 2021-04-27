@@ -102,7 +102,7 @@
                 android:id="@+id/ig_registNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="注册登记证编号" />
+                app:title="使用登记证编号" />
 
             <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_registCode"
@@ -155,6 +155,45 @@
                 android:layout_height="wrap_content"
                 app:isSelect="true"
                 app:title="竣工日期" />
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_companyInternalNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="单位内部编号" />
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_factoryNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="出厂编号" />
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_locationName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="设备所在地点" />
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_certifyingAuthority"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSelect="true"
+                app:title="发证机构" />
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_authorityDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSelect="true"
+                app:title="发证日期" />
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_maintenanceContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="维保负责人"
+                android:visibility="gone"/>
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_emergencyCall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:title="紧急救援电话" />
             <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_totalLength"
                 android:layout_width="match_parent"

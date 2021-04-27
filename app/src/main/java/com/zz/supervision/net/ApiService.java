@@ -2,6 +2,7 @@ package com.zz.supervision.net;
 
 
 import com.zz.supervision.CompanyBean;
+import com.zz.supervision.bean.AccessoryBean;
 import com.zz.supervision.bean.BeforeAddDeviceCheck;
 import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.CompanyType;
@@ -82,6 +83,9 @@ public interface ApiService {
     @GET("/app/v1/supervise/companyInfo/list")
     Observable<JsonT<List<CompanyBean>>> getCompanyInfoList(@QueryMap Map<String, Object> params);
 
+    @GET("/app/v1/supervise/tzsbDeviceAccessory/list/{deviceId}")
+    Observable<JsonT<List<AccessoryBean>>> getAccessoryInfoList(@Path("deviceId") String deviceId,@QueryMap Map<String, Object> params);
+
     @GET("/app/v1/supervise/tzsbDeviceInfo/list")
     Observable<JsonT<List<EquipmentBean>>> getEquipmentInfoList(@QueryMap Map<String, Object> params);
 
@@ -119,6 +123,9 @@ public interface ApiService {
     @GET("/app/v1/supervise/tzsbDeviceInfo/{id}")
     Observable<JsonT<EquipmentBean>> getEquipmentInfo(@Path("id") String id);
 
+    @GET("/app/v1/supervise/tzsbDeviceAccessory/{id}")
+    Observable<JsonT<AccessoryBean>> getAccessoryInfo(@Path("id") String id);
+
     @GET("/app/v1/supervise/tzsbDeviceInfo/tzsbPressurepipePart/{id}")
     Observable<JsonT<PipePartBean>> getPressurepipePartInfo(@Path("id") String id);
 
@@ -141,8 +148,14 @@ public interface ApiService {
     @PUT("/app/v1/supervise/tzsbDeviceInfo")
     Observable<JsonT<String>> editTzsbDeviceInfo(@QueryMap Map<String, Object> params);
 
+    @PUT("/app/v1/supervise/tzsbDeviceAccessory")
+    Observable<JsonT<String>> editAccessoryInfo(@QueryMap Map<String, Object> params);
+
     @POST("/app/v1/supervise/tzsbDeviceInfo")
     Observable<JsonT<String>> postTzsbDeviceInfo(@QueryMap Map<String, Object> params);
+
+    @POST("/app/v1/supervise/tzsbDeviceAccessory")
+    Observable<JsonT<String>> postAccessory(@QueryMap Map<String, Object> params);
 
 
     @POST("/app/v1/supervise/{url}")

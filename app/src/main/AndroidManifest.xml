@@ -188,6 +188,9 @@
         <activity android:name=".business.equipment.SearchEquipmentActivity" />
         <activity android:name=".business.record.TzsbCheckListActivity" />
         <activity android:name=".business.equipment.SelectEquipmentActivity" />
+        <activity android:name=".business.equipment.AccessoryActivity" />
+        <activity android:name=".business.equipment.AddAccessoryActivity" />
+        <activity android:name=".business.equipment.AccessoryInfoActivity" />
     </application>
 
 </manifest>

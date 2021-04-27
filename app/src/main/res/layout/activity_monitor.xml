@@ -44,12 +44,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <com.zz.supervision.widget.ItemGroup
-                android:id="@+id/ig_illegalActivity"
+            <LinearLayout
+                android:id="@+id/ll_violation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="违法行为" />
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/text_illegalActivity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="违法行为"
+                    android:textColor="@color/colorTextBlack33"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#cccccc" />
+
+                <EditText
+                    android:id="@+id/et_illegalActivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="100dp"
+                    android:layout_marginTop="8dp"
+                    android:padding="5dp"
+                    android:visibility="gone"
+                    android:textColor="#272727"
+                    android:textSize="15dp"
+                    android:hint="违规项"
+                    android:background="@color/white"/>
+
+            </LinearLayout>
 
             <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_lawContent"

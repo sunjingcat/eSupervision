@@ -229,7 +229,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             ll_fieldTime.setVisibility(View.GONE);
             etOperatorName.setTitle("单位名称");
             etAddress.setTitle("单位地址");
-            etSocialCreditCode.setTitle("社会信用代码");
+            etSocialCreditCode.setTitle("组织结构代码");
             etLegalRepresentative.setTitle("法定代表人");
             etContact.setTitle("安全管理联系人");
             etContactInformation.setTitle("安全管理联系电话");

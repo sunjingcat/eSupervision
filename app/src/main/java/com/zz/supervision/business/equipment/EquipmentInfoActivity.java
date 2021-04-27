@@ -64,6 +64,8 @@ public class EquipmentInfoActivity extends MyBaseActivity {
     TextView etLocation;
     @BindView(R.id.toolbar_subtitle)
     TextView toolbar_subtitle;
+    @BindView(R.id.ll_accessory)
+    LinearLayout ll_accessory;
 
     ArrayList<String> images = new ArrayList<>();
     ArrayList<DetailBean> mlist = new ArrayList<>();
@@ -139,11 +141,11 @@ public class EquipmentInfoActivity extends MyBaseActivity {
         mlist.add(new DetailBean("制造日期", data.getManufacturerDate() + ""));
         mlist.add(new DetailBean("安装单位", data.getInstallationCompany() + ""));
         mlist.add(new DetailBean("竣工日期", data.getCompletionDate() + ""));
-
+        ll_accessory.setVisibility(View.VISIBLE);
         if (data.getDeviceType1().equals("3")) {
             mlist.add(new DetailBean("管道总长", data.getTotalLength() + ""));
             btOk.setText("压力管道单元");
-
+            ll_accessory.setVisibility(View.GONE);
         }
         if (data.getDeviceType1().equals("8")) {
             mlist.add(new DetailBean("车牌号码", data.getLicensePlate() + ""));
@@ -179,7 +181,7 @@ public class EquipmentInfoActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record})
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record, R.id.ll_accessory})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
@@ -191,7 +193,7 @@ public class EquipmentInfoActivity extends MyBaseActivity {
                 if (equipmentBean == null) return;
                 if (equipmentBean.getDeviceType1().equals("3")) {
                     startActivity(new Intent(this, PipePartListActivity.class).putExtra("deviceId", equipmentBean.getId()));
-                }else {
+                } else {
                     startActivity(new Intent(this, CheckActivity.class).putExtra("deviceId", equipmentBean.getId()).putExtra("deviceType", equipmentBean.getDeviceType1()));
                 }
                 break;
@@ -201,6 +203,10 @@ public class EquipmentInfoActivity extends MyBaseActivity {
                 startActivity(new Intent(this, TzsbCheckListActivity.class).putExtra("id", equipmentBean.getId()));
 
 
+                break;
+            case R.id.ll_accessory:
+                if (equipmentBean == null) return;
+                startActivity(new Intent(this, AccessoryActivity.class).putExtra("id", equipmentBean.getId()));
                 break;
             case R.id.et_location:
                 if (equipmentBean == null) return;

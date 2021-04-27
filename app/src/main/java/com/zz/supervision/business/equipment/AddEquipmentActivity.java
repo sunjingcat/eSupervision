@@ -114,6 +114,21 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
     @BindView(R.id.ig_maintenanceCompany)
     ItemGroup ig_maintenanceCompany;
 
+    @BindView(R.id.ig_companyInternalNum)
+    ItemGroup ig_companyInternalNum;
+    @BindView(R.id.ig_factoryNum)
+    ItemGroup ig_factoryNum;
+    @BindView(R.id.ig_locationName)
+    ItemGroup ig_locationName;
+    @BindView(R.id.ig_certifyingAuthority)
+    ItemGroup ig_certifyingAuthority;
+    @BindView(R.id.ig_authorityDate)
+    ItemGroup ig_authorityDate;
+    @BindView(R.id.ig_maintenanceContact)
+    ItemGroup ig_maintenanceContact;
+    @BindView(R.id.ig_emergencyCall)
+    ItemGroup ig_emergencyCall;
+
     @BindView(R.id.ig_location)
     ItemGroup ig_location;
     @BindView(R.id.bt_ok)
@@ -238,6 +253,20 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
         params.put("licensePlate", getText(ig_licensePlate) + "");
         params.put("totalLength", getText(ig_totalLength) + "");
         params.put("maintenanceCompany", getText(ig_maintenanceCompany) + "");
+        params.put("provinceId", getText(ig_maintenanceCompany) + "");
+        params.put("cityId", getText(ig_maintenanceCompany) + "");
+        params.put("countyId", getText(ig_maintenanceCompany) + "");
+
+        params.put("companyInternalNum", getText(ig_companyInternalNum) + "");
+        params.put("factoryNum", getText(ig_factoryNum) + "");
+        params.put("locationName", getText(ig_locationName) + "");
+        params.put("certifyingAuthority", ig_certifyingAuthority.getSelectValue() + "");
+        params.put("authorityDate", ig_authorityDate.getSelectValue() + "");
+
+        params.put("maintenanceContact", getText(ig_maintenanceContact));
+        params.put("emergencyCall", getText(ig_emergencyCall));
+
+
         if (lon != 0.0 && lat != 0.0) {
             params.put("longitude", lon);
             params.put("latitude", lat);
@@ -302,6 +331,7 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
                 lat = poiInfo.getLocation().latitude;
                 lon = poiInfo.getLocation().longitude;
                 ig_location.setChooseContent(poiInfo.getAddress() + "");
+
             }
 
         }
@@ -333,9 +363,23 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
         ig_projectNumber.setChooseContent(data.getProjectNumber() + "");
         ig_installationCompany.setChooseContent(data.getInstallationCompany() + "");
 
+        ig_companyInternalNum.setChooseContent(data.getCompanyInternalNum()+"");
+        ig_factoryNum.setChooseContent(data.getFactoryNum()+"");
+        ig_locationName.setChooseContent(data.getLocationName()+"");
+        ig_certifyingAuthority.setChooseContent(data.getCertifyingAuthority()+"");
+        ig_authorityDate.setChooseContent(data.getAuthorityDate()+"");
+
+
+        ig_maintenanceContact.setVisibility(deviceType1.equals("4") ? View.VISIBLE : View.GONE);
+        ig_maintenanceContact.setChooseContent(deviceType1.equals("4") ?data.getTotalLength()+"" :"");
+
+        ig_emergencyCall.setVisibility(deviceType1.equals("4") ? View.VISIBLE : View.GONE);
+        ig_emergencyCall.setChooseContent(deviceType1.equals("4") ?data.getTotalLength()+"" :"");
+
         ig_totalLength.setVisibility(deviceType1.equals("3") ? View.VISIBLE : View.GONE);
-        ig_licensePlate.setVisibility(deviceType1.equals("8") ? View.VISIBLE : View.GONE);
         ig_totalLength.setChooseContent(deviceType1.equals("3") ?data.getTotalLength()+"" :"");
+
+        ig_licensePlate.setVisibility(deviceType1.equals("8") ? View.VISIBLE : View.GONE);
         ig_licensePlate.setChooseContent(deviceType1.equals("8") ?data.getLicensePlate()+ "": "");
 
         ig_maintenanceCompany.setChooseContent(deviceType1.equals("4") ?data.getMaintenanceCompany()+ "": "");
