@@ -174,7 +174,6 @@
                 android:id="@+id/ig_certifyingAuthority"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:isSelect="true"
                 app:title="发证机构" />
             <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_authorityDate"
@@ -220,6 +219,7 @@
                 android:layout_height="wrap_content"
                 app:isSelect="true"
                 app:title="定位" />
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/item_rv_images"

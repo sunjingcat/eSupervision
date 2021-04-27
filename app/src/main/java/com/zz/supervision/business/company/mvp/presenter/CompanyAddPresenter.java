@@ -4,6 +4,8 @@ package com.zz.supervision.business.company.mvp.presenter;
 import com.google.gson.Gson;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.bean.BusinessType;
+import com.zz.supervision.bean.CityBean;
+import com.zz.supervision.bean.DictBean;
 import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.business.company.mvp.Contract;
 import com.zz.supervision.net.ApiService;
@@ -222,6 +224,21 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
             }
         }, mDialog);
 
+    }
+    @Override
+    public void getCitys() {
+
+        RxNetUtils.request(getApi(ApiService.class).getCitys(), new RequestObserver<JsonT<List<CityBean>>>(this) {
+            @Override
+            protected void onSuccess(JsonT<List<CityBean>> jsonT) {
+                view.showCitys(jsonT.getData());
+            }
+
+            @Override
+            protected void onFail2(JsonT<List<CityBean>> stringJsonT) {
+                super.onFail2(stringJsonT);
+            }
+        }, mDialog);
     }
 
 }

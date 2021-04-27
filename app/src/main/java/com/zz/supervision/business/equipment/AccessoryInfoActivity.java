@@ -1,6 +1,8 @@
 package com.zz.supervision.business.equipment;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import com.zz.lib.commonlib.utils.ToolBarUtils;
@@ -19,6 +21,7 @@ import com.zz.supervision.utils.BASE64;
 import com.zz.supervision.utils.GlideUtils;
 import com.zz.supervision.widget.ItemGroup;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -73,6 +76,12 @@ public class AccessoryInfoActivity extends MyBaseActivity {
         if (!TextUtils.isEmpty(id)) {
             getData(id);
         }
+        toolbar_subtitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(AccessoryInfoActivity.this,AddAccessoryActivity.class).putExtra("id",id),1001);
+            }
+        });
     }
 
     @Override
@@ -96,7 +105,7 @@ public class AccessoryInfoActivity extends MyBaseActivity {
     public void showInfo(AccessoryBean data) {
         if (data == null) return;
         accessoryBean = data;
-        ig_accessoryType.setChooseContent(data.getAccessoryTypeText());
+        ig_accessoryType.setChooseContent(data.getAccessoryTypeText(),data.getAccessoryType()+"");
         et_accessoryExplain.setText(data.getAccessoryExplain()+"");
         getImage(data.getId());
     }
@@ -141,4 +150,13 @@ public class AccessoryInfoActivity extends MyBaseActivity {
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1001) {
+            if (!TextUtils.isEmpty(id)) {
+                getData(id);
+            }
+        }
+    }
 }

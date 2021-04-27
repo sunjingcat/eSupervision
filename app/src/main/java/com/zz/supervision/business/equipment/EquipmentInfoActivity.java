@@ -132,7 +132,7 @@ public class EquipmentInfoActivity extends MyBaseActivity {
         mlist.add(new DetailBean("注册登记机构", data.getRegistOrganizationName() + ""));
         mlist.add(new DetailBean("注册时间", data.getRegistTime() + ""));
         mlist.add(new DetailBean("注册登记人员", data.getRegistRecorder() + ""));
-        mlist.add(new DetailBean("注册登记证编号", data.getRegistNumber() + ""));
+        mlist.add(new DetailBean("使用登记证编号", data.getRegistNumber() + ""));
         mlist.add(new DetailBean("注册代码", data.getRegistCode() + ""));
         mlist.add(new DetailBean("使用状态", data.getUsageStatusText() + ""));
         mlist.add(new DetailBean("使用状态变更日期", data.getUsageUpdateDate() + ""));
@@ -141,11 +141,17 @@ public class EquipmentInfoActivity extends MyBaseActivity {
         mlist.add(new DetailBean("制造日期", data.getManufacturerDate() + ""));
         mlist.add(new DetailBean("安装单位", data.getInstallationCompany() + ""));
         mlist.add(new DetailBean("竣工日期", data.getCompletionDate() + ""));
+
+        mlist.add(new DetailBean("单位内部编号", data.getCompanyInternalNum() + ""));
+        mlist.add(new DetailBean("出厂编号", data.getFactoryNum() + ""));
+        mlist.add(new DetailBean("设备所在地点", data.getLocationName() + ""));
+        mlist.add(new DetailBean("发证机构", data.getCertifyingAuthority() + ""));
+        mlist.add(new DetailBean("发证日期", data.getAuthorityDate() + ""));
+
         ll_accessory.setVisibility(View.VISIBLE);
         if (data.getDeviceType1().equals("3")) {
             mlist.add(new DetailBean("管道总长", data.getTotalLength() + ""));
             btOk.setText("压力管道单元");
-            ll_accessory.setVisibility(View.GONE);
         }
         if (data.getDeviceType1().equals("8")) {
             mlist.add(new DetailBean("车牌号码", data.getLicensePlate() + ""));
@@ -153,6 +159,8 @@ public class EquipmentInfoActivity extends MyBaseActivity {
         }
         if (data.getDeviceType1().equals("4")) {
             mlist.add(new DetailBean("维保单位", data.getMaintenanceCompany() + ""));
+            mlist.add(new DetailBean("维保负责人", data.getMaintenanceContact() + ""));
+            mlist.add(new DetailBean("紧急救援电话", data.getEmergencyCall() + ""));
 
         }
 

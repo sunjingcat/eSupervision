@@ -73,6 +73,7 @@ public class EquipmentAddPresenter extends MyBasePresenterImpl<Contract.IGetEqui
         }, mDialog);
     }
 
+
     @Override
     public void postImage(int position, String file) {
 

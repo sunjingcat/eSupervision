@@ -57,6 +57,8 @@ public class AddAccessoryActivity extends MyBaseActivity<Contract.IsetAccessoryA
     TextView toolbar_subtitle;
     @BindView(R.id.ig_accessoryType)
     ItemGroup ig_accessoryType;
+    @BindView(R.id.ig_name)
+    ItemGroup ig_name;
     ArrayList<ImageBack> images = new ArrayList<>();
     ArrayList<String> localPath = new ArrayList<>();
     ImageDeleteItemAdapter adapter;
@@ -134,8 +136,9 @@ public class AddAccessoryActivity extends MyBaseActivity<Contract.IsetAccessoryA
     }
     void postData(){
         Map<String,Object>map = new HashMap<>();
-        map.put("accessoryTyp",ig_accessoryType.getSelectValue());
+        map.put("accessoryType",ig_accessoryType.getSelectValue());
         map.put("deviceId",deviceId);
+        map.put("accessoryName",getText(ig_name));
         if (!TextUtils.isEmpty(id)){
             map.put("id",id);
         }
@@ -153,6 +156,8 @@ public class AddAccessoryActivity extends MyBaseActivity<Contract.IsetAccessoryA
     public void showAccessoryInfo(AccessoryBean data) {
         et_accessoryExplain.setText(data.getAccessoryExplain()+"");
         ig_accessoryType.setChooseContent(data.getAccessoryTypeText(),data.getAccessoryType()+"");
+        ig_name.setChooseContent(data.getAccessoryName()+"");
+        deviceId = data.getDeviceId();
     }
 
     @Override

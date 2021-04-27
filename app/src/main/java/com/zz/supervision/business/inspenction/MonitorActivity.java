@@ -3,6 +3,7 @@ package com.zz.supervision.business.inspenction;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,14 +40,14 @@ public class MonitorActivity extends MyBaseActivity {
     TextView toolbarSubtitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.ig_illegalActivity)
-    ItemGroup igIllegalActivity;
-    @BindView(R.id.ig_lawContent)
-    ItemGroup igLawContent;
-    @BindView(R.id.ig_accordContent)
-    ItemGroup igAccordContent;
-    @BindView(R.id.ig_reformMeasure)
-    ItemGroup igReformMeasure;
+    @BindView(R.id.et_illegalActivity)
+    EditText igIllegalActivity;
+    @BindView(R.id.et_lawContent)
+    EditText igLawContent;
+    @BindView(R.id.et_accordContent)
+    EditText igAccordContent;
+    @BindView(R.id.et_reformMeasure)
+    EditText igReformMeasure;
     @BindView(R.id.bg)
     LinearLayout bg;
     String recordId;
@@ -84,10 +85,10 @@ public class MonitorActivity extends MyBaseActivity {
                 if (jsonT.isSuccess()) {
                     MonitorBean data = jsonT.getData();
                     if (data == null) return;
-                    igIllegalActivity.setChooseContent(data.getIllegalActivity() + "");
-                    igLawContent.setChooseContent(data.getLawContent() + "");
-                    igAccordContent.setChooseContent(data.getAccordContent() + "");
-                    igReformMeasure.setChooseContent(data.getReformMeasure() + "");
+                    igIllegalActivity.setText(data.getIllegalActivity() + "");
+                    igLawContent.setText(data.getLawContent() + "");
+                    igAccordContent.setText(data.getAccordContent() + "");
+                    igReformMeasure.setText(data.getReformMeasure() + "");
                 }
             }
 
@@ -100,11 +101,6 @@ public class MonitorActivity extends MyBaseActivity {
     }
 
     void postData() {
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("illegalActivity", getText(igIllegalActivity));
-//        map.put("lawContent", getText(igLawContent));
-//        map.put("accordContent", getText(igAccordContent));
-//        map.put("reformMeasure", getText(igReformMeasure));
         RxNetUtils.request(getApi(ApiService.class).postDeviceByCheck(recordId, getText(igIllegalActivity),getText(igLawContent),getText(igAccordContent),getText(igReformMeasure)), new RequestObserver<JsonT>(this) {
             @Override
             protected void onSuccess(JsonT jsonT) {

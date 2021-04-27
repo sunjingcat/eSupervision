@@ -253,15 +253,12 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
         params.put("licensePlate", getText(ig_licensePlate) + "");
         params.put("totalLength", getText(ig_totalLength) + "");
         params.put("maintenanceCompany", getText(ig_maintenanceCompany) + "");
-        params.put("provinceId", getText(ig_maintenanceCompany) + "");
-        params.put("cityId", getText(ig_maintenanceCompany) + "");
-        params.put("countyId", getText(ig_maintenanceCompany) + "");
 
         params.put("companyInternalNum", getText(ig_companyInternalNum) + "");
         params.put("factoryNum", getText(ig_factoryNum) + "");
         params.put("locationName", getText(ig_locationName) + "");
-        params.put("certifyingAuthority", ig_certifyingAuthority.getSelectValue() + "");
-        params.put("authorityDate", ig_authorityDate.getSelectValue() + "");
+        params.put("certifyingAuthority", getText(ig_certifyingAuthority) + "");
+        params.put("authorityDate", getText(ig_authorityDate) + "");
 
         params.put("maintenanceContact", getText(ig_maintenanceContact));
         params.put("emergencyCall", getText(ig_emergencyCall));
@@ -371,10 +368,10 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
 
 
         ig_maintenanceContact.setVisibility(deviceType1.equals("4") ? View.VISIBLE : View.GONE);
-        ig_maintenanceContact.setChooseContent(deviceType1.equals("4") ?data.getTotalLength()+"" :"");
+        ig_maintenanceContact.setChooseContent(deviceType1.equals("4") ?data.getMaintenanceContact()+"" :"");
 
         ig_emergencyCall.setVisibility(deviceType1.equals("4") ? View.VISIBLE : View.GONE);
-        ig_emergencyCall.setChooseContent(deviceType1.equals("4") ?data.getTotalLength()+"" :"");
+        ig_emergencyCall.setChooseContent(deviceType1.equals("4") ?data.getEmergencyCall()+"" :"");
 
         ig_totalLength.setVisibility(deviceType1.equals("3") ? View.VISIBLE : View.GONE);
         ig_totalLength.setChooseContent(deviceType1.equals("3") ?data.getTotalLength()+"" :"");
@@ -492,6 +489,7 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
 
             }
         });
+
         ig_registTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -514,6 +512,12 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
             @Override
             public void onClick(View v) {
                 selectTime(ig_completionDate);
+            }
+        });
+        ig_authorityDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectTime(ig_authorityDate);
             }
         });
         ig_registStatus.setOnClickListener(new View.OnClickListener() {

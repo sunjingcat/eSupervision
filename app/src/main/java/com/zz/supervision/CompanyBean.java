@@ -134,6 +134,38 @@ public class CompanyBean implements Serializable {
     private String       coldstorageType1Text;// 47.21882160905167,
     private String       coldstorageType2Text;// 47.21882160905167,
 
+    private String provinceId;
+    private String cityId;
+    private String countyId;
+
+    private String provinceName;
+    private String cityName;
+    private String countyName;
+
+    public String getProvinceId() {
+        return provinceId;
+    }
+
+    public String getCityId() {
+        return cityId;
+    }
+
+    public String getCountyId() {
+        return countyId;
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public String getCountyName() {
+        return countyName;
+    }
+
     public int getAlarmStatus() {
         return alarmStatus;
     }

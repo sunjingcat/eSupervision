@@ -178,12 +178,14 @@ public class CompanyInfoActivity extends MyBaseActivity {
             mlist.add(new DetailBean("签发时间", data.getFieldTime() + ""));
         } else if (companyType.equals("6")) {
 
+
             mlist.add(new DetailBean("单位名称", data.getOperatorName() + ""));
             mlist.add(new DetailBean("单位地址", data.getAddress() + ""));
-            mlist.add(new DetailBean("社会信用代码", data.getSocialCreditCode() + ""));
+            mlist.add(new DetailBean("组织结构代码", data.getSocialCreditCode() + ""));
             mlist.add(new DetailBean("法定代表人", data.getLegalRepresentative() + ""));
             mlist.add(new DetailBean("安全管理联系人", data.getContact() + ""));
             mlist.add(new DetailBean("安全管理联系电话", data.getContactInformation() + ""));
+            mlist.add(new DetailBean("地址", data.getProvinceName()+""+data.getCityName()+""+data.getCountyName()));
             ll_user.setVisibility(View.GONE);
 
         } else {

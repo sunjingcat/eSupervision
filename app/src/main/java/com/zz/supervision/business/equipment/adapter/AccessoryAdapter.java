@@ -25,7 +25,8 @@ public class AccessoryAdapter extends BaseQuickAdapter<AccessoryBean, BaseViewHo
 
     @Override
     protected void convert(BaseViewHolder holder, final AccessoryBean item) {
-//        holder.setText(R.id.item_title, item.getDeviceName() );
+        holder.setText(R.id.item_title, item.getAccessoryName() +"");
+        holder.setText(R.id.item_content, item.getAccessoryTypeText()+"" );
 
     }
 }

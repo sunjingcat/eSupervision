@@ -4,6 +4,7 @@ import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.ui.mvp.BaseView;
 import com.zz.supervision.CompanyBean;
 import com.zz.supervision.bean.BusinessType;
+import com.zz.supervision.bean.CityBean;
 import com.zz.supervision.bean.DictBean;
 import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.bean.UserBasicBean;
@@ -19,6 +20,7 @@ public class Contract {
         void getData(String type,String url);
 
         void getDicts(String type);
+        void getCitys();
 
 
         void postImage(int position,String files);
@@ -36,6 +38,7 @@ public class Contract {
         void showPostImage(int position,String id);
 
         void showDicts(String type,List<BusinessType> list);
+        void showCitys(List<CityBean> list);
 
         void showImage(List<ImageBack> list);
 

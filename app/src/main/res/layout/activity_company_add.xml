@@ -95,6 +95,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="住所" />
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/et_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isSelect="true"
+                android:visibility="gone"
+                app:title="地址" />
 
             <LinearLayout
                 android:id="@+id/ll_jingying"

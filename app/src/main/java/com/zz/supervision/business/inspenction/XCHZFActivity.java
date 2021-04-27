@@ -225,10 +225,10 @@ public class XCHZFActivity extends MyBaseActivity {
                     for (int i = 0; i < equipment.size(); i++) {
                         if (i == equipment.size() - 1) {
                             names = names + equipment.get(i).getDeviceName();
-                            ids = ids + equipment.get(i).getDeviceCode();
+                            ids = ids + equipment.get(i).getId();
                         } else {
                             names = names + equipment.get(i).getDeviceName() + ",";
-                            ids = ids + equipment.get(i).getDeviceCode() + ",";
+                            ids = ids + equipment.get(i).getId() + ",";
                         }
                     }
                     et_device.setText(names + "");
@@ -310,7 +310,7 @@ public class XCHZFActivity extends MyBaseActivity {
                 showToast("请选择执法设备");
                 return;
             }
-            map.put("deviceCodes", ids);
+            map.put("deviceIds", ids);
             if (inspectionType==0) {
                 showToast("请选择检查类型");
                 return;

@@ -5,6 +5,7 @@ import com.zz.supervision.CompanyBean;
 import com.zz.supervision.bean.AccessoryBean;
 import com.zz.supervision.bean.BeforeAddDeviceCheck;
 import com.zz.supervision.bean.BusinessType;
+import com.zz.supervision.bean.CityBean;
 import com.zz.supervision.bean.CompanyType;
 import com.zz.supervision.bean.DeviceCheck;
 import com.zz.supervision.bean.DeviceType;
@@ -193,6 +194,9 @@ public interface ApiService {
 
     @GET("/app/v1/supervise/tzsbDeviceInfo/selectTzsbDeviceType")
     Observable<JsonT<List<DictBean>>> selectTzsbDeviceType();
+
+    @GET("/app/v1/supervise/tzsbCompanyInfo/citys")
+    Observable<JsonT<List<CityBean>>> getCitys();
 
     @GET("/app/v1/supervise/tzsbOrganization/selectorganizationalUnit")
     Observable<JsonT<List<DictBean>>> selectorganizationalUnit();

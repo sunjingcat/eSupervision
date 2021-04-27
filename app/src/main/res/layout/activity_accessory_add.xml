@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:id="@+id/bg"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -44,6 +46,11 @@
             android:orientation="vertical">
 
             <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="附件名称" />
+            <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_accessoryType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -71,7 +78,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:minHeight="150dp"
+                    android:minHeight="100dp"
+                    android:textSize="14sp"
                     android:gravity="top"
                     android:hint="请填写"
                     android:background="@color/white"></EditText>

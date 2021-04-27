@@ -10,6 +10,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnChangeLisener;
 import com.codbking.widget.OnSureLisener;
@@ -27,14 +30,18 @@ import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.BusinessProjectBean;
 import com.zz.supervision.bean.BusinessType;
+import com.zz.supervision.bean.CityBean;
+import com.zz.supervision.bean.DictBean;
 import com.zz.supervision.bean.ImageBack;
 import com.zz.supervision.bean.PLocation;
 import com.zz.supervision.business.company.adapter.ImageDeleteItemAdapter;
 import com.zz.supervision.business.company.mvp.Contract;
 import com.zz.supervision.business.company.mvp.presenter.CompanyAddPresenter;
+import com.zz.supervision.business.equipment.AddEquipmentActivity;
 import com.zz.supervision.utils.BASE64;
 import com.zz.supervision.utils.GlideUtils;
 import com.zz.supervision.utils.ImageLoader;
+import com.zz.supervision.utils.LogUtils;
 import com.zz.supervision.utils.TimeUtils;
 import com.zz.supervision.widget.ItemGroup;
 
@@ -105,6 +112,8 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     LinearLayout ll_businessProject;
     @BindView(R.id.et_contactInformation)
     ItemGroup etContactInformation;
+    @BindView(R.id.et_city)
+    ItemGroup et_city;
     @BindView(R.id.et_fieldTime)
     TextView etFieldTime;
     @BindView(R.id.et_location)
@@ -199,6 +208,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             mPresenter.getImage(companyType, id);
             showLoading("");
         }
+        mPresenter.getCitys();
         et_companyType.setText(getIntent().getStringExtra("companyTypeText") + "");
         if (companyType.equals("1")) {
             ll_loginAccount.setVisibility(View.GONE);
@@ -219,7 +229,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 etContact.setTitle("企业负责人");
             }
 
-        } else if (companyType.equals("6")){
+        } else if (companyType.equals("6")){ //特种设备
             ll_loginAccount.setVisibility(View.GONE);
             et_coldstorage.setVisibility(View.GONE);
             ll_businessType.setVisibility(View.GONE);
@@ -233,12 +243,19 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             etLegalRepresentative.setTitle("法定代表人");
             etContact.setTitle("安全管理联系人");
             etContactInformation.setTitle("安全管理联系电话");
+            et_city.setVisibility(View.VISIBLE);
         }
         ig_businessScope.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(AddCompanyActivity.this, OperatingitemsActivity.class), 3001);
+            }
+        });
+        et_city.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectCitys();
             }
         });
     }
@@ -390,6 +407,10 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         ig_warehouseAddress.setChooseContent(data.getWarehouseAddress() + "");
         businessScope = data.getBusinessScope();
 
+        type1 = data.getProvinceId();
+        type2 = data.getCityId();
+        type3 = data.getCountyId();
+        et_city.setChooseContent(data.getProvinceName()+""+data.getCityName()+""+data.getCountyName());
 
     }
 
@@ -432,6 +453,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             }
         }
     }
+
 
 
     @Override
@@ -537,7 +559,15 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             params.put("id", id);
         }
 
-
+        if (!TextUtils.isEmpty(type1)){
+            params.put("provinceId", type1+ "");
+        }
+        if (!TextUtils.isEmpty(type2)){
+            params.put("cityId", type2 + "");
+        }
+          if (!TextUtils.isEmpty(type3)){
+            params.put("countyId", type3 + "");
+        }
         if (companyType.equals("2")) {
             String edPassword_ = et_password.getValue().toString();
             String edPasswordAgain_ = et_passwordCon.getValue().toString();
@@ -758,6 +788,67 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 selectPopupWindows1.dismiss();
             }
         });
+    }
+    List<CityBean> options1Items = new ArrayList<>();
+    List<List<CityBean>> options2Items = new ArrayList<>();
+    List<List<List<CityBean>>> options3Items = new ArrayList<>();
+    String type1="";
+    String type2="";
+    String type3="";
+    void selectCitys(){
+        UIAdjuster.closeKeyBoard(AddCompanyActivity.this);
+        OptionsPickerView pvOptions = new OptionsPickerBuilder(AddCompanyActivity.this, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                //返回的分别是三个级别的选中位置
+
+                String tx = options1Items.get(options1).getPickerViewText()
+                        + options2Items.get(options1).get(option2).getPickerViewText();
+                if (options3Items.get(options1) != null && options3Items.get(options1).size() > 0
+                        && options3Items.get(options1).get(option2) != null && options3Items.get(options1).get(option2).size() > 0
+                        && options3Items.get(options1).get(option2).get(options3) != null) {
+                    tx = tx + options3Items.get(options1).get(option2).get(options3).getPickerViewText();
+                    type1 = options3Items.get(options1).get(option2).get(options3).getId();
+                } else {
+                    type3 = "";
+                }
+                et_city.setChooseContent(tx);
+                type1 = options1Items.get(options1).getId();
+                type2 = options2Items.get(options1).get(option2).getId();
+            }
+        }).build();
+        pvOptions.setPicker(options1Items, options2Items, options3Items);
+        pvOptions.show();
+    }
+    @Override
+    public void showCitys(List<CityBean> list) {
+        if (list == null||list.size()==0) return;
+
+        for (CityBean categoryBean : list) {
+            options1Items.add(categoryBean);
+            List<List<CityBean>> optionsItems3 = new ArrayList<>();
+            List<CityBean> optionsItems2 = new ArrayList<>();
+            if (categoryBean.getClist() != null && categoryBean.getClist().size() > 0) {
+                for (CityBean child1 : categoryBean.getClist()) {
+                    List<CityBean> optionsItems = new ArrayList<>();
+                    for (CityBean child2 : child1.getClist()) {
+                        optionsItems.add(child2);
+                    }
+                    optionsItems3.add(optionsItems);
+                    optionsItems2.add(child1);
+                }
+
+            } else {
+                optionsItems2.add(new CityBean());
+                List<CityBean> optionsItems = new ArrayList<>();
+                optionsItems.add(new CityBean());
+                optionsItems3.add(optionsItems);
+            }
+            options2Items.add(optionsItems2);
+            options3Items.add(optionsItems3);
+
+        }
+        LogUtils.v(list.toString());
     }
 
 }

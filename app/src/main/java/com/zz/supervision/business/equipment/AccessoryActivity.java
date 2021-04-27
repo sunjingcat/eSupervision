@@ -26,6 +26,7 @@ import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -75,12 +76,12 @@ public class AccessoryActivity extends MyBaseActivity implements OnRefreshListen
     protected void initView() {
         ButterKnife.bind(this);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new AccessoryAdapter(R.layout.item_company, mlist);
+        adapter = new AccessoryAdapter(R.layout.item_simple, mlist);
         rv.setAdapter(adapter);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                startActivity(new Intent(AccessoryActivity.this, AccessoryInfoActivity.class).putExtra("id", id));
+                startActivityForResult(new Intent(AccessoryActivity.this, AccessoryInfoActivity.class).putExtra("id", mlist.get(position).getId()+""),1001);
 
             }
         });
@@ -91,7 +92,7 @@ public class AccessoryActivity extends MyBaseActivity implements OnRefreshListen
         toolbar_subtitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AccessoryActivity.this, AddAccessoryActivity.class).putExtra("deviceId", id));
+                startActivityForResult(new Intent(AccessoryActivity.this, AddAccessoryActivity.class).putExtra("deviceId", id),1001);
             }
         });
     }
@@ -132,7 +133,7 @@ public class AccessoryActivity extends MyBaseActivity implements OnRefreshListen
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", pagenum);
         map.put("pageSize", pagesize);
-        map.put("companyType", 0);
+        map.put("deviceId", id);
         RxNetUtils.request(getApi(ApiService.class).getAccessoryInfoList(id, map), new RequestObserver<JsonT<List<AccessoryBean>>>() {
             @Override
             protected void onSuccess(JsonT<List<AccessoryBean>> jsonT) {
@@ -144,5 +145,12 @@ public class AccessoryActivity extends MyBaseActivity implements OnRefreshListen
                 super.onFail2(stringJsonT);
             }
         }, LoadingUtils.build(this));
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1001) {
+            getDate();
+        }
     }
 }

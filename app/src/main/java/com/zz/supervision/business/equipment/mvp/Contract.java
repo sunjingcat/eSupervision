@@ -23,6 +23,7 @@ public class Contract {
         void getDeviceType();
 
 
+
         void postImage(int position,String files);
         void uploadEquipmentImgs(String id,String files);
 
