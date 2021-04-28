@@ -47,6 +47,8 @@ public class AccessoryInfoActivity extends MyBaseActivity {
     TextView toolbar_subtitle;
     @BindView(R.id.ig_accessoryType)
     ItemGroup ig_accessoryType;
+    @BindView(R.id.ig_name)
+    ItemGroup ig_name;
     @BindView(R.id.et_accessoryExplain)
     TextView et_accessoryExplain;
     ArrayList<String> images = new ArrayList<>();
@@ -105,6 +107,7 @@ public class AccessoryInfoActivity extends MyBaseActivity {
     public void showInfo(AccessoryBean data) {
         if (data == null) return;
         accessoryBean = data;
+        ig_name.setChooseContent(data.getAccessoryName()+"");
         ig_accessoryType.setChooseContent(data.getAccessoryTypeText(),data.getAccessoryType()+"");
         et_accessoryExplain.setText(data.getAccessoryExplain()+"");
         getImage(data.getId());

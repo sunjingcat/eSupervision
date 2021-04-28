@@ -45,7 +45,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isEditable="false"
+                app:title="附件名称" />
             <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_accessoryType"
                 android:layout_width="match_parent"

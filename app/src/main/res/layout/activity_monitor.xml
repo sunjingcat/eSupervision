@@ -93,7 +93,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@color/white"
                     android:gravity="top"
-                    android:hint="违规项"
+                    android:hint=""
                     android:minHeight="100dp"
                     android:padding="5dp"
                     android:textColor="#272727"
@@ -130,7 +130,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="违法行为"
+                        android:text="违反条款"
                         android:textColor="@color/colorTextBlack33"
                         android:textSize="15sp" />
 
@@ -151,7 +151,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@color/white"
                     android:gravity="top"
-                    android:hint="违规项"
+                    android:hint=""
                     android:minHeight="100dp"
                     android:padding="5dp"
                     android:textColor="#272727"
@@ -188,7 +188,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="违法行为"
+                        android:text="依据条款"
                         android:textColor="@color/colorTextBlack33"
                         android:textSize="15sp" />
 
@@ -209,7 +209,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@color/white"
                     android:gravity="top"
-                    android:hint="违规项"
+                    android:hint=""
                     android:minHeight="100dp"
                     android:padding="5dp"
                     android:textColor="#272727"
@@ -246,7 +246,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="违法行为"
+                        android:text="整改措施"
                         android:textColor="@color/colorTextBlack33"
                         android:textSize="15sp" />
 
@@ -267,7 +267,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@color/white"
                     android:gravity="top"
-                    android:hint="违规项"
+                    android:hint=""
                     android:minHeight="100dp"
                     android:padding="5dp"
                     android:textColor="#272727"
