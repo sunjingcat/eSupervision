@@ -4,6 +4,7 @@
     <declare-styleable name="ItemGroup">
         <!--标题的文字-->
         <attr name="title" format="string" />
+        <attr name="inputType" format="string" />
         <!--标题的字体大小-->
         <attr name="title_size" format="dimension" />
         <!--标题的字体颜色-->

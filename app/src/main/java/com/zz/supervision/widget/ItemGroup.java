@@ -3,6 +3,7 @@ package com.zz.supervision.widget;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -86,6 +87,7 @@ public class ItemGroup extends FrameLayout {
         String hintContent = typedArray.getString(R.styleable.ItemGroup_edt_hint_content);
         int hintColor = typedArray.getColor(R.styleable.ItemGroup_edt_hint_text_color, defaultHintColor);
         boolean isSelect = typedArray.getBoolean(R.styleable.ItemGroup_isSelect, false);
+        String inputType = typedArray.getString(R.styleable.ItemGroup_inputType);
         //默认输入框可以编辑
         boolean isEditable = typedArray.getBoolean(R.styleable.ItemGroup_isEditable, true);
         typedArray.recycle();
@@ -96,6 +98,11 @@ public class ItemGroup extends FrameLayout {
         titleTv.setText(title);
         titleTv.setTextSize(titleSize);
         titleTv.setTextColor(titleColor);
+        if (!TextUtils.isEmpty(inputType)) {
+            if (inputType.equals("numberDecimal")) {
+                contentEdt.setInputType(8194);
+            }
+        }
 
         contentEdt.setText(content);
         contentEdt.setTextSize(contentSize);

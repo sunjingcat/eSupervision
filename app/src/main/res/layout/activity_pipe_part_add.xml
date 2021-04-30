@@ -68,6 +68,7 @@
                 android:id="@+id/ig_totalLength"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:inputType="numberDecimal"
                 app:title="管道长度" />
 
             <com.zz.supervision.widget.ItemGroup

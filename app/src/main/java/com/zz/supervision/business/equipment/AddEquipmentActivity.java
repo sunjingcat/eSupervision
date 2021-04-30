@@ -373,8 +373,8 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
         ig_emergencyCall.setVisibility(deviceType1.equals("4") ? View.VISIBLE : View.GONE);
         ig_emergencyCall.setChooseContent(deviceType1.equals("4") ?data.getEmergencyCall()+"" :"");
 
-        ig_totalLength.setVisibility(deviceType1.equals("3") ? View.VISIBLE : View.GONE);
-        ig_totalLength.setChooseContent(deviceType1.equals("3") ?data.getTotalLength()+"" :"");
+//        ig_totalLength.setVisibility(deviceType1.equals("3") ? View.VISIBLE : View.GONE);
+//        ig_totalLength.setChooseContent(deviceType1.equals("3") ?data.getTotalLength()+"" :"");
 
         ig_licensePlate.setVisibility(deviceType1.equals("8") ? View.VISIBLE : View.GONE);
         ig_licensePlate.setChooseContent(deviceType1.equals("8") ?data.getLicensePlate()+ "": "");
@@ -554,7 +554,7 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
                         ig_deviceType.setChooseContent(tx);
                         deviceType1 = options1Items.get(options1).getDictValue();
                         deviceType2 = options2Items.get(options1).get(option2).getDictValue();
-                        ig_totalLength.setVisibility(deviceType1.equals("3") ? View.VISIBLE : View.GONE);
+//                        ig_totalLength.setVisibility(deviceType1.equals("3") ? View.VISIBLE : View.GONE);
                         ig_licensePlate.setVisibility(deviceType1.equals("8") ? View.VISIBLE : View.GONE);
                         ig_maintenanceCompany.setVisibility(deviceType1.equals("4") ? View.VISIBLE : View.GONE);
                     }

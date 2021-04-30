@@ -100,7 +100,7 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
         }else if (type.equals("4")) {
             url = "ylqxCompany";
         }else if (type.equals("6")) {
-            url = "tzsbCompanyInfo";
+            url = "tzsbCompany";
         }
         RxNetUtils.request(getApi(ApiService.class).getImageBase64(url, modelId), new RequestObserver<JsonT<List<ImageBack>>>(this) {
             @Override
