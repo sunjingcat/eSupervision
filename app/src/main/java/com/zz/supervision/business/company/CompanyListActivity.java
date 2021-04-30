@@ -92,7 +92,9 @@ public class CompanyListActivity extends MyBaseActivity {
         et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                getDate();
                 if (selectFragment!=null) {
+
                     selectFragment.setSearchStr(et_search.getText().toString() + "");
                     //隐藏软键盘
                     @SuppressLint("WrongConstant") InputMethodManager imm = (InputMethodManager) context.getSystemService("input_method");
@@ -110,6 +112,7 @@ public class CompanyListActivity extends MyBaseActivity {
             @Override
             public void onPageSelected(int position) {
                 selectFragment = (CompanyFragment) fragments.get(position);
+                getDate();
                 selectFragment.setSearchStr(et_search.getText().toString()+"");
             }
 
@@ -119,26 +122,31 @@ public class CompanyListActivity extends MyBaseActivity {
             }
         });
     }
+    boolean isFirst= true;
 
     void initFragment(List<CompanyType> list) {
+
+
         if (list.size() > 0 && list.size() == fragments.size()) {
 
 
         } else {
-            fragments.clear();
-            for (int i = 0; i < list.size(); i++) {
-                CompanyFragment companyFragment = new CompanyFragment(list.get(i).getCompanyType());
-                fragments.add(companyFragment);
+            if (isFirst) {
+                isFirst = false;
+                for (int i = 0; i < list.size(); i++) {
+                    CompanyFragment companyFragment = new CompanyFragment(list.get(i).getCompanyType());
+                    fragments.add(companyFragment);
+                }
+                tablayout.setupWithViewPager(viewpager, false);
+                pagerAdapter = new FmPagerAdapter(fragments, getSupportFragmentManager());
+                viewpager.setAdapter(pagerAdapter);
+                selectFragment = (CompanyFragment) fragments.get(0);
             }
-            tablayout.setupWithViewPager(viewpager, false);
-            pagerAdapter = new FmPagerAdapter(fragments, getSupportFragmentManager());
-            viewpager.setAdapter(pagerAdapter);
-            selectFragment= (CompanyFragment) fragments.get(0);
+            for (int i = 0; i < list.size(); i++) {
+                tablayout.getTabAt(i).setText(list.get(i).getCompanyTypeText() + "(" + list.get(i).getCount() + ")");
+            }
+        }
 
-        }
-        for (int i = 0; i < list.size(); i++) {
-            tablayout.getTabAt(i).setText(list.get(i).getCompanyTypeText() + "(" + list.get(i).getCount() + ")");
-        }
     }
 
     @Override
@@ -153,6 +161,10 @@ public class CompanyListActivity extends MyBaseActivity {
 
     void getDate() {
         Map<String, Object> map = new HashMap<>();
+        String s = et_search.getText().toString();
+        if (!TextUtils.isEmpty(s)) {
+            map.put("searchValue", s);
+        }
         RxNetUtils.request(getApi(ApiService.class).selectCompanyGroupCount(map), new RequestObserver<JsonT<List<CompanyType>>>() {
             @Override
             protected void onSuccess(JsonT<List<CompanyType>> jsonT) {
@@ -196,10 +208,10 @@ public class CompanyListActivity extends MyBaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1001 && resultCode == RESULT_OK) {
-            setResult(RESULT_OK, data);
-            finish();
-        }
+//        if (requestCode == 1001 && resultCode == RESULT_OK) {
+//            setResult(RESULT_OK, data);
+//            finish();
+//        }
     }
 
     @Override
