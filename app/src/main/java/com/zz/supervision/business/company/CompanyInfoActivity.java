@@ -264,7 +264,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 break;
             case R.id.bt_add_device:
                 if (companyBean == null) return;
-                startActivity(new Intent(this, AddEquipmentActivity.class).putExtra("companyId", companyBean.getId()));
+                startActivityForResult(new Intent(this, AddEquipmentActivity.class).putExtra("companyId", companyBean.getId()).putExtra("from", "companyInfo"),1002);
                 break;
             case R.id.et_device:
                 startActivity(new Intent(this, EquipmentListActivity.class).putExtra("id", companyBean.getId()).putExtra("companyType", companyBean.getCompanyType() + ""));
@@ -333,7 +333,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
         } else if (companyType.equals("4")) {
             url = "ylqxCompany";
         } else if (companyType.equals("6")) {
-            url = "tzsbCompanyInfo";
+            url = "tzsbCompany";
         }
         RxNetUtils.request(getApi(ApiService.class).getImageBase64(url, id), new RequestObserver<JsonT<List<ImageBack>>>(this) {
             @Override
@@ -419,6 +419,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
             if (!TextUtils.isEmpty(id)) {
                 getData(id);
             }
+        }else if (requestCode == 1002&&resultCode==RESULT_OK) {
+            startActivity(new Intent(this, EquipmentListActivity.class).putExtra("id", companyBean.getId()).putExtra("companyType", companyBean.getCompanyType() + ""));
         }
     }
 }

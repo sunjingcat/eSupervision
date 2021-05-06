@@ -165,6 +165,7 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
     protected void initView() {
         ButterKnife.bind(this);
         companyId = getIntent().getStringExtra("companyId");
+
         id = getIntent().getStringExtra("id");
         if (!TextUtils.isEmpty(id)){
             mPresenter.getData(id);
@@ -397,9 +398,12 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
 
     @Override
     public void showResult() {
-        finish();
-
         showToast("提交成功");
+        String  from = getIntent().getStringExtra("from");
+        if ("companyInfo".equals(from)) {
+            setResult(RESULT_OK);
+        } finish();
+
     }
 
     @Override

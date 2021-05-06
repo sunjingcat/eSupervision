@@ -129,7 +129,6 @@ public class CompanyListActivity extends MyBaseActivity {
 
         if (list.size() > 0 && list.size() == fragments.size()) {
 
-
         } else {
             if (isFirst) {
                 isFirst = false;
@@ -142,11 +141,11 @@ public class CompanyListActivity extends MyBaseActivity {
                 viewpager.setAdapter(pagerAdapter);
                 selectFragment = (CompanyFragment) fragments.get(0);
             }
-            for (int i = 0; i < list.size(); i++) {
-                tablayout.getTabAt(i).setText(list.get(i).getCompanyTypeText() + "(" + list.get(i).getCount() + ")");
-            }
-        }
 
+        }
+        for (int i = 0; i < list.size(); i++) {
+            tablayout.getTabAt(i).setText(list.get(i).getCompanyTypeText() + "(" + list.get(i).getCount() + ")");
+        }
     }
 
     @Override

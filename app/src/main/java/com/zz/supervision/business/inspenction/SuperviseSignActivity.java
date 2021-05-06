@@ -30,7 +30,6 @@ import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.DetailBean;
 import com.zz.supervision.bean.SuperviseBean;
-import com.zz.supervision.business.equipment.AddEquipmentActivity;
 import com.zz.supervision.business.inspenction.adapter.SignInfoAdapter;
 import com.zz.supervision.business.record.ShowDocActivity;
 import com.zz.supervision.business.risk.RiskSuperviseInfoActivity;
