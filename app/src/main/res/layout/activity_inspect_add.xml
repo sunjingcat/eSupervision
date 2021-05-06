@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="检查设备"
+            android:text="检验信息"
             android:textColor="@color/white"
             android:textSize="18dp" />
 
