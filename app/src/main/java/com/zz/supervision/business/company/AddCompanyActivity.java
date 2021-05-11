@@ -808,7 +808,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                         && options3Items.get(options1).get(option2) != null && options3Items.get(options1).get(option2).size() > 0
                         && options3Items.get(options1).get(option2).get(options3) != null) {
                     tx = tx + options3Items.get(options1).get(option2).get(options3).getPickerViewText();
-                    type1 = options3Items.get(options1).get(option2).get(options3).getId();
+                    type3 = options3Items.get(options1).get(option2).get(options3).getId();
                 } else {
                     type3 = "";
                 }

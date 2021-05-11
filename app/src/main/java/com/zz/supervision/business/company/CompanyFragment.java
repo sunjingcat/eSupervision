@@ -133,6 +133,7 @@ public class CompanyFragment extends Fragment implements OnRefreshListener, OnLo
         }
         mlist.addAll(data);
         adapter.notifyDataSetChanged();
+        if (llNull==null)return;
         if (mlist.size() == 0) {
             llNull.setVisibility(View.VISIBLE);
         } else {

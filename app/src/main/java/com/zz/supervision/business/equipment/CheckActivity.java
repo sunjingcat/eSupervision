@@ -185,7 +185,11 @@ public class CheckActivity extends MyBaseActivity<Contract.IsetCheckAddPresenter
             mPresenter.beforeAddDeviceCheck(deviceType,deviceId);
         } else {
             ig_inspectionOrganization.setChooseContent(data.getInspectionOrganizationName(),data.getInspectionOrganizationId());
-            ig_inspectionOrganizationId.setChooseContent(data.getInspectionOrganizationId());
+            if (TextUtils.isEmpty(data.getInspectionOrganizationId())) {
+                ig_inspectionOrganizationId.setChooseContent("");
+            }else {
+                ig_inspectionOrganizationId.setChooseContent(data.getInspectionOrganizationId());
+            }
             ig_organizationalUnit.setChooseContent(data.getOrganizationalUnitName());
             ig_organizationalUnit.setSelectValue(data.getOrganizationalUnitId());
             ig_checkNature.setChooseContent(data.getCheckNatureText());

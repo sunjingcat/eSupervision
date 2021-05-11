@@ -128,18 +128,18 @@ public class ItemGroup extends FrameLayout {
 
     public void setChooseContent(String choose) {
         if (this.chooseTv.getVisibility()==View.VISIBLE) {
-            if (choose==null||choose.equals("null")){
-                this.chooseTv.setText("");
-            }else {
+//            if (choose==null||choose.equals("null")){
+//                this.chooseTv.setText("");
+//            }else {
                 this.chooseTv.setText(choose + "");
-            }
+//            }
 
         }else {
-            if (choose==null||choose.equals("null")){
-                this.contentEdt.setText("");
-            }else {
+//            if (choose==null||choose.equals("null")){
+//                this.contentEdt.setText("");
+//            }else {
                 this.contentEdt.setText(choose + "");
-            }
+//            }
         }
     }
 
@@ -161,6 +161,9 @@ public class ItemGroup extends FrameLayout {
     }
     private String selectValue="";
     public String getSelectValue() {
+        if (selectValue.equals("null")){
+            return "";
+        }
         return selectValue;
     }
     public void setSelectValue(String selectValue) {

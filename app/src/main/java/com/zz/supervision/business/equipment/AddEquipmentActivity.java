@@ -239,11 +239,7 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
         params.put("deviceType3", deviceType3 + "");
         params.put("deviceName", getText(ig_deviceName));
         params.put("registStatus", ig_registStatus.getSelectValue() + "");
-        if (ig_registOrganizationId.getSelectValue().equals("null")||TextUtils.isEmpty(ig_registOrganizationId.getSelectValue())){
-
-        }else {
-            params.put("registOrganizationId", ig_registOrganizationId.getSelectValue() + "");
-        }
+        params.put("registOrganizationId", ig_registOrganizationId.getSelectValue() );
         params.put("registTime", getText(ig_registTime) + "");
         params.put("registRecorder", getText(ig_registRecorder) + "");
         params.put("registNumber", getText(ig_registNumber) + "");
@@ -341,6 +337,7 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
 
     @Override
     public void showEquipmentInfo(EquipmentBean data) {
+
         ig_deviceCode.setChooseContent(data.getDeviceCode() + "");
         ig_deviceModel.setChooseContent(data.getDeviceModel() + "");
         ig_deviceType.setChooseContent(data.getDeviceType1Text() + "" + data.getDeviceType2Text() + "" + data.getDeviceType3Text());
@@ -351,7 +348,7 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
         ig_registStatus.setChooseContent(data.getRegistStatusText() + "");
         ig_registStatus.setSelectValue(data.getRegistStatus() + "");
         ig_registOrganizationId.setChooseContent(data.getRegistOrganizationName());
-        ig_registOrganizationId.setSelectValue(data.getRegistOrganizationId() + "");
+        ig_registOrganizationId.setSelectValue(data.getRegistOrganizationId()+"" );
         ig_registTime.setChooseContent(data.getRegistTime() + "");
         ig_registRecorder.setChooseContent(data.getRegistRecorder() + "");
         ig_registNumber.setChooseContent(data.getRegistNumber() + "");

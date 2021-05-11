@@ -131,6 +131,7 @@ public class EquipmentFragment extends Fragment implements OnRefreshListener, On
         }
         mlist.addAll(data);
         adapter.notifyDataSetChanged();
+        if (llNull==null)return;
         if (mlist.size() == 0) {
             llNull.setVisibility(View.VISIBLE);
         } else {
