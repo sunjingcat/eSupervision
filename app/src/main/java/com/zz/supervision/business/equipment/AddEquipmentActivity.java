@@ -239,7 +239,11 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
         params.put("deviceType3", deviceType3 + "");
         params.put("deviceName", getText(ig_deviceName));
         params.put("registStatus", ig_registStatus.getSelectValue() + "");
-        params.put("registOrganizationId", ig_registOrganizationId.getSelectValue() + "");
+        if (ig_registOrganizationId.getSelectValue().equals("null")||TextUtils.isEmpty(ig_registOrganizationId.getSelectValue())){
+
+        }else {
+            params.put("registOrganizationId", ig_registOrganizationId.getSelectValue() + "");
+        }
         params.put("registTime", getText(ig_registTime) + "");
         params.put("registRecorder", getText(ig_registRecorder) + "");
         params.put("registNumber", getText(ig_registNumber) + "");
