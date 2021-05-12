@@ -27,7 +27,7 @@ public class EquipmentAdapter extends BaseQuickAdapter<EquipmentBean, BaseViewHo
 
     @Override
     protected void convert(BaseViewHolder holder, final EquipmentBean item) {
-        holder.setText(R.id.item_title, item.getDeviceName() + "-" + item.getDeviceModel());
+        holder.setText(R.id.item_title, item.getRegistNumber()+"" );
         holder.setText(R.id.tv_alarmStatus, item.getAlarmStatusText() + "");
         if (!TextUtils.isEmpty(item.getAlarmStatusColor())) {
             try {
@@ -38,7 +38,7 @@ public class EquipmentAdapter extends BaseQuickAdapter<EquipmentBean, BaseViewHo
 
         }
         holder.setText(R.id.item_use_status, item.getUsageStatusText() + "");
-        holder.setText(R.id.item_reg_time, item.getRegistTime() + "");
+        holder.setText(R.id.item_reg_time, item.getRegistCode() + "");
         if (item.isSelect()) {
             holder.setBackgroundColor(R.id.content, Color.parseColor("#eeeeee"));
         } else {
