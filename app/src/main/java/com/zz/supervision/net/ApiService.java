@@ -177,6 +177,9 @@ public interface ApiService {
     @GET("/app/v1/supervise/dict/getDicts")
     Observable<JsonT<List<BusinessType>>> getDicts(@QueryMap Map<String, Object> params);
 
+    @GET("/app/v1/supervise/tzsbDeviceCheck/getCheckCategoryDictByDeviceType/{deviceType}")
+    Observable<JsonT<List<BusinessType>>> getCheckCategory(@Path("deviceType") String deviceType);
+
     @GET("/app/v1/supervise/tzsbDeviceCheck/beforeAddDeviceCheck/{deviceId}")
     Observable<JsonT<List<BeforeAddDeviceCheck>>> beforeAddDeviceCheck(@Path("deviceId") String deviceId);
 

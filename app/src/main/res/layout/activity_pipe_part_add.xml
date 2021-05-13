@@ -70,6 +70,26 @@
                 android:layout_height="wrap_content"
                 app:inputType="numberDecimal"
                 app:title="管道长度" />
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_pipeRank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="管道级别" />
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_pipeStandard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="管道规格" />
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_pipeTexture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="管道材质" />
+             <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_workingMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="工作介质" />
 
             <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_manufacturerDate"

@@ -161,7 +161,7 @@ public class ItemGroup extends FrameLayout {
     }
     private String selectValue="";
     public String getSelectValue() {
-        if (selectValue.equals("null")){
+        if (TextUtils.isEmpty(selectValue)||selectValue.equals("null")){
             return "";
         }
         return selectValue;

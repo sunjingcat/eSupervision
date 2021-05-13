@@ -70,9 +70,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
                     android:ellipsize="end"
-                    android:lines="1"
                     android:textColor="#999999"
                     android:textSize="15dp"
                     tools:text="主体业态:单位食堂" />

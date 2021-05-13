@@ -113,6 +113,10 @@ public class PipePartInfoActivity extends MyBaseActivity {
         mlist.add(new DetailBean("安装单位", data.getInstallationCompany() + ""));
         mlist.add(new DetailBean("竣工日期", data.getCompletionDate() + ""));
         mlist.add(new DetailBean("管道长度", data.getTotalLength() + ""));
+        mlist.add(new DetailBean("管道级别", data.getPipeRank() + ""));
+        mlist.add(new DetailBean("管道规格", data.getPipeStandard() + ""));
+        mlist.add(new DetailBean("管道材质", data.getPipeTexture() + ""));
+        mlist.add(new DetailBean("工作介质", data.getWorkingMedium() + ""));
         infoAdapter.notifyDataSetChanged();
     }
 

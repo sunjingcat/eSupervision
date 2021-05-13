@@ -66,6 +66,22 @@ public class CheckAddPresenter extends MyBasePresenterImpl<Contract.IGetCheckAdd
     }
 
     @Override
+    public void getCheckCategory(String type) {
+
+        RxNetUtils.request(getApi(ApiService.class).getCheckCategory(type), new RequestObserver<JsonT<List<BusinessType>>>(this) {
+            @Override
+            protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
+                view.showCheckCategory(jsonT.getData());
+            }
+
+            @Override
+            protected void onFail2(JsonT<List<BusinessType>> stringJsonT) {
+                super.onFail2(stringJsonT);
+            }
+        }, mDialog);
+    }
+
+    @Override
     public void getOrganizationalUnit() {
 
         RxNetUtils.request(getApi(ApiService.class).selectorganizationalUnit(), new RequestObserver<JsonT<List<DictBean>>>(this) {

@@ -63,6 +63,15 @@ public class AddPipePartActivity extends MyBaseActivity<Contract.IsetPipeAddPres
     @BindView(R.id.ig_totalLength)
     ItemGroup ig_totalLength;
 
+    @BindView(R.id.ig_pipeRank)
+    ItemGroup ig_pipeRank;
+    @BindView(R.id.ig_pipeStandard)
+    ItemGroup ig_pipeStandard;
+    @BindView(R.id.ig_pipeTexture)
+    ItemGroup ig_pipeTexture;
+    @BindView(R.id.ig_workingMedium)
+    ItemGroup ig_workingMedium;
+
     String deviceId;
     String id;
 
@@ -100,6 +109,10 @@ public class AddPipePartActivity extends MyBaseActivity<Contract.IsetPipeAddPres
         map.put("completionDate", ig_completionDate.getValue());
         map.put("installationCompany", getText(ig_installationCompany));
         map.put("totalLength", getText(ig_totalLength));
+        map.put("pipeRank", getText(ig_pipeRank));
+        map.put("pipeStandard", getText(ig_pipeStandard));
+        map.put("pipeTexture", getText(ig_pipeTexture));
+        map.put("workingMedium", getText(ig_workingMedium));
 
         mPresenter.submitData(map);
     }
@@ -174,6 +187,11 @@ public class AddPipePartActivity extends MyBaseActivity<Contract.IsetPipeAddPres
         ig_completionDate.setChooseContent(data.getCompletionDate() + "");
         ig_installationCompany.setChooseContent(data.getInstallationCompany() + "");
         ig_totalLength.setChooseContent(data.getTotalLength() + "");
+
+        ig_pipeRank.setChooseContent(data.getPipeRank() + "");
+        ig_pipeStandard.setChooseContent(data.getPipeStandard() + "");
+        ig_pipeTexture.setChooseContent(data.getPipeTexture() + "");
+        ig_workingMedium.setChooseContent(data.getWorkingMedium() + "");
     }
 
     @Override

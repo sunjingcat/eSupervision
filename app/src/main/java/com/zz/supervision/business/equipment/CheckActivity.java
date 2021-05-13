@@ -107,7 +107,7 @@ public class CheckActivity extends MyBaseActivity<Contract.IsetCheckAddPresenter
         }
         mPresenter.getDicts("tzsb_check_status");
         mPresenter.getDicts("tzsb_check_nature");
-        mPresenter.getDicts("tzsb_check_category");
+        mPresenter.getCheckCategory(deviceType);
         mPresenter.getDicts("tzsb_process_status");
         mPresenter.getOrganizationalUnit();
         if (deviceType.equals("1")) {
@@ -258,13 +258,18 @@ public class CheckActivity extends MyBaseActivity<Contract.IsetCheckAddPresenter
         } else if (type.equals("tzsb_check_nature")) {
             list_check_nature.clear();
             list_check_nature.addAll(list);
-        } else if (type.equals("tzsb_check_category")) {
-            list_check_category.clear();
-            list_check_category.addAll(list);
-        } else if (type.equals("tzsb_process_status")) {
+        }  else if (type.equals("tzsb_process_status")) {
             list_process_status.clear();
             list_process_status.addAll(list);
         }
+    }
+
+    @Override
+    public void showCheckCategory(List<BusinessType> list) {
+
+            list_check_category.clear();
+            list_check_category.addAll(list);
+
     }
 
     @Override

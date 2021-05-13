@@ -48,6 +48,7 @@ public class Contract {
         void submitData(DeviceCheck map);
         void getData(String deviceType,String id);
         void getDicts(String type);
+        void getCheckCategory(String type);
         void getOrganizationalUnit();
         void beforeAddDeviceCheck(String deviceType,String deviceId);
 
@@ -56,8 +57,8 @@ public class Contract {
     public interface IGetCheckAddView extends BaseView {
         void showCheckInfo(DeviceCheck data);
         void showSubmitResult(String id);
-
         void showDicts(String type,List<BusinessType> list);
+        void showCheckCategory(List<BusinessType> list);
         void showOrganizationalUnit(List<DictBean> list);
         void showBeforeAddDeviceCheck(List<BeforeAddDeviceCheck> list);
 
