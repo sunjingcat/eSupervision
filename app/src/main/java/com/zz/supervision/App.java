@@ -16,6 +16,7 @@ import com.zz.lib.core.BaseApplication;
 import com.orhanobut.logger.Logger;
 import com.zz.supervision.print.transfer.ConnectionListener;
 import com.zz.supervision.print.utils.ConnectionUtils;
+import com.zz.supervision.utils.LocationHelper;
 
 
 public class App extends BaseApplication {
@@ -23,6 +24,8 @@ public class App extends BaseApplication {
     public static App mApplication;
     private ConnectionListener connListener;
     private int myPort;
+    public static double longitude=0.0;
+    public static double latitude=0.0;
 
     private boolean isConnectionListenerRunning = false;
     private static Handler mHandler;  // 全局的Handler 可以防止内存泄露
@@ -111,5 +114,10 @@ public class App extends BaseApplication {
 
     public int getPort(){
         return myPort;
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
     }
 }

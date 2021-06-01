@@ -1,10 +1,12 @@
 package com.zz.supervision;
 
+import android.Manifest;
 import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.View;
 
 import com.zz.lib.commonlib.utils.CacheUtility;
+import com.zz.lib.commonlib.utils.PermissionUtils;
 import com.zz.lib.core.http.utils.ToastUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.supervision.base.MyBaseActivity;
@@ -17,6 +19,7 @@ import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
 import com.zz.supervision.net.RequestObserver;
 import com.zz.supervision.net.RxNetUtils;
+import com.zz.supervision.utils.LocationHelper;
 import com.zz.supervision.utils.UpdateManager;
 
 import org.cups4j.CupsClient;
@@ -55,6 +58,19 @@ public class MainActivity extends MyBaseActivity {
     protected void initView() {
         ButterKnife.bind(this);
         new UpdateManager(this).checkUpdate();
+        PermissionUtils.getInstance().checkPermission(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION}, new PermissionUtils.OnPermissionChangedListener() {
+            @Override
+            public void onGranted() {
+                LocationHelper.getInstance().start();
+            }
+
+            @Override
+            public void onDenied() {
+
+            }
+        });
+
     }
 
     @Override
@@ -99,6 +115,7 @@ public class MainActivity extends MyBaseActivity {
                 mExitTime = System.currentTimeMillis();
             } else {
                 finish();
+                LocationHelper.getInstance().stop();
             }
             return true;
         }

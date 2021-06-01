@@ -82,6 +82,7 @@ public class CheckActivity extends MyBaseActivity<Contract.IsetCheckAddPresenter
     List<BusinessType> list_check_nature = new ArrayList<>();
     List<BusinessType> list_check_category = new ArrayList<>();
     List<BusinessType> list_process_status = new ArrayList<>();
+    List<BusinessType> list_check_reduction = new ArrayList<>();
 
     String deviceId;
     String deviceType;
@@ -109,6 +110,7 @@ public class CheckActivity extends MyBaseActivity<Contract.IsetCheckAddPresenter
         mPresenter.getDicts("tzsb_check_nature");
         mPresenter.getCheckCategory(deviceType);
         mPresenter.getDicts("tzsb_process_status");
+        mPresenter.getDicts("tzsb_check_reduction");
         mPresenter.getOrganizationalUnit();
         if (deviceType.equals("1")) {
             ig_anquanfaCheckStatus.setVisibility(View.VISIBLE);
@@ -172,7 +174,7 @@ public class CheckActivity extends MyBaseActivity<Contract.IsetCheckAddPresenter
             deviceCheck.setXiansuqiCheckStatus(ig_xiansuqiCheckStatus.getSelectValue() );
         }
 
-        deviceCheck.setCheckModelType(ig_checkCategory.getSelectValue() );
+        deviceCheck.setCheckCategory(ig_checkCategory.getSelectValue() );
         deviceCheck.setProcessStatus(ig_processStatus.getSelectValue() );
         deviceCheck.setProcessDate(ig_firstCheckDate.getValue() );
 
@@ -220,7 +222,7 @@ public class CheckActivity extends MyBaseActivity<Contract.IsetCheckAddPresenter
 
                     @Override
                     public void onClick(ItemGroup itemGroup) {
-                        showSelectPopWindow1(itemGroup, list_check_status);
+                        showSelectPopWindow1(itemGroup, list_check_reduction);
                     }
                 });
                 businessStatuses.add(businessStatus);
@@ -231,7 +233,7 @@ public class CheckActivity extends MyBaseActivity<Contract.IsetCheckAddPresenter
             ig_guoluCheckStatus.setChooseContent(data.getGuoluCheckStatusText(),data.getGuoluCheckStatus());
             ig_xiansuqiCheckStatus.setChooseContent(data.getXiansuqiCheckStatusText(),data.getXiansuqiCheckStatus());
 
-            ig_checkCategory.setChooseContent(data.getGuoluCheckStatusText(),data.getGuoluCheckStatus());
+            ig_checkCategory.setChooseContent(data.getCheckCategoryText(),data.getCheckCategory());
             ig_processStatus.setChooseContent(data.getProcessStatusText(),data.getProcessStatus());
             ig_processDate.setChooseContent(data.getProcessDate());
 
@@ -261,6 +263,9 @@ public class CheckActivity extends MyBaseActivity<Contract.IsetCheckAddPresenter
         }  else if (type.equals("tzsb_process_status")) {
             list_process_status.clear();
             list_process_status.addAll(list);
+        }else if (type.equals("tzsb_check_reduction")) {
+            list_check_reduction.clear();
+            list_check_reduction.addAll(list);
         }
     }
 
@@ -311,7 +316,6 @@ public class CheckActivity extends MyBaseActivity<Contract.IsetCheckAddPresenter
         for (BeforeAddDeviceCheck item : list) {
             BusinessStatus businessStatus = new BusinessStatus(this);
             businessStatus.setTitleTv(item.getCheckModelTypeText());
-            businessStatus.setTag(item.getCheckModelType());
             businessStatus.setOnClickListener(new BusinessStatus.OnItemClickListener() {
                 @Override
                 public void onOptionPicker(ItemGroup itemGroup) {

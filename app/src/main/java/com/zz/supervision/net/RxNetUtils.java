@@ -10,6 +10,7 @@ import com.zz.lib.core.http.http.RetrofitClient;
 import com.zz.lib.core.http.http.SingleRxHttp;
 import com.zz.lib.core.http.interceptor.Transformer;
 import com.zz.lib.core.http.upload.UploadRetrofit;
+import com.zz.supervision.App;
 
 import java.io.File;
 import java.util.HashMap;
@@ -38,16 +39,17 @@ public class RxNetUtils extends RxHttpUtils {
 
     public static SingleRxHttp getSInstance() {
         SingleRxHttp rxhttp = SingleRxHttp.getInstance();
-
+        Map<String,Object> paras = new HashMap<>();
         if(CacheUtility.isLogin()){
             if (!TextUtils.isEmpty(CacheUtility.getToken()) ){
-                Map<String,Object> paras = new HashMap<>();
                 paras.put("token", CacheUtility.getToken());
-                rxhttp.addHeaders(paras);
             }
         }
+        paras.put("longitude", App.longitude+"");
+        paras.put("latitude", App.latitude+"");
 //        Map<String,Object> param = new HashMap<>();
 //        rxhttp.addParams(param);
+        rxhttp.addHeaders(paras);
         rxhttp.baseUrl(rxhttp.getBaseUrl());
         return rxhttp;
     }
