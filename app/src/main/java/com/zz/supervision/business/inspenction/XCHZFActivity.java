@@ -67,6 +67,8 @@ public class XCHZFActivity extends MyBaseActivity {
     TextView etPeople;
     @BindView(R.id.et_startTime)
     TextView etStartTime;
+    @BindView(R.id.tv_startTime)
+    TextView tv_startTime;
     @BindView(R.id.et_device)
     TextView et_device;
     @BindView(R.id.et_endTime)
@@ -264,6 +266,8 @@ public class XCHZFActivity extends MyBaseActivity {
         etBusinessPlace.setText(company.getBusinessPlace() + "");
         etContact.setText(company.getContact() + "");
         etContactInformation.setText(company.getContactInformation() + "");
+
+        tv_startTime.setText(company.getCompanyType() == 6 ? "开始时间": "执法时间");
         ll_endTime.setVisibility(company.getCompanyType() == 6 ? View.VISIBLE : View.GONE);
         ll_device.setVisibility(company.getCompanyType() == 6 ? View.VISIBLE : View.GONE);
         v_endTime.setVisibility(company.getCompanyType() == 6 ? View.VISIBLE : View.GONE);
@@ -332,7 +336,9 @@ public class XCHZFActivity extends MyBaseActivity {
                         || type == 5
                         || type == 6 || type == 7
                         || type == 8 || type == 9 || type == 10
-                        || type == 11|| type == 12 || type == 13 || type == 14 || type == 15 || type == 16 || type == 17|| type == 18) {
+                        || type == 11|| type == 12 || type == 13 || type == 14 || type == 15 || type == 16 || type == 17|| type == 18
+                        || type == 19
+                ) {
                     startActivity(new Intent(XCHZFActivity.this, SuperviseActivity.class)
                             .putExtra("company", companyBean.getOperatorName())
                             .putExtra("id", jsonT.getData() + "")

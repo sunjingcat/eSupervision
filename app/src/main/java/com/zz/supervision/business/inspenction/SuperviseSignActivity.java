@@ -200,6 +200,11 @@ public class SuperviseSignActivity extends MyBaseActivity {
             tvSign2.setText("检查人员签字");
             tvSign3.setText("记录员签字");
             text_violation.setText("检查中发现的其他问题");
+        }else if ( type == 19) {
+            url = "hzpInspectionRecord";
+            llReviewerSignSign.setVisibility(View.GONE);
+            tvSign1.setText("企业陪同人员签字");
+            tvSign2.setText("执法人签字");
         }
         resposeBean = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
         if (resposeBean != null) {
@@ -279,7 +284,14 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 etViolation.setVisibility(View.GONE);
                 ll_violation.setVisibility(TextUtils.isEmpty(resposeBean.getViolation()) ? View.GONE : View.VISIBLE);
             }
-        } else {
+        } else if (type == 19) {
+            mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + "", true));
+            mlist.add(new DetailBean("问题数", resposeBean.getProblemCount() + ""));
+            if (resposeBean.getProblemCount() > 0) {
+                ll_reformTime.setVisibility(View.VISIBLE);
+                getDicts("reformTime");
+            }
+        }else {
             mlist.add(new DetailBean("静态评分项分数", resposeBean.getStaticScore() + "", true));
             mlist.add(new DetailBean("动态评分项分数", resposeBean.getDynamicScore() + ""));
             mlist.add(new DetailBean("总分数", resposeBean.getTotalScore() + ""));
@@ -325,7 +337,14 @@ public class SuperviseSignActivity extends MyBaseActivity {
 //            lawEnforcer_sign = resposeBean.getCompanySign();
 //            reviewerSign_sign=resposeBean.getRecordSign();
 
-        } else {
+        } if ( type == 19) {
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLawEnforcerSign);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLegalRepresentativeSign);
+
+//            legalRepresentative_sign = resposeBean.getOfficerSign();
+//            lawEnforcer_sign = resposeBean.getCompanySign();
+
+        }else {
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getFillerSign(), tvLawEnforcerSign);
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOwnerSign(), tvLegalRepresentativeSign);
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getReviewerSign(), tvReviewerSignSign);

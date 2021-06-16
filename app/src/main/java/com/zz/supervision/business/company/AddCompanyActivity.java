@@ -131,6 +131,8 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     ItemGroup ig_warehouseAddress;
     @BindView(R.id.ig_businessScope)
     ItemGroup ig_businessScope;
+    @BindView(R.id.et_legalId)
+    ItemGroup et_legalId;
     String fieldTime;
     String validDate;
     String businessType = "";
@@ -207,7 +209,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             mPresenter.getImage(companyType, id);
             showLoading("");
         }
-        mPresenter.getCitys();
+
         et_companyType.setText(getIntent().getStringExtra("companyTypeText") + "");
         if (companyType.equals("1")) {
             ll_loginAccount.setVisibility(View.GONE);
@@ -216,19 +218,28 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         } else if (companyType.equals("2")) {
             ll_loginAccount.setVisibility(View.VISIBLE);
             et_coldstorage.setVisibility(View.VISIBLE);
-        } else if (companyType.equals("3") || companyType.equals("4")) {//"companyType": "3","companyTypeText": "药品",
+        } else if (companyType.equals("3") || companyType.equals("4")|| companyType.equals("5")) {//"companyType": "3","companyTypeText": "药品",
             ll_loginAccount.setVisibility(View.GONE);
             et_coldstorage.setVisibility(View.GONE);
             ll_businessType.setVisibility(View.GONE);
             ll_businessProject.setVisibility(View.GONE);
             ll_jtcompanyType.setVisibility(View.VISIBLE);
-            mPresenter.getDicts(companyType.equals("3") ? "ypCompanyType" : "ylqxCompanyType");
+
             if (companyType.equals("3")) {
                 ll_yp.setVisibility(View.VISIBLE);
                 etContact.setTitle("企业负责人");
+                mPresenter.getDicts("ypCompanyType" );
+            } else if (companyType.equals("4")) {
+                ll_yp.setVisibility(View.VISIBLE);
+                etContact.setTitle("企业负责人");
+                mPresenter.getDicts( "ylqxCompanyType");
+            } else if (companyType.equals("5")) {
+                et_legalId.setVisibility(View.VISIBLE);
+                ll_jtcompanyType.setVisibility(View.GONE);
             }
 
         } else if (companyType.equals("6")) { //特种设备
+            mPresenter.getCitys();
             ll_loginAccount.setVisibility(View.GONE);
             et_coldstorage.setVisibility(View.GONE);
             ll_businessType.setVisibility(View.GONE);
@@ -400,6 +411,10 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         } else if (companyType.equals("4")) {
             et_jtcompanyType.setText(data.getSpecificTypeText() + "");
             ylqxCompanyType = data.getSpecificType();
+        }else if (companyType.equals("5")) {
+//            et_jtcompanyType.setText(data.getSpecificTypeText() + "");
+//            ylqxCompanyType = data.getSpecificType();
+            et_legalId.setChooseContent(data.getIdNum()+"");
         }
         ig_businessScope.setChooseContent(data.getBusinessScopeText() + "");
         ig_qualityContact.setChooseContent(data.getQualityContact() + "");
@@ -514,6 +529,10 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         if (!TextUtils.isEmpty(businessPlace)) {
             params.put("businessPlace", businessPlace);
         }
+       String legalId = et_legalId.getValue().toString();
+        if (!TextUtils.isEmpty(legalId)) {
+            params.put("idNum", legalId);
+        }
 
 
         if (!TextUtils.isEmpty(businessType)) {
@@ -528,6 +547,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         if (!TextUtils.isEmpty(validDate)) {
             params.put("validDate", validDate);
         }
+
 
 
         params.put("businessProject", businessProject + "");

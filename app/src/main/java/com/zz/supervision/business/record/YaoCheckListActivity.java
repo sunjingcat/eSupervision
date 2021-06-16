@@ -81,7 +81,7 @@ public class YaoCheckListActivity extends MyBaseActivity {
     @BindView(R.id.ll_level)
     LinearLayout llLevel;
     private ArrayList<Fragment> fragments = new ArrayList<>();
-    String[] tabs = {"  药品 ", "医疗器械"};
+    String[] tabs = {"  药品 ", "医疗器械", "化妆品"};
     String inspectionResult = "";
     String beginTime = "";
     String endTime = "";
@@ -118,14 +118,19 @@ public class YaoCheckListActivity extends MyBaseActivity {
 
     CheckFragment checkFragment1;
     CheckFragment checkFragment2;
+    CheckFragment checkFragment3;
 
     void initFragment() {
 
         checkFragment1 = new CheckFragment("3");
         checkFragment2 = new CheckFragment("4");
-        for (int i = 0; i < tabs.length; i++) {
-            fragments.add(i == 0 ? checkFragment1 : checkFragment2);
-        }
+        checkFragment3 = new CheckFragment("5");
+//        for (int i = 0; i < tabs.length; i++) {
+//            fragments.add(i == 0 ? checkFragment1 :i == 1? checkFragment3:checkFragment3);
+//        }
+        fragments.add(checkFragment1);
+        fragments.add(checkFragment2);
+        fragments.add(checkFragment3);
         tablayout.setupWithViewPager(viewpager, false);
         pagerAdapter = new FmPagerAdapter(fragments, getSupportFragmentManager());
         viewpager.setAdapter(pagerAdapter);
@@ -153,8 +158,11 @@ public class YaoCheckListActivity extends MyBaseActivity {
                 if (tablayout.getSelectedTabPosition() == 0) {
                     checkFragment1.setSearchStr("", "", inspectionResult, level, status, beginTime, endTime);
 
-                } else {
+                }else if (tablayout.getSelectedTabPosition() == 1) {
                     checkFragment2.setSearchStr("", "", inspectionResult, level, status, beginTime, endTime);
+
+                }else if (tablayout.getSelectedTabPosition() == 2) {
+                    checkFragment3.setSearchStr("", "", inspectionResult, level, status, beginTime, endTime);
 
                 }
             }
@@ -338,8 +346,11 @@ public class YaoCheckListActivity extends MyBaseActivity {
                 if (tablayout.getSelectedTabPosition() == 0) {
                     checkFragment1.setSearchStr("", "", inspectionResult, level, status, beginTime, endTime);
 
-                } else {
+                } else if (tablayout.getSelectedTabPosition() == 1) {
                     checkFragment2.setSearchStr("", "", inspectionResult, level, status, beginTime, endTime);
+
+                } else {
+                    checkFragment3.setSearchStr("", "", inspectionResult, level, status, beginTime, endTime);
 
                 }
                 drawer.closeDrawers();
@@ -351,8 +362,10 @@ public class YaoCheckListActivity extends MyBaseActivity {
                 String strLawEnforcer = etLawEnforcer.getText().toString();
                 if (tablayout.getSelectedTabPosition() == 0) {
                     checkFragment1.setSearchStr(strCompany + "", strLawEnforcer + "", inspectionResult, level, status, beginTime, endTime);
-                } else {
+                } else if (tablayout.getSelectedTabPosition() == 1) {
                     checkFragment2.setSearchStr(strCompany + "", strLawEnforcer + "", inspectionResult, level, status, beginTime, endTime);
+                } else {
+                    checkFragment3.setSearchStr(strCompany + "", strLawEnforcer + "", inspectionResult, level, status, beginTime, endTime);
                 }
                 break;
         }

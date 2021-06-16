@@ -16,6 +16,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zz.lib.core.utils.LoadingUtils;
+import com.zz.supervision.App;
 import com.zz.supervision.R;
 import com.zz.supervision.bean.RecordBean;
 import com.zz.supervision.business.inspenction.SuperviseActivity;
@@ -121,7 +122,7 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
                 RecordBean recordBean = mlist.get(position);
                 if (recordBean.getStatus() == 1) {
-                    if (recordBean.getType() == 3 || recordBean.getType() == 4 || recordBean.getType() == 6 || recordBean.getType() == 7 || recordBean.getType() == 8 || recordBean.getType() == 9 || recordBean.getType() == 10) {
+                    if (recordBean.getType() == 3 || recordBean.getType() == 4 ) {
                         startActivity(new Intent(getActivity(), RiskSuperviseActivity.class)
                                 .putExtra("company", recordBean.getOperatorName())
                                 .putExtra("id", recordBean.getId() + "")
@@ -179,7 +180,11 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
     }
 
     void getDate() {
-        String companyId = getActivity().getIntent().getStringExtra("id");
+        String companyId="";
+
+            companyId = App.context.getIntent().getStringExtra("id");
+
+
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", pagenum);
         map.put("pageSize", pagesize);
@@ -221,7 +226,15 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
                 }
             }, LoadingUtils.build(getActivity()));
         } else {
-            RxNetUtils.request(getApi(ApiService.class).getYaoRecordList("3".equals(type) ? "ypInspectionRecord" : "ylqxInspectionRecord", map), new RequestObserver<JsonT<List<RecordBean>>>() {
+            String url = "";
+            if ("3".equals(type)){
+                url=   "ypInspectionRecord";
+            }else  if ("4".equals(type)){
+                url=   "ylqxInspectionRecord";
+            }else  if ("5".equals(type)){
+                url=   "hzpInspectionRecord";
+            }
+            RxNetUtils.request(getApi(ApiService.class).getYaoRecordList(url, map), new RequestObserver<JsonT<List<RecordBean>>>() {
                 @Override
                 protected void onSuccess(JsonT<List<RecordBean>> jsonT) {
                     showResult(jsonT.getData());
@@ -231,7 +244,7 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
                 protected void onFail2(JsonT<List<RecordBean>> stringJsonT) {
                     super.onFail2(stringJsonT);
                 }
-            }, LoadingUtils.build(getActivity()));
+            }, LoadingUtils.build(App.context));
         }
     }
 

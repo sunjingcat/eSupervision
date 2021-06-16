@@ -35,6 +35,8 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
             url = "ypCompanyInfo";
         }else if (type.equals("4")) {
             url = "ylqxCompanyInfo";
+        }else if (type.equals("5")) {
+            url = "hzpCompanyInfo";
         }else if (type.equals("6")) {
             url = "tzsbCompanyInfo";
         }
@@ -99,6 +101,8 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
             url = "ypCompany";
         }else if (type.equals("4")) {
             url = "ylqxCompany";
+        }else if (type.equals("5")) {
+            url = "hzpCompany";
         }else if (type.equals("6")) {
             url = "tzsbCompany";
         }
@@ -123,10 +127,12 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
     @Override
     public void submitData(Map<String, Object> map) {
         if (map.containsKey("id")) {
-            if (map.containsKey("companyType") && (map.get("companyType").equals("3") || map.get("companyType").equals("4")|| map.get("companyType").equals("6"))) {
+            if (map.containsKey("companyType") && (map.get("companyType").equals("3") || map.get("companyType").equals("4")|| map.get("companyType").equals("5")|| map.get("companyType").equals("6"))) {
                 String url = "ylqxCompanyInfo";
                 if (map.get("companyType").equals("3")) {
                     url = "ypCompanyInfo";
+                }else if (map.get("companyType").equals("5")) {
+                    url = "hzpCompanyInfo";
                 }else if (map.get("companyType").equals("6")) {
                     url = "tzsbCompanyInfo";
                 }
@@ -160,10 +166,12 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
             }
 
         } else {
-            if (map.containsKey("companyType") && (map.get("companyType").equals("3") || map.get("companyType").equals("4")|| map.get("companyType").equals("6"))) {
+            if (map.containsKey("companyType") && (map.get("companyType").equals("3") || map.get("companyType").equals("4")||map.get("companyType").equals("5")|| map.get("companyType").equals("6"))) {
                 String url = "ylqxCompanyInfo";
                 if (map.get("companyType").equals("3")) {
                     url = "ypCompanyInfo";
+                }else if (map.get("companyType").equals("5")) {
+                    url = "hzpCompanyInfo";
                 }else if (map.get("companyType").equals("6")) {
                     url = "tzsbCompanyInfo";
                 }
@@ -204,6 +212,8 @@ public class CompanyAddPresenter extends MyBasePresenterImpl<Contract.IGetCompan
             url = "ypCompanyInfo";
         }else if (type.equals("4")) {
             url = "ylqxCompanyInfo";
+        }else if (type.equals("5")) {
+            url = "hzpCompanyInfo";
         }else if (type.equals("6")) {
             url = "tzsbCompanyInfo";
         }

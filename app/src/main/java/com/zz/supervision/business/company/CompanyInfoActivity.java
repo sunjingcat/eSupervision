@@ -155,13 +155,17 @@ public class CompanyInfoActivity extends MyBaseActivity {
             mlist.add(new DetailBean("登录账号", data.getLoginAccount() + ""));
             mlist.add(new DetailBean("冷库类型", data.getColdstorageType1Text() + ""));
             mlist.add(new DetailBean("是否含第三方冷库", data.getColdstorageType2Text() + ""));
-        } else if (companyType.equals("3") || companyType.equals("4")) {
+        } else if (companyType.equals("3") || companyType.equals("4")|| companyType.equals("5")) {
             mlist.add(new DetailBean("经营者名称", data.getOperatorName() + ""));
             mlist.add(new DetailBean("社会信用代码", data.getSocialCreditCode() + ""));
             mlist.add(new DetailBean("许可证编号", data.getLicenseNumber() + ""));
             mlist.add(new DetailBean("法定代表人", data.getLegalRepresentative() + ""));
+            if (companyType.equals("5")) {
+                mlist.add(new DetailBean("法人身份证号", data.getLegalRepresentative() + ""));
+            }
             mlist.add(new DetailBean("住所", data.getAddress() + ""));
             if (companyType.equals("3")) {
+                mlist.add(new DetailBean("具体类型", data.getSpecificTypeText() + ""));
                 mlist.add(new DetailBean("企业负责人", data.getContact() + ""));
                 mlist.add(new DetailBean("质量负责人", data.getQualityContact() + ""));
                 mlist.add(new DetailBean("仓库地址", data.getWarehouseAddress() + ""));
@@ -174,7 +178,6 @@ public class CompanyInfoActivity extends MyBaseActivity {
             ll_user.setVisibility(View.GONE);
             mlist.add(new DetailBean("经营场所", data.getBusinessPlace() + ""));
             mlist.add(new DetailBean("企业类型", data.getCompanyTypeText() + ""));
-            mlist.add(new DetailBean("具体类型", data.getSpecificTypeText() + ""));
             mlist.add(new DetailBean("有效期至", data.getValidDate() + ""));
             mlist.add(new DetailBean("签发时间", data.getFieldTime() + ""));
         } else if (companyType.equals("6")) {
@@ -224,6 +227,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
             url = "ypCompanyInfo";
         } else if (companyType.equals("4")) {
             url = "ylqxCompanyInfo";
+        }else if (companyType.equals("5")) {
+            url = "hzpCompanyInfo";
         } else if (companyType.equals("6")) {
             url = "tzsbCompanyInfo";
         }
@@ -332,6 +337,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
             url = "ypCompany";
         } else if (companyType.equals("4")) {
             url = "ylqxCompany";
+        }else if (companyType.equals("5")) {
+            url = "hzpCompany";
         } else if (companyType.equals("6")) {
             url = "tzsbCompany";
         }
@@ -394,6 +401,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
             url = "ypCompanyInfo";
         } else if (companyType.equals("4")) {
             url = "ylqxCompanyInfo";
+        }else if (companyType.equals("5")) {
+            url = "hzpCompanyInfo";
         } else if (companyType.equals("6")) {
             url = "tzsbCompanyInfo";
         }

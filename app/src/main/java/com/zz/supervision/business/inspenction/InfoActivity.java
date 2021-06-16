@@ -93,6 +93,9 @@ public class InfoActivity extends Activity {
         }else if (type == 11 || type == 12 || type == 13 || type == 14 || type == 15 || type == 16 || type == 17 || type == 18) {
             list.add(new DetailBean("检查项数目", lightDevice.getSumCount() + ""));
             list.add(new DetailBean("不符合规范项数", lightDevice.getProblemCount() + ""));
+        }else if ( type == 19) {
+            list.add(new DetailBean("检查项数目", lightDevice.getSumCount() + ""));
+            list.add(new DetailBean("问题数", lightDevice.getProblemCount() + ""));
         } else {
             list.add(new DetailBean("静态评分项分数", lightDevice.getStaticScore() + ""));
             list.add(new DetailBean("动态评分项分数", lightDevice.getDynamicScore() + ""));

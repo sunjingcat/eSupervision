@@ -89,6 +89,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="法定代表人" />
+            <com.zz.supervision.widget.ItemGroup
+                android:visibility="gone"
+                android:id="@+id/et_legalId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="法人身份证号" />
 
             <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/et_address"

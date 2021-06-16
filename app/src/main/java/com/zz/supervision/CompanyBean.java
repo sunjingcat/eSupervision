@@ -113,6 +113,7 @@ public class CompanyBean implements Serializable {
     private String createBy;// ,
     private String createTime;// ,
     private String fieldTime;// ,
+    private String idNum;// ,
     private String id;// 0,
     private String legalRepresentative;// ,
     private String licenseNumber;// ,
@@ -141,6 +142,10 @@ public class CompanyBean implements Serializable {
     private String provinceName;
     private String cityName;
     private String countyName;
+
+    public String getIdNum() {
+        return idNum;
+    }
 
     public String getProvinceId() {
         return provinceId;
