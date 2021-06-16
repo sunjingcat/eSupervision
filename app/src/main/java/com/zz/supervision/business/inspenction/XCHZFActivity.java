@@ -375,6 +375,7 @@ public class XCHZFActivity extends MyBaseActivity {
         switch (companyBean.getCompanyType()) {
             case 3:
             case 4:
+            case 5:
             case 6:
                 dateType = DateType.TYPE_YMDHM;
                 format = "yyyy-MM-dd HH:mm";
