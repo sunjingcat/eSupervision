@@ -245,7 +245,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + "", true));
             mlist.add(new DetailBean("问题数", resposeBean.getProblemCount() + ""));
             mlist.add(new DetailBean("检查结果", resposeBean.getInspectionResultText() + "", true));
-        } else if (type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
+        } else if (type == 6 || type == 7 || type == 8 || type == 9 || type == 10 ) {
             mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + "", true));
             mlist.add(new DetailBean("问题数", resposeBean.getProblemCount() + ""));
             if (resposeBean.getProblemCount() > 0) {
@@ -591,7 +591,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
         String officerSign = BASE64.imageToBase64(legalRepresentative_sign);
         String reviewerSign = BASE64.imageToBase64(reviewerSign_sign);
 
-        if (type == 1 || type == 2 || type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
+        if (type == 1 || type == 2 || type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10|| type == 19) {
             RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign, reformTime), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
