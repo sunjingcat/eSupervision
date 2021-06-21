@@ -559,6 +559,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 showToast("企业负责人签字");
             } else if (type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
                 showToast("法人签字");
+            } else if ( type == 19) {
+                showToast("企业陪同人员签字");
             } else {
                 showToast("填表人签字");
             }
@@ -570,6 +572,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
             } else if (type >= 11 && type <= 18) {
                 showToast("检查人员签字");
             } else if (type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
+                showToast("执法人签字");
+            }else if ( type == 19) {
                 showToast("执法人签字");
             } else {
                 showToast("企业法定代表人签字");
