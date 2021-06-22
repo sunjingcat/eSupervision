@@ -191,6 +191,9 @@
         <activity android:name=".business.equipment.AccessoryActivity" />
         <activity android:name=".business.equipment.AddAccessoryActivity" />
         <activity android:name=".business.equipment.AccessoryInfoActivity" />
+        <activity android:name=".business.company.ProductActivity" />
+        <activity android:name=".business.company.ProductInfoActivity" />
+        <activity android:name=".business.company.ProductListActivity" />
     </application>
 
 </manifest>

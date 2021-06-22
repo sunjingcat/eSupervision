@@ -218,6 +218,8 @@ public class SearchCompanyActivity extends MyBaseActivity implements OnRefreshLi
             url = "ylqxCompanyInfo";
         } else if (companyType.equals("6")) {
             url = "tzsbCompanyInfo";
+        }else if (companyType.equals("7")) {
+            url = "zdgypCompanyInfo";
         }
         RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(url,id), new RequestObserver<JsonT>() {
             @Override

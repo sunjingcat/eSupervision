@@ -205,6 +205,11 @@ public class SuperviseSignActivity extends MyBaseActivity {
             llReviewerSignSign.setVisibility(View.GONE);
             tvSign1.setText("企业陪同人员签字");
             tvSign2.setText("执法人签字");
+        }else if ( type == 21) {
+            url = "hzpInspectionRecord";
+            llReviewerSignSign.setVisibility(View.GONE);
+            tvSign1.setText("法人签字");
+            tvSign2.setText("执法人签字");
         }
         resposeBean = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
         if (resposeBean != null) {
@@ -291,6 +296,10 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 ll_reformTime.setVisibility(View.VISIBLE);
                 getDicts("reformTime");
             }
+        } else if (type == 21) {
+            mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + "", true));
+            mlist.add(new DetailBean("不符合规范项数", resposeBean.getProblemCount() + ""));
+
         }else {
             mlist.add(new DetailBean("静态评分项分数", resposeBean.getStaticScore() + "", true));
             mlist.add(new DetailBean("动态评分项分数", resposeBean.getDynamicScore() + ""));
@@ -338,6 +347,13 @@ public class SuperviseSignActivity extends MyBaseActivity {
 //            reviewerSign_sign=resposeBean.getRecordSign();
 
         } if ( type == 19) {
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLawEnforcerSign);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLegalRepresentativeSign);
+
+//            legalRepresentative_sign = resposeBean.getOfficerSign();
+//            lawEnforcer_sign = resposeBean.getCompanySign();
+
+        }if ( type == 21) {
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLawEnforcerSign);
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLegalRepresentativeSign);
 
@@ -561,6 +577,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 showToast("法人签字");
             } else if ( type == 19) {
                 showToast("企业陪同人员签字");
+            }else if ( type == 21) {
+                showToast("法人签字");
             } else {
                 showToast("填表人签字");
             }
@@ -574,6 +592,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
             } else if (type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
                 showToast("执法人签字");
             }else if ( type == 19) {
+                showToast("执法人签字");
+            }else if ( type == 21) {
                 showToast("执法人签字");
             } else {
                 showToast("企业法定代表人签字");

@@ -87,12 +87,16 @@ public class CompanyInfoActivity extends MyBaseActivity {
     Button btOk;
     @BindView(R.id.bt_add_device)
     Button bt_add_device;
+    @BindView(R.id.bt_add_product)
+    Button bt_add_product;
     @BindView(R.id.bt_delete)
     Button bt_delete;
     @BindView(R.id.bg)
     LinearLayout bg;
     @BindView(R.id.ll_device)
     LinearLayout ll_device;
+    @BindView(R.id.ll_product)
+    LinearLayout ll_product;
     private CustomDialog customDialog;
 
     @Override
@@ -122,6 +126,10 @@ public class CompanyInfoActivity extends MyBaseActivity {
         if (companyType.equals("6")) {
             bt_add_device.setVisibility(View.VISIBLE);
             ll_device.setVisibility(View.VISIBLE);
+        }
+        if (companyType.equals("7")) {
+            bt_add_product.setVisibility(View.VISIBLE);
+            ll_product.setVisibility(View.VISIBLE);
         }
 
     }
@@ -194,6 +202,45 @@ public class CompanyInfoActivity extends MyBaseActivity {
 
             ll_user.setVisibility(View.GONE);
 
+        }else if (companyType.equals("7")) {
+
+
+            mlist.add(new DetailBean("获证时企业名称", data.getOperatorNameCertificate() + ""));
+            mlist.add(new DetailBean("现企业名称", data.getOperatorName() + ""));
+            mlist.add(new DetailBean("获证时企业住所", data.getAddressCertificate() + ""));
+            mlist.add(new DetailBean("现企业住所", data.getAddress() + ""));
+            mlist.add(new DetailBean("获证时企业生产地址", data.getBusinessPlaceCertificat() + ""));
+            mlist.add(new DetailBean("现企业生产地址", data.getBusinessPlace() + ""));
+            mlist.add(new DetailBean("获证时法人代表", data.getLegalRepresentativeCertificate() + ""));
+            mlist.add(new DetailBean("现法人代表", data.getLegalRepresentative() + ""));
+            mlist.add(new DetailBean("获证时经济性质", data.getEconomicNatureCertificate() + ""));
+            mlist.add(new DetailBean("现经济性质", data.getEconomicNature() + ""));
+            mlist.add(new DetailBean("获证时社会统一信用代码", data.getSocialCreditCodeCertificate() + ""));
+            mlist.add(new DetailBean("现社会统一信用代码", data.getSocialCreditCode() + ""));
+            mlist.add(new DetailBean("获证时企业总人数", data.getPeopleTotalCertificate() + ""));
+            mlist.add(new DetailBean("现企业总人数", data.getPeopleTotal() + ""));
+            mlist.add(new DetailBean("获证时企业技术人员数", data.getTechniciansTotalCertificate() + ""));
+            mlist.add(new DetailBean("现企业技术人员数", data.getTechniciansTotal() + ""));
+            mlist.add(new DetailBean("生产许可证编号", data.getLicenseNumber() + ""));
+            mlist.add(new DetailBean("法人身份证号", data.getIdNum() + ""));
+            mlist.add(new DetailBean("法人电话", data.getLegalPhone() + ""));
+            mlist.add(new DetailBean("质量管理负责人", data.getQualityContact() + ""));
+            mlist.add(new DetailBean("年总产值", data.getAnnualOutput() + ""));
+            mlist.add(new DetailBean("年销售额", data.getAnnualSales() + ""));
+            mlist.add(new DetailBean("年缴税金额", data.getAnnualTaxPayment() + ""));
+            mlist.add(new DetailBean("年利润", data.getAnnualProfit() + ""));
+            mlist.add(new DetailBean("企业规模", data.getScaleText() + ""));
+            mlist.add(new DetailBean("对象类别", data.getCategoryText() + ""));
+            if (data.getCategory().equals("4")){
+                mlist.add(new DetailBean("类别描述", data.getCategoryRemark() + ""));
+            }
+            mlist.add(new DetailBean("主要产品", data.getMainProducts() + ""));
+            mlist.add(new DetailBean("联系人", data.getContact() + ""));
+            mlist.add(new DetailBean("联系方式", data.getContactInformation() + ""));
+
+
+            ll_user.setVisibility(View.GONE);
+
         } else {
             mlist.add(new DetailBean("社会信用代码", data.getSocialCreditCode() + ""));
             mlist.add(new DetailBean("许可证编号", data.getLicenseNumber() + ""));
@@ -231,6 +278,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
             url = "hzpCompanyInfo";
         } else if (companyType.equals("6")) {
             url = "tzsbCompanyInfo";
+        } else if (companyType.equals("7")) {
+            url = "zdgypCompanyInfo";
         }
         RxNetUtils.request(getApi(ApiService.class).getCompanyInfo(url, id), new RequestObserver<JsonT<CompanyBean>>(this) {
             @Override
@@ -251,7 +300,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.bt_password, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record, R.id.bt_add_device, R.id.et_device})
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.bt_password, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record, R.id.bt_add_device, R.id.et_device, R.id.bt_add_product, R.id.et_product})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
@@ -273,6 +322,13 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 break;
             case R.id.et_device:
                 startActivity(new Intent(this, EquipmentListActivity.class).putExtra("id", companyBean.getId()).putExtra("companyType", companyBean.getCompanyType() + ""));
+                break;
+                case R.id.bt_add_product:
+                if (companyBean == null) return;
+                startActivityForResult(new Intent(this, ProductActivity.class).putExtra("companyId", companyBean.getId()).putExtra("from", "companyInfo"),1002);
+                break;
+            case R.id.et_product:
+                startActivity(new Intent(this, ProductListActivity.class).putExtra("id", companyBean.getId()).putExtra("companyType", companyBean.getCompanyType() + ""));
                 break;
             case R.id.et_record:
                 if (companyBean == null) return;
@@ -341,6 +397,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
             url = "hzpCompany";
         } else if (companyType.equals("6")) {
             url = "tzsbCompany";
+        }else if (companyType.equals("7")) {
+            url = "zdgypCompany";
         }
         RxNetUtils.request(getApi(ApiService.class).getImageBase64(url, id), new RequestObserver<JsonT<List<ImageBack>>>(this) {
             @Override
@@ -405,6 +463,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
             url = "hzpCompanyInfo";
         } else if (companyType.equals("6")) {
             url = "tzsbCompanyInfo";
+        }else if (companyType.equals("7")) {
+            url = "zdgypCompanyInfo";
         }
         RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(url, id), new RequestObserver<JsonT>() {
             @Override

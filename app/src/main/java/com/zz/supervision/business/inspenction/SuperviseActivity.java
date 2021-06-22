@@ -86,6 +86,8 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
             url = "tzsbInspectionRecord";
         }else if (type == 19 ) {
             url = "hzpInspectionRecord";
+        }else if (type == 21 ) {
+            url = "zdgypInspectionRecord";
         }
         final int[] num = {0};
         adapter = new SuperviseAdapter(new OnProviderOnClick() {

@@ -95,6 +95,8 @@ public class SuperviseInfoActivity extends MyBaseActivity {
             url = "tzsbInspectionRecord";
         }else if (type == 19) {
             url = "hzpInspectionRecord";
+        }else if (type == 21) {
+            url = "zdgypInspectionRecord";
         }
         adapter = new SuperviseAdapter(new OnProviderOnClick() {
             @Override

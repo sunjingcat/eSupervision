@@ -7,86 +7,86 @@ import android.text.TextUtils;
 import java.io.Serializable;
 
 /*"data": [{
-		"searchValue": null,
-		"createBy": null,
-		"createTime": null,
-		"updateBy": null,
-		"updateTime": null,
-		"remark": null,
+		"searchValue;
+		"createBy;
+		"createTime;
+		"updateBy;
+		"updateTime;
+		"remark;
 		"params": {},
-		"deptId": null,
+		"deptId;
 		"companyType": "0",
 		"companyTypeText": "全部",
 		"count": "78"
 	}, {
-		"searchValue": null,
-		"createBy": null,
-		"createTime": null,
-		"updateBy": null,
-		"updateTime": null,
-		"remark": null,
+		"searchValue;
+		"createBy;
+		"createTime;
+		"updateBy;
+		"updateTime;
+		"remark;
 		"params": {},
-		"deptId": null,
+		"deptId;
 		"companyType": "1",
 		"companyTypeText": "食品",
 		"count": "59"
 	}, {
-		"searchValue": null,
-		"createBy": null,
-		"createTime": null,
-		"updateBy": null,
-		"updateTime": null,
-		"remark": null,
+		"searchValue;
+		"createBy;
+		"createTime;
+		"updateBy;
+		"updateTime;
+		"remark;
 		"params": {},
-		"deptId": null,
+		"deptId;
 		"companyType": "2",
 		"companyTypeText": "冷链",
 		"count": "5"
 	}, {
-		"searchValue": null,
-		"createBy": null,
-		"createTime": null,
-		"updateBy": null,
-		"updateTime": null,
-		"remark": null,
+		"searchValue;
+		"createBy;
+		"createTime;
+		"updateBy;
+		"updateTime;
+		"remark;
 		"params": {},
-		"deptId": null,
+		"deptId;
 		"companyType": "3",
 		"companyTypeText": "药品",
 		"count": "5"
 	}, {
-		"searchValue": null,
-		"createBy": null,
-		"createTime": null,
-		"updateBy": null,
-		"updateTime": null,
-		"remark": null,
+		"searchValue;
+		"createBy;
+		"createTime;
+		"updateBy;
+		"updateTime;
+		"remark;
 		"params": {},
-		"deptId": null,
+		"deptId;
 		"companyType": "4",
 		"companyTypeText": "医疗器械",
 		"count": "1"
 	}, {
-		"searchValue": null,
-		"createBy": null,
-		"createTime": null,
-		"updateBy": null,
-		"updateTime": null,
-		"remark": null,
+		"searchValue;
+		"createBy;
+		"createTime;
+		"updateBy;
+		"updateTime;
+		"remark;
 		"params": {},
-		"deptId": null,
+		"deptId;
 		"companyType": "5",
 		"companyTypeText": "化妆品",
 		"count": "4"
 	}, {
-		"searchValue": null,
-		"createBy": null,
-		"createTime": null,
-		"updateBy": null,
-		"updateTime": null,
-		"remark": null,
+		"searchValue;
+		"createBy;
+		"createTime;
+		"updateBy;
+		"updateTime;
+		"remark;
 		"params": {},
-		"deptId": null,
+		"deptId;
 		"companyType": "6",
 		"companyTypeText": "特种设备",
 		"count": "4"
@@ -138,10 +138,37 @@ public class CompanyBean implements Serializable {
     private String provinceId;
     private String cityId;
     private String countyId;
-
     private String provinceName;
     private String cityName;
     private String countyName;
+    private String legalPhone;
+    private String economicNature;
+    private String peopleTotal;
+    private String techniciansTotal;
+
+    private String annualOutput;
+    private String annualSales;
+    private String annualTaxPayment;
+    private String annualProfit;
+    private String scale;
+    private String scaleText;
+
+    private String companyTypeTex;
+    private String category;
+    private String      categoryText;
+    private String     categoryRemark;
+    private String     mapAddress;
+    private String      operatorNameCertificate;
+    private String     socialCreditCodeCertificate;
+    private String      legalRepresentativeCertificate;
+    private String        addressCertificate;
+    private String       businessPlaceCertificate;
+    private String      economicNatureCertificate;
+    private String        peopleTotalCertificate;
+    private String        techniciansTotalCertificate;
+    private String     mainProducts;
+    private String     recordCoun;
+    
 
     public String getIdNum() {
         return idNum;
@@ -342,5 +369,135 @@ public class CompanyBean implements Serializable {
         return address;
     }
 
+    public String getLoginName() {
+        return loginName;
+    }
 
+    public String getLegalPhone() {
+        return legalPhone;
+    }
+
+    public String getEconomicNature() {
+        return economicNature;
+    }
+
+    public String getPeopleTotal() {
+        if (peopleTotal==null){
+            return "";
+        }
+        return peopleTotal;
+    }
+
+    public String getTechniciansTotal() {
+        if (techniciansTotal==null){
+            return "";
+        }
+        return techniciansTotal;
+    }
+
+    public String getAnnualOutput() {
+        if (annualOutput==null){
+            return "";
+        }
+        return annualOutput;
+    }
+
+    public String getAnnualSales() {
+        if (annualSales==null){
+            return "";
+        }
+        return annualSales;
+    }
+
+    public String getAnnualTaxPayment() {
+        if (annualTaxPayment==null){
+            return "";
+        }
+        return annualTaxPayment;
+    }
+
+    public String getAnnualProfit() {
+        if (annualProfit==null){
+            return "";
+        }
+        return annualProfit;
+    }
+
+    public String getScale() {
+        return scale;
+    }
+
+    public String getScaleText() {
+        return scaleText;
+    }
+
+    public String getCompanyTypeTex() {
+        return companyTypeTex;
+    }
+
+    public String getCategory() {
+        if (category==null){
+            return "";
+        }
+        return category;
+    }
+
+    public String getCategoryText() {
+        return categoryText;
+    }
+
+    public String getCategoryRemark() {
+        return categoryRemark;
+    }
+
+    public String getMapAddress() {
+        return mapAddress;
+    }
+
+    public String getOperatorNameCertificate() {
+
+        return operatorNameCertificate;
+    }
+
+    public String getSocialCreditCodeCertificate() {
+        return socialCreditCodeCertificate;
+    }
+
+    public String getLegalRepresentativeCertificate() {
+        return legalRepresentativeCertificate;
+    }
+
+    public String getAddressCertificate() {
+        return addressCertificate;
+    }
+
+    public String getBusinessPlaceCertificat() {
+        return businessPlaceCertificate;
+    }
+
+    public String getEconomicNatureCertificate() {
+        return economicNatureCertificate;
+    }
+
+    public String getPeopleTotalCertificate() {
+        if (peopleTotalCertificate==null){
+            return "";
+        }
+        return peopleTotalCertificate;
+    }
+
+    public String getTechniciansTotalCertificate() {
+        if (techniciansTotalCertificate==null){
+            return "";
+        }
+        return techniciansTotalCertificate;
+    }
+
+    public String getMainProducts() {
+        return mainProducts;
+    }
+
+    public String getRecordCoun() {
+        return recordCoun;
+    }
 }

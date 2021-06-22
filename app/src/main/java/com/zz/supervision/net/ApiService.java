@@ -17,6 +17,7 @@ import com.zz.supervision.bean.LawEnforcerBean;
 import com.zz.supervision.bean.MonitorBean;
 import com.zz.supervision.bean.OrganizationBean;
 import com.zz.supervision.bean.PipePartBean;
+import com.zz.supervision.bean.ProductBean;
 import com.zz.supervision.bean.RecordBean;
 import com.zz.supervision.bean.RiskSuperviseBean;
 import com.zz.supervision.bean.SuperviseBean;
@@ -90,6 +91,9 @@ public interface ApiService {
     @GET("/app/v1/supervise/tzsbDeviceInfo/list")
     Observable<JsonT<List<EquipmentBean>>> getEquipmentInfoList(@QueryMap Map<String, Object> params);
 
+    @GET("/app/v1/supervise/zdgypProductInfo/list")
+    Observable<JsonT<List<ProductBean>>> getZdgypProductInfo(@QueryMap Map<String, Object> params);
+
     @GET("/app/v1/supervise/tzsbInspectionRecord/deviceListByCompanyAndType")
     Observable<JsonT<List<EquipmentBean>>> deviceListByCompanyAndType(@QueryMap Map<String, Object> params);
 
@@ -121,6 +125,9 @@ public interface ApiService {
     @GET("/app/v1/supervise/{url}/{id}")
     Observable<JsonT<CompanyBean>> getCompanyInfo(@Path("url") String url, @Path("id") String id);
 
+    @GET("/app/v1/supervise/zdgypProductInfo/{id}")
+    Observable<JsonT<ProductBean>> getZdgypProductInfo( @Path("id") String id);
+
     @GET("/app/v1/supervise/tzsbDeviceInfo/{id}")
     Observable<JsonT<EquipmentBean>> getEquipmentInfo(@Path("id") String id);
 
@@ -145,9 +152,15 @@ public interface ApiService {
     @POST("/app/v1/supervise/companyInfo/addCompanyInfo")
     Observable<JsonT<String>> postCompanyInfo(@QueryMap Map<String, Object> params);
 
+   @POST("/app/v1/supervise/zdgypProductInfo")
+    Observable<JsonT<String>> postZdgypProductInfo(@QueryMap Map<String, Object> params);
+
 
     @PUT("/app/v1/supervise/tzsbDeviceInfo")
     Observable<JsonT<String>> editTzsbDeviceInfo(@QueryMap Map<String, Object> params);
+
+    @PUT("/app/v1/supervise/zdgypProductInfo")
+    Observable<JsonT<String>> editZdgypProductInfo(@QueryMap Map<String, Object> params);
 
     @PUT("/app/v1/supervise/tzsbDeviceAccessory")
     Observable<JsonT<String>> editAccessoryInfo(@QueryMap Map<String, Object> params);

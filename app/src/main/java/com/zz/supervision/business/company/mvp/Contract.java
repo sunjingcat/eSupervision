@@ -7,6 +7,7 @@ import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.CityBean;
 import com.zz.supervision.bean.DictBean;
 import com.zz.supervision.bean.ImageBack;
+import com.zz.supervision.bean.ProductBean;
 import com.zz.supervision.bean.UserBasicBean;
 
 import java.util.List;
@@ -40,6 +41,29 @@ public class Contract {
         void showDicts(String type,List<BusinessType> list);
         void showCitys(List<CityBean> list);
 
+        void showImage(List<ImageBack> list);
+
+    }
+    public interface IsetProductAddPresenter extends BasePresenter {
+        void submitData(Map<String, Object> map);
+        void getData(String url);
+
+        void getDicts(String type);
+
+        void postImage(int position,String files);
+        void uploadCompanyImgs(String id,String files);
+
+        void getImage(String modelId);
+    }
+
+    public interface IGetProductAddView extends BaseView {
+        void showProductInfo(ProductBean data);
+
+        void showSubmitResult(String id);
+
+        void showResult();
+        void showPostImage(int position,String id);
+        void showDicts(String type,List<BusinessType> list);
         void showImage(List<ImageBack> list);
 
     }

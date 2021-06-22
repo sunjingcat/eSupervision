@@ -101,6 +101,10 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     LinearLayout ll_jtcompanyType;
     @BindView(R.id.ll_yp)
     LinearLayout ll_yp;
+    @BindView(R.id.ll_company)
+    LinearLayout ll_company;
+    @BindView(R.id.ll_zdgyp)
+    LinearLayout ll_zdgyp;
     @BindView(R.id.ll_fieldTime)
     LinearLayout ll_fieldTime;
     @BindView(R.id.ll_jingying)
@@ -133,6 +137,73 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     ItemGroup ig_businessScope;
     @BindView(R.id.et_legalId)
     ItemGroup et_legalId;
+
+
+    @BindView(R.id.et_z_operatorNameCertificate)
+    ItemGroup et_z_operatorNameCertificate;
+    @BindView(R.id.et_z_operatorName)
+    ItemGroup et_z_operatorName;
+    @BindView(R.id.et_z_addressCertificate)
+    ItemGroup et_z_addressCertificate;
+    @BindView(R.id.et_z_address)
+    ItemGroup et_z_address;
+    @BindView(R.id.et_z_businessPlaceCertificate)
+    ItemGroup et_z_businessPlaceCertificate;
+    @BindView(R.id.et_z_businessPlace)
+    ItemGroup et_z_businessPlace;
+    @BindView(R.id.et_z_legalRepresentativeCertificate)
+    ItemGroup et_z_legalRepresentativeCertificate;
+    @BindView(R.id.et_z_legalRepresentative)
+    ItemGroup et_z_legalRepresentative;
+    @BindView(R.id.et_z_economicNatureCertificate)
+    ItemGroup et_z_economicNatureCertificate;
+
+    @BindView(R.id.et_z_economicNature)
+    ItemGroup et_z_economicNature;
+    @BindView(R.id.et_z_socialCreditCodeCertificate)
+    ItemGroup et_z_socialCreditCodeCertificate;
+    @BindView(R.id.et_z_socialCreditCode)
+    ItemGroup et_z_socialCreditCode;
+    @BindView(R.id.et_z_peopleTotalCertificate)
+    ItemGroup et_z_peopleTotalCertificate;
+    @BindView(R.id.et_z_peopleTotal)
+    ItemGroup et_z_peopleTotal;
+    @BindView(R.id.et_z_techniciansTotalCertificate)
+    ItemGroup et_z_techniciansTotalCertificate;
+    @BindView(R.id.et_z_techniciansTotal)
+    ItemGroup et_z_techniciansTotal;
+    @BindView(R.id.et_z_licenseNumber)
+    ItemGroup et_z_licenseNumber;
+    @BindView(R.id.et_z_idNum)
+    ItemGroup et_z_idNum;
+    @BindView(R.id.et_z_legalPhone)
+    ItemGroup et_z_legalPhone;
+    @BindView(R.id.et_z_qualityContact)
+    ItemGroup et_z_qualityContact;
+    @BindView(R.id.et_z_annualOutput)
+    ItemGroup et_z_annualOutput;
+    @BindView(R.id.et_z_annualSales)
+    ItemGroup et_z_annualSales;
+    @BindView(R.id.et_z_annualTaxPayment)
+    ItemGroup et_z_annualTaxPayment;
+    @BindView(R.id.et_z_annualProfit)
+    ItemGroup et_z_annualProfit;
+    @BindView(R.id.et_z_scale)
+    ItemGroup et_z_scale;
+    @BindView(R.id.et_z_category)
+    ItemGroup et_z_category;
+    @BindView(R.id.et_z_categoryRemark)
+    ItemGroup et_z_categoryRemark;
+    @BindView(R.id.et_z_mainProducts)
+    ItemGroup et_z_mainProducts;
+    @BindView(R.id.et_z_contact)
+    ItemGroup et_z_contact;
+    @BindView(R.id.et_z_contactInformation)
+    ItemGroup et_z_contactInformation;
+    @BindView(R.id.et_z_location)
+    ItemGroup et_z_location;
+
+
     String fieldTime;
     String validDate;
     String businessType = "";
@@ -147,6 +218,8 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     List<BusinessType> businessTypeList = new ArrayList<>();
     List<BusinessType> jtCompanyTypeList = new ArrayList<>();
     List<BusinessType> business2TypeList = new ArrayList<>();
+    List<BusinessType> zdgyp_scaleTypeList = new ArrayList<>();
+    List<BusinessType> zdgyp_categoryTypeList = new ArrayList<>();
 
 
     SelectPopupWindows selectPopupWindows;
@@ -218,7 +291,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         } else if (companyType.equals("2")) {
             ll_loginAccount.setVisibility(View.VISIBLE);
             et_coldstorage.setVisibility(View.VISIBLE);
-        } else if (companyType.equals("3") || companyType.equals("4")|| companyType.equals("5")) {//"companyType": "3","companyTypeText": "药品",
+        } else if (companyType.equals("3") || companyType.equals("4") || companyType.equals("5")) {//"companyType": "3","companyTypeText": "药品",
             ll_loginAccount.setVisibility(View.GONE);
             et_coldstorage.setVisibility(View.GONE);
             ll_businessType.setVisibility(View.GONE);
@@ -228,11 +301,11 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             if (companyType.equals("3")) {
                 ll_yp.setVisibility(View.VISIBLE);
                 etContact.setTitle("企业负责人");
-                mPresenter.getDicts("ypCompanyType" );
+                mPresenter.getDicts("ypCompanyType");
             } else if (companyType.equals("4")) {
                 ll_yp.setVisibility(View.VISIBLE);
                 etContact.setTitle("企业负责人");
-                mPresenter.getDicts( "ylqxCompanyType");
+                mPresenter.getDicts("ylqxCompanyType");
             } else if (companyType.equals("5")) {
                 et_legalId.setVisibility(View.VISIBLE);
                 ll_jtcompanyType.setVisibility(View.GONE);
@@ -254,6 +327,11 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             etContact.setTitle("安全管理联系人");
             etContactInformation.setTitle("安全管理联系电话");
             et_city.setVisibility(View.VISIBLE);
+        } else if (companyType.equals("7")) {//重点工业品
+            ll_company.setVisibility(View.GONE);
+            ll_zdgyp.setVisibility(View.VISIBLE);
+            mPresenter.getDicts("zdgyp_scale");
+            mPresenter.getDicts("zdgyp_category");
         }
         ig_businessScope.setOnClickListener(new View.OnClickListener() {
 
@@ -268,6 +346,25 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 selectCitys();
             }
         });
+        et_z_scale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSelectPopWindow(et_z_scale, zdgyp_scaleTypeList);
+            }
+        });
+        et_z_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSelectPopWindow(et_z_category, zdgyp_categoryTypeList);
+            }
+        });
+        et_z_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(AddCompanyActivity.this, SelectLocationActivity.class).putExtra("lat", lat).putExtra("lon", lon), 1002);
+
+            }
+        });
     }
 
     @Override
@@ -280,7 +377,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         return new CompanyAddPresenter(this);
     }
 
-    @OnClick({R.id.et_location, R.id.et_businessType, R.id.et_jtcompanyType, R.id.et_businessProject, R.id.et_endTime, R.id.et_fieldTime, R.id.bt_ok})
+    @OnClick({R.id.et_location, R.id.et_businessType, R.id.et_jtcompanyType, R.id.et_businessProject, R.id.et_endTime, R.id.et_fieldTime, R.id.bt_ok,})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.et_businessType:
@@ -366,12 +463,17 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
 
                 break;
         }
+
     }
 
 
     @Override
     public void showCompanyInfo(CompanyBean data) {
         if (data == null) return;
+        if (data.getCompanyType()==7){
+            setZdgypInfo(data);
+            return;
+        }
         etOperatorName.setChooseContent(data.getOperatorName() + "");
         etSocialCreditCode.setChooseContent(data.getSocialCreditCode() + "");
         etLicenseNumber.setChooseContent(data.getLicenseNumber() + "");
@@ -411,10 +513,10 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         } else if (companyType.equals("4")) {
             et_jtcompanyType.setText(data.getSpecificTypeText() + "");
             ylqxCompanyType = data.getSpecificType();
-        }else if (companyType.equals("5")) {
+        } else if (companyType.equals("5")) {
 //            et_jtcompanyType.setText(data.getSpecificTypeText() + "");
 //            ylqxCompanyType = data.getSpecificType();
-            et_legalId.setChooseContent(data.getIdNum()+"");
+            et_legalId.setChooseContent(data.getIdNum() + "");
         }
         ig_businessScope.setChooseContent(data.getBusinessScopeText() + "");
         ig_qualityContact.setChooseContent(data.getQualityContact() + "");
@@ -461,6 +563,12 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
             } else if ("specific_type".equals(type)) {
                 business2TypeList.clear();
                 business2TypeList.addAll(list);
+            } else if ("zdgyp_scale".equals(type)) {
+                zdgyp_scaleTypeList.clear();
+                zdgyp_scaleTypeList.addAll(list);
+            } else if ("zdgyp_category".equals(type)) {
+                zdgyp_categoryTypeList.clear();
+                zdgyp_categoryTypeList.addAll(list);
             } else if ("ypCompanyType".equals(type) || "ylqxCompanyType".equals(type)) {
                 jtCompanyTypeList.clear();
                 jtCompanyTypeList.addAll(list);
@@ -493,6 +601,10 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
     }
 
     private void postData() {
+        if (companyType.equals("7")) {
+            postZdgyp();
+            return;
+        }
         Map<String, Object> params = new HashMap<>();
 
         String operatorName = etOperatorName.getValue();
@@ -529,7 +641,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         if (!TextUtils.isEmpty(businessPlace)) {
             params.put("businessPlace", businessPlace);
         }
-       String legalId = et_legalId.getValue().toString();
+        String legalId = et_legalId.getValue().toString();
         if (!TextUtils.isEmpty(legalId)) {
             params.put("idNum", legalId);
         }
@@ -547,7 +659,6 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         if (!TextUtils.isEmpty(validDate)) {
             params.put("validDate", validDate);
         }
-
 
 
         params.put("businessProject", businessProject + "");
@@ -691,6 +802,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 String s = new BigDecimal(lat).toString();
                 String s1 = new BigDecimal(lon).toString();
                 etLocation.setText(poiInfo.getAddress() + "");
+                et_z_location.setChooseContent(poiInfo.getAddress() + "");
             }
             if (requestCode == 3001) {
                 if (data == null) return;
@@ -872,4 +984,239 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
         LogUtils.v(list.toString());
     }
 
+    void showSelectPopWindow(ItemGroup itemGroup, List<BusinessType> businessTypeList) {
+        UIAdjuster.closeKeyBoard(this);
+        List<String> list = new ArrayList<>();
+        List<String> list1 = new ArrayList<>();
+        for (int i = 0; i < businessTypeList.size(); i++) {
+            list.add(businessTypeList.get(i).getDictLabel());
+            list1.add(businessTypeList.get(i).getDictValue());
+        }
+        String[] array = (String[]) list.toArray(new String[list.size()]);
+        String[] values = (String[]) list1.toArray(new String[list1.size()]);
+        selectPopupWindows = new SelectPopupWindows(this, array);
+        selectPopupWindows.showAtLocation(findViewById(R.id.bg),
+                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        selectPopupWindows.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
+            @Override
+            public void onSelected(int index, String msg) {
+                if (itemGroup == et_z_category) {
+                    et_z_categoryRemark.setVisibility(values[index].equals("4") ? View.VISIBLE : View.GONE);
+                }
+                itemGroup.setChooseContent(msg,values[index]);
+
+            }
+
+            @Override
+            public void onCancel() {
+                selectPopupWindows.dismiss();
+            }
+        });
+    }
+
+    void postZdgyp() {
+        Map<String, Object> params = new HashMap<>();
+        if (!TextUtils.isEmpty(companyType)) {
+            params.put("companyType", companyType);
+        }
+        if (!TextUtils.isEmpty(id)) {
+            params.put("id", id);
+        }
+        if (lon != 0.0 && lat != 0.0) {
+            params.put("longitude", lon);
+            params.put("latitude", lat);
+        }
+        String operatorNameCertificate = et_z_operatorNameCertificate.getValue();
+        if (!TextUtils.isEmpty(operatorNameCertificate)) {
+            params.put("operatorNameCertificate", operatorNameCertificate);
+        }
+        String operatorName = et_z_operatorName.getValue();
+        if (!TextUtils.isEmpty(operatorName)) {
+            params.put("operatorName", operatorName);
+        }
+        String addressCertificate = et_z_addressCertificate.getValue();
+        if (!TextUtils.isEmpty(addressCertificate)) {
+            params.put("addressCertificate", addressCertificate);
+        }
+        String address = et_z_address.getValue();
+        if (!TextUtils.isEmpty(address)) {
+            params.put("address", address);
+        }
+        String businessPlaceCertificate = et_z_businessPlaceCertificate.getValue();
+        if (!TextUtils.isEmpty(businessPlaceCertificate)) {
+            params.put("businessPlaceCertificate", businessPlaceCertificate);
+        }
+        String businessPlace = et_z_businessPlace.getValue();
+        if (!TextUtils.isEmpty(businessPlace)) {
+            params.put("businessPlace", businessPlace);
+        }
+        String legalRepresentativeCertificate = et_z_legalRepresentativeCertificate.getValue();
+        if (!TextUtils.isEmpty(legalRepresentativeCertificate)) {
+            params.put("legalRepresentativeCertificate", legalRepresentativeCertificate);
+        }
+        String legalRepresentative = et_z_legalRepresentative.getValue();
+        if (!TextUtils.isEmpty(legalRepresentative)) {
+            params.put("legalRepresentative", legalRepresentative);
+        }
+        String economicNatureCertificate = et_z_economicNatureCertificate.getValue();
+        if (!TextUtils.isEmpty(economicNatureCertificate)) {
+            params.put("economicNatureCertificate", economicNatureCertificate);
+        }
+        String economicNature = et_z_economicNature.getValue();
+        if (!TextUtils.isEmpty(economicNature)) {
+            params.put("economicNature", economicNature);
+        }
+        String socialCreditCodeCertificate = et_z_socialCreditCodeCertificate.getValue();
+        if (!TextUtils.isEmpty(socialCreditCodeCertificate)) {
+            params.put("socialCreditCodeCertificate", socialCreditCodeCertificate);
+        }
+        String socialCreditCode = et_z_socialCreditCode.getValue();
+        if (!TextUtils.isEmpty(socialCreditCode)) {
+            params.put("socialCreditCode", socialCreditCode);
+        }
+        String peopleTotalCertificate = et_z_peopleTotalCertificate.getValue();
+        if (!TextUtils.isEmpty(peopleTotalCertificate)) {
+            params.put("peopleTotalCertificate", peopleTotalCertificate);
+        }
+        String peopleTotal = et_z_peopleTotal.getValue();
+        if (!TextUtils.isEmpty(peopleTotal)) {
+            params.put("peopleTotal", peopleTotal);
+        }
+        String techniciansTotalCertificate = et_z_techniciansTotalCertificate.getValue();
+        if (!TextUtils.isEmpty(techniciansTotalCertificate)) {
+            params.put("techniciansTotalCertificate", techniciansTotalCertificate);
+        }
+        String techniciansTotal = et_z_techniciansTotal.getValue();
+        if (!TextUtils.isEmpty(techniciansTotal)) {
+            params.put("techniciansTotal", techniciansTotal);
+        }
+        String licenseNumber = et_z_licenseNumber.getValue();
+        if (!TextUtils.isEmpty(licenseNumber)) {
+            params.put("licenseNumber", licenseNumber);
+        }
+        String idNum = et_z_idNum.getValue();
+        if (!TextUtils.isEmpty(idNum)) {
+            params.put("idNum", idNum);
+        }
+        String legalPhone = et_z_legalPhone.getValue();
+        if (!TextUtils.isEmpty(legalPhone)) {
+            params.put("legalPhone", legalPhone);
+        }
+        String qualityContact = et_z_qualityContact.getValue();
+        if (!TextUtils.isEmpty(qualityContact)) {
+            params.put("qualityContact", qualityContact);
+        }
+        String annualOutput = et_z_annualOutput.getValue();
+        if (!TextUtils.isEmpty(annualOutput)) {
+            params.put("annualOutput", annualOutput);
+        }
+        String annualSales = et_z_annualSales.getValue();
+        if (!TextUtils.isEmpty(annualSales)) {
+            params.put("annualSales", annualSales);
+        }
+        String annualTaxPayment = et_z_annualTaxPayment.getValue();
+        if (!TextUtils.isEmpty(annualTaxPayment)) {
+            params.put("annualTaxPayment", annualTaxPayment);
+        }
+        String annualProfit = et_z_annualProfit.getValue();
+        if (!TextUtils.isEmpty(annualProfit)) {
+            params.put("annualProfit", annualProfit);
+        }
+        String scale = et_z_scale.getSelectValue();
+        if (!TextUtils.isEmpty(scale)) {
+            params.put("scale", scale);
+        }
+        String category = et_z_category.getSelectValue();
+        if (!TextUtils.isEmpty(category)) {
+            params.put("category", category);
+        }
+        String categoryRemark = et_z_categoryRemark.getValue();
+        if (!TextUtils.isEmpty(categoryRemark)) {
+            params.put("categoryRemark", categoryRemark);
+        }
+        String mainProducts = et_z_mainProducts.getValue();
+        if (!TextUtils.isEmpty(mainProducts)) {
+            params.put("mainProducts", mainProducts);
+        }
+        String contact = et_z_contact.getValue();
+        if (!TextUtils.isEmpty(contact)) {
+            params.put("contact", contact);
+        }
+        String contactInformation = et_z_contactInformation.getValue();
+        if (!TextUtils.isEmpty(contactInformation)) {
+            params.put("contactInformation", contactInformation);
+        }
+
+        mPresenter.submitData(params);
+    }
+
+    void setZdgypInfo(CompanyBean data) {
+        companyType = data.getCompanyType()+"";
+        lat = data.getLatitude();
+        lon = data.getLongitude();
+        et_z_location.setChooseContent("位置");
+        et_z_operatorNameCertificate.setChooseContent("");
+        et_z_operatorNameCertificate.setChooseContent(data.getOperatorNameCertificate());
+
+        et_z_operatorName.setChooseContent(data.getOperatorName());
+
+        et_z_addressCertificate.setChooseContent(data.getAddressCertificate());
+
+        et_z_address.setChooseContent(data.getAddress());
+
+        et_z_businessPlaceCertificate.setChooseContent(data.getBusinessPlaceCertificat());
+
+        et_z_businessPlace.setChooseContent(data.getBusinessPlace());
+
+        et_z_legalRepresentativeCertificate.setChooseContent(data.getLegalRepresentativeCertificate());
+
+        et_z_legalRepresentative.setChooseContent(data.getLegalRepresentative());
+
+         et_z_economicNatureCertificate.setChooseContent(data.getEconomicNatureCertificate());
+
+         et_z_economicNature.setChooseContent(data.getEconomicNature());
+
+         et_z_socialCreditCodeCertificate.setChooseContent(data.getSocialCreditCodeCertificate());
+
+        et_z_socialCreditCode.setChooseContent(data.getSocialCreditCode());
+
+         et_z_peopleTotalCertificate.setChooseContent(data.getPeopleTotalCertificate());
+
+        et_z_peopleTotal.setChooseContent(data.getPeopleTotal());
+
+        et_z_techniciansTotalCertificate.setChooseContent(data.getTechniciansTotalCertificate());
+
+        et_z_techniciansTotal.setChooseContent(data.getTechniciansTotal());
+
+         et_z_licenseNumber.setChooseContent(data.getLicenseNumber());
+
+       et_z_idNum.setChooseContent(data.getIdNum());
+
+        et_z_legalPhone.setChooseContent(data.getLegalPhone());
+
+        et_z_qualityContact.setChooseContent(data.getQualityContact());
+
+         et_z_annualOutput.setChooseContent(data.getAnnualOutput());
+
+         et_z_annualSales.setChooseContent(data.getAnnualSales());
+
+         et_z_annualTaxPayment.setChooseContent(data.getAnnualTaxPayment());
+
+         et_z_annualProfit.setChooseContent(data.getAnnualProfit());
+
+        et_z_scale.setChooseContent(data.getScaleText(),data.getScale());
+
+        et_z_category.setChooseContent(data.getCategoryText(),data.getCategory());
+        if (data.getCategory().equals("4")) {
+            et_z_categoryRemark.setVisibility(View.VISIBLE);
+            et_z_categoryRemark.setChooseContent(data.getCategoryRemark());
+        }
+
+        et_z_mainProducts.setChooseContent(data.getMainProducts());
+
+        et_z_contact.setChooseContent(data.getContact());
+
+         et_z_contactInformation.setChooseContent(data.getContactInformation());
+
+    }
 }

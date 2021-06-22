@@ -35,8 +35,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+        <LinearLayout
+
+            android:id="@+id/ll_company"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <com.zz.supervision.widget.ItemGroup
+
                 android:id="@+id/et_operatorName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -382,6 +389,12 @@
 
                 </TextView>
             </LinearLayout>
+        </LinearLayout>
+
+            <include
+                android:id="@+id/ll_zdgyp"
+                android:visibility="gone"
+                layout="@layout/layout_zdgyp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/item_rv_images"

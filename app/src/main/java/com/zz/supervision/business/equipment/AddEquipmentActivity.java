@@ -570,6 +570,7 @@ public class AddEquipmentActivity extends MyBaseActivity<Contract.IsetEquipmentA
             }
         });
         bt_ok.setOnClickListener(this);
+
     }
 
     SelectPopupWindows selectPopupWindows;

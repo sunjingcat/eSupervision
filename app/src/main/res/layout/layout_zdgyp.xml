@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_operatorNameCertificate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="经营者名称" />
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_operatorName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="现企业名称" />
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_addressCertificate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="获证时企业住所" />
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="现企业住所" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_businessPlaceCertificate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="获证时企业生产地址" />
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_businessPlace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="现企业生产地址" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_legalRepresentativeCertificate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="获证时法人代表" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_legalRepresentative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="现法人代表" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_economicNatureCertificate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="获证时经济性质" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_economicNature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="现经济性质" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_socialCreditCodeCertificate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="获证时社会统一信用代码" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_socialCreditCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="现社会统一信用代码" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_peopleTotalCertificate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="获证时企业总人数" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_peopleTotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="现企业总人数" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_techniciansTotalCertificate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="获证时企业技术人员数" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_techniciansTotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="现企业技术人员数" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_licenseNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="生产许可证编号" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_idNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="法人身份证号" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_legalPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="法人电话" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_qualityContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="质量管理负责人" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_annualOutput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="年总产值" />
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_annualSales"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="年销售额" />
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_annualTaxPayment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="年缴税金额" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_annualProfit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="年利润" />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_scale"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="企业规模"
+        app:isSelect="true"/>
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="对象类别"
+        app:isSelect="true"/>
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_categoryRemark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:title="对象类别"
+        />
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_mainProducts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="主要产品"
+        />
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="联系人"
+        />
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_contactInformation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="联系方式"
+        />
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/et_z_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="定位"
+        app:isSelect="true"
+        />
+</LinearLayout>
