@@ -95,6 +95,8 @@ public class SuperviseInfoActivity extends MyBaseActivity {
             url = "tzsbInspectionRecord";
         }else if (type == 19) {
             url = "hzpInspectionRecord";
+        }else if (type == 20) {
+            url = "ypRiskRecord";
         }else if (type == 21) {
             url = "zdgypInspectionRecord";
         }

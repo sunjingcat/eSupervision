@@ -208,7 +208,7 @@ public class EquipmentInfoActivity extends MyBaseActivity {
             case R.id.et_record:
                 if (equipmentBean == null) return;
 
-                startActivity(new Intent(this, TzsbCheckListActivity.class).putExtra("id", equipmentBean.getId()));
+                startActivity(new Intent(this, TzsbCheckListActivity.class).putExtra("id", equipmentBean.getId()).putExtra("url","tzsbInspectionRecord"));
 
 
                 break;

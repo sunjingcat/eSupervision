@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/border_radius_5_white"
+    android:orientation="vertical"
+    app:contentView="@+id/content"
+    app:rightMenuView="@+id/right"
+    android:paddingRight="10dp"
+    android:id="@+id/item_bg"
+    android:paddingBottom="10dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="20dp"
+            android:background="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textColor="#272727"
+            android:textSize="15dp"
+            tools:text="商品名称"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/item_isImported"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="right"
+            android:lines="1"
+            android:textColor="#999999"
+            android:textSize="15dp"
+            tools:text="+56" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="8dp"
+        android:background="#cecece" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:ellipsize="end"
+            android:lines="1"
+            android:textColor="#999999"
+            android:textSize="15dp"
+            android:text="产品类别:" />
+
+        <TextView
+            android:id="@+id/item_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+
+            android:ellipsize="end"
+            android:textColor="#333333"
+            android:textSize="15dp"
+            tools:text="---" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textColor="#999999"
+            android:textSize="15dp"
+            android:text="产品品种规格型号:" />
+
+        <TextView
+            android:id="@+id/item_Spec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:ellipsize="end"
+            android:textColor="#333333"
+            android:textSize="15dp"
+            tools:text="---" />
+
+    </LinearLayout>
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1px"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:background="#cecece" />-->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:gravity="center_vertical"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_marginLeft="15dp">-->
+
+
+<!--        <TextView-->
+<!--            android:id="@+id/item_batchNumber"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:ellipsize="end"-->
+<!--            android:lines="1"-->
+<!--            android:textColor="#999999"-->
+<!--            android:textSize="13dp"-->
+<!--            tools:text="批号" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/item_weight"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:ellipsize="end"-->
+<!--            android:gravity="right"-->
+<!--            android:lines="1"-->
+<!--            android:textColor="#333333"-->
+<!--            android:textSize="15dp"-->
+<!--            tools:text="+56" />-->
+
+<!--    </LinearLayout>-->
+</LinearLayout>

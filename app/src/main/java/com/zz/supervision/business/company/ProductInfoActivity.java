@@ -18,6 +18,7 @@ import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.AccessoryBean;
 import com.zz.supervision.bean.ImageBack;
+import com.zz.supervision.bean.ProductBean;
 import com.zz.supervision.business.company.adapter.ImageItemAdapter;
 import com.zz.supervision.business.equipment.AddAccessoryActivity;
 import com.zz.supervision.net.ApiService;
@@ -46,18 +47,22 @@ public class ProductInfoActivity extends MyBaseActivity {
     Toolbar toolbar;
     @BindView(R.id.toolbar_subtitle)
     TextView toolbar_subtitle;
-    @BindView(R.id.ig_accessoryType)
-    ItemGroup ig_accessoryType;
     @BindView(R.id.ig_name)
     ItemGroup ig_name;
-    @BindView(R.id.et_accessoryExplain)
-    TextView et_accessoryExplain;
+    @BindView(R.id.ig_category)
+    ItemGroup ig_category;
+    @BindView(R.id.ig_varietySpecModel)
+    ItemGroup ig_varietySpecModel;
+    @BindView(R.id.ig_unit)
+    ItemGroup ig_unit;
+    @BindView(R.id.ig_productionSituation)
+    ItemGroup ig_productionSituation;
     ArrayList<String> images = new ArrayList<>();
     ImageItemAdapter adapter;
     @BindView(R.id.item_rv_images)
     RecyclerView itemRvImages;
     String id="";
-    AccessoryBean accessoryBean;
+    ProductBean productBean;
     @Override
     protected int getContentView() {
         return R.layout.activity_product_info;
@@ -82,7 +87,7 @@ public class ProductInfoActivity extends MyBaseActivity {
         toolbar_subtitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(ProductInfoActivity.this, AddAccessoryActivity.class).putExtra("id",id),1001);
+                startActivityForResult(new Intent(ProductInfoActivity.this, ProductActivity.class).putExtra("id",id),1001);
             }
         });
     }
@@ -92,29 +97,31 @@ public class ProductInfoActivity extends MyBaseActivity {
         ToolBarUtils.getInstance().setNavigation(toolbar,1);
     }
     void getData(String id) {
-        RxNetUtils.request(getApi(ApiService.class).getAccessoryInfo(id), new RequestObserver<JsonT<AccessoryBean>>(this) {
+        RxNetUtils.request(getApi(ApiService.class).getZdgypProductInfo(id), new RequestObserver<JsonT<ProductBean>>(this) {
             @Override
-            protected void onSuccess(JsonT<AccessoryBean> jsonT) {
-                accessoryBean = jsonT.getData();
+            protected void onSuccess(JsonT<ProductBean> jsonT) {
+                productBean = jsonT.getData();
                 showInfo(jsonT.getData());
             }
 
             @Override
-            protected void onFail2(JsonT<AccessoryBean> stringJsonT) {
+            protected void onFail2(JsonT<ProductBean> stringJsonT) {
                 super.onFail2(stringJsonT);
             }
         }, LoadingUtils.build(this));
     }
-    public void showInfo(AccessoryBean data) {
+    public void showInfo(ProductBean data) {
         if (data == null) return;
-        accessoryBean = data;
-        ig_name.setChooseContent(data.getAccessoryName()+"");
-        ig_accessoryType.setChooseContent(data.getAccessoryTypeText(),data.getAccessoryType()+"");
-        et_accessoryExplain.setText(data.getAccessoryExplain()+"");
+        productBean = data;
+        ig_name.setChooseContent(data.getName());
+        ig_unit.setChooseContent(data.getUnit());
+        ig_category.setChooseContent(data.getCategory());
+        ig_varietySpecModel.setChooseContent(data.getVarietySpecModel());
+        ig_productionSituation.setChooseContent(data.getProductionSituationText(),data.getVarietySpecModel());
         getImage(data.getId());
     }
     public void getImage(String id) {
-        RxNetUtils.request(getApi(ApiService.class).getImageBase64("tzsbDeviceAccessory", id), new RequestObserver<JsonT<List<ImageBack>>>(this) {
+        RxNetUtils.request(getApi(ApiService.class).getImageBase64("zdgypProduct", id), new RequestObserver<JsonT<List<ImageBack>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<ImageBack>> data) {
                 if (data.isSuccess()) {

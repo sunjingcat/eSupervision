@@ -19,6 +19,7 @@ import com.zz.supervision.CompanyBean;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.AccessoryBean;
+import com.zz.supervision.bean.EquipmentBean;
 import com.zz.supervision.bean.ProductBean;
 import com.zz.supervision.business.company.adapter.ProductAdapter;
 import com.zz.supervision.business.equipment.adapter.AccessoryAdapter;
@@ -40,6 +41,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
@@ -62,6 +64,7 @@ public class ProductListActivity extends MyBaseActivity implements OnRefreshList
     private int pagenum = 1;
     private int pagesize = 20;
     String id;
+    boolean select;
 
     @Override
     protected int getContentView() {
@@ -78,27 +81,50 @@ public class ProductListActivity extends MyBaseActivity implements OnRefreshList
     protected void initView() {
         ButterKnife.bind(this);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ProductAdapter(R.layout.item_simple, mlist);
+        adapter = new ProductAdapter(R.layout.item_product, mlist);
         rv.setAdapter(adapter);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                startActivityForResult(new Intent(ProductListActivity.this, ProductInfoActivity.class).putExtra("id", mlist.get(position).getId()+""),1001);
-
+                if (select){
+                    mlist.get(position).setSelect(!mlist.get(position).isSelect());
+                    adapter.notifyDataSetChanged();
+                }else {
+                    startActivityForResult(new Intent(ProductListActivity.this, ProductInfoActivity.class).putExtra("id", mlist.get(position).getId() + ""), 1001);
+                }
             }
         });
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setOnLoadMoreListener(this);
         id = getIntent().getStringExtra("id");
+        select = getIntent().getBooleanExtra("select",false);
+        toolbar_subtitle.setText(select?"确定":"新建");
         getDate();
-        toolbar_subtitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(ProductListActivity.this, ProductActivity.class).putExtra("deviceId", id),1001);
-            }
-        });
-    }
 
+    }
+    ArrayList<ProductBean> selectList = new ArrayList<>();
+    @OnClick(R.id.toolbar_subtitle)
+    public void onViewClicked() {
+        if (select) {
+            Intent intent = new Intent();
+            selectList.clear();
+            for (int i = 0; i < mlist.size(); i++) {
+                if (mlist.get(i).isSelect()) {
+                    selectList.add(mlist.get(i));
+                }
+            }
+            if (selectList.size() < 1) {
+                showToast("请选择产品");
+                return;
+            }
+            intent.putExtra("products", selectList);
+            setResult(RESULT_OK, intent);
+            finish();
+        }else {
+            startActivityForResult(new Intent(ProductListActivity.this, ProductActivity.class).putExtra("companyId", id),1001);
+
+        }
+    }
     @Override
     protected void initToolBar() {
         ToolBarUtils.getInstance().setNavigation(toolbar, 1);

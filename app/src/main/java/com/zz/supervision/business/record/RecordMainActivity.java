@@ -95,11 +95,13 @@ public class RecordMainActivity extends MyBaseActivity {
                 break;
             case R.id.ll_tzh:
                 Intent intent2 = new Intent();
-                intent2.setClass(RecordMainActivity.this, TzsbCheckListActivity.class);
+                intent2.setClass(RecordMainActivity.this, TzsbCheckListActivity.class).putExtra("url","tzsbInspectionRecord");
                 startActivity(intent2);
                 break;
             case R.id.ll_zhd:
-                showToast("暂未开放，敬请期待");
+                Intent intent3 = new Intent();
+                intent3.setClass(RecordMainActivity.this, TzsbCheckListActivity.class).putExtra("url","zdgypInspectionRecord");
+                startActivity(intent3);
                 break;
         }
     }

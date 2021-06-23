@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.codbking.widget.utils.UIAdjuster;
@@ -53,14 +54,16 @@ public class ProductActivity extends MyBaseActivity<Contract.IsetProductAddPrese
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.toolbar_subtitle)
-    TextView toolbar_subtitle;
+    @BindView(R.id.bt_ok)
+    Button bt_ok;
     @BindView(R.id.ig_name)
     ItemGroup ig_name;
     @BindView(R.id.ig_category)
     ItemGroup ig_category;
     @BindView(R.id.ig_varietySpecModel)
     ItemGroup ig_varietySpecModel;
+    @BindView(R.id.ig_unit)
+    ItemGroup ig_unit;
     @BindView(R.id.ig_productionSituation)
     ItemGroup ig_productionSituation;
     ArrayList<ImageBack> images = new ArrayList<>();
@@ -70,6 +73,7 @@ public class ProductActivity extends MyBaseActivity<Contract.IsetProductAddPrese
     ArrayList<String> localPath = new ArrayList<>();
     List<BusinessType> businessTypeList = new ArrayList<>();
     String id ="";
+    String companyId ="";
     @Override
     protected int getContentView() {
         return R.layout.activity_product;
@@ -88,6 +92,11 @@ public class ProductActivity extends MyBaseActivity<Contract.IsetProductAddPrese
         adapter = new ImageDeleteItemAdapter(this, images);
         itemRvImages.setAdapter(adapter);
         id = getIntent().getStringExtra("id");
+        if (!TextUtils.isEmpty(id)){
+            mPresenter.getData(id);
+            mPresenter.getImage(id);
+        }
+        companyId = getIntent().getStringExtra("companyId");
         adapter.setOnclick(new ImageDeleteItemAdapter.Onclick() {
             @Override
             public void onclickAdd(View v, int option) {
@@ -125,7 +134,7 @@ public class ProductActivity extends MyBaseActivity<Contract.IsetProductAddPrese
                 showSelectPopWindow1();
             }
         });
-        toolbar_subtitle.setOnClickListener(new View.OnClickListener() {
+        bt_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 postData();
@@ -137,11 +146,15 @@ public class ProductActivity extends MyBaseActivity<Contract.IsetProductAddPrese
     void postData(){
         Map<String,Object> map = new HashMap<>();
         map.put("name",getText(ig_name));
+        map.put("unit",getText(ig_unit));
         map.put("category",getText(ig_category));
         map.put("varietySpecModel",getText(ig_varietySpecModel));
         map.put("productionSituation",ig_productionSituation.getSelectValue());
         if (!TextUtils.isEmpty(id)){
             map.put("id",id);
+        }
+        if (!TextUtils.isEmpty(companyId)){
+            map.put("companyId",companyId);
         }
         mPresenter.submitData(map);
 
@@ -153,7 +166,12 @@ public class ProductActivity extends MyBaseActivity<Contract.IsetProductAddPrese
 
     @Override
     public void showProductInfo(ProductBean data) {
-
+        companyId =data.getCompanyId();
+        ig_name.setChooseContent(data.getName());
+        ig_unit.setChooseContent(data.getUnit());
+        ig_category.setChooseContent(data.getCategory());
+        ig_varietySpecModel.setChooseContent(data.getVarietySpecModel());
+        ig_productionSituation.setChooseContent(data.getProductionSituationText(),data.getProductionSituation());
     }
 
     @Override

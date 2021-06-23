@@ -25,8 +25,10 @@ import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.BusinessType;
 import com.zz.supervision.bean.EquipmentBean;
 import com.zz.supervision.bean.LawEnforcerBean;
+import com.zz.supervision.bean.ProductBean;
 import com.zz.supervision.business.company.CompanyListActivity;
 import com.zz.supervision.business.company.PeopleActivity;
+import com.zz.supervision.business.company.ProductListActivity;
 import com.zz.supervision.business.equipment.EquipmentListActivity;
 import com.zz.supervision.business.equipment.SelectEquipmentActivity;
 import com.zz.supervision.business.risk.RiskSuperviseActivity;
@@ -71,10 +73,14 @@ public class XCHZFActivity extends MyBaseActivity {
     TextView tv_startTime;
     @BindView(R.id.et_device)
     TextView et_device;
+    @BindView(R.id.et_product)
+    TextView et_product;
     @BindView(R.id.et_endTime)
     TextView et_endTime;
     @BindView(R.id.ll_device)
     LinearLayout ll_device;
+    @BindView(R.id.ll_product)
+    LinearLayout ll_product;
     @BindView(R.id.ll_endTime)
     LinearLayout ll_endTime;
     @BindView(R.id.ed_cause)
@@ -87,6 +93,8 @@ public class XCHZFActivity extends MyBaseActivity {
     View v_endTime;
     @BindView(R.id.view_device)
     View view_device;
+    @BindView(R.id.view_product)
+    View view_product;
     @BindView(R.id.view_InspectionCheckType)
     View view_InspectionCheckType;
     @BindView(R.id.et_InspectionCheckType)
@@ -107,10 +115,12 @@ public class XCHZFActivity extends MyBaseActivity {
     LinearLayout llCompanyInfo;
     CompanyBean companyBean;
     List<EquipmentBean> equipment = new ArrayList<>();
+    List<ProductBean> products = new ArrayList<>();
     int type = 0;
     int inspectionType = 0;
     String names = "";
     String ids = "";
+    String productIds = "";
     List<BusinessType> businessTypeList = new ArrayList<>();
     List<BusinessType> inspectionCheckTypeList = new ArrayList<>();
     ArrayList<LawEnforcerBean> lawEnforcerBeanArrayList = new ArrayList<>();
@@ -144,7 +154,7 @@ public class XCHZFActivity extends MyBaseActivity {
         ToolBarUtils.getInstance().setNavigation(toolbar, 1);
     }
 
-    @OnClick({R.id.ll_company, R.id.ll_company_info, R.id.et_type, R.id.et_people, R.id.et_startTime, R.id.bt_ok, R.id.et_device, R.id.et_endTime, R.id.ll_InspectionCheckType})
+    @OnClick({R.id.ll_company, R.id.ll_company_info, R.id.et_type, R.id.et_people, R.id.et_startTime, R.id.bt_ok, R.id.et_device, R.id.et_product, R.id.et_endTime, R.id.ll_InspectionCheckType})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_company:
@@ -163,6 +173,13 @@ public class XCHZFActivity extends MyBaseActivity {
                     return;
                 }
                 startActivityForResult(new Intent(this, SelectEquipmentActivity.class).putExtra("type",type ).putExtra("id", companyBean.getId()).putExtra("companyType", companyBean.getCompanyType() + ""), 1002);
+                break;
+                case R.id.et_product:
+                if (companyBean == null) {
+                    showToast("请先选择企业");
+                    return;
+                }
+                startActivityForResult(new Intent(this, ProductListActivity.class).putExtra("id", companyBean.getId()).putExtra("companyType", companyBean.getCompanyType() + "").putExtra("select",true), 1003);
                 break;
             case R.id.et_type:
                 if (businessTypeList.size() == 0) {
@@ -187,6 +204,7 @@ public class XCHZFActivity extends MyBaseActivity {
                     showToast("请先选择企业");
                     return;
                 }
+
 
                 selectTime(etStartTime);
                 break;
@@ -236,6 +254,24 @@ public class XCHZFActivity extends MyBaseActivity {
                     et_device.setText(names + "");
 
                 }
+            }  else if (requestCode == 1003) {
+                products = data.getParcelableArrayListExtra("products");
+                if (products != null) {
+                 String   names = "";
+                    productIds = "";
+
+                    for (int i = 0; i < products.size(); i++) {
+                        if (i == products.size() - 1) {
+                            names = names + products.get(i).getName();
+                            productIds = productIds + products.get(i).getId();
+                        } else {
+                            names = names + products.get(i).getName() + ",";
+                            productIds = productIds + products.get(i).getId() + ",";
+                        }
+                    }
+                    et_product.setText(names + "");
+
+                }
             } else if (requestCode == 2001) {
                 ArrayList<LawEnforcerBean> arrayList = data.getParcelableArrayListExtra("select");
                 if (arrayList != null) {
@@ -274,6 +310,9 @@ public class XCHZFActivity extends MyBaseActivity {
         view_device.setVisibility(company.getCompanyType() == 6 ? View.VISIBLE : View.GONE);
         ll_InspectionCheckType.setVisibility(company.getCompanyType() == 6 ? View.VISIBLE : View.GONE);
         view_InspectionCheckType.setVisibility(company.getCompanyType() == 6 ? View.VISIBLE : View.GONE);
+
+        ll_product.setVisibility(company.getCompanyType() == 7 ? View.VISIBLE : View.GONE);
+        view_product.setVisibility(company.getCompanyType() == 7 ? View.VISIBLE : View.GONE);
         if (company.getCompanyType() == 6) {
             getInspectionCheckType();
         }
@@ -321,7 +360,13 @@ public class XCHZFActivity extends MyBaseActivity {
             }
             map.put("inspectionCheckType", inspectionType);
         }
-
+        if (companyBean.getCompanyType() == 7){
+            if (products .size()==0) {
+                showToast("请选择抽查的产品");
+                return;
+            }
+            map.put("productIds", productIds);
+        }
         map.put("companyId", companyBean.getId());
         map.put("inspectionTime", inspectionTime);
         map.put("lawEnforcer1", lawEnforcerBeanArrayList.get(0).getId());
@@ -337,8 +382,9 @@ public class XCHZFActivity extends MyBaseActivity {
                         || type == 6 || type == 7
                         || type == 8 || type == 9 || type == 10
                         || type == 11|| type == 12 || type == 13 || type == 14 || type == 15 || type == 16 || type == 17|| type == 18
-                        || type == 19
-                        || type == 21
+                        || type == 19//特种设备
+                        || type == 21//重点工业品
+                        || type == 20//量化
                 ) {
                     startActivity(new Intent(XCHZFActivity.this, SuperviseActivity.class)
                             .putExtra("company", companyBean.getOperatorName())
@@ -381,7 +427,10 @@ public class XCHZFActivity extends MyBaseActivity {
                 dateType = DateType.TYPE_YMDHM;
                 format = "yyyy-MM-dd HH:mm";
                 break;
-
+        }
+        if (type==20){
+             dateType = DateType.TYPE_YMD;
+             format = "yyyy-MM-dd";
         }
         DatePickDialog dialog = new DatePickDialog(XCHZFActivity.this);
         //设置上下年分限制
@@ -434,6 +483,9 @@ public class XCHZFActivity extends MyBaseActivity {
                 } else {
                     etType.setText(msg);
                     type = Integer.parseInt(values[index]);
+                    if (type==20){
+                        etStartTime.setText("");
+                    }
                 }
             }
 

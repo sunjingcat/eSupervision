@@ -103,8 +103,8 @@ public interface ApiService {
     @GET("/app/v1/supervise/llglInspectionRecord/list")
     Observable<JsonT<List<RecordBean>>> getColdRecordList(@QueryMap Map<String, Object> params);
 
-    @GET("/app/v1/supervise/tzsbInspectionRecord/list")
-    Observable<JsonT<List<RecordBean>>> getTzsbInspectionRecordList(@QueryMap Map<String, Object> params);
+    @GET("/app/v1/supervise/{url}/list")
+    Observable<JsonT<List<RecordBean>>> getTzsbInspectionRecordList(@Path("url") String url,@QueryMap Map<String, Object> params);
 
     @GET("/app/v1/supervise/{url}/list")
     Observable<JsonT<List<RecordBean>>> getYaoRecordList(@Path("url") String url, @QueryMap Map<String, Object> params);
@@ -285,6 +285,10 @@ public interface ApiService {
     @FormUrlEncoded
     @PUT("/app/v1/supervise/{url}/submitSign/{id}")
     Observable<JsonT> submitSignRisk(@Path("url") String url, @Path("id") String id, @Field("fillerSign") String fillerSign, @Field("ownerSign") String ownerSign, @Field("reviewerSign") String reviewerSign);
+
+    @FormUrlEncoded
+    @PUT("/app/v1/supervise/{url}/submitSign/{id}")
+    Observable<JsonT> submitZdgypSign(@Path("url") String url, @Path("id") String id, @Field("companySign") String companySign, @Field("officerSign") String officerSign, @Field("isRandomCheck") String isRandomCheck,@Field("randomCheckType") String randomCheckType, @Field("inspectionMethod") String inspectionMethod,@Field("inspectionResult") String inspectionResult,@Field("reductionOpinion ") String reductionOpinion );
 
     @GET("/app/v1/supervise/{url}/{id}")
     Observable<JsonT<SuperviseBean.ResposeBean>> getSuperviseDetail(@Path("url") String url, @Path("id") String id);

@@ -310,6 +310,45 @@
 
                     </TextView>
                 </LinearLayout>
+                <View
+                    android:id="@+id/view_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorbg"
+                    android:visibility="gone"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_product"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/textLeftStyle"
+                        android:layout_width="150dp"
+                        android:text="抽查的产品" />
+
+                    <TextView
+                        android:id="@+id/et_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:drawableRight="@drawable/image_arrow"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="请选择"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+
+                        android:textColor="#333"
+                        android:textSize="14dp">
+
+                    </TextView>
+                </LinearLayout>
 
 
 

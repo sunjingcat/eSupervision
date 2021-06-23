@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text=""
+            android:text="产品"
             android:textColor="@color/white"
             android:textSize="18dp" />
 
@@ -31,7 +31,7 @@
             android:layout_marginRight="10dp"
             android:padding="8dp"
             android:singleLine="true"
-            android:text="产品"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="16dp" />
     </androidx.appcompat.widget.Toolbar>
@@ -56,6 +56,11 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/ig_category"
                 app:title="产品类别" />
+            <com.zz.supervision.widget.ItemGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ig_unit"
+                app:title="产品单元" />
 
             <com.zz.supervision.widget.ItemGroup
                 android:layout_width="match_parent"

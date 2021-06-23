@@ -276,6 +276,8 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
             tinspectType = 8;
         }  else if (tinspectType == 19 ) {
             tinspectType = 9;
+        }else if (tinspectType == 21 ) {
+            tinspectType = 10;
         } else if (tinspectType == 100) {
             tinspectType = 8;
         }

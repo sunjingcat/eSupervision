@@ -104,6 +104,7 @@ public class TzsbCheckListActivity extends MyBaseActivity implements OnRefreshLi
     List<RecordBean> mlist = new ArrayList<>();
     private int pagenum = 1;
     private int pagesize = 20;
+    private String url = "tzsbInspectionRecord";
 
     @Override
     protected int getContentView() {
@@ -120,6 +121,7 @@ public class TzsbCheckListActivity extends MyBaseActivity implements OnRefreshLi
         llLevel.setVisibility(View.GONE);
         llInspectionResult.setVisibility(View.VISIBLE);
         String select = getIntent().getStringExtra("select");
+         url = getIntent().getStringExtra("url");
         if (TextUtils.isEmpty(select)) {
             toolbarSubtitle.setVisibility(View.VISIBLE);
         } else {
@@ -130,6 +132,11 @@ public class TzsbCheckListActivity extends MyBaseActivity implements OnRefreshLi
             ll_company.setVisibility(View.GONE);
         } else {
             ll_company.setVisibility(View.VISIBLE);
+        }
+        if (url.equals("tzsbInspectionRecord")){
+            tv_inspectionResult.setText("执法类型");
+        }else  if (url.equals("zdgypInspectionRecord")){
+            tv_inspectionResult.setText("评定结果");
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CheckListAdapter(R.layout.item_check_list, mlist);
@@ -160,7 +167,7 @@ public class TzsbCheckListActivity extends MyBaseActivity implements OnRefreshLi
                 }
             }
         });
-        tv_inspectionResult.setText("执法类型");
+
         getType();
 
     }
@@ -353,7 +360,13 @@ public class TzsbCheckListActivity extends MyBaseActivity implements OnRefreshLi
 
     void getType() {
         Map<String, Object> params = new HashMap<>();
-        params.put("dictType", "tzsb_inspection_type");
+
+        if (url.equals("tzsbInspectionRecord")){
+            params.put("dictType", "tzsb_inspection_type");
+        }else  if (url.equals("zdgypInspectionRecord")){
+            params.put("dictType", "inspection_result");
+        }
+
         RxNetUtils.request(getApi(ApiService.class).getDicts(params), new RequestObserver<JsonT<List<BusinessType>>>(this) {
             @Override
             protected void onSuccess(JsonT<List<BusinessType>> jsonT) {
@@ -431,7 +444,7 @@ public class TzsbCheckListActivity extends MyBaseActivity implements OnRefreshLi
         if (status != 0) {
             map.put("status", status);
         }
-        RxNetUtils.request(getApi(ApiService.class).getTzsbInspectionRecordList(map), new RequestObserver<JsonT<List<RecordBean>>>() {
+        RxNetUtils.request(getApi(ApiService.class).getTzsbInspectionRecordList(url,map), new RequestObserver<JsonT<List<RecordBean>>>() {
             @Override
             protected void onSuccess(JsonT<List<RecordBean>> jsonT) {
                 showResult(jsonT.getData());

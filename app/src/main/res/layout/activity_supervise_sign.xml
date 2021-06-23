@@ -258,6 +258,10 @@
                 android:id="@+id/rv_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+            <include
+                android:id="@+id/layout_sign_zdgyp"
+                android:visibility="gone"
+                layout="@layout/layout_sign_zdgyp_inspection"/>
             <LinearLayout
                 android:id="@+id/ll_reformTime"
                 android:layout_width="match_parent"

@@ -50,40 +50,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:isEditable="false"
-                app:title="附件名称" />
+                app:edt_hint_content=""
+                app:title="产品名称" />
+
             <com.zz.supervision.widget.ItemGroup
-                android:id="@+id/ig_accessoryType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="附件类型"
-                app:isEditable="false"/>
-
-            <LinearLayout
+                android:id="@+id/ig_category"
+                app:isEditable="false"
+                app:edt_hint_content=""
+                app:title="产品类别" />
+            <com.zz.supervision.widget.ItemGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="10dp"
-                android:orientation="vertical"
-                android:background="@color/white">
+                android:id="@+id/ig_unit"
+                app:isEditable="false"
+                app:edt_hint_content=""
+                app:title="产品单元" />
 
-                <TextView
-                    style="@style/textLeftStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="附件说明" />
+            <com.zz.supervision.widget.ItemGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ig_varietySpecModel"
+                app:isEditable="false"
+                app:edt_hint_content=""
+                app:title="产品品种规格型号" />
 
-                <TextView
-                    android:id="@+id/et_accessoryExplain"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:minHeight="100dp"
-                    android:gravity="top"
-                    android:hint="请填写"
-                    android:background="@color/white"></TextView>
-            </LinearLayout>
+            <com.zz.supervision.widget.ItemGroup
+                android:id="@+id/ig_productionSituation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isEditable="false"
+                app:edt_hint_content=""
+                app:title="生产情况" />
 
 
             <androidx.recyclerview.widget.RecyclerView

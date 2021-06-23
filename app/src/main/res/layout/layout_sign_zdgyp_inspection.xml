@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/ll_zdgyp"
+    android:orientation="vertical">
+
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_isRandomCheck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:isSelect="true"
+        app:title="是否随机抽查" />
+  <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_randomCheckType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:isSelect="true"
+      android:visibility="gone"
+        app:title="随机检查类型" />
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_inspectionMethod"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:isSelect="true"
+        app:title="检查方式" />
+    <com.zz.supervision.widget.ItemGroup
+        android:id="@+id/ig_inspectionResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:isSelect="true"
+        app:title="检查结果" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        android:padding="5dp"
+        android:textColor="#272727"
+        android:textSize="15dp"
+        android:text="处理意见" />
+    <EditText
+        android:id="@+id/et_reductionOpinion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:padding="8dp"
+        android:textColor="#272727"
+        android:textSize="15dp"
+        tools:text="请填写"
+        android:gravity="top"
+        android:background="@color/white"/>
+</LinearLayout>

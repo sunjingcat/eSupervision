@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ import com.zz.supervision.net.RxNetUtils;
 import com.zz.supervision.utils.BASE64;
 import com.zz.supervision.utils.GlideUtils;
 import com.zz.supervision.utils.TimeUtils;
+import com.zz.supervision.widget.ItemGroup;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -137,6 +139,19 @@ public class SuperviseSignActivity extends MyBaseActivity {
     @BindView(R.id.text_violation)
     TextView text_violation;
 
+    @BindView(R.id.layout_sign_zdgyp)
+    LinearLayout layout_sign_zdgyp;
+    @BindView(R.id.ig_isRandomCheck)
+    ItemGroup ig_isRandomCheck;
+    @BindView(R.id.ig_randomCheckType)
+    ItemGroup ig_randomCheckType;
+    @BindView(R.id.ig_inspectionMethod)
+    ItemGroup ig_inspectionMethod;
+    @BindView(R.id.ig_inspectionResult)
+    ItemGroup ig_inspectionResult;
+ @BindView(R.id.et_reductionOpinion)
+ EditText et_reductionOpinion;
+
     @BindView(R.id.tv_reason)
     TextView tv_reason;
     @BindView(R.id.rv_info)
@@ -146,6 +161,10 @@ public class SuperviseSignActivity extends MyBaseActivity {
     List<BusinessType> reformTimeList = new ArrayList<>();
     List<BusinessType> inspection_opinionList = new ArrayList<>();
     List<BusinessType> result_reductionList = new ArrayList<>();
+    List<BusinessType> zdgyp_inspection_result = new ArrayList<>();
+    List<BusinessType> zdgyp_inspection_method = new ArrayList<>();
+    List<BusinessType> random_check_type = new ArrayList<>();
+    List<BusinessType> is_random_check = new ArrayList<>();
 
     @Override
     protected int getContentView() {
@@ -206,10 +225,15 @@ public class SuperviseSignActivity extends MyBaseActivity {
             tvSign1.setText("企业陪同人员签字");
             tvSign2.setText("执法人签字");
         }else if ( type == 21) {
-            url = "hzpInspectionRecord";
+            url = "zdgypInspectionRecord";
             llReviewerSignSign.setVisibility(View.GONE);
+            layout_sign_zdgyp.setVisibility(View.VISIBLE);
             tvSign1.setText("法人签字");
             tvSign2.setText("执法人签字");
+            getDicts("is_random_check");
+            getDicts("random_check_type");
+            getDicts("zdgyp_inspection_method");
+            getDicts("zdgyp_inspection_result");
         }
         resposeBean = (SuperviseBean.ResposeBean) getIntent().getSerializableExtra("resposeBean");
         if (resposeBean != null) {
@@ -221,6 +245,30 @@ public class SuperviseSignActivity extends MyBaseActivity {
             getData();
 
         }
+        ig_isRandomCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSelectPopWindow1(is_random_check,ig_isRandomCheck);
+            }
+        });
+        ig_randomCheckType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSelectPopWindow1(random_check_type,ig_randomCheckType);
+            }
+        });
+        ig_inspectionMethod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSelectPopWindow1(zdgyp_inspection_method,ig_inspectionMethod);
+            }
+        });
+        ig_inspectionResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSelectPopWindow1(zdgyp_inspection_result,ig_inspectionResult);
+            }
+        });
     }
 
     @Override
@@ -647,7 +695,20 @@ public class SuperviseSignActivity extends MyBaseActivity {
                     showToast(userInfoJsonT.getMessage());
                 }
             }, LoadingUtils.build(this));
-        } else {
+        } else if (type ==21){
+            RxNetUtils.request(getApi(ApiService.class).submitZdgypSign(url, id, companySign, officerSign, ig_isRandomCheck.getSelectValue(),ig_randomCheckType.getSelectValue(),ig_inspectionMethod.getSelectValue(),ig_inspectionResult.getSelectValue(),getText(et_reductionOpinion)), new RequestObserver<JsonT>(this) {
+                @Override
+                protected void onSuccess(JsonT jsonT) {
+                    showResult(jsonT);
+                }
+
+                @Override
+                protected void onFail2(JsonT userInfoJsonT) {
+                    super.onFail2(userInfoJsonT);
+                    showToast(userInfoJsonT.getMessage());
+                }
+            }, LoadingUtils.build(this));
+        }else {
             RxNetUtils.request(getApi(ApiService.class).submitSignRisk(url, id, companySign, officerSign, reviewerSign), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
@@ -717,12 +778,24 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 if (type.equals("tzsb_inspection_opinion")) {
                     inspection_opinionList.clear();
                     inspection_opinionList.addAll(jsonT.getData());
-                } else if (type.equals("tzsb_result_reduction")) {
+                }else if (type.equals("tzsb_result_reduction")) {
                     result_reductionList.clear();
                     result_reductionList.addAll(jsonT.getData());
                 } else if (type.equals("reformTime")) {
                     reformTimeList.clear();
                     reformTimeList.addAll(jsonT.getData());
+                }else if (type.equals("is_random_check")) {
+                    is_random_check.clear();
+                    is_random_check.addAll(jsonT.getData());
+                }else if (type.equals("random_check_type")) {
+                    random_check_type.clear();
+                    random_check_type.addAll(jsonT.getData());
+                }else if (type.equals("zdgyp_inspection_method")) {
+                    zdgyp_inspection_method.clear();
+                    zdgyp_inspection_method.addAll(jsonT.getData());
+                }else if (type.equals("zdgyp_inspection_result")) {
+                    zdgyp_inspection_result.clear();
+                    zdgyp_inspection_result.addAll(jsonT.getData());
                 }
 
             }
@@ -763,6 +836,34 @@ public class SuperviseSignActivity extends MyBaseActivity {
                     et_reformTime.setText(msg);
                     reformTime = values[index];
                 }
+            }
+
+            @Override
+            public void onCancel() {
+                selectPopupWindows.dismiss();
+            }
+        });
+    }
+    void showSelectPopWindow1(List<BusinessType> businessTypes, ItemGroup itemGroup) {
+        UIAdjuster.closeKeyBoard(this);
+        List<String> list = new ArrayList<>();
+        List<String> list1 = new ArrayList<>();
+        for (int i = 0; i < businessTypes.size(); i++) {
+            list.add(businessTypes.get(i).getDictLabel());
+            list1.add(businessTypes.get(i).getDictValue());
+        }
+        String[] array = (String[]) list.toArray(new String[list.size()]);
+        String[] values = (String[]) list1.toArray(new String[list1.size()]);
+        selectPopupWindows = new SelectPopupWindows(this, array);
+        selectPopupWindows.showAtLocation(findViewById(R.id.bg),
+                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        selectPopupWindows.setOnItemClickListener(new SelectPopupWindows.OnItemClickListener() {
+            @Override
+            public void onSelected(int index, String msg) {
+                if (itemGroup == ig_isRandomCheck) {
+                    ig_randomCheckType.setVisibility(values[index].equals("1") ? View.VISIBLE : View.GONE);
+                }
+                itemGroup.setChooseContent(msg,values[index]);
             }
 
             @Override

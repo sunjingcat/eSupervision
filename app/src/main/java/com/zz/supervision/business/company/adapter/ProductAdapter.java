@@ -1,5 +1,7 @@
 package com.zz.supervision.business.company.adapter;
 
+import android.graphics.Color;
+
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 
@@ -22,8 +24,13 @@ public class ProductAdapter extends BaseQuickAdapter<ProductBean, BaseViewHolder
 
     @Override
     protected void convert(BaseViewHolder holder, final ProductBean item) {
-//        holder.setText(R.id.item_title, item.getAccessoryName() +"");
-//        holder.setText(R.id.item_content, item.getAccessoryTypeText()+"" );
+        if (item.isSelect()){
+            holder.setBackgroundColor(R.id.item_bg, Color.parseColor("#eeeeee"));
+        }
+        holder.setText(R.id.item_title, item.getName() +"");
+        holder.setText(R.id.item_isImported, item.getProductionSituationText()+"" );
+        holder.setText(R.id.item_category, item.getCategory()+"" );
+        holder.setText(R.id.item_Spec, item.getVarietySpecModel()+"" );
 
     }
 }

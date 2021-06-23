@@ -153,7 +153,7 @@ public class PipePartInfoActivity extends MyBaseActivity {
                 break;
             case R.id.et_record:
                 if (pipePartBean == null) return;
-                startActivity(new Intent(this, TzsbCheckListActivity.class).putExtra("id", pipePartBean.getId()));
+                startActivity(new Intent(this, TzsbCheckListActivity.class).putExtra("id", pipePartBean.getId()).putExtra("url","tzsbInspectionRecord"));
                 break;
 
 
