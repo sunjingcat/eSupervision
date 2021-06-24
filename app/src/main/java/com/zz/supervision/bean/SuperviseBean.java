@@ -203,6 +203,9 @@ public class SuperviseBean extends BaseExpandNode  {
         private String serialNumber;// null,
         private String sumCount;// 2,
         private String problemCount;// 2,
+        private String seriousCount;// 2,
+        private String reasonableCount;// 2,
+        private String gradeText;// 2,
         private String importantCount;// 0,
         private String generalCount;// 2,
         private String importantProblemCount;// 0,
@@ -284,7 +287,17 @@ public class SuperviseBean extends BaseExpandNode  {
             return sumCount;
         }
 
+        public String getSeriousCount() {
+            return seriousCount;
+        }
 
+        public String getReasonableCount() {
+            return reasonableCount;
+        }
+
+        public String getGradeText() {
+            return gradeText;
+        }
     }
 
     public class ResposeBean implements Serializable {
@@ -336,13 +349,27 @@ public class SuperviseBean extends BaseExpandNode  {
         private String ownerSign;// 待签字
         private String reviewerSign;// 待签字
         private String recordSign;// 待签字
-
+        private String seriousCount;// 2,
+        private String reasonableCount;// 2,
+        private String gradeText;// 2,
 
         private String staticScore;
         private String dynamicScore;
         private String totalScore;
         private String level;
         private String typeText;
+
+        public String getSeriousCount() {
+            return seriousCount;
+        }
+
+        public String getReasonableCount() {
+            return reasonableCount;
+        }
+
+        public String getGradeText() {
+            return gradeText;
+        }
 
         public String getRecordSign() {
             return recordSign;

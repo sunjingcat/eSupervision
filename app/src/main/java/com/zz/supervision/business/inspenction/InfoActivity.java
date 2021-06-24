@@ -96,6 +96,13 @@ public class InfoActivity extends Activity {
         }else if ( type == 19) {
             list.add(new DetailBean("检查项数目", lightDevice.getSumCount() + ""));
             list.add(new DetailBean("问题数", lightDevice.getProblemCount() + ""));
+        }else if ( type == 20) {
+            list.add(new DetailBean("严重缺陷数", lightDevice.getSeriousCount() + ""));
+            list.add(new DetailBean("主要缺陷数", lightDevice.getProblemCount() + ""));
+            list.add(new DetailBean("一般缺陷数", lightDevice.getGeneralCount() + ""));
+            list.add(new DetailBean("合理缺陷数", lightDevice.getReasonableCount() + ""));
+            list.add(new DetailBean("评定级别", lightDevice.getLevel() + ""));
+            list.add(new DetailBean("评定类别", lightDevice.getGradeText() + ""));
         }else if ( type == 21) {
             list.add(new DetailBean("检查项数目", lightDevice.getSumCount() + ""));
             list.add(new DetailBean("不符合规范项数", lightDevice.getProblemCount() + ""));

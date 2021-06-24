@@ -2,9 +2,7 @@ package com.zz.supervision.business.inspenction.adapter;
 
 import com.chad.library.adapter.base.BaseNodeAdapter;
 import com.chad.library.adapter.base.entity.node.BaseNode;
-import com.zz.supervision.bean.ScoreBean;
 import com.zz.supervision.bean.SuperviseBean;
-import com.zz.supervision.business.risk.adapter.RiskFooterNodeProvider;
 
 
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +24,7 @@ public class SuperviseAdapter extends BaseNodeAdapter {
         if (node instanceof SuperviseBean) {
             if (((SuperviseBean) node).getChildType() == 0) {
                 return 1;
-            } else if (((SuperviseBean) node).getChildType() == 1) {
+            } else if (((SuperviseBean) node).getChildType() == 2) {
                 return 3;
             } else {
                 return 0;

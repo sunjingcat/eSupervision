@@ -83,28 +83,29 @@ public class SuperviseSignActivity extends MyBaseActivity {
     TextView tvViolation;
     @BindView(R.id.et_violation)
     TextView etViolation;
-    @BindView(R.id.tv_lawEnforcer_sign)
-    ImageView tvLawEnforcerSign;
+    @BindView(R.id.iv_sign1)
+    ImageView iv_sign1;
     @BindView(R.id.bt_ok)
     Button bt_ok;
     @BindView(R.id.bt_print)
     Button bt_print;
     @BindView(R.id.bt_delete)
     Button bt_delete;
-    @BindView(R.id.tv_legalRepresentative_sign)
-    ImageView tvLegalRepresentativeSign;
-    String lawEnforcer_sign;
-    String legalRepresentative_sign;
-    String reviewerSign_sign;
+    @BindView(R.id.iv_sign2)
+    ImageView iv_sign2;
+    String sign1;
+    String sign2;
+    String sign3;
+    String sign4;
     String url = "";
     String id = "";
     String reformTime = "";
     int resultReduction = 0;
     String inspectionOpinion = "";
-    @BindView(R.id.ll_lawEnforcer_sign)
-    LinearLayout llLawEnforcerSign;
-    @BindView(R.id.ll_legalRepresentative_sign)
-    LinearLayout llLegalRepresentativeSign;
+    @BindView(R.id.ll_sign1)
+    LinearLayout ll_sign1;
+    @BindView(R.id.ll_sign2)
+    LinearLayout ll_sign2;
     @BindView(R.id.ll_violation)
     LinearLayout ll_violation;
     @BindView(R.id.ll_reformTime)
@@ -127,10 +128,16 @@ public class SuperviseSignActivity extends MyBaseActivity {
     TextView tvSign2;
     @BindView(R.id.tv_sign_3)
     TextView tvSign3;
-    @BindView(R.id.tv_reviewerSign_sign)
-    ImageView tvReviewerSignSign;
-    @BindView(R.id.ll_reviewerSign_sign)
-    LinearLayout llReviewerSignSign;
+    @BindView(R.id.tv_sign_4)
+    TextView tvSign4;
+    @BindView(R.id.iv_sign3)
+    ImageView iv_sign3;
+    @BindView(R.id.iv_sign4)
+    ImageView iv_sign4;
+    @BindView(R.id.ll_sign3)
+    LinearLayout ll_sign3;
+    @BindView(R.id.ll_sign4)
+    LinearLayout ll_sign4;
     int type;
     @BindView(R.id.ll_yearCount)
     LinearLayout llYearCount;
@@ -181,38 +188,38 @@ public class SuperviseSignActivity extends MyBaseActivity {
         type = getIntent().getIntExtra("type", 0);
         if (type == 1) {
             url = "spxsInspectionRecord";
-            llReviewerSignSign.setVisibility(View.GONE);
+            ll_sign3.setVisibility(View.GONE);
         } else if (type == 2) {
             url = "cyfwInspectionRecord";
-            llReviewerSignSign.setVisibility(View.GONE);
+            ll_sign3.setVisibility(View.GONE);
         } else if (type == 3) {
             url = "spxsRiskRecord";
-            llReviewerSignSign.setVisibility(View.VISIBLE);
+            ll_sign3.setVisibility(View.VISIBLE);
             tvSign1.setText("填表人签字");
             tvSign2.setText("企业法定代表人签字");
         } else if (type == 4) {
             url = "cyfwRiskRecord";
-            llReviewerSignSign.setVisibility(View.VISIBLE);
+            ll_sign3.setVisibility(View.VISIBLE);
             tvSign1.setText("填表人签字");
             tvSign2.setText("企业法定代表人签字");
         } else if (type == 5) {
             url = "llglInspectionRecord";
-            llReviewerSignSign.setVisibility(View.GONE);
+            ll_sign3.setVisibility(View.GONE);
             tvSign1.setText("法人签字");
             tvSign2.setText("执法人签字");
         } else if (type == 6 || type == 7) {
             url = "ypInspectionRecord";
-            llReviewerSignSign.setVisibility(View.GONE);
+            ll_sign3.setVisibility(View.GONE);
             tvSign1.setText("法人签字");
             tvSign2.setText("执法人签字");
         } else if (type == 8 || type == 9 || type == 10) {
             url = "ylqxInspectionRecord";
-            llReviewerSignSign.setVisibility(View.GONE);
+            ll_sign3.setVisibility(View.GONE);
             tvSign1.setText("法人签字");
             tvSign2.setText("执法人签字");
         } else if (type >= 11 && type <= 18) {
             url = "tzsbInspectionRecord";
-            llReviewerSignSign.setVisibility(View.VISIBLE);
+            ll_sign3.setVisibility(View.VISIBLE);
             ll_inspection_opinion.setVisibility(View.VISIBLE);
 
             tvSign1.setText("企业负责人签字");
@@ -221,12 +228,20 @@ public class SuperviseSignActivity extends MyBaseActivity {
             text_violation.setText("检查中发现的其他问题");
         }else if ( type == 19) {
             url = "hzpInspectionRecord";
-            llReviewerSignSign.setVisibility(View.GONE);
+            ll_sign3.setVisibility(View.GONE);
             tvSign1.setText("企业陪同人员签字");
             tvSign2.setText("执法人签字");
+        }else if ( type == 20) {
+            url = "ypRiskRecord";
+            ll_sign3.setVisibility(View.VISIBLE);
+            ll_sign4.setVisibility(View.VISIBLE);
+            tvSign1.setText("法定代表人签字");
+            tvSign2.setText("质量负责人签字");
+            tvSign3.setText("执法人员(一)");
+            tvSign4.setText("执法人员(二)");
         }else if ( type == 21) {
             url = "zdgypInspectionRecord";
-            llReviewerSignSign.setVisibility(View.GONE);
+            ll_sign3.setVisibility(View.GONE);
             layout_sign_zdgyp.setVisibility(View.VISIBLE);
             tvSign1.setText("法人签字");
             tvSign2.setText("执法人签字");
@@ -344,6 +359,14 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 ll_reformTime.setVisibility(View.VISIBLE);
                 getDicts("reformTime");
             }
+        }else if (type == 20) {
+            mlist.add(new DetailBean("严重缺陷数", resposeBean.getSeriousCount() + ""));
+            mlist.add(new DetailBean("主要缺陷数", resposeBean.getProblemCount() + ""));
+            mlist.add(new DetailBean("一般缺陷数", resposeBean.getGeneralCount() + ""));
+            mlist.add(new DetailBean("合理缺陷数", resposeBean.getReasonableCount() + ""));
+            mlist.add(new DetailBean("评定级别", resposeBean.getLevel() + ""));
+            mlist.add(new DetailBean("评定类别", resposeBean.getGradeText() + ""));
+
         } else if (type == 21) {
             mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + "", true));
             mlist.add(new DetailBean("不符合规范项数", resposeBean.getProblemCount() + ""));
@@ -358,8 +381,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
         bt_ok.setText(resposeBean.getStatus() == 3 ? "打印" : "确定");
 
         if (resposeBean.getStatus() == 3) {
-            llLawEnforcerSign.setEnabled(false);
-            llLegalRepresentativeSign.setEnabled(false);
+            ll_sign1.setEnabled(false);
+            ll_sign2.setEnabled(false);
             et_reformTime.setEnabled(false);
             et_reformTime.setText(resposeBean.getReformTimeText());
             et_reformTime.setHint("");
@@ -373,45 +396,52 @@ public class SuperviseSignActivity extends MyBaseActivity {
         tvType.setText(resposeBean.getTypeText() + "");
 
         if (type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
-            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLawEnforcerSign);
-            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLegalRepresentativeSign);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), iv_sign1);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), iv_sign2);
 
 //            legalRepresentative_sign = resposeBean.getOfficerSign();
 //            lawEnforcer_sign = resposeBean.getCompanySign();
 
         } else if (type == 1 || type == 2) {
-            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLegalRepresentativeSign);
-            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLawEnforcerSign);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), iv_sign2);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), iv_sign1);
 //            legalRepresentative_sign = resposeBean.getCompanySign();
 //            lawEnforcer_sign = resposeBean.getOfficerSign();
 
         } else if (type >= 11 && type <= 18) {
-            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLawEnforcerSign);
-            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLegalRepresentativeSign);
-            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getRecordSign(), tvReviewerSignSign);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), iv_sign1);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), iv_sign2);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getRecordSign(), iv_sign3);
 
 //            legalRepresentative_sign = resposeBean.getOfficerSign();
 //            lawEnforcer_sign = resposeBean.getCompanySign();
 //            reviewerSign_sign=resposeBean.getRecordSign();
 
         } if ( type == 19) {
-            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLawEnforcerSign);
-            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLegalRepresentativeSign);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), iv_sign1);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), iv_sign2);
 
 //            legalRepresentative_sign = resposeBean.getOfficerSign();
 //            lawEnforcer_sign = resposeBean.getCompanySign();
 
+        }
+        if ( type == 20) {
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), iv_sign1);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), iv_sign2);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), iv_sign2);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), iv_sign2);
+
         }if ( type == 21) {
-            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), tvLawEnforcerSign);
-            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), tvLegalRepresentativeSign);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), iv_sign1);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), iv_sign2);
 
 //            legalRepresentative_sign = resposeBean.getOfficerSign();
 //            lawEnforcer_sign = resposeBean.getCompanySign();
 
         }else {
-            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getFillerSign(), tvLawEnforcerSign);
-            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOwnerSign(), tvLegalRepresentativeSign);
-            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getReviewerSign(), tvReviewerSignSign);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getFillerSign(), iv_sign1);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOwnerSign(), iv_sign2);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getReviewerSign(), iv_sign3);
 
 //            legalRepresentative_sign = resposeBean.getOwnerSign();
 //            lawEnforcer_sign = resposeBean.getFillerSign();
@@ -428,10 +458,10 @@ public class SuperviseSignActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.ll_lawEnforcer_sign, R.id.ll_legalRepresentative_sign, R.id.et_reformTime, R.id.bt_ok, R.id.bt_print, R.id.bt_delete, R.id.ll_reviewerSign_sign, R.id.toolbar_subtitle, R.id.et_inspection_opinion, R.id.et_result_reduction})
+    @OnClick({R.id.ll_sign1, R.id.ll_sign2, R.id.et_reformTime, R.id.bt_ok, R.id.bt_print, R.id.bt_delete, R.id.ll_sign3, R.id.ll_sign4, R.id.toolbar_subtitle, R.id.et_inspection_opinion, R.id.et_result_reduction})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.ll_lawEnforcer_sign:
+            case R.id.ll_sign1:
                 PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
                     @Override
                     public void onGranted() {
@@ -445,7 +475,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 });
 
                 break;
-            case R.id.ll_legalRepresentative_sign:
+            case R.id.ll_sign2:
                 if (resposeBean.getStatus() != 3) {
                     PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
                         @Override
@@ -461,12 +491,28 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 }
 
                 break;
-            case R.id.ll_reviewerSign_sign:
+            case R.id.ll_sign3:
                 if (resposeBean.getStatus() != 3) {
                     PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
                         @Override
                         public void onGranted() {
                             startActivityForResult(new Intent(SuperviseSignActivity.this, SignActivity.class), 1003);
+                        }
+
+                        @Override
+                        public void onDenied() {
+
+                        }
+                    });
+                }
+
+                break;
+                case R.id.ll_sign4:
+                if (resposeBean.getStatus() != 3) {
+                    PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
+                        @Override
+                        public void onGranted() {
+                            startActivityForResult(new Intent(SuperviseSignActivity.this, SignActivity.class), 1004);
                         }
 
                         @Override
@@ -593,15 +639,19 @@ public class SuperviseSignActivity extends MyBaseActivity {
         if (resultCode == RESULT_OK && data != null) {
             String path = data.getStringExtra("sign");
             if (requestCode == 1001) {
-                lawEnforcer_sign = path;
-                GlideUtils.loadImage(SuperviseSignActivity.this, path, tvLawEnforcerSign);
+                sign1 = path;
+                GlideUtils.loadImage(SuperviseSignActivity.this, path, iv_sign1);
             } else if (requestCode == 1002) {
-                legalRepresentative_sign = path;
-                GlideUtils.loadImage(SuperviseSignActivity.this, path, tvLegalRepresentativeSign);
+                sign2 = path;
+                GlideUtils.loadImage(SuperviseSignActivity.this, path, iv_sign2);
 
             } else if (requestCode == 1003) {
-                reviewerSign_sign = path;
-                GlideUtils.loadImage(SuperviseSignActivity.this, path, tvReviewerSignSign);
+                sign3 = path;
+                GlideUtils.loadImage(SuperviseSignActivity.this, path, iv_sign3);
+
+            }else if (requestCode == 1004) {
+                sign4 = path;
+                GlideUtils.loadImage(SuperviseSignActivity.this, path, iv_sign4);
 
             }
         }
@@ -616,7 +666,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
     }
 
     void postData() {
-        if (TextUtils.isEmpty(lawEnforcer_sign)) {
+        if (TextUtils.isEmpty(sign1)) {
             if (type == 1 || type == 2) {
                 showToast("执法人签字");
             } else if (type >= 11 && type <= 18) {
@@ -625,6 +675,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 showToast("法人签字");
             } else if ( type == 19) {
                 showToast("企业陪同人员签字");
+            }else if ( type == 20) {
+                showToast("法定代表人签字");
             }else if ( type == 21) {
                 showToast("法人签字");
             } else {
@@ -632,7 +684,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             }
             return;
         }
-        if (TextUtils.isEmpty(legalRepresentative_sign)) {
+        if (TextUtils.isEmpty(sign2)) {
             if (type == 1 || type == 2) {
                 showToast("企业负责人签字");
             } else if (type >= 11 && type <= 18) {
@@ -641,6 +693,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 showToast("执法人签字");
             }else if ( type == 19) {
                 showToast("执法人签字");
+            }else if ( type == 20) {
+                showToast("质量负责人签字");
             }else if ( type == 21) {
                 showToast("执法人签字");
             } else {
@@ -648,37 +702,38 @@ public class SuperviseSignActivity extends MyBaseActivity {
             }
             return;
         }
-
-        if (TextUtils.isEmpty(reviewerSign_sign)) {
+        if (TextUtils.isEmpty(sign3)) {
             if (type == 3 || type == 4) {
                 showToast("审批人签字");
                 return;
             } else if (type >= 11 && type <= 18) {
                 showToast("记录员签字");
                 return;
+            }else if (type == 20) {
+                showToast("执法人员(一)签名");
+                return;
             }
         }
-
-        String companySign = BASE64.imageToBase64(lawEnforcer_sign);
-        String officerSign = BASE64.imageToBase64(legalRepresentative_sign);
-        String reviewerSign = BASE64.imageToBase64(reviewerSign_sign);
-
-        if (type == 1 || type == 2 || type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10|| type == 19) {
-            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign, reformTime), new RequestObserver<JsonT>(this) {
-                @Override
-                protected void onSuccess(JsonT jsonT) {
-                    showResult(jsonT);
-                }
-
-                @Override
-                protected void onFail2(JsonT userInfoJsonT) {
-                    super.onFail2(userInfoJsonT);
-                    showToast(userInfoJsonT.getMessage());
-                }
-            }, LoadingUtils.build(this));
-        } else if (type >= 11 && type <= 18) {
-
-            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, companySign, officerSign, reviewerSign, reformTime, resultReduction + "", inspectionOpinion, getText(etViolation)), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
+        if (TextUtils.isEmpty(sign4)) {
+            if (type == 20) {
+                showToast("执法人员(二)签名");
+                return;
+            }
+        }
+        String companySign = BASE64.imageToBase64(sign1);
+        String officerSign = BASE64.imageToBase64(sign2);
+        String reviewerSign = BASE64.imageToBase64(sign3);
+        String reviewerSign2 = BASE64.imageToBase64(sign4);
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        if (type >= 11 && type <= 18) {
+            map.put("companySign",companySign);
+            map.put("officerSign",officerSign);
+            map.put("recordSign",reviewerSign);
+            map.put("reformTime",reformTime);
+            map.put("resultReduction",resultReduction + "");
+            map.put("inspectionOpinion",inspectionOpinion);
+            map.put("violation",getText(etViolation));
+            RxNetUtils.request(getApi(ApiService.class).submitSign1(url, id,map), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
                 @Override
                 protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
                     if (jsonT.getData().getStatus() != 3) {
@@ -695,21 +750,30 @@ public class SuperviseSignActivity extends MyBaseActivity {
                     showToast(userInfoJsonT.getMessage());
                 }
             }, LoadingUtils.build(this));
-        } else if (type ==21){
-            RxNetUtils.request(getApi(ApiService.class).submitZdgypSign(url, id, companySign, officerSign, ig_isRandomCheck.getSelectValue(),ig_randomCheckType.getSelectValue(),ig_inspectionMethod.getSelectValue(),ig_inspectionResult.getSelectValue(),getText(et_reductionOpinion)), new RequestObserver<JsonT>(this) {
-                @Override
-                protected void onSuccess(JsonT jsonT) {
-                    showResult(jsonT);
-                }
-
-                @Override
-                protected void onFail2(JsonT userInfoJsonT) {
-                    super.onFail2(userInfoJsonT);
-                    showToast(userInfoJsonT.getMessage());
-                }
-            }, LoadingUtils.build(this));
-        }else {
-            RxNetUtils.request(getApi(ApiService.class).submitSignRisk(url, id, companySign, officerSign, reviewerSign), new RequestObserver<JsonT>(this) {
+        } else {
+            if (type == 1 || type == 2 || type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10|| type == 19){
+                map.put("companySign",companySign);
+                map.put("officerSign",officerSign);
+                map.put("reformTime",reformTime);
+            }else if (type == 3 || type == 4){
+                map.put("fillerSign",companySign);
+                map.put("ownerSign",officerSign);
+                map.put("reviewerSign",reviewerSign);
+            }else if (type == 20){
+                map.put("companySign",companySign);
+                map.put("qualitySign",officerSign);
+                map.put("officerSign1",reviewerSign);
+                map.put("officerSign2",reviewerSign2);
+            }else if (type ==21){
+                map.put("companySign",companySign);
+                map.put("officerSign",officerSign);
+                map.put("isRandomCheck",ig_isRandomCheck.getSelectValue());
+                map.put("randomCheckType",ig_randomCheckType.getSelectValue());
+                map.put("inspectionMethod",ig_inspectionMethod.getSelectValue());
+                map.put("inspectionResult",ig_inspectionResult.getSelectValue());
+                map.put("reductionOpinion",getText(et_reductionOpinion));
+            }
+            RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, map), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
                     showResult(jsonT);
@@ -722,7 +786,6 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 }
             }, LoadingUtils.build(this));
         }
-
 
     }
 

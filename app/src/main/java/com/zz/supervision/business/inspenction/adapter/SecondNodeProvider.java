@@ -1,6 +1,7 @@
 package com.zz.supervision.business.inspenction.adapter;
 
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -98,5 +99,14 @@ public class SecondNodeProvider extends BaseNodeProvider {
                 onProviderOnClick.onItemOnclick(data, 3);
             }
         });
+        baseViewHolder.setVisible(R.id.expanded_content,((SuperviseBean) data).getChildrenList().size()>0);
+        baseViewHolder.getView(R.id.expanded_content).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onProviderOnClick.onItemOnclick(data, 10);
+            }
+        });
+
+        ((TextView)baseViewHolder.getView(R.id.expanded_content)).getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
     }
 }

@@ -71,7 +71,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         ButterKnife.bind(this);
         rv.setLayoutManager(new LinearLayoutManager(this));
 //        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        type = getIntent().getIntExtra("type", 20);
+        type = getIntent().getIntExtra("type", 0);
         if (type == 1) {
             url = "spxsInspectionRecord";
         } else if (type == 2) {
@@ -179,7 +179,7 @@ public class SuperviseActivity extends MyBaseActivity<Contract.IsetSupervisePres
         String type = getIntent().getStringExtra("typeText");
         String time = getIntent().getStringExtra("inspectionTime");
         String reason = getIntent().getStringExtra("reason");
-        id = "5";
+        id = getIntent().getStringExtra("id");
         tvCompany.setText(company + "");
         tvInspector.setText("检查员：" + lawEnforcerText);
         tvType.setText("检查类型：" + type + "");

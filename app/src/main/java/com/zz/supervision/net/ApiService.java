@@ -35,6 +35,7 @@ import okhttp3.MultipartBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -276,11 +277,15 @@ public interface ApiService {
 
     @FormUrlEncoded
     @PUT("/app/v1/supervise/{url}/submitSign/{id}")
-    Observable<JsonT> submitSign(@Path("url") String url, @Path("id") String id, @Field("companySign") String companySign, @Field("officerSign") String officerSign, @Field("reformTime") String reformTime);
+    Observable<JsonT> submitSign(@Path("url") String url, @Path("id") String id, @FieldMap Map<String, Object> versionBody);
 
     @FormUrlEncoded
     @PUT("/app/v1/supervise/{url}/submitSign/{id}")
     Observable<JsonT<SuperviseBean.ResposeBean>> submitSign(@Path("url") String url, @Path("id") String id, @Field("companySign") String companySign, @Field("officerSign") String officerSign, @Field("recordSign") String recordSign, @Field("reformTime") String reformTime, @Field("resultReduction") String resultReduction, @Field("inspectionOpinion") String inspectionOpinion, @Field("violation") String violation);
+
+    @FormUrlEncoded
+    @PUT("/app/v1/supervise/{url}/submitSign/{id}")
+    Observable<JsonT<SuperviseBean.ResposeBean>> submitSign1(@Path("url") String url, @Path("id") String id,@FieldMap Map<String, Object> versionBody);
 
     @FormUrlEncoded
     @PUT("/app/v1/supervise/{url}/submitSign/{id}")

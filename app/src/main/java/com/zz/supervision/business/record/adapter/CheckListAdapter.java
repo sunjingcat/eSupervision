@@ -40,6 +40,11 @@ public class CheckListAdapter extends BaseQuickAdapter<RecordBean, BaseViewHolde
                 helper.setText(R.id.tv_inspectionResult_tv, "检查结果");
             }
         }
+        if (item.getType() == 20){
+            helper.getView(R.id.ll_yearCount).setVisibility(View.GONE);
+            helper.setText(R.id.tv_inspectionResult, "" + item.getLevel());
+            helper.setText(R.id.tv_inspectionResult_tv, "评定级别");
+        }
         helper.setText(R.id.tv_yearCount, "" + item.getYearCount());
 
         helper.setText(R.id.tv_inspectionTime, "检查日期：" + item.getInspectionTime());

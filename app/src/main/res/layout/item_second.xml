@@ -29,7 +29,14 @@
 
 
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/expanded_content"
+        android:text="详细内容"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="all"
+        android:gravity="right"
+        android:textColor="@color/colorThemeRed"/>
     <LinearLayout
         android:id="@+id/item_rg"
         android:layout_width="match_parent"
@@ -70,5 +77,6 @@
             android:text="不涉及此项"
             android:visibility="gone"/>
     </LinearLayout>
+
 
 </LinearLayout>

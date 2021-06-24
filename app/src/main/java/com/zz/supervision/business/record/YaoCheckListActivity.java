@@ -391,4 +391,8 @@ public class YaoCheckListActivity extends MyBaseActivity {
             }
         }, LoadingUtils.build(this));
     }
+  public   void setYaoRiskSetVisible(boolean visible){
+        llLevel.setVisibility(visible?View.VISIBLE:View.GONE);
+        llInspectionResult.setVisibility(visible?View.GONE:View.VISIBLE);
+  }
 }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -55,6 +56,8 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
     LinearLayout llNull;
     @BindView(R.id.rv)
     RecyclerView rv;
+    @BindView(R.id.rg)
+    RadioGroup rg;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     Unbinder unbinder;
@@ -65,7 +68,7 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
     private int pagesize = 20;
     private String searchStr = "";
     private String type = "";
-
+    String url = "";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -150,7 +153,33 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
                 }
             }
         });
-
+        if ("3".equals(type)){
+            url=   "ypInspectionRecord";
+            rg.setVisibility(View.VISIBLE);
+        }else  if ("4".equals(type)){
+            url=   "ylqxInspectionRecord";
+        }else  if ("5".equals(type)){
+            url=   "hzpInspectionRecord";
+        }
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.rb_normal:
+                        url=   "ypInspectionRecord";
+                        pagenum = 1;
+                        getDate();
+                        ((YaoCheckListActivity)getActivity()).setYaoRiskSetVisible(false);
+                        break;
+                    case R.id.rb_lh:
+                        url=   "ypRiskRecord";
+                        pagenum = 1;
+                        getDate();
+                        ((YaoCheckListActivity)getActivity()).setYaoRiskSetVisible(true);
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -226,14 +255,6 @@ public class CheckFragment extends Fragment implements OnRefreshListener, OnLoad
                 }
             }, LoadingUtils.build(getActivity()));
         } else {
-            String url = "";
-            if ("3".equals(type)){
-                url=   "ypInspectionRecord";
-            }else  if ("4".equals(type)){
-                url=   "ylqxInspectionRecord";
-            }else  if ("5".equals(type)){
-                url=   "hzpInspectionRecord";
-            }
             RxNetUtils.request(getApi(ApiService.class).getYaoRecordList(url, map), new RequestObserver<JsonT<List<RecordBean>>>() {
                 @Override
                 protected void onSuccess(JsonT<List<RecordBean>> jsonT) {

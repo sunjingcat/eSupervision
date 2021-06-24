@@ -1,13 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".business.mine.AboutActivity">
 
-   <include
-       layout="@layout/refresh_layout"/>
+    <RadioGroup
+        android:id="@+id/rg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:visibility="gone">
+
+        <RadioButton
+            android:id="@+id/rb_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_radio"
+            android:button="@null"
+            android:checked="true"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="5dp"
+            android:text="日常监督检查"
+            android:textColor="@drawable/radio_selector_blue" />
+
+        <RadioButton
+            android:id="@+id/rb_lh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/selector_radio"
+            android:button="@null"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="5dp"
+            android:text="量化分级分类"
+            android:textColor="@drawable/radio_selector_blue" />
+    </RadioGroup>
+
+    <include layout="@layout/refresh_layout" />
 </LinearLayout>

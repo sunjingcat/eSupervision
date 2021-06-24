@@ -405,7 +405,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_lawEnforcer_sign"
+                android:id="@+id/ll_sign1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -420,7 +420,7 @@
                     android:text="执法人签字" />
 
                 <ImageView
-                    android:id="@+id/tv_lawEnforcer_sign"
+                    android:id="@+id/iv_sign1"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_weight="1"
@@ -443,7 +443,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_legalRepresentative_sign"
+                android:id="@+id/ll_sign2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -458,7 +458,7 @@
                     android:text="企业负责人签字" />
 
                 <ImageView
-                    android:id="@+id/tv_legalRepresentative_sign"
+                    android:id="@+id/iv_sign2"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_weight="1"
@@ -482,7 +482,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_reviewerSign_sign"
+                android:id="@+id/ll_sign3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -498,7 +498,45 @@
                     android:text="审批人" />
 
                 <ImageView
-                    android:id="@+id/tv_reviewerSign_sign"
+                    android:id="@+id/iv_sign3"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:drawableRight="@drawable/image_arrow"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:hint=""
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#333"
+                    android:textSize="14dp">
+
+                </TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_sign4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_sign_4"
+                    style="@style/textLeftStyle"
+                    android:layout_width="150dp"
+                    android:text="执法人员(二)" />
+
+                <ImageView
+                    android:id="@+id/iv_sign4"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_weight="1"
