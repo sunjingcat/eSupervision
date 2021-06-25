@@ -163,7 +163,41 @@
 
                 </TextView>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_sceneRecord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                >
 
+                <TextView
+                    style="@style/textLeftStyle"
+                    android:layout_width="150dp"
+                    android:text="现场笔录"
+                    />
+
+
+                <TextView
+                    android:id="@+id/et_sceneRecord"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:drawableRight="@drawable/image_arrow"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:hint=""
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#333"
+                    android:textSize="14dp">
+
+                </TextView>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -268,6 +302,7 @@
                 </TextView>
             </LinearLayout>
 
+
             <Button
                 android:id="@+id/bt_ok"
                 android:layout_width="match_parent"
@@ -280,33 +315,48 @@
                 android:text="开始执法"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
+            <Button
+                android:id="@+id/bt_add_sceneRecord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border_radius_3_dae"
+                android:text="添加现场笔录"
+                android:textColor="#0851A2"
+                android:textSize="16sp"
+                />
 
             <Button
                 android:id="@+id/bt_add_device"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="1dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/border_radius_3_gray"
                 android:text="添加设备"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                />
             <Button
                 android:id="@+id/bt_add_product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="1dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/border_radius_3_gray"
                 android:text="添加产品"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                />
 
             <LinearLayout
                 android:id="@+id/ll_user"
@@ -333,7 +383,10 @@
                 android:id="@+id/bt_delete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@color/white"
                 android:text="删除"
                 android:textColor="@color/red"

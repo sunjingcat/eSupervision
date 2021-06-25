@@ -29,6 +29,7 @@ import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.business.inspenction.MonitorActivity;
+import com.zz.supervision.business.inspenction.SceneRecordInfoActivity;
 import com.zz.supervision.business.inspenction.SuperviseResultActivity;
 import com.zz.supervision.net.ApiService;
 import com.zz.supervision.net.JsonT;
@@ -282,6 +283,8 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
             tinspectType = 10;
         } else if (tinspectType == 100) {
             tinspectType = 8;
+        }else if (tinspectType == 666) {
+            tinspectType = 100;
         }
         int tinspectSheetType = getIntent().getIntExtra("tinspectSheetType", 0);
         map.put("tinspectSheetType", tinspectSheetType);
@@ -324,20 +327,45 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
     void completeData() {
         String id = getIntent().getStringExtra("id");
         int type = getIntent().getIntExtra("type",0);
-        RxNetUtils.request(getApi(ApiService.class).completeTzsbInspectionRecord(id), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
-            @Override
-            protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
-                if (jsonT.isSuccess()) {
-                    startActivity(new Intent(ShowDocActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", jsonT.getData()).putExtra("type", type));
-                    finish();
-                }
-            }
+        String url="tzsbInspectionRecord";
+        if (type==666){
+            url="sceneRecord";
+            RxNetUtils.request(getApi(ApiService.class).completeSceneRecord(id), new RequestObserver<JsonT<Integer>>(this) {
+                @Override
+                protected void onSuccess(JsonT<Integer> jsonT) {
+                    if (jsonT.isSuccess()) {
 
-            @Override
-            protected void onFail2(JsonT<SuperviseBean.ResposeBean> userInfoJsonT) {
-                super.onFail2(userInfoJsonT);
-                showToast(userInfoJsonT.getMessage());
-            }
-        }, LoadingUtils.build(this));
+                            startActivity(new Intent(ShowDocActivity.this, SceneRecordInfoActivity.class).putExtra("id", jsonT.getData()).putExtra("type", type));
+                            finish();
+
+                    }
+                }
+
+                @Override
+                protected void onFail2(JsonT<Integer> userInfoJsonT) {
+                    super.onFail2(userInfoJsonT);
+                    showToast(userInfoJsonT.getMessage());
+                }
+            }, LoadingUtils.build(this));
+        }else {
+            RxNetUtils.request(getApi(ApiService.class).completeTzsbInspectionRecord(id), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
+                @Override
+                protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
+                    if (jsonT.isSuccess()) {
+
+                            startActivity(new Intent(ShowDocActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", jsonT.getData()).putExtra("type", type));
+                            finish();
+
+                    }
+                }
+
+                @Override
+                protected void onFail2(JsonT<SuperviseBean.ResposeBean> userInfoJsonT) {
+                    super.onFail2(userInfoJsonT);
+                    showToast(userInfoJsonT.getMessage());
+                }
+            }, LoadingUtils.build(this));
+        }
+
     }
 }

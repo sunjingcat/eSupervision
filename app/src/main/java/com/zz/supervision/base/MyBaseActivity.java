@@ -22,6 +22,7 @@ import com.zz.lib.commonlib.CommonApplication;
 import com.zz.lib.commonlib.utils.CacheUtility;
 import com.zz.lib.core.ui.BaseActivity;
 import com.zz.lib.core.utils.AnimeUtils;
+import com.zz.supervision.widget.ItemArea;
 import com.zz.supervision.widget.ItemGroup;
 
 
@@ -184,6 +185,20 @@ public abstract class MyBaseActivity<P extends com.zz.lib.core.ui.mvp.BasePresen
 
     }
     protected String getText(ItemGroup itemGroup) {
+        String string = itemGroup.getValue().toString();
+        if (TextUtils.isEmpty(string)) {
+            return "";
+        } else {
+            String trim = string.trim();
+            if (TextUtils.isEmpty(trim)) {
+                return "";
+            } else {
+                return trim;
+            }
+        }
+
+    }
+    protected String getText(ItemArea itemGroup) {
         String string = itemGroup.getValue().toString();
         if (TextUtils.isEmpty(string)) {
             return "";

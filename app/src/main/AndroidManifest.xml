@@ -194,6 +194,10 @@
         <activity android:name=".business.company.ProductActivity" />
         <activity android:name=".business.company.ProductInfoActivity" />
         <activity android:name=".business.company.ProductListActivity" />
+        <activity android:name=".business.inspenction.SceneRecordActivity" />
+        <activity android:name=".business.inspenction.SceneRecordDetailActivity" />
+        <activity android:name=".business.inspenction.SceneRecordListActivity" />
+        <activity android:name=".business.inspenction.SceneRecordInfoActivity" />
     </application>
 
 </manifest>

@@ -20,6 +20,7 @@ import com.zz.supervision.bean.PipePartBean;
 import com.zz.supervision.bean.ProductBean;
 import com.zz.supervision.bean.RecordBean;
 import com.zz.supervision.bean.RiskSuperviseBean;
+import com.zz.supervision.bean.SceneRecord;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.bean.SuperviseInfoBean;
 import com.zz.supervision.bean.UserBasicBean;
@@ -94,6 +95,9 @@ public interface ApiService {
 
     @GET("/app/v1/supervise/zdgypProductInfo/list")
     Observable<JsonT<List<ProductBean>>> getZdgypProductInfo(@QueryMap Map<String, Object> params);
+
+    @GET("/app/v1/supervise/sceneRecord")
+    Observable<JsonT<List<SceneRecord>>> getSceneRecord(@QueryMap Map<String, Object> params);
 
     @GET("/app/v1/supervise/tzsbInspectionRecord/deviceListByCompanyAndType")
     Observable<JsonT<List<EquipmentBean>>> deviceListByCompanyAndType(@QueryMap Map<String, Object> params);
@@ -272,8 +276,15 @@ public interface ApiService {
     @POST("/app/v1/supervise/universal/createRecord")
     Observable<JsonT<Integer>> createRecord(@QueryMap Map<String, Object> params);
 
+  @POST("/app/v1/supervise/sceneRecord")
+    Observable<JsonT<Integer>> createSceneRecord(@QueryMap Map<String, Object> params);
+
     @GET("/app/v1/supervise/enclosure/base64/{type}/{modelId}")
     Observable<JsonT<List<ImageBack>>> getImageBase64(@Path("type") String type, @Path("modelId") String modelId);
+
+    @FormUrlEncoded
+    @PUT("/app/v1/supervise/sceneRecord")
+    Observable<JsonT> submitSceneRecordSign( @FieldMap Map<String, Object> versionBody);
 
     @FormUrlEncoded
     @PUT("/app/v1/supervise/{url}/submitSign/{id}")
@@ -298,6 +309,9 @@ public interface ApiService {
     @GET("/app/v1/supervise/{url}/{id}")
     Observable<JsonT<SuperviseBean.ResposeBean>> getSuperviseDetail(@Path("url") String url, @Path("id") String id);
 
+    @GET("/app/v1/supervise/sceneRecord/{id}")
+    Observable<JsonT<SceneRecord>> getSceneRecordDetail( @Path("id") String id);
+
     @GET("/app/v1/supervise/pdfPrint/getPdfDownPath/{id}")
     Observable<JsonT<String>> getDocInfo(@Path("id") String id, @QueryMap Map<String, Object> params);
 
@@ -308,7 +322,9 @@ public interface ApiService {
     @PUT("/app/v1/supervise/tzsbInspectionRecord/editOrder/{id}")
     Observable<JsonT> postDeviceByCheck(@Path("id") String id, @Field("illegalActivity") String illegalActivity, @Field("lawContent") String lawContent, @Field("accordContent") String accordContent, @Field("reformMeasure") String reformMeasure);
 
-    @PUT("/app/v1/supervise/tzsbInspectionRecord/complete/{recordId}")
+    @PUT("/app/v1/supervise/tzsbInspectionRecord/complete/{recordId}")//sceneRecord,tzsbInspectionRecord
     Observable<JsonT<SuperviseBean.ResposeBean>> completeTzsbInspectionRecord(@Path("recordId") String recordId);
+    @PUT("/app/v1/supervise/sceneRecord/complete/{recordId}")//sceneRecord,tzsbInspectionRecord
+    Observable<JsonT<Integer>> completeSceneRecord(@Path("recordId") String recordId);
 }
 

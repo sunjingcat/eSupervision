@@ -311,6 +311,7 @@ public class SuperviseBean extends BaseExpandNode  {
         private String deptId;// 110,
         private String reformTime;// 110,
         private String reformTimeText;// 110,
+        private String operatorName;// 110,
         private String id;// 22,
         private String serialNumber;// spxs20200928140145564,
         private String companyId;// 22,
@@ -358,6 +359,10 @@ public class SuperviseBean extends BaseExpandNode  {
         private String totalScore;
         private String level;
         private String typeText;
+
+        public String getOperatorName() {
+            return operatorName;
+        }
 
         public String getSeriousCount() {
             return seriousCount;

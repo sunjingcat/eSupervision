@@ -24,6 +24,8 @@ import com.zz.supervision.business.company.adapter.ComInfoAdapter;
 import com.zz.supervision.business.company.adapter.ImageItemAdapter;
 import com.zz.supervision.business.equipment.AddEquipmentActivity;
 import com.zz.supervision.business.equipment.EquipmentListActivity;
+import com.zz.supervision.business.inspenction.SceneRecordActivity;
+import com.zz.supervision.business.inspenction.SceneRecordListActivity;
 import com.zz.supervision.business.inspenction.XCHZFActivity;
 import com.zz.supervision.business.mine.PasswordActivity;
 import com.zz.supervision.business.record.CheckListActivity;
@@ -91,6 +93,8 @@ public class CompanyInfoActivity extends MyBaseActivity {
     Button bt_add_product;
     @BindView(R.id.bt_delete)
     Button bt_delete;
+    @BindView(R.id.bt_add_sceneRecord)
+    Button bt_add_sceneRecord;
     @BindView(R.id.bg)
     LinearLayout bg;
     @BindView(R.id.ll_device)
@@ -163,7 +167,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
             mlist.add(new DetailBean("登录账号", data.getLoginAccount() + ""));
             mlist.add(new DetailBean("冷库类型", data.getColdstorageType1Text() + ""));
             mlist.add(new DetailBean("是否含第三方冷库", data.getColdstorageType2Text() + ""));
-        } else if (companyType.equals("3") || companyType.equals("4")|| companyType.equals("5")) {
+        } else if (companyType.equals("3") || companyType.equals("4") || companyType.equals("5")) {
             mlist.add(new DetailBean("经营者名称", data.getOperatorName() + ""));
             mlist.add(new DetailBean("社会信用代码", data.getSocialCreditCode() + ""));
             mlist.add(new DetailBean("许可证编号", data.getLicenseNumber() + ""));
@@ -202,7 +206,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
 
             ll_user.setVisibility(View.GONE);
 
-        }else if (companyType.equals("7")) {
+        } else if (companyType.equals("7")) {
 
 
             mlist.add(new DetailBean("获证时企业名称", data.getOperatorNameCertificate() + ""));
@@ -231,7 +235,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
             mlist.add(new DetailBean("年利润", data.getAnnualProfit() + ""));
             mlist.add(new DetailBean("企业规模", data.getScaleText() + ""));
             mlist.add(new DetailBean("对象类别", data.getCategoryText() + ""));
-            if (data.getCategory().equals("4")){
+            if (data.getCategory().equals("4")) {
                 mlist.add(new DetailBean("类别描述", data.getCategoryRemark() + ""));
             }
             mlist.add(new DetailBean("主要产品", data.getMainProducts() + ""));
@@ -274,7 +278,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
             url = "ypCompanyInfo";
         } else if (companyType.equals("4")) {
             url = "ylqxCompanyInfo";
-        }else if (companyType.equals("5")) {
+        } else if (companyType.equals("5")) {
             url = "hzpCompanyInfo";
         } else if (companyType.equals("6")) {
             url = "tzsbCompanyInfo";
@@ -300,7 +304,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.bt_password, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record, R.id.bt_add_device, R.id.et_device, R.id.bt_add_product, R.id.et_product})
+    @OnClick({R.id.toolbar_subtitle, R.id.bt_ok, R.id.bt_password, R.id.et_location, R.id.bt_delete, R.id.et_nav, R.id.et_record, R.id.bt_add_device, R.id.et_device, R.id.bt_add_sceneRecord, R.id.et_sceneRecord, R.id.bt_add_product, R.id.et_product})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_subtitle:
@@ -318,28 +322,35 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 break;
             case R.id.bt_add_device:
                 if (companyBean == null) return;
-                startActivityForResult(new Intent(this, AddEquipmentActivity.class).putExtra("companyId", companyBean.getId()).putExtra("from", "companyInfo"),1002);
+                startActivityForResult(new Intent(this, AddEquipmentActivity.class).putExtra("companyId", companyBean.getId()).putExtra("from", "companyInfo"), 1002);
                 break;
             case R.id.et_device:
                 startActivity(new Intent(this, EquipmentListActivity.class).putExtra("id", companyBean.getId()).putExtra("companyType", companyBean.getCompanyType() + ""));
                 break;
-                case R.id.bt_add_product:
+            case R.id.bt_add_product:
                 if (companyBean == null) return;
-                startActivityForResult(new Intent(this, ProductActivity.class).putExtra("companyId", companyBean.getId()).putExtra("from", "companyInfo"),1002);
+                startActivityForResult(new Intent(this, ProductActivity.class).putExtra("companyId", companyBean.getId()).putExtra("from", "companyInfo"), 1002);
                 break;
             case R.id.et_product:
                 startActivity(new Intent(this, ProductListActivity.class).putExtra("id", companyBean.getId()).putExtra("companyType", companyBean.getCompanyType() + ""));
+                break;
+            case R.id.bt_add_sceneRecord:
+                if (companyBean == null) return;
+                startActivity(new Intent(this, SceneRecordActivity.class).putExtra("company", companyBean));
+                break;
+            case R.id.et_sceneRecord:
+                startActivity(new Intent(this, SceneRecordListActivity.class).putExtra("id", companyBean.getId()).putExtra("companyType", companyBean.getCompanyType() + ""));
                 break;
             case R.id.et_record:
                 if (companyBean == null) return;
                 if (companyType.equals("2")) {
                     startActivity(new Intent(this, ColdCheckListActivity.class).putExtra("id", companyBean.getId()));
-                } else if (companyType.equals("3") || companyType.equals("4")) {
+                } else if (companyType.equals("3") || companyType.equals("4")|| companyType.equals("5")) {
                     startActivity(new Intent(this, YaoCheckListActivity.class).putExtra("id", companyBean.getId()));
                 } else if (companyType.equals("6")) {
-                    startActivity(new Intent(this, TzsbCheckListActivity.class).putExtra("id", companyBean.getId()).putExtra("url","tzsbInspectionRecord"));
-                }else if (companyType.equals("7")) {
-                    startActivity(new Intent(this, TzsbCheckListActivity.class).putExtra("id", companyBean.getId()).putExtra("url","zdgypInspectionRecord"));
+                    startActivity(new Intent(this, TzsbCheckListActivity.class).putExtra("id", companyBean.getId()).putExtra("url", "tzsbInspectionRecord"));
+                } else if (companyType.equals("7")) {
+                    startActivity(new Intent(this, TzsbCheckListActivity.class).putExtra("id", companyBean.getId()).putExtra("url", "zdgypInspectionRecord"));
                 } else {
                     startActivity(new Intent(this, CheckListActivity.class).putExtra("id", companyBean.getId()));
                 }
@@ -395,11 +406,11 @@ public class CompanyInfoActivity extends MyBaseActivity {
             url = "ypCompany";
         } else if (companyType.equals("4")) {
             url = "ylqxCompany";
-        }else if (companyType.equals("5")) {
+        } else if (companyType.equals("5")) {
             url = "hzpCompany";
         } else if (companyType.equals("6")) {
             url = "tzsbCompany";
-        }else if (companyType.equals("7")) {
+        } else if (companyType.equals("7")) {
             url = "zdgypCompany";
         }
         RxNetUtils.request(getApi(ApiService.class).getImageBase64(url, id), new RequestObserver<JsonT<List<ImageBack>>>(this) {
@@ -461,11 +472,11 @@ public class CompanyInfoActivity extends MyBaseActivity {
             url = "ypCompanyInfo";
         } else if (companyType.equals("4")) {
             url = "ylqxCompanyInfo";
-        }else if (companyType.equals("5")) {
+        } else if (companyType.equals("5")) {
             url = "hzpCompanyInfo";
         } else if (companyType.equals("6")) {
             url = "tzsbCompanyInfo";
-        }else if (companyType.equals("7")) {
+        } else if (companyType.equals("7")) {
             url = "zdgypCompanyInfo";
         }
         RxNetUtils.request(getApi(ApiService.class).removeCompanyInfo(url, id), new RequestObserver<JsonT>() {
@@ -490,7 +501,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
             if (!TextUtils.isEmpty(id)) {
                 getData(id);
             }
-        }else if (requestCode == 1002&&resultCode==RESULT_OK) {
+        } else if (requestCode == 1002 && resultCode == RESULT_OK) {
             startActivity(new Intent(this, EquipmentListActivity.class).putExtra("id", companyBean.getId()).putExtra("companyType", companyBean.getCompanyType() + ""));
         }
     }

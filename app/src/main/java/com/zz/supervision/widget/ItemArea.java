@@ -1,18 +1,14 @@
 package com.zz.supervision.widget;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.TypedArray;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.DebugUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,26 +19,23 @@ import androidx.annotation.Nullable;
 import com.zz.lib.commonlib.utils.DensityUtils;
 import com.zz.supervision.R;
 
-public class ItemGroup extends FrameLayout {
-
-    private LinearLayout itemGroupLayout; //组合控件的布局
+public class ItemArea extends FrameLayout {
     private TextView titleTv; //标题
-    private TextView chooseTv; //标题
     private EditText contentEdt; //输入框
     private OnClickListener itemOnClickListener; //Item的点击事件
 
-    public ItemGroup(@NonNull Context context) {
+    public ItemArea(@NonNull Context context) {
         super(context);
         initView(context);
     }
 
-    public ItemGroup(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public ItemArea(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initView(context);
         initAttrs(context, attrs);
     }
 
-    public ItemGroup(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public ItemArea(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context);
         initAttrs(context, attrs);
@@ -54,11 +47,9 @@ public class ItemGroup extends FrameLayout {
 
     //初始化View
     private void initView(Context context) {
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_edit, null);
-        itemGroupLayout = (LinearLayout) view.findViewById(R.id.ll_view_container);
-        titleTv = (TextView) view.findViewById(R.id.tv_choose_item_name);
-        chooseTv = (TextView) view.findViewById(R.id.tv_choose_item_choose);
-        contentEdt = (EditText) view.findViewById(R.id.et_choose_item_choose);
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_area, null);
+        titleTv = (TextView) view.findViewById(R.id.tv);
+        contentEdt = (EditText) view.findViewById(R.id.et);
         addView(view); //把自定义的这个组合控件的布局加入到当前FramLayout
     }
 
@@ -91,7 +82,6 @@ public class ItemGroup extends FrameLayout {
         int hintColor = typedArray.getColor(R.styleable.ItemGroup_edt_hint_text_color, defaultHintColor);
         boolean isSelect = typedArray.getBoolean(R.styleable.ItemGroup_isSelect, false);
         String inputType = typedArray.getString(R.styleable.ItemGroup_inputType);
-        String contentStyle = typedArray.getString(R.styleable.ItemGroup_contentStyle);
         //默认输入框可以编辑
         boolean isEditable = typedArray.getBoolean(R.styleable.ItemGroup_isEditable, true);
         typedArray.recycle();
@@ -107,86 +97,31 @@ public class ItemGroup extends FrameLayout {
                 contentEdt.setInputType(8194);
             }
         }
-        if (!TextUtils.isEmpty(contentStyle)) {
-            if (contentStyle.equals("right")) {
-                titleTv.setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT,1));
-                contentEdt.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                chooseTv.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                contentEdt.setGravity(Gravity.RIGHT);
-                chooseTv.setGravity(Gravity.RIGHT);
-            }else {
-                titleTv.setLayoutParams(new LinearLayout.LayoutParams(DensityUtils.dp2px(context,150), LayoutParams.WRAP_CONTENT));
-                contentEdt.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-                chooseTv.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-                contentEdt.setGravity(Gravity.LEFT);
-                chooseTv.setGravity(Gravity.LEFT);
-            }
-        }
-
         contentEdt.setText(content);
         contentEdt.setTextSize(contentSize);
         contentEdt.setTextColor(contentColor);
-        contentEdt.setHint(TextUtils.isEmpty(hintContent)?isSelect?"请选择":"请填写":hintContent);
+        contentEdt.setHint(TextUtils.isEmpty(hintContent) ? isSelect ? "请选择" : "请填写" : hintContent);
         contentEdt.setHintTextColor(hintColor);
         contentEdt.setFocusable(isEditable); //设置输入框是否可以编辑
         contentEdt.setLongClickable(false); //输入框不允许长按
-        chooseTv.setVisibility(isSelect ? View.VISIBLE : View.GONE);  //设置向右的箭头图标是否可见
         contentEdt.setVisibility(!isSelect ? View.VISIBLE : View.GONE);  //设置向右的箭头图标是否可见
-        chooseTv.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (itemOnClickListener==null)return;
-                itemOnClickListener.onClick(v);
-            }
-        });
     }
 
     public void setTitle(String titleTv) {
-        this.titleTv.setText(titleTv+"");
+        this.titleTv.setText(titleTv + "");
     }
 
     public void setChooseContent(String choose) {
-        if (this.chooseTv.getVisibility()==View.VISIBLE) {
-//            if (choose==null||choose.equals("null")){
-//                this.chooseTv.setText("");
-//            }else {
-                this.chooseTv.setText(choose + "");
-//            }
 
-        }else {
-//            if (choose==null||choose.equals("null")){
-//                this.contentEdt.setText("");
-//            }else {
-                this.contentEdt.setText(choose + "");
-//            }
-        }
-    }
+        this.contentEdt.setText(choose + "");
 
-    public void setChooseContent(String choose,String selectValue) {
-        if (this.chooseTv.getVisibility()==View.VISIBLE) {
-            this.chooseTv.setText(choose + "");
-            this.selectValue =selectValue;
-        }else {
-            this.contentEdt.setText(choose+"");
-        }
+
     }
 
     public String getValue() {
-        if (this.chooseTv.getVisibility()==View.VISIBLE) {
-            return chooseTv.getText().toString();
-        }else {
-            return contentEdt.getText().toString();
-        }
+        return contentEdt.getText().toString();
+
     }
-    private String selectValue="";
-    public String getSelectValue() {
-        if (TextUtils.isEmpty(selectValue)||selectValue.equals("null")){
-            return "";
-        }
-        return selectValue;
-    }
-    public void setSelectValue(String selectValue) {
-       this.selectValue =selectValue;
-    }
+
 
 }
