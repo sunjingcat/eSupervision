@@ -99,14 +99,18 @@ public class SecondNodeProvider extends BaseNodeProvider {
                 onProviderOnClick.onItemOnclick(data, 3);
             }
         });
-        baseViewHolder.setVisible(R.id.expanded_content,((SuperviseBean) data).getChildrenList().size()>0);
-        baseViewHolder.getView(R.id.expanded_content).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onProviderOnClick.onItemOnclick(data, 10);
-            }
-        });
+        if(entity.getChildrenList()!=null){
+            baseViewHolder.setVisible(R.id.expanded_content,((SuperviseBean) data).getChildrenList().size()>0);
+            baseViewHolder.getView(R.id.expanded_content).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onProviderOnClick.onItemOnclick(data, 10);
+                }
+            });
 
-        ((TextView)baseViewHolder.getView(R.id.expanded_content)).getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+            ((TextView)baseViewHolder.getView(R.id.expanded_content)).getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        }
+
+
     }
 }

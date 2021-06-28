@@ -360,6 +360,22 @@ public class SuperviseBean extends BaseExpandNode  {
         private String level;
         private String typeText;
 
+        private Integer orderStatus;
+        private Integer decisionStatus;
+        private Integer replyStatus;
+
+        public Integer getOrderStatus() {
+            return orderStatus;
+        }
+
+        public Integer getDecisionStatus() {
+            return decisionStatus;
+        }
+
+        public Integer getReplyStatus() {
+            return replyStatus;
+        }
+
         public String getOperatorName() {
             return operatorName;
         }

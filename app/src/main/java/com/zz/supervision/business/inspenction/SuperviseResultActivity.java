@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zz.lib.commonlib.utils.ToolBarUtils;
@@ -47,7 +48,14 @@ public class SuperviseResultActivity extends MyBaseActivity {
     Button btn_pingfen;
     int type;
     int resultReduction;
-
+    @BindView(R.id.bt_orderStatus)
+    Button bt_orderStatus;
+    @BindView(R.id.bt_decisionStatus)
+    Button bt_decisionStatus;
+    @BindView(R.id.bt_replyStatus)
+    Button bt_replyStatus;
+    @BindView(R.id.ly_status)
+    LinearLayout ly_status;
     @Override
     protected int getContentView() {
         return R.layout.activity_supervise_result;
@@ -144,7 +152,13 @@ public class SuperviseResultActivity extends MyBaseActivity {
 
         mlist.addAll(list);
         adapter.notifyDataSetChanged();
+        bt_orderStatus.setVisibility(lightDevice.getOrderStatus()==0?View.GONE:View.VISIBLE);
+        bt_decisionStatus.setVisibility(lightDevice.getDecisionStatus()==0?View.GONE:View.VISIBLE);
+        bt_replyStatus.setVisibility(lightDevice.getReplyStatus()==0?View.GONE:View.VISIBLE);
 
+        bt_orderStatus.setText(lightDevice.getOrderStatus()==1?"生成责令改正通知书":"打印责令改正通知书");
+        bt_decisionStatus.setText(lightDevice.getDecisionStatus()==1?"生成行政处罚决定书":"打印行政处罚决定书");
+        bt_replyStatus.setText(lightDevice.getReplyStatus()==1?"生成送达回证":"打印送达回证");
     }
 
     @Override

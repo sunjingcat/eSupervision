@@ -129,5 +129,8 @@
                 android:layout_weight="1" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+    <include
+        android:id="@+id/ly_status"
+        layout="@layout/layout_status"/>
 
 </LinearLayout>

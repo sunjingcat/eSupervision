@@ -198,6 +198,7 @@
         <activity android:name=".business.inspenction.SceneRecordDetailActivity" />
         <activity android:name=".business.inspenction.SceneRecordListActivity" />
         <activity android:name=".business.inspenction.SceneRecordInfoActivity" />
+        <activity android:name=".business.inspenction.CreateStatusActivity" />
     </application>
 
 </manifest>

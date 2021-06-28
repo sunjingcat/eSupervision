@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+
+    <Button
+        android:id="@+id/bt_orderStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/border_radius_3_dae"
+        android:paddingHorizontal="8dp"
+        android:text="责令改正通知书"
+        android:textColor="#1F7DCF" />
+
+    <Button
+        android:id="@+id/bt_decisionStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/border_radius_3_dae"
+        android:paddingHorizontal="8dp"
+        android:text="行政处罚决定书"
+        android:textColor="#1F7DCF" />
+
+    <Button
+        android:id="@+id/bt_replyStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/border_radius_3_dae"
+        android:paddingHorizontal="8dp"
+        android:text="送达回证"
+        android:textColor="#1F7DCF" />
+
+
+</LinearLayout>

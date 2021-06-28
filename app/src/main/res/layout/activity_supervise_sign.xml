@@ -596,4 +596,8 @@
             android:visibility="gone"
             />
     </LinearLayout>
+    <include
+        android:id="@+id/ly_status"
+        layout="@layout/layout_status"/>
+
 </LinearLayout>

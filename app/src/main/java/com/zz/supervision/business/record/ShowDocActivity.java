@@ -327,9 +327,7 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
     void completeData() {
         String id = getIntent().getStringExtra("id");
         int type = getIntent().getIntExtra("type",0);
-        String url="tzsbInspectionRecord";
         if (type==666){
-            url="sceneRecord";
             RxNetUtils.request(getApi(ApiService.class).completeSceneRecord(id), new RequestObserver<JsonT<Integer>>(this) {
                 @Override
                 protected void onSuccess(JsonT<Integer> jsonT) {
