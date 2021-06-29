@@ -23,6 +23,7 @@ import com.zz.supervision.bean.RiskSuperviseBean;
 import com.zz.supervision.bean.SceneRecord;
 import com.zz.supervision.bean.SuperviseBean;
 import com.zz.supervision.bean.SuperviseInfoBean;
+import com.zz.supervision.bean.SyxhRectificationOrder;
 import com.zz.supervision.bean.UserBasicBean;
 import com.zz.supervision.bean.UserInfo;
 import com.zz.supervision.bean.Version;
@@ -284,7 +285,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @PUT("/app/v1/supervise/sceneRecord")
-    Observable<JsonT> submitSceneRecordSign( @FieldMap Map<String, Object> versionBody);
+    Observable<JsonT<Integer>> submitSceneRecordSign( @FieldMap Map<String, Object> versionBody);
 
     @FormUrlEncoded
     @PUT("/app/v1/supervise/{url}/submitSign/{id}")
@@ -312,19 +313,47 @@ public interface ApiService {
     @GET("/app/v1/supervise/sceneRecord/{id}")
     Observable<JsonT<SceneRecord>> getSceneRecordDetail( @Path("id") String id);
 
+    @GET("/app/v1/supervise/universal/getTinspectTypeByType/{type}")
+    Observable<JsonT<Integer>> getTinspectTypeByType( @Path("type") String type);
+
     @GET("/app/v1/supervise/pdfPrint/getPdfDownPath/{id}")
     Observable<JsonT<String>> getDocInfo(@Path("id") String id, @QueryMap Map<String, Object> params);
 
     @GET("/app/v1/supervise/tzsbInspectionRecord/order/{recordId}")
     Observable<JsonT<MonitorBean>> getDeviceByCheck(@Path("recordId") String recordId);
 
+    @GET("/app/v1/supervise/syxhRectificationOrderController/syxhRectificationOrder/{recordType}/{recordId}")
+    Observable<JsonT<SyxhRectificationOrder>> getSyxhRectificationOrder(@Path("recordType") String recordType, @Path("recordId") String recordId);
+
+    @GET("/app/v1/supervise/syxhPenaltyDecisionController/syxhPenaltyDecision/{recordType}/{recordId}")
+    Observable<JsonT<SyxhRectificationOrder>> getSyxhPenaltyDecision(@Path("recordType") String recordType, @Path("recordId") String recordId);
+
+    @GET("/app/v1/supervise/syxhServiceReplyController/syxhServiceReply/{recordType}/{recordId}")
+    Observable<JsonT<SyxhRectificationOrder>> getSyxhServiceReply(@Path("recordType") String recordType, @Path("recordId") String recordId);
+
     @FormUrlEncoded
     @PUT("/app/v1/supervise/tzsbInspectionRecord/editOrder/{id}")
     Observable<JsonT> postDeviceByCheck(@Path("id") String id, @Field("illegalActivity") String illegalActivity, @Field("lawContent") String lawContent, @Field("accordContent") String accordContent, @Field("reformMeasure") String reformMeasure);
+
+    @FormUrlEncoded
+    @PUT("/app/v1/supervise/syxhRectificationOrderController/syxhRectificationOrder/{recordType}/{recordId}")
+    Observable<JsonT> syxhRectificationOrder(@Path("recordType") String recordType,@Path("recordId") String recordId,@FieldMap Map<String, Object> versionBody);
+
+    @FormUrlEncoded
+    @PUT("/app/v1/supervise/syxhPenaltyDecisionController/syxhPenaltyDecision/{recordType}/{recordId}")
+    Observable<JsonT> syxhPenaltyDecision(@Path("recordType") String recordType,@Path("recordId") String recordId,@FieldMap Map<String, Object> versionBody);
+
+    @FormUrlEncoded
+    @PUT("/app/v1/supervise/syxhServiceReplyController/syxhServiceReply/{recordType}/{recordId}")
+    Observable<JsonT> syxhServiceReply(@Path("recordType") String recordType,@Path("recordId") String recordId,@FieldMap Map<String, Object> versionBody);
 
     @PUT("/app/v1/supervise/tzsbInspectionRecord/complete/{recordId}")//sceneRecord,tzsbInspectionRecord
     Observable<JsonT<SuperviseBean.ResposeBean>> completeTzsbInspectionRecord(@Path("recordId") String recordId);
     @PUT("/app/v1/supervise/sceneRecord/complete/{recordId}")//sceneRecord,tzsbInspectionRecord
     Observable<JsonT<Integer>> completeSceneRecord(@Path("recordId") String recordId);
+
+    @PUT("/app/v1/supervise/{url1}/{url2}/{recordType}/{recordId}")
+    Observable<JsonT<SuperviseBean.ResposeBean>> completeSyxhService(@Path("url1") String url1,@Path("url2") String url2,@Path("recordType") String recordType, @Path("recordId") String recordId);
+
 }
 

@@ -84,7 +84,7 @@ public class SceneRecordInfoActivity extends MyBaseActivity {
     @BindView(R.id.iv_sign2)
     ImageView iv_sign2;
     String url = "";
-    String id = "";
+    int id = 0;
     @BindView(R.id.tv_sign_1)
     TextView tvSign1;
     @BindView(R.id.tv_sign_2)
@@ -133,7 +133,7 @@ public class SceneRecordInfoActivity extends MyBaseActivity {
         tvSign3.setText("检查人员签字");
 
 
-            id = getIntent().getStringExtra("id");
+           id = getIntent().getIntExtra("id",0);
             getData();
 
 
@@ -181,8 +181,8 @@ public class SceneRecordInfoActivity extends MyBaseActivity {
         switch (view.getId()) {
             case R.id.bt_print:
 
-                if (TextUtils.isEmpty(id)) return;
-                startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", id).putExtra("tinspectSheetType", 1).putExtra("tinspectType", 666));
+                if (id==0) return;
+                startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", id+"").putExtra("tinspectSheetType", 1).putExtra("tinspectType", 100));
                 break;
             case R.id.bt_delete:
                 CustomDialog.Builder builder = new CustomDialog.Builder(this)
@@ -217,7 +217,7 @@ public class SceneRecordInfoActivity extends MyBaseActivity {
 
     void getData() {
 
-        RxNetUtils.request(getApi(ApiService.class).getSceneRecordDetail(id), new RequestObserver<JsonT<SceneRecord>>(this) {
+        RxNetUtils.request(getApi(ApiService.class).getSceneRecordDetail(id+""), new RequestObserver<JsonT<SceneRecord>>(this) {
             @Override
             protected void onSuccess(JsonT<SceneRecord> jsonT) {
                 if (jsonT.isSuccess()) {
@@ -234,8 +234,8 @@ public class SceneRecordInfoActivity extends MyBaseActivity {
         }, LoadingUtils.build(this));
     }
 
-    void deleteDate(String id) {
-        RxNetUtils.request(getApi(ApiService.class).removeSuperviseInfo(url, id), new RequestObserver<JsonT>() {
+    void deleteDate(int id) {
+        RxNetUtils.request(getApi(ApiService.class).removeSuperviseInfo(url, id+""), new RequestObserver<JsonT>() {
             @Override
             protected void onSuccess(JsonT jsonT) {
                 finish();

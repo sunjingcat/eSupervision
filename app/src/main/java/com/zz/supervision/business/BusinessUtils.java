@@ -22,21 +22,21 @@ public class BusinessUtils {
 //    化妆品责改：9,3
 //    化妆品处罚：9,4
 //    化妆品回达：9,5
-    public static int getStatusTinspectTypeByInsType(int type){
-        int tinspectType=0;
-        if (type == 1||type==3) {
-            tinspectType = 1;
-        } else if (type == 2||type == 4) {
-            tinspectType = 2;
-        }  else if (type == 6 || type == 7) {
-            tinspectType = 7;
-        } else if (type == 8 || type == 9 || type == 10) {
-            tinspectType = 6;
-        }else if (type == 19 ) {
-            tinspectType = 9;
-        }else if (type == 20 ) {
-            tinspectType = 9;
+    public static String getRecordTypeByType(int type){
+        String recordType="";
+        if (type==1){
+            recordType="spxs";
+        }else if (type==2){
+            recordType="spxs";
         }
-        return tinspectType;
+        else if (type == 6 || type == 7) {//药品
+            recordType="yp";
+        }
+        else if (type == 8 || type == 9 || type == 10) {//医疗器械
+            recordType="ylqx";
+        }else if (type == 19) {//医疗器械
+            recordType="hzp";
+        }
+        return  recordType;
     }
 }

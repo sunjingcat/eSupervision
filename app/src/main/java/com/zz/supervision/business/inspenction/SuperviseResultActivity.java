@@ -166,7 +166,7 @@ public class SuperviseResultActivity extends MyBaseActivity {
         return null;
     }
 
-    @OnClick({R.id.btn_jilu, R.id.btn_pingfen})
+    @OnClick({R.id.btn_jilu, R.id.btn_pingfen, R.id.bt_orderStatus, R.id.bt_decisionStatus, R.id.bt_replyStatus})
     public void onViewClicked(View view) {
         if (deviceInfo == null) {
             return;
@@ -178,12 +178,44 @@ public class SuperviseResultActivity extends MyBaseActivity {
 
                 break;
             case R.id.btn_pingfen:
-                if (resultReduction!=0&&resultReduction!=4) {
-                    startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", deviceInfo.getId()).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 100));
-                } else {
+//                if (resultReduction!=0&&resultReduction!=4) {
+//                    startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", deviceInfo.getId()).putExtra("tinspectSheetType", 2).putExtra("tinspectType", type));
+//                } else {
                     startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", deviceInfo.getId()).putExtra("tinspectSheetType", 2).putExtra("tinspectType", type));
 
+//                }
+                finish();
+                break;
+            case R.id.bt_orderStatus:
+                if (deviceInfo != null && deviceInfo.getStatus() == 3) {
+                    if (deviceInfo.getOrderStatus()==1) {
+                        startActivity(new Intent(SuperviseResultActivity.this, CreateOrderStatusActivity.class ).putExtra("id", deviceInfo.getId()).putExtra("type", type));
+                    }else {
+                        startActivity(new Intent(SuperviseResultActivity.this,  ShowDocActivity.class).putExtra("tinspectSheetType", 3).putExtra("tinspectType", type).putExtra("read", 1));
+                    }
                 }
+                finish();
+                break;
+            case R.id.bt_decisionStatus:
+                if (deviceInfo != null && deviceInfo.getStatus() == 3) {
+                    if (deviceInfo.getDecisionStatus() == 1) {
+                        startActivity(new Intent(SuperviseResultActivity.this, CreateDecisionStatusActivity.class).putExtra("id",  deviceInfo.getId()).putExtra("type", type));
+                    } else {
+                        startActivity(new Intent(SuperviseResultActivity.this, ShowDocActivity.class).putExtra("tinspectSheetType", 4).putExtra("tinspectType", type).putExtra("id",  deviceInfo.getId()));
+
+                    }
+                }
+                finish();
+                break;
+            case R.id.bt_replyStatus:
+                if (deviceInfo != null && deviceInfo.getStatus() == 3) {
+                    if (deviceInfo.getReplyStatus()==1) {
+                        startActivity(new Intent(SuperviseResultActivity.this, CreateReplyStatusActivity.class ).putExtra("id",  deviceInfo.getId()).putExtra("type", type));
+                    }else {
+                        startActivity(new Intent(SuperviseResultActivity.this,  ShowDocActivity.class).putExtra("tinspectSheetType", 5).putExtra("tinspectType", type).putExtra("id",  deviceInfo.getId()));
+                    }
+                }
+                finish();
                 break;
         }
     }

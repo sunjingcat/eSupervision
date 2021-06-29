@@ -140,6 +140,11 @@ public class ItemGroup extends FrameLayout {
             }
         });
     }
+   public void setEnable(boolean isEnable){
+       contentEdt.setFocusable(isEnable); //设置输入框是否可以编辑
+       chooseTv.setVisibility(!isEnable ? View.VISIBLE : View.GONE);  //设置向右的箭头图标是否可见
+       contentEdt.setVisibility(isEnable ? View.VISIBLE : View.GONE);  //设置向右的箭头图标是否可见
+    }
 
     public void setTitle(String titleTv) {
         this.titleTv.setText(titleTv+"");

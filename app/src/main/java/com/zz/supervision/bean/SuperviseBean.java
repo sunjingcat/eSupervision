@@ -353,6 +353,54 @@ public class SuperviseBean extends BaseExpandNode  {
         private String seriousCount;// 2,
         private String reasonableCount;// 2,
         private String gradeText;// 2,
+        private Integer isRandomCheck;// 2,
+        private Integer randomCheckType;// 2,
+        private Integer inspectionMethod;// 2,
+        private String reductionOpinion ;// 2,
+
+          private String isRandomCheckText;// 2,
+        private String randomCheckTypeText;// 2,
+        private String inspectionMethodText;// 2,
+
+
+        public String getIsRandomCheckText() {
+            return isRandomCheckText;
+        }
+
+        public String getRandomCheckTypeText() {
+            return randomCheckTypeText;
+        }
+
+        public String getInspectionMethodText() {
+            return inspectionMethodText;
+        }
+
+
+        public Integer getIsRandomCheck() {
+            if (isRandomCheck==null){
+                return 0;
+            }
+
+            return isRandomCheck;
+        }
+
+        public Integer getRandomCheckType() {
+            if (isRandomCheck==null){
+                return 0;
+            }
+            return randomCheckType;
+        }
+
+        public Integer getInspectionMethod() {
+            if (isRandomCheck==null){
+                return 0;
+            }
+            return inspectionMethod;
+        }
+
+        public String getReductionOpinion() {
+            return reductionOpinion;
+        }
 
         private String staticScore;
         private String dynamicScore;
@@ -360,19 +408,19 @@ public class SuperviseBean extends BaseExpandNode  {
         private String level;
         private String typeText;
 
-        private Integer orderStatus;
-        private Integer decisionStatus;
-        private Integer replyStatus;
+        private int orderStatus;
+        private int decisionStatus;
+        private int replyStatus;
 
-        public Integer getOrderStatus() {
+        public int getOrderStatus() {
             return orderStatus;
         }
 
-        public Integer getDecisionStatus() {
+        public int getDecisionStatus() {
             return decisionStatus;
         }
 
-        public Integer getReplyStatus() {
+        public int getReplyStatus() {
             return replyStatus;
         }
 

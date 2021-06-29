@@ -8,8 +8,8 @@ android {
         applicationId "com.zz.supervision"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 70
-        versionName "7.0"
+        versionCode 71
+        versionName "7.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         packagingOptions {
             exclude 'META-INF/proguard/androidx-annotations.pro'

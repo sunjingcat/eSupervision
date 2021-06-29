@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +22,6 @@ import com.troila.customealert.CustomDialog;
 import com.zz.lib.commonlib.utils.PermissionUtils;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.commonlib.widget.SelectPopupWindows;
-import com.zz.lib.core.http.utils.ToastUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
 import com.zz.supervision.R;
@@ -57,7 +55,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.http.Field;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
@@ -210,22 +207,22 @@ public class SuperviseSignActivity extends MyBaseActivity {
             ll_sign3.setVisibility(View.VISIBLE);
             tvSign1.setText("填表人签字");
             tvSign2.setText("企业法定代表人签字");
-        } else if (type == 5) {
+        } else if (type == 5) {//冷链
             url = "llglInspectionRecord";
             ll_sign3.setVisibility(View.GONE);
             tvSign1.setText("法人签字");
             tvSign2.setText("执法人签字");
-        } else if (type == 6 || type == 7) {
+        } else if (type == 6 || type == 7) {//药品
             url = "ypInspectionRecord";
             ll_sign3.setVisibility(View.GONE);
             tvSign1.setText("法人签字");
             tvSign2.setText("执法人签字");
-        } else if (type == 8 || type == 9 || type == 10) {
+        } else if (type == 8 || type == 9 || type == 10) {//医疗器械
             url = "ylqxInspectionRecord";
             ll_sign3.setVisibility(View.GONE);
             tvSign1.setText("法人签字");
             tvSign2.setText("执法人签字");
-        } else if (type >= 11 && type <= 18) {
+        } else if (type >= 11 && type <= 18) {//特种设备
             url = "tzsbInspectionRecord";
             ll_sign3.setVisibility(View.VISIBLE);
             ll_inspection_opinion.setVisibility(View.VISIBLE);
@@ -234,12 +231,12 @@ public class SuperviseSignActivity extends MyBaseActivity {
             tvSign2.setText("检查人员签字");
             tvSign3.setText("记录员签字");
             text_violation.setText("检查中发现的其他问题");
-        } else if (type == 19) {
+        } else if (type == 19) {//化妆品
             url = "hzpInspectionRecord";
             ll_sign3.setVisibility(View.GONE);
             tvSign1.setText("企业陪同人员签字");
             tvSign2.setText("执法人签字");
-        } else if (type == 20) {
+        } else if (type == 20) {//药品量化
             url = "ypRiskRecord";
             ll_sign3.setVisibility(View.VISIBLE);
             ll_sign4.setVisibility(View.VISIBLE);
@@ -247,7 +244,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             tvSign2.setText("质量负责人签字");
             tvSign3.setText("执法人员(一)");
             tvSign4.setText("执法人员(二)");
-        } else if (type == 21) {
+        } else if (type == 21) {//重点工业品
             url = "zdgypInspectionRecord";
             ll_sign3.setVisibility(View.GONE);
             layout_sign_zdgyp.setVisibility(View.VISIBLE);
@@ -379,6 +376,20 @@ public class SuperviseSignActivity extends MyBaseActivity {
             mlist.add(new DetailBean("检查项数目", resposeBean.getSumCount() + "", true));
             mlist.add(new DetailBean("不符合规范项数", resposeBean.getProblemCount() + ""));
 
+            ig_isRandomCheck.setChooseContent(resposeBean.getIsRandomCheckText(),resposeBean.getIsRandomCheck()+"");
+            ig_randomCheckType.setChooseContent(resposeBean.getRandomCheckTypeText(),resposeBean.getRandomCheckType()+"");
+            ig_inspectionMethod.setChooseContent(resposeBean.getInspectionMethodText(),resposeBean.getInspectionMethod()+"");
+            ig_inspectionResult.setChooseContent(resposeBean.getInspectionResultText(),resposeBean.getInspectionResult());
+            et_reductionOpinion.setText(resposeBean.getReductionOpinion());
+
+            if (resposeBean.getStatus() == 3) {
+                ig_isRandomCheck.setEnable(false);
+                ig_randomCheckType.setEnable(false);
+                ig_inspectionMethod.setEnable(false);
+                ig_inspectionResult.setEnable(false);
+                et_reductionOpinion.setFocusable(false);
+            }
+
         } else {
             mlist.add(new DetailBean("静态评分项分数", resposeBean.getStaticScore() + "", true));
             mlist.add(new DetailBean("动态评分项分数", resposeBean.getDynamicScore() + ""));
@@ -458,6 +469,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
 //            reviewerSign_sign=resposeBean.getReviewerSign();
 
         }
+
         ly_status.setVisibility(resposeBean.getStatus() == 3 ? View.VISIBLE : View.GONE);
         bt_orderStatus.setVisibility(resposeBean.getOrderStatus() == 0 ? View.GONE : View.VISIBLE);
         bt_decisionStatus.setVisibility(resposeBean.getDecisionStatus() == 0 ? View.GONE : View.VISIBLE);
@@ -558,7 +570,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
             case R.id.bt_print:
                 if (resposeBean != null && resposeBean.getStatus() == 3) {
                     if (TextUtils.isEmpty(id)) return;
-                    startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", id).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 100));
+                    startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", id).putExtra("tinspectSheetType", 2).putExtra("tinspectType", type));
 
 //
                 }
@@ -654,18 +666,32 @@ public class SuperviseSignActivity extends MyBaseActivity {
             case R.id.bt_orderStatus:
                 if (resposeBean != null && resposeBean.getStatus() == 3) {
                     if (resposeBean.getOrderStatus()==1) {
-                        startActivity(new Intent(SuperviseSignActivity.this, CreateStatusActivity.class ).putExtra("id", ""));
+                        startActivity(new Intent(SuperviseSignActivity.this, CreateOrderStatusActivity.class ).putExtra("id", id).putExtra("type", type));
                     }else {
                         startActivity(new Intent(SuperviseSignActivity.this,  ShowDocActivity.class).putExtra("tinspectSheetType", 3).putExtra("tinspectType", type).putExtra("read", 1));
-
                     }
                 }
                 break;
             case R.id.bt_decisionStatus:
+                if (resposeBean != null && resposeBean.getStatus() == 3) {
+                    if (resposeBean.getDecisionStatus() == 1) {
+                        startActivity(new Intent(SuperviseSignActivity.this, CreateDecisionStatusActivity.class).putExtra("id", id).putExtra("type", type));
+                    } else {
+                        startActivity(new Intent(SuperviseSignActivity.this, ShowDocActivity.class).putExtra("tinspectSheetType", 4).putExtra("tinspectType", type).putExtra("id", id));
+
+                    }
+                }
 
                 break;
             case R.id.bt_replyStatus:
+                if (resposeBean != null && resposeBean.getStatus() == 3) {
+                if (resposeBean.getReplyStatus()==1) {
+                    startActivity(new Intent(SuperviseSignActivity.this, CreateReplyStatusActivity.class ).putExtra("id", id).putExtra("type", type));
+                }else {
+                    startActivity(new Intent(SuperviseSignActivity.this,  ShowDocActivity.class).putExtra("tinspectSheetType", 5).putExtra("tinspectType", type).putExtra("id", id));
 
+                }
+                }
                 break;
         }
     }

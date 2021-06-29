@@ -69,7 +69,7 @@ public class MonitorActivity extends MyBaseActivity {
     protected void initView() {
         ButterKnife.bind(this);
         recordId = getIntent().getStringExtra("recordId");
-        type = getIntent().getIntExtra("type", 11);
+        type = getIntent().getIntExtra("type", 0);
         getData();
     }
 
@@ -104,7 +104,7 @@ public class MonitorActivity extends MyBaseActivity {
         RxNetUtils.request(getApi(ApiService.class).postDeviceByCheck(recordId, getText(igIllegalActivity),getText(igLawContent),getText(igAccordContent),getText(igReformMeasure)), new RequestObserver<JsonT>(this) {
             @Override
             protected void onSuccess(JsonT jsonT) {
-                startActivity(new Intent(MonitorActivity.this, ShowDocActivity.class).putExtra("id", recordId).putExtra("type", type).putExtra("tinspectSheetType", 2).putExtra("tinspectType", 100).putExtra("read", 1));
+                startActivity(new Intent(MonitorActivity.this, ShowDocActivity.class).putExtra("id", recordId).putExtra("type", type).putExtra("tinspectSheetType", 2).putExtra("tinspectType", type).putExtra("read", 1));
 
             }
 

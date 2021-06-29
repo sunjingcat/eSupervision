@@ -13,7 +13,7 @@
         android:layout_marginTop="1dp"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:padding="11dp">
 
         <TextView
             android:id="@+id/tv_choose_item_name"

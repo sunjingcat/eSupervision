@@ -287,6 +287,21 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/ig_reformTime"
                 app:title="整改期限"
+                android:visibility="gone"
+
+                /> <com.zz.supervision.widget.ItemGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ig_contact"
+                app:title="联系人"
+
+                />
+            <com.zz.supervision.widget.ItemGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ig_contactInformation"
+                app:inputType="numberDecimal"
+                app:title="联系电话 "
 
                 />
             <Button

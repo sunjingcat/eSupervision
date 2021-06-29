@@ -272,10 +272,10 @@ public class SceneRecordDetailActivity extends MyBaseActivity {
         map.put("officerSign", BASE64.imageToBase64(sign3));
         map.put("partySign", BASE64.imageToBase64(sign1));
         map.put("siteCondition", getText(ia_siteCondition));
-        RxNetUtils.request(getApi(ApiService.class).submitSceneRecordSign(map), new RequestObserver<JsonT>(this) {
+        RxNetUtils.request(getApi(ApiService.class).submitSceneRecordSign(map), new RequestObserver<JsonT<Integer>>(this) {
             @Override
-            protected void onSuccess(JsonT jsonT) {
-                startActivity(new Intent(SceneRecordDetailActivity.this, ShowDocActivity.class).putExtra("id", id).putExtra("type", 666).putExtra("tinspectSheetType", 1).putExtra("tinspectType", 666).putExtra("read", 1));
+            protected void onSuccess(JsonT<Integer> jsonT) {
+                startActivity(new Intent(SceneRecordDetailActivity.this, ShowDocActivity.class).putExtra("id", jsonT.getData()+"").putExtra("type", 100).putExtra("tinspectSheetType", 1).putExtra("tinspectType", 100).putExtra("read", 1));
 
             }
 

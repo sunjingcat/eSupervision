@@ -49,6 +49,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import static com.zz.supervision.business.BusinessUtils.getRecordTypeByType;
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
 public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.ReaderCallback {
@@ -162,14 +163,16 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
         super.onPause();
 
     }
-
+    int tinspectSheetType =0;
     @Override
     protected void initView() {
-
+        mFileUrl = getIntent().getStringExtra("url");
+        isRead = getIntent().getIntExtra("read", 0);
+        tinspectSheetType=  getIntent().getIntExtra("tinspectSheetType", 0);
         PermissionUtils.getInstance().checkPermission(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, new PermissionUtils.OnPermissionChangedListener() {
             @Override
             public void onGranted() {
-                getDocInfo();
+                getTinspectType();
             }
 
             @Override
@@ -177,9 +180,6 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
 
             }
         });
-
-        mFileUrl = getIntent().getStringExtra("url");
-        isRead = getIntent().getIntExtra("read", 0);
 
         mTbsReaderView = new TbsReaderView(this, this);
         mDownloadBtn = (Button) findViewById(R.id.btn_download);
@@ -235,7 +235,7 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
                     completeData();
                 }else {
                     String path = FileUtils.getLocalFile(context, mFileName).getPath();
-                    if (TextUtils.isEmpty(path)) return;
+                        if (TextUtils.isEmpty(path)) return;
                     try {
                         PrintUtil.printpdf(ShowDocActivity.this, FileUtils.getLocalFile(context, mFileName).getPath());
                     } catch (IOException e) {
@@ -264,29 +264,27 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
         }
     }
 
-    void getDocInfo() {
+    void getDocInfo(int tinspectType) {
         Map<String, Object> map = new HashMap<>();
 
         String id = getIntent().getStringExtra("id");
-        int tinspectType = getIntent().getIntExtra("tinspectType", 0);
-        if (tinspectType == 6 || tinspectType == 7) {
-            tinspectType = 7;
-        } else if (tinspectType == 8 || tinspectType == 9 || tinspectType == 10) {
-            tinspectType = 6;
-        } else if (tinspectType >= 11 && tinspectType <= 18) {
-            tinspectType = 8;
-        }  else if (tinspectType == 19 ) {
-            tinspectType = 9;
-        }  else if (tinspectType == 20) {
-            tinspectType = 7;
-        }else if (tinspectType == 21 ) {
-            tinspectType = 10;
-        } else if (tinspectType == 100) {
-            tinspectType = 8;
-        }else if (tinspectType == 666) {
-            tinspectType = 100;
-        }
-        int tinspectSheetType = getIntent().getIntExtra("tinspectSheetType", 0);
+
+//        if (tinspectType == 6 || tinspectType == 7) {
+//            tinspectType = 7;
+//        } else if (tinspectType == 8 || tinspectType == 9 || tinspectType == 10) {
+//            tinspectType = 6;
+//        } else if (tinspectType >= 11 && tinspectType <= 18) {
+//            tinspectType = 8;
+//        }  else if (tinspectType == 19 ) {
+//            tinspectType = 9;
+//        }  else if (tinspectType == 20) {
+//            tinspectType = 7;
+//        }else if (tinspectType == 21 ) {
+//            tinspectType = 10;
+//        } else if (tinspectType == 666) {
+//            tinspectType = 100;
+//        }
+
         map.put("tinspectSheetType", tinspectSheetType);
         map.put("tinspectType", tinspectType);
         RxNetUtils.request(getApi(ApiService.class).getDocInfo(id, map), new RequestObserver<JsonT<String>>() {
@@ -327,15 +325,13 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
     void completeData() {
         String id = getIntent().getStringExtra("id");
         int type = getIntent().getIntExtra("type",0);
-        if (type==666){
+        if (type==100){
             RxNetUtils.request(getApi(ApiService.class).completeSceneRecord(id), new RequestObserver<JsonT<Integer>>(this) {
                 @Override
                 protected void onSuccess(JsonT<Integer> jsonT) {
                     if (jsonT.isSuccess()) {
-
                             startActivity(new Intent(ShowDocActivity.this, SceneRecordInfoActivity.class).putExtra("id", jsonT.getData()).putExtra("type", type));
                             finish();
-
                     }
                 }
 
@@ -346,24 +342,83 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
                 }
             }, LoadingUtils.build(this));
         }else {
-            RxNetUtils.request(getApi(ApiService.class).completeTzsbInspectionRecord(id), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
-                @Override
-                protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
-                    if (jsonT.isSuccess()) {
+            String url1="syxhRectificationOrderController";
+            String url2="completeSyxhRectificationOrder";
+
+            if (tinspectSheetType==3||tinspectSheetType==4||tinspectSheetType==5) {
+                if (tinspectSheetType==3){
+                     url1="syxhRectificationOrderController";
+                     url2="completeSyxhRectificationOrder";
+
+                }else if (tinspectSheetType==4){
+                     url1="syxhPenaltyDecisionController";
+                     url2="completeSyxhPenaltyDecision";
+
+                }else if (tinspectSheetType==5){
+                     url1="syxhServiceReplyController";
+                     url2="completeSyxhServiceReply";
+
+                }
+                RxNetUtils.request(getApi(ApiService.class).completeSyxhService(url1,url2,getRecordTypeByType(type),id), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
+                    @Override
+                    protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
+                        if (jsonT.isSuccess()) {
 
                             startActivity(new Intent(ShowDocActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", jsonT.getData()).putExtra("type", type));
                             finish();
+
+                        }
+                    }
+
+                    @Override
+                    protected void onFail2(JsonT<SuperviseBean.ResposeBean> userInfoJsonT) {
+                        super.onFail2(userInfoJsonT);
+                        showToast(userInfoJsonT.getMessage());
+                    }
+                }, LoadingUtils.build(this));
+            }else {
+                RxNetUtils.request(getApi(ApiService.class).completeTzsbInspectionRecord(id), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
+                    @Override
+                    protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
+                        if (jsonT.isSuccess()) {
+
+                            startActivity(new Intent(ShowDocActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", jsonT.getData()).putExtra("type", type));
+                            finish();
+
+                        }
+                    }
+
+                    @Override
+                    protected void onFail2(JsonT<SuperviseBean.ResposeBean> userInfoJsonT) {
+                        super.onFail2(userInfoJsonT);
+                        showToast(userInfoJsonT.getMessage());
+                    }
+                }, LoadingUtils.build(this));
+            }
+        }
+
+    }
+    void getTinspectType(){
+        int type = getIntent().getIntExtra("tinspectType", 0);
+        if (type==100){
+            getDocInfo(100);
+        }else {
+            RxNetUtils.request(getApi(ApiService.class).getTinspectTypeByType(type+""), new RequestObserver<JsonT<Integer>>(this) {
+                @Override
+                protected void onSuccess(JsonT<Integer> jsonT) {
+                    if (jsonT.isSuccess()) {
+
+                        getDocInfo(jsonT.getData());
 
                     }
                 }
 
                 @Override
-                protected void onFail2(JsonT<SuperviseBean.ResposeBean> userInfoJsonT) {
+                protected void onFail2(JsonT<Integer> userInfoJsonT) {
                     super.onFail2(userInfoJsonT);
                     showToast(userInfoJsonT.getMessage());
                 }
             }, LoadingUtils.build(this));
         }
-
     }
 }
