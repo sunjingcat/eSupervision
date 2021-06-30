@@ -9,7 +9,7 @@
         android:id="@+id/et_z_operatorNameCertificate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="经营者名称" />
+        app:title="获奖时企业名称" />
     <com.zz.supervision.widget.ItemGroup
         android:id="@+id/et_z_operatorName"
         android:layout_width="match_parent"

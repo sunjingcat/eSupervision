@@ -73,7 +73,7 @@ public class SuperviseResultActivity extends MyBaseActivity {
         if (deviceInfo != null) {
             showIntent(deviceInfo, type);
         }
-        if (type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10) {
+        if (type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10||type == 19) {
             btn_pingfen.setVisibility(View.GONE);
         }
 

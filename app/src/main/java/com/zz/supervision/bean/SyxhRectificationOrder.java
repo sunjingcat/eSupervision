@@ -10,7 +10,7 @@ public class SyxhRectificationOrder {
     private String    lawContent;//w,
     private String     accordContent;//e,
     private String    reformMeasure;//r,
-    private String     reformTimeType;//1,
+    private Integer     reformTimeType;//1,
     private String    reformTimeTypeText;//是,
     private String     reformTime;//,
     private String     contact;//qwp,
@@ -76,7 +76,8 @@ public class SyxhRectificationOrder {
     }
 
     public String getReformTimeType() {
-        return reformTimeType;
+        if (reformTimeType==null)return "";
+        return reformTimeType+"";
     }
 
     public String getReformTimeTypeText() {

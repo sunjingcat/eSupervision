@@ -297,7 +297,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
     }
 
     public void showIntent(SuperviseBean.ResposeBean resposeBean) {
-        tvCompany.setText(resposeBean.getCompanyInfo().getOperatorName() + "");
+        tvCompany.setText(resposeBean.getOperatorName() + "");
         tvSumCount.setText(resposeBean.getSumCount() + "");
         llSumCount.setVisibility(TextUtils.isEmpty(resposeBean.getSumCount()) ? View.GONE : View.VISIBLE);
         tvLawEnforcer.setText(resposeBean.getLawEnforcer1Name() + "," + resposeBean.getLawEnforcer2Name());
@@ -579,7 +579,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 if (resposeBean == null) return;
                 if (type == 3 || type == 4) {
                     startActivity(new Intent(this, RiskSuperviseInfoActivity.class)
-                            .putExtra("company", resposeBean.getCompanyInfo().getOperatorName())
+                            .putExtra("company", resposeBean.getOperatorName())
                             .putExtra("id", resposeBean.getId() + "")
                             .putExtra("type", type)
                             .putExtra("status", resposeBean.getStatus())
@@ -589,7 +589,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
                 } else {
                     startActivity(new Intent(this, SuperviseInfoActivity.class)
-                            .putExtra("company", resposeBean.getCompanyInfo().getOperatorName())
+                            .putExtra("company", resposeBean.getOperatorName())
                             .putExtra("id", resposeBean.getId() + "")
                             .putExtra("type", type)
                             .putExtra("status", resposeBean.getStatus())

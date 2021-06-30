@@ -1,9 +1,11 @@
 package com.zz.supervision.business.company;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -11,6 +13,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.troila.customealert.CustomDialog;
 import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
@@ -55,6 +59,8 @@ public class ProductInfoActivity extends MyBaseActivity {
     ItemGroup ig_varietySpecModel;
     @BindView(R.id.ig_unit)
     ItemGroup ig_unit;
+    @BindView(R.id.bt_delete)
+    Button bt_delete;
     @BindView(R.id.ig_productionSituation)
     ItemGroup ig_productionSituation;
     ArrayList<String> images = new ArrayList<>();
@@ -63,6 +69,7 @@ public class ProductInfoActivity extends MyBaseActivity {
     RecyclerView itemRvImages;
     String id="";
     ProductBean productBean;
+    private CustomDialog customDialog;
     @Override
     protected int getContentView() {
         return R.layout.activity_product_info;
@@ -88,6 +95,28 @@ public class ProductInfoActivity extends MyBaseActivity {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(ProductInfoActivity.this, ProductActivity.class).putExtra("id",id),1001);
+            }
+        });
+        bt_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialog.Builder builder = new CustomDialog.Builder(ProductInfoActivity.this)
+                        .setTitle("提示")
+                        .setMessage("确定删除该设备？")
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteDate(id);
+                            }
+                        });
+                customDialog = builder.create();
+                customDialog.show();
             }
         });
     }
@@ -170,4 +199,28 @@ public class ProductInfoActivity extends MyBaseActivity {
             }
         }
     }
+    void deleteDate(String id) {
+        RxNetUtils.request(getApi(ApiService.class).removeDeviceInfo(id), new RequestObserver<JsonT>() {
+            @Override
+            protected void onSuccess(JsonT jsonT) {
+                showToast("删除成功");
+                finish();
+            }
+
+            @Override
+            protected void onFail2(JsonT stringJsonT) {
+                super.onFail2(stringJsonT);
+                ToastUtils.showShort(stringJsonT.getMessage());
+            }
+        }, LoadingUtils.build(this));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (customDialog != null && customDialog.isShowing()) {
+            customDialog.dismiss();
+        }
+    }
+
 }

@@ -98,7 +98,7 @@ public class InfoActivity extends Activity {
             list.add(new DetailBean("问题数", lightDevice.getProblemCount() + ""));
         }else if ( type == 20) {
             list.add(new DetailBean("严重缺陷数", lightDevice.getSeriousCount() + ""));
-            list.add(new DetailBean("主要缺陷数", lightDevice.getProblemCount() + ""));
+            list.add(new DetailBean("主要缺陷数", lightDevice.getMajorCount() + ""));
             list.add(new DetailBean("一般缺陷数", lightDevice.getGeneralCount() + ""));
             list.add(new DetailBean("合理缺陷数", lightDevice.getReasonableCount() + ""));
             list.add(new DetailBean("评定级别", lightDevice.getLevel() + ""));

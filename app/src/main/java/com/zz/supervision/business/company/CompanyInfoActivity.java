@@ -173,7 +173,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
             mlist.add(new DetailBean("许可证编号", data.getLicenseNumber() + ""));
             mlist.add(new DetailBean("法定代表人", data.getLegalRepresentative() + ""));
             if (companyType.equals("5")) {
-                mlist.add(new DetailBean("法人身份证号", data.getLegalRepresentative() + ""));
+                mlist.add(new DetailBean("法人身份证号", data.getIdNum() + ""));
             }
             mlist.add(new DetailBean("住所", data.getAddress() + ""));
             if (companyType.equals("3")) {

@@ -216,8 +216,13 @@ public class SuperviseBean extends BaseExpandNode  {
         private String staticScore;
         private String dynamicScore;
         private String totalScore;
+        private String majorCount;
         private String level;
         private String resultReductionText;
+
+        public String getMajorCount() {
+            return majorCount;
+        }
 
         public String getProblemCount() {
             return problemCount;

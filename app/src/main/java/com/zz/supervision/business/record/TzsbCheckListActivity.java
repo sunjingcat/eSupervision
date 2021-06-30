@@ -136,7 +136,7 @@ public class TzsbCheckListActivity extends MyBaseActivity implements OnRefreshLi
         if (url.equals("tzsbInspectionRecord")){
             tv_inspectionResult.setText("执法类型");
         }else  if (url.equals("zdgypInspectionRecord")){
-            tv_inspectionResult.setText("评定结果");
+            tv_inspectionResult.setText("检查结果");
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CheckListAdapter(R.layout.item_check_list, mlist);
@@ -364,7 +364,7 @@ public class TzsbCheckListActivity extends MyBaseActivity implements OnRefreshLi
         if (url.equals("tzsbInspectionRecord")){
             params.put("dictType", "tzsb_inspection_type");
         }else  if (url.equals("zdgypInspectionRecord")){
-            params.put("dictType", "inspection_result");
+            params.put("dictType", "zdgyp_inspection_result");
         }
 
         RxNetUtils.request(getApi(ApiService.class).getDicts(params), new RequestObserver<JsonT<List<BusinessType>>>(this) {
