@@ -121,6 +121,9 @@ public interface ApiService {
     @DELETE("/app/v1/supervise/tzsbDeviceInfo/{id}")
     Observable<JsonT> removeDeviceInfo(@Path("id") String id);
 
+    @DELETE("/app/v1/supervise/zdgypProductInfo/{id}")
+    Observable<JsonT> removeProductInfo(@Path("id") String id);
+
     @DELETE("/app/v1/supervise/tzsbDeviceInfo/tzsbPressurepipePart/{id}")
     Observable<JsonT> removePressurepipePartInfo(@Path("id") String id);
 

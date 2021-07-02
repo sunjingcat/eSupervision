@@ -41,7 +41,8 @@ public class SignActivity extends MyBaseActivity {
     private SignatureView mView;
     @Override
     protected int getContentView() {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        setSCREEN_ORIENTATION(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         return R.layout.activity_sign;
     }
 
@@ -51,6 +52,7 @@ public class SignActivity extends MyBaseActivity {
         mView = new SignatureView(this);
         flView.addView(mView);
         mView.requestFocus();
+        LogUtils.v("-------");
     }
 
     @Override

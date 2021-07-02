@@ -2,25 +2,57 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
+    android:background="@color/white"
     android:orientation="vertical"
+    android:padding="10dp"
     >
 
-        <TextView
-            android:id="@+id/tv"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="fff"
-            android:paddingLeft="8dp"
-            style="@style/textLeftStyle"/>
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="整改措施"
+                    android:textColor="@color/colorTextBlack33"
+                    android:textSize="15sp" />
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
         <EditText
             android:id="@+id/et"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/white"
             android:gravity="top"
-            android:padding="8dp"
-            android:background="@drawable/line_radius_10_light"
-            android:hint="请填写"
-            android:textColor="@color/colorTextBlack99" />
+            android:hint=""
+            android:minHeight="100dp"
+            android:padding="5dp"
+            android:textColor="#272727"
+            android:textSize="15dp" />
+
 </LinearLayout>
+

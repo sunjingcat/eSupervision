@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="责令改正通知书"
+            android:text="行政处罚决定书"
             android:textColor="@color/white"
             android:textSize="18dp" />
 

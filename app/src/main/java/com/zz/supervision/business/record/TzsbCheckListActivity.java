@@ -59,6 +59,9 @@ import butterknife.OnClick;
 
 import static com.zz.supervision.net.RxNetUtils.getApi;
 
+/**
+ * 特种设备，重点工业品
+ */
 public class TzsbCheckListActivity extends MyBaseActivity implements OnRefreshListener, OnLoadMoreListener {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -440,6 +443,9 @@ public class TzsbCheckListActivity extends MyBaseActivity implements OnRefreshLi
         }
         if (!TextUtils.isEmpty(inspectionResult)) {
             map.put("type", inspectionResult);
+        }
+        if (!TextUtils.isEmpty(inspectionResult)) {
+            map.put("inspectionResult", inspectionResult);
         }
         if (status != 0) {
             map.put("status", status);

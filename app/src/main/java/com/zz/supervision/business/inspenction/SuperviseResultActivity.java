@@ -46,6 +46,8 @@ public class SuperviseResultActivity extends MyBaseActivity {
     TextView itemTitle;
     @BindView(R.id.btn_pingfen)
     Button btn_pingfen;
+    @BindView(R.id.btn_jilu)
+    Button btn_jilu;
     int type;
     int resultReduction;
     @BindView(R.id.bt_orderStatus)
@@ -73,7 +75,7 @@ public class SuperviseResultActivity extends MyBaseActivity {
         if (deviceInfo != null) {
             showIntent(deviceInfo, type);
         }
-        if (type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10||type == 19) {
+        if (type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10||type == 19||type == 20) {
             btn_pingfen.setVisibility(View.GONE);
         }
 
@@ -85,6 +87,7 @@ public class SuperviseResultActivity extends MyBaseActivity {
                 btn_pingfen.setText("打印指令书");
             }
         }
+        btn_jilu.setText(type==20?"打印量化分级判定表":"打印记录表");
 
     }
 
@@ -174,7 +177,7 @@ public class SuperviseResultActivity extends MyBaseActivity {
         switch (view.getId()) {
 
             case R.id.btn_jilu:
-                startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", deviceInfo.getId()).putExtra("tinspectSheetType", 1).putExtra("tinspectType", type));
+                startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", deviceInfo.getId()).putExtra("tinspectSheetType", type==20?2:1).putExtra("tinspectType", type));
 
                 break;
             case R.id.btn_pingfen:
@@ -187,35 +190,34 @@ public class SuperviseResultActivity extends MyBaseActivity {
                 finish();
                 break;
             case R.id.bt_orderStatus:
-                if (deviceInfo != null && deviceInfo.getStatus() == 3) {
+
                     if (deviceInfo.getOrderStatus()==1) {
                         startActivity(new Intent(SuperviseResultActivity.this, CreateOrderStatusActivity.class ).putExtra("id", deviceInfo.getId()).putExtra("type", type));
                     }else {
-                        startActivity(new Intent(SuperviseResultActivity.this,  ShowDocActivity.class).putExtra("tinspectSheetType", 3).putExtra("tinspectType", type).putExtra("read", 1));
+                        startActivity(new Intent(SuperviseResultActivity.this,  ShowDocActivity.class).putExtra("tinspectSheetType", 3).putExtra("tinspectType", type).putExtra("id",  deviceInfo.getId()));
                     }
-                }
-                finish();
+
+
                 break;
             case R.id.bt_decisionStatus:
-                if (deviceInfo != null && deviceInfo.getStatus() == 3) {
+
                     if (deviceInfo.getDecisionStatus() == 1) {
                         startActivity(new Intent(SuperviseResultActivity.this, CreateDecisionStatusActivity.class).putExtra("id",  deviceInfo.getId()).putExtra("type", type));
                     } else {
                         startActivity(new Intent(SuperviseResultActivity.this, ShowDocActivity.class).putExtra("tinspectSheetType", 4).putExtra("tinspectType", type).putExtra("id",  deviceInfo.getId()));
 
                     }
-                }
-                finish();
+
                 break;
             case R.id.bt_replyStatus:
-                if (deviceInfo != null && deviceInfo.getStatus() == 3) {
+
                     if (deviceInfo.getReplyStatus()==1) {
                         startActivity(new Intent(SuperviseResultActivity.this, CreateReplyStatusActivity.class ).putExtra("id",  deviceInfo.getId()).putExtra("type", type));
                     }else {
                         startActivity(new Intent(SuperviseResultActivity.this,  ShowDocActivity.class).putExtra("tinspectSheetType", 5).putExtra("tinspectType", type).putExtra("id",  deviceInfo.getId()));
                     }
-                }
-                finish();
+
+
                 break;
         }
     }

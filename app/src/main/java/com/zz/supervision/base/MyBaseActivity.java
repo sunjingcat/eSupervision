@@ -54,6 +54,11 @@ public abstract class MyBaseActivity<P extends com.zz.lib.core.ui.mvp.BasePresen
 //        });
 
     }
+    private int SCREEN_ORIENTATION=ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+
+    public void setSCREEN_ORIENTATION(int SCREEN_ORIENTATION) {
+        this.SCREEN_ORIENTATION = SCREEN_ORIENTATION;
+    }
 
     //获取Activity布局
     protected abstract int getContentView();
@@ -67,9 +72,9 @@ public abstract class MyBaseActivity<P extends com.zz.lib.core.ui.mvp.BasePresen
   public   ImmersionBar immersionBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
+        setRequestedOrientation(SCREEN_ORIENTATION);
         mTransAnimation = AnimeUtils.sceneTransAnime(this);
         initView();
         initToolBar();

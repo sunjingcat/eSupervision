@@ -362,8 +362,23 @@ public class SuperviseBean extends BaseExpandNode  {
         private Integer randomCheckType;// 2,
         private Integer inspectionMethod;// 2,
         private String reductionOpinion ;// 2,
+        private String qualitySign ;// 2,
+        private String officerSign1 ;// 2,
+        private String officerSign2 ;// 2,
 
-          private String isRandomCheckText;// 2,
+        public String getQualitySign() {
+            return qualitySign;
+        }
+
+        public String getOfficerSign1() {
+            return officerSign1;
+        }
+
+        public String getOfficerSign2() {
+            return officerSign2;
+        }
+
+        private String isRandomCheckText;// 2,
         private String randomCheckTypeText;// 2,
         private String inspectionMethodText;// 2,
 

@@ -45,13 +45,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.zz.supervision.widget.ItemArea
-                android:id="@+id/ia_partyAttendance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:title="通知当事人到场情况"
-                android:layout_marginTop="@dimen/dp_10"/>
-
             <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_party_is_see"
                 android:layout_width="match_parent"
@@ -76,22 +69,6 @@
                 app:contentStyle="right"
                 app:isSelect="true"
                 app:title="如实施行政强制措施，当场告知当事人采取行政强制措施的理由、依据以及依法享有的权力、救济途径情况:" />
-
-            <com.zz.supervision.widget.ItemArea
-                android:id="@+id/ia_partyDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:title="当事人的陈述和申辩："
-
-                />
-
-            <com.zz.supervision.widget.ItemArea
-                android:id="@+id/ia_siteCondition"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:edt_hint_content="执法人员到达现场后，经出示执法证，对该市场主体进行检查。"
-                app:title="现场情况：" />
-
             <com.zz.supervision.widget.ItemGroup
                 android:id="@+id/ig_is_check_site"
                 android:layout_width="match_parent"
@@ -99,6 +76,33 @@
                 app:contentStyle="right"
                 app:isSelect="true"
                 app:title="检查人员是否向你核对/已宣读现场检查的情况记录：" />
+            <com.zz.supervision.widget.ItemArea
+                android:id="@+id/ia_partyAttendance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="通知当事人到场情况"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#cecece"/>
+            <com.zz.supervision.widget.ItemArea
+                android:id="@+id/ia_partyDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="当事人的陈述和申辩："
+
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#cecece"/>
+            <com.zz.supervision.widget.ItemArea
+                android:id="@+id/ia_siteCondition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:edt_hint_content="执法人员到达现场后，经出示执法证，对该市场主体进行检查。"
+                app:title="现场情况：" />
 
 
 

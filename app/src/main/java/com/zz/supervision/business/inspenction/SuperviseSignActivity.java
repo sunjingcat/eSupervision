@@ -297,7 +297,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
     }
 
     public void showIntent(SuperviseBean.ResposeBean resposeBean) {
-        tvCompany.setText(resposeBean.getOperatorName() + "");
+        tvCompany.setText(resposeBean.getCompanyInfo().getOperatorName() + "");
         tvSumCount.setText(resposeBean.getSumCount() + "");
         llSumCount.setVisibility(TextUtils.isEmpty(resposeBean.getSumCount()) ? View.GONE : View.VISIBLE);
         tvLawEnforcer.setText(resposeBean.getLawEnforcer1Name() + "," + resposeBean.getLawEnforcer2Name());
@@ -447,9 +447,9 @@ public class SuperviseSignActivity extends MyBaseActivity {
         }
         if (type == 20) {
             GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getCompanySign(), iv_sign1);
-            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), iv_sign2);
-            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), iv_sign2);
-            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign(), iv_sign2);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getQualitySign(), iv_sign2);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign1(), iv_sign3);
+            GlideUtils.loadImage(SuperviseSignActivity.this, resposeBean.getOfficerSign2(), iv_sign4);
 
         }
         if (type == 21) {
@@ -560,7 +560,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 if (resposeBean != null && resposeBean.getStatus() == 3) {
 
                     if (TextUtils.isEmpty(id)) return;
-                    startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", id).putExtra("tinspectSheetType", 1).putExtra("tinspectType", type));
+                    startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", id).putExtra("tinspectSheetType", (type==20)?2:1).putExtra("tinspectType", type));
 //
                 } else {
                     postData();
@@ -579,7 +579,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                 if (resposeBean == null) return;
                 if (type == 3 || type == 4) {
                     startActivity(new Intent(this, RiskSuperviseInfoActivity.class)
-                            .putExtra("company", resposeBean.getOperatorName())
+                            .putExtra("company", resposeBean.getCompanyInfo().getOperatorName())
                             .putExtra("id", resposeBean.getId() + "")
                             .putExtra("type", type)
                             .putExtra("status", resposeBean.getStatus())
@@ -589,7 +589,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
 
                 } else {
                     startActivity(new Intent(this, SuperviseInfoActivity.class)
-                            .putExtra("company", resposeBean.getOperatorName())
+                            .putExtra("company", resposeBean.getCompanyInfo().getOperatorName())
                             .putExtra("id", resposeBean.getId() + "")
                             .putExtra("type", type)
                             .putExtra("status", resposeBean.getStatus())
@@ -668,7 +668,7 @@ public class SuperviseSignActivity extends MyBaseActivity {
                     if (resposeBean.getOrderStatus()==1) {
                         startActivity(new Intent(SuperviseSignActivity.this, CreateOrderStatusActivity.class ).putExtra("id", id).putExtra("type", type));
                     }else {
-                        startActivity(new Intent(SuperviseSignActivity.this,  ShowDocActivity.class).putExtra("tinspectSheetType", 3).putExtra("tinspectType", type).putExtra("read", 1));
+                        startActivity(new Intent(SuperviseSignActivity.this,  ShowDocActivity.class).putExtra("tinspectSheetType", 3).putExtra("tinspectType", type).putExtra("id", id));
                     }
                 }
                 break;
@@ -788,7 +788,29 @@ public class SuperviseSignActivity extends MyBaseActivity {
         String reviewerSign = BASE64.imageToBase64(sign3);
         String reviewerSign2 = BASE64.imageToBase64(sign4);
         HashMap<String, Object> map = new HashMap<String, Object>();
-        if (type >= 11 && type <= 18) {
+
+        if (type == 1 || type == 2 || type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10 || type == 19) {
+            map.put("companySign", companySign);
+            map.put("officerSign", officerSign);
+            map.put("reformTime", reformTime);
+        } else if (type == 3 || type == 4) {
+            map.put("fillerSign", companySign);
+            map.put("ownerSign", officerSign);
+            map.put("reviewerSign", reviewerSign);
+        } else if (type == 20) {
+            map.put("companySign", companySign);
+            map.put("qualitySign", officerSign);
+            map.put("officerSign1", reviewerSign);
+            map.put("officerSign2", reviewerSign2);
+        } else if (type == 21) {
+            map.put("companySign", companySign);
+            map.put("officerSign", officerSign);
+            map.put("isRandomCheck", ig_isRandomCheck.getSelectValue());
+            map.put("randomCheckType", ig_randomCheckType.getSelectValue());
+            map.put("inspectionMethod", ig_inspectionMethod.getSelectValue());
+            map.put("inspectionResult", ig_inspectionResult.getSelectValue());
+            map.put("reductionOpinion", getText(et_reductionOpinion));
+        }  if (type >= 11 && type <= 18) {
             map.put("companySign", companySign);
             map.put("officerSign", officerSign);
             map.put("recordSign", reviewerSign);
@@ -796,46 +818,8 @@ public class SuperviseSignActivity extends MyBaseActivity {
             map.put("resultReduction", resultReduction + "");
             map.put("inspectionOpinion", inspectionOpinion);
             map.put("violation", getText(etViolation));
-            RxNetUtils.request(getApi(ApiService.class).submitSign1(url, id, map), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
-                @Override
-                protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
-                    if (jsonT.getData().getStatus() != 3) {
-                        startActivity(new Intent(SuperviseSignActivity.this, MonitorActivity.class).putExtra("recordId", id).putExtra("type", type));
-                    } else {
-                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", jsonT.getData()).putExtra("type", type));
-                        finish();
-                    }
-                }
-
-                @Override
-                protected void onFail2(JsonT<SuperviseBean.ResposeBean> userInfoJsonT) {
-                    super.onFail2(userInfoJsonT);
-                    showToast(userInfoJsonT.getMessage());
-                }
-            }, LoadingUtils.build(this));
-        } else {
-            if (type == 1 || type == 2 || type == 5 || type == 6 || type == 7 || type == 8 || type == 9 || type == 10 || type == 19) {
-                map.put("companySign", companySign);
-                map.put("officerSign", officerSign);
-                map.put("reformTime", reformTime);
-            } else if (type == 3 || type == 4) {
-                map.put("fillerSign", companySign);
-                map.put("ownerSign", officerSign);
-                map.put("reviewerSign", reviewerSign);
-            } else if (type == 20) {
-                map.put("companySign", companySign);
-                map.put("qualitySign", officerSign);
-                map.put("officerSign1", reviewerSign);
-                map.put("officerSign2", reviewerSign2);
-            } else if (type == 21) {
-                map.put("companySign", companySign);
-                map.put("officerSign", officerSign);
-                map.put("isRandomCheck", ig_isRandomCheck.getSelectValue());
-                map.put("randomCheckType", ig_randomCheckType.getSelectValue());
-                map.put("inspectionMethod", ig_inspectionMethod.getSelectValue());
-                map.put("inspectionResult", ig_inspectionResult.getSelectValue());
-                map.put("reductionOpinion", getText(et_reductionOpinion));
-            }
+        }
+        if (type==3||type==4||type==5){
             RxNetUtils.request(getApi(ApiService.class).submitSign(url, id, map), new RequestObserver<JsonT>(this) {
                 @Override
                 protected void onSuccess(JsonT jsonT) {
@@ -848,7 +832,35 @@ public class SuperviseSignActivity extends MyBaseActivity {
                     showToast(userInfoJsonT.getMessage());
                 }
             }, LoadingUtils.build(this));
+        }else {
+            RxNetUtils.request(getApi(ApiService.class).submitSign1(url, id, map), new RequestObserver<JsonT<SuperviseBean.ResposeBean>>(this) {
+                @Override
+                protected void onSuccess(JsonT<SuperviseBean.ResposeBean> jsonT) {
+                    if (type >= 11 && type <= 18) {
+
+                        if (jsonT.getData().getStatus() != 3) {
+                            startActivity(new Intent(SuperviseSignActivity.this, MonitorActivity.class).putExtra("recordId", id).putExtra("type", type));
+                        } else {
+                            startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean", jsonT.getData()).putExtra("type", type));
+                            finish();
+                        }
+                    } else {
+
+                        startActivity(new Intent(SuperviseSignActivity.this, SuperviseResultActivity.class).putExtra("resposeBean",  jsonT.getData()).putExtra("type", type));
+                        finish();
+                    }
+
+                }
+
+                @Override
+                protected void onFail2(JsonT<SuperviseBean.ResposeBean> userInfoJsonT) {
+                    super.onFail2(userInfoJsonT);
+                    showToast(userInfoJsonT.getMessage());
+                }
+            }, LoadingUtils.build(this));
         }
+
+
 
     }
 

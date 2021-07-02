@@ -230,7 +230,8 @@ public class CreateReplyStatusActivity extends MyBaseActivity {
             @Override
             protected void onFail2(JsonT<SyxhRectificationOrder> userInfoJsonT) {
                 super.onFail2(userInfoJsonT);
-//                showToast(userInfoJsonT.getMessage());
+                showToast(userInfoJsonT.getMessage());
+                finish();
             }
         }, LoadingUtils.build(this));
     }

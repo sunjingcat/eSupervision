@@ -200,7 +200,7 @@ public class ProductInfoActivity extends MyBaseActivity {
         }
     }
     void deleteDate(String id) {
-        RxNetUtils.request(getApi(ApiService.class).removeDeviceInfo(id), new RequestObserver<JsonT>() {
+        RxNetUtils.request(getApi(ApiService.class).removeProductInfo(id), new RequestObserver<JsonT>() {
             @Override
             protected void onSuccess(JsonT jsonT) {
                 showToast("删除成功");
