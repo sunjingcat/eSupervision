@@ -33,7 +33,7 @@ import butterknife.OnClick;
 /**
  * 监督检查结果
  */
-public class SuperviseResultActivity extends MyBaseActivity {
+public class  SuperviseResultActivity extends MyBaseActivity {
 
     @BindView(R.id.info_rv)
     RecyclerView infoRv;

@@ -190,6 +190,6 @@ public class SuperviseInfoActivity extends MyBaseActivity {
     public void onViewClicked() {
         if (TextUtils.isEmpty(id)) return;
 
-        startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", id).putExtra("tinspectSheetType", (type>=5&&type<=10||type>=19&&type<=21)?2:1).putExtra("tinspectType", type));
+        startActivity(new Intent(this, ShowDocActivity.class).putExtra("id", id).putExtra("tinspectSheetType", 1).putExtra("tinspectType", type));
     }
 }
