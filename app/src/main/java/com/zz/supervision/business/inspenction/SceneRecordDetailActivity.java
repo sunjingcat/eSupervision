@@ -276,7 +276,6 @@ public class SceneRecordDetailActivity extends MyBaseActivity {
             @Override
             protected void onSuccess(JsonT<Integer> jsonT) {
                 startActivity(new Intent(SceneRecordDetailActivity.this, ShowDocActivity.class).putExtra("id", jsonT.getData()+"").putExtra("type", 100).putExtra("tinspectSheetType", 1).putExtra("tinspectType", 100).putExtra("read", 1));
-
             }
 
             @Override

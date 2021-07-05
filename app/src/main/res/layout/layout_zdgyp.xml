@@ -9,7 +9,7 @@
         android:id="@+id/et_z_operatorNameCertificate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="获奖时企业名称" />
+        app:title="获证时企业名称" />
     <com.zz.supervision.widget.ItemGroup
         android:id="@+id/et_z_operatorName"
         android:layout_width="match_parent"
@@ -77,25 +77,29 @@
         android:id="@+id/et_z_peopleTotalCertificate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="获证时企业总人数" />
+        app:title="获证时企业总人数"
+        app:inputType="numberDecimal"/>
 
     <com.zz.supervision.widget.ItemGroup
         android:id="@+id/et_z_peopleTotal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="现企业总人数" />
+        app:title="现企业总人数"
+        app:inputType="numberDecimal"/>
 
     <com.zz.supervision.widget.ItemGroup
         android:id="@+id/et_z_techniciansTotalCertificate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="获证时企业技术人员数" />
+        app:title="获证时企业技术人员数"
+        app:inputType="numberDecimal"/>
 
     <com.zz.supervision.widget.ItemGroup
         android:id="@+id/et_z_techniciansTotal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="现企业技术人员数" />
+        app:title="现企业技术人员数"
+        app:inputType="numberDecimal"/>
 
     <com.zz.supervision.widget.ItemGroup
         android:id="@+id/et_z_licenseNumber"

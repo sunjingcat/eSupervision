@@ -102,6 +102,7 @@ public class YaoCheckListActivity extends MyBaseActivity {
                 .init();
         initFragment();
         String select = getIntent().getStringExtra("select");
+
         if (TextUtils.isEmpty(select)) {
             toolbarSubtitle.setVisibility(View.VISIBLE);
         } else {
@@ -121,7 +122,7 @@ public class YaoCheckListActivity extends MyBaseActivity {
     CheckFragment checkFragment3;
 
     void initFragment() {
-
+        String companyType = getIntent().getStringExtra("companyType");
         checkFragment1 = new CheckFragment("3");
         checkFragment2 = new CheckFragment("4");
         checkFragment3 = new CheckFragment("5");
@@ -134,10 +135,21 @@ public class YaoCheckListActivity extends MyBaseActivity {
         tablayout.setupWithViewPager(viewpager, false);
         pagerAdapter = new FmPagerAdapter(fragments, getSupportFragmentManager());
         viewpager.setAdapter(pagerAdapter);
-        tablayout.getTabAt(0);
+        int tabIndex = 0;
+        if (!TextUtils.isEmpty(companyType)) {
+
+            if (companyType.equals("3")) {
+                tabIndex = 0;
+            } else if (companyType.equals("4")) {
+                tabIndex = 1;
+            } else if (companyType.equals("5")) {
+                tabIndex = 2;
+            }
+        }
         for (int i = 0; i < tabs.length; i++) {
             tablayout.getTabAt(i).setText(tabs[i]);
         }
+
         llLevel.setVisibility(View.GONE);
         llInspectionResult.setVisibility(View.GONE);
         tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -178,6 +190,14 @@ public class YaoCheckListActivity extends MyBaseActivity {
             }
         });
 
+
+        int finalTabIndex = tabIndex;
+        tablayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tablayout.getTabAt(finalTabIndex).select();
+            }
+        }, 100);
     }
 
     @Override

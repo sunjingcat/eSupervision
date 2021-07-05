@@ -346,7 +346,7 @@ public class CompanyInfoActivity extends MyBaseActivity {
                 if (companyType.equals("2")) {
                     startActivity(new Intent(this, ColdCheckListActivity.class).putExtra("id", companyBean.getId()));
                 } else if (companyType.equals("3") || companyType.equals("4")|| companyType.equals("5")) {
-                    startActivity(new Intent(this, YaoCheckListActivity.class).putExtra("id", companyBean.getId()));
+                    startActivity(new Intent(this, YaoCheckListActivity.class).putExtra("id", companyBean.getId()).putExtra("companyType",companyType));
                 } else if (companyType.equals("6")) {
                     startActivity(new Intent(this, TzsbCheckListActivity.class).putExtra("id", companyBean.getId()).putExtra("url", "tzsbInspectionRecord"));
                 } else if (companyType.equals("7")) {

@@ -303,7 +303,7 @@ public class AddCompanyActivity extends MyBaseActivity<Contract.IsetCompanyAddPr
                 etContact.setTitle("企业负责人");
                 mPresenter.getDicts("ypCompanyType");
             } else if (companyType.equals("4")) {
-                ll_yp.setVisibility(View.VISIBLE);
+                ll_yp.setVisibility(View.GONE);
                 etContact.setTitle("企业负责人");
                 mPresenter.getDicts("ylqxCompanyType");
             } else if (companyType.equals("5")) {

@@ -88,7 +88,7 @@ public class SceneRecordListActivity extends MyBaseActivity implements OnRefresh
                 if (mlist.get(position).getStatus()==1) {//0 未完成 1 已完成
                     startActivityForResult(new Intent(SceneRecordListActivity.this, SceneRecordInfoActivity.class).putExtra("id", mlist.get(position).getId() ).putExtra("type", 666), 1001);
                 }else {
-                    startActivityForResult(new Intent(SceneRecordListActivity.this, SceneRecordDetailActivity.class).putExtra("id", mlist.get(position).getId() ), 1001);
+                    startActivityForResult(new Intent(SceneRecordListActivity.this, SceneRecordDetailActivity.class).putExtra("id", mlist.get(position).getId() +""), 1001);
 
                 }
             }

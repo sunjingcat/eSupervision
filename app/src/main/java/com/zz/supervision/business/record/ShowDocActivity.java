@@ -330,7 +330,7 @@ public class ShowDocActivity extends MyBaseActivity implements TbsReaderView.Rea
                 @Override
                 protected void onSuccess(JsonT<Integer> jsonT) {
                     if (jsonT.isSuccess()) {
-                            startActivity(new Intent(ShowDocActivity.this, SceneRecordInfoActivity.class).putExtra("id", jsonT.getData()).putExtra("type", type));
+                            startActivity(new Intent(ShowDocActivity.this, SceneRecordInfoActivity.class).putExtra("id", jsonT.getData()).putExtra("type", type).putExtra("from","list"));
                             finish();
                     }
                 }

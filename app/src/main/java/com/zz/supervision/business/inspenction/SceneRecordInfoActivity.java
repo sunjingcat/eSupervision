@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +30,7 @@ import com.zz.lib.commonlib.utils.ToolBarUtils;
 import com.zz.lib.commonlib.widget.SelectPopupWindows;
 import com.zz.lib.core.ui.mvp.BasePresenter;
 import com.zz.lib.core.utils.LoadingUtils;
+import com.zz.supervision.MainActivity;
 import com.zz.supervision.R;
 import com.zz.supervision.base.MyBaseActivity;
 import com.zz.supervision.bean.BusinessType;
@@ -117,6 +119,7 @@ public class SceneRecordInfoActivity extends MyBaseActivity {
     ItemArea ia_siteCondition;
     @BindView(R.id.ia_partyAttendance)
     ItemArea ia_partyAttendance;
+    String pageFrom;
     @Override
     protected int getContentView() {
         return R.layout.activity_scene_info;
@@ -134,15 +137,12 @@ public class SceneRecordInfoActivity extends MyBaseActivity {
 
 
            id = getIntent().getIntExtra("id",0);
+            pageFrom = getIntent().getStringExtra("from");
             getData();
 
 
     }
 
-    @Override
-    protected void initToolBar() {
-        ToolBarUtils.getInstance().setNavigation(toolbar, 1);
-    }
 
     public void showIntent(SceneRecord resposeBean) {
         tvCompany.setText(resposeBean.getOperatorName() + "");
@@ -247,6 +247,26 @@ public class SceneRecordInfoActivity extends MyBaseActivity {
             }
         }, LoadingUtils.build(this));
     }
+    @Override
+    protected void initToolBar() {
+        ToolBarUtils.getInstance().setNavigation(toolbar, 1);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(pageFrom)) {
+                    startActivity(new Intent(SceneRecordInfoActivity.this, MainActivity.class));
+                }
+                finish();
+            }
+        });
+    }
 
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK&&!TextUtils.isEmpty(pageFrom)) {
+            return  true;
+        } else {
+            return super.dispatchKeyEvent(event);
+        }
+    }
 
 }
