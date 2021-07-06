@@ -217,9 +217,9 @@ public class CreateOrderStatusActivity extends MyBaseActivity {
             protected void onSuccess(JsonT<SyxhRectificationOrder> jsonT) {
                 SyxhRectificationOrder data = jsonT.getData();
                 igIllegalActivity.setText(data.getIllegalActivity() + "");
-                igLawContent.setText(data.getIllegalActivity() + "");
-                igAccordContent.setText(data.getIllegalActivity() + "");
-                igReformMeasure.setText(data.getIllegalActivity() + "");
+                igLawContent.setText(data.getLawContent() + "");
+                igAccordContent.setText(data.getAccordContent() + "");
+                igReformMeasure.setText(data.getReformMeasure() + "");
                 ig_reformTimeType.setChooseContent(data.getReformTimeTypeText(), data.getReformTimeType());
                 ig_reformTime.setChooseContent(data.getReformTime() + "");
                 if (data.getReformTimeType().equals("0")) {

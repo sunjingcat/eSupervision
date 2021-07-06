@@ -218,8 +218,8 @@ public class CreateDecisionStatusActivity extends MyBaseActivity {
             protected void onSuccess(JsonT<SyxhRectificationOrder> jsonT) {
                 SyxhRectificationOrder data = jsonT.getData();
                 igIllegalActivity.setText(data.getIllegalActivity()+"");
-                igLawContent.setText(data.getIllegalActivity()+"");
-                igAccordContent.setText(data.getIllegalActivity()+"");
+                igLawContent.setText(data.getLawContent()+"");
+                igAccordContent.setText(data.getAccordContent()+"");
                 GlideUtils.loadImage(CreateDecisionStatusActivity.this, data.getCompanySign(), iv_sign1);
                 GlideUtils.loadImage(CreateDecisionStatusActivity.this, data.getOfficerSign1(), iv_sign2);
                 GlideUtils.loadImage(CreateDecisionStatusActivity.this, data.getOfficerSign2(), iv_sign3);

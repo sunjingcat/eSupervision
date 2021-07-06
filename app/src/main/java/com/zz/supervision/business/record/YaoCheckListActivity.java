@@ -413,6 +413,6 @@ public class YaoCheckListActivity extends MyBaseActivity {
     }
   public   void setYaoRiskSetVisible(boolean visible){
         llLevel.setVisibility(visible?View.VISIBLE:View.GONE);
-        llInspectionResult.setVisibility(visible?View.GONE:View.VISIBLE);
+//        llInspectionResult.setVisibility(visible?View.GONE:View.VISIBLE);
   }
 }
